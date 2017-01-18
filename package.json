@@ -1,6 +1,6 @@
 {
   "name": "apple-amp-docs",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Apple documentation powered by Presidium.",
   "authors": [
     {
@@ -11,11 +11,15 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean -s",
-    "build": "npm run cpx "./content/** ./dist --watch"
+    "build": "npm run build:copy-content & npm run build:copy-presidium",
+    "build:copy-content": "cpx \"./content/**/*\" dist",
+    "build:copy-presidium": "cpx \"../presidium-docs/**/*\" dist",
+    "postbuild": "cd ./dist && jekyll serve -s . -d versions/latest"
   },
   "license": "TBD",
   "devDependencies": {},
   "dependencies": {
-    "cpx": "^1.5.0"
+    "cpx": "^1.5.0",
+    "rimraf": "^2.5.4"
   }
 }
