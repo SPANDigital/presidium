@@ -1,0 +1,21 @@
+{
+  "name": "apple-amp-docs",
+  "version": "0.0.0",
+  "description": "Apple documentation powered by Presidium.",
+  "authors": [
+    {
+      "name": "Dominic Follett-Smith",
+      "email": "dominic@spandigital.com"
+    }
+  ],
+  "scripts": {
+    "clean": "rimraf dist/*",
+    "prebuild": "npm run clean -s",
+    "build": "npm run cpx "./content/** ./dist --watch"
+  },
+  "license": "TBD",
+  "devDependencies": {},
+  "dependencies": {
+    "cpx": "^1.5.0"
+  }
+}
