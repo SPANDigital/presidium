@@ -1,7 +1,7 @@
 {
-  "name": "apple-amp-docs",
+  "name": "presidium-reference",
   "version": "0.0.1",
-  "description": "Apple documentation powered by Presidium.",
+  "description": "Reference documentation powered by Presidium.",
   "authors": [
     {
       "name": "Dominic Follett-Smith",
@@ -13,13 +13,15 @@
     "prebuild": "npm run clean -s",
     "build": "npm run build:copy-content & npm run build:copy-presidium",
     "build:copy-content": "cpx \"./content/**/*\" dist",
-    "build:copy-presidium": "cpx \"../presidium-docs/**/*\" dist",
+    "build:copy-presidium": "cpx \"../presidium/**/*\" dist",
+    "build:copy-overrides": "cpx \"./_config.yml\" dist",
     "postbuild": "cd ./dist && jekyll serve -s . -d versions/latest"
   },
   "license": "TBD",
   "devDependencies": {},
   "dependencies": {
     "cpx": "^1.5.0",
+    "renamer": "^0.6.1",
     "rimraf": "^2.5.4"
   }
 }
