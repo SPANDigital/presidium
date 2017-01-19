@@ -1,6 +1,6 @@
-# presidium-reference
+# Presidium
 
-A reference documentation site using presidium.
+A reference documentation site using Presidium.
 
 ## Installation Requirements
 
@@ -23,4 +23,11 @@ On OS X El Capitan, Yosemite, Mavericks, and macOS Sierra, Ruby 2.0 is included.
 
 ```
 $ gem install jekyll
+```
+
+## Build & Run
+
+```sh
+$ npm install
+$ npm run build
 ```
