@@ -52,3 +52,7 @@ sass:
     sass_dir: assets/shared/_sass
 
 
+#
+# Theme
+#
+theme: minima

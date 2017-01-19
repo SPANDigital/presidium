@@ -13,9 +13,9 @@
     "prebuild": "npm run clean -s",
     "build": "npm run build:copy-content & npm run build:copy-presidium & npm run build:copy-overrides",
     "build:copy-content": "cpx --watch \"./content/**/*\" dist &",
-    "build:copy-presidium": "cpx --watch \"../presidium/**/*\" dist &",
-    "build:copy-overrides": "cpx --watch \"./_config_overrides.yml\" dist &",
-    "postbuild": "cd ./dist && jekyll serve --config _config.yml,_config_overrides.yml -s . -d versions/latest"
+    "build:copy-presidium": "cpx --watch \"../presidium-core/**/*\" dist &",
+    "build:copy-overrides": "cpx --watch \"./_config_overrides.yml\" dist & cpx --watch \"./Gemfile\" dist &",
+    "postbuild": "cd ./dist && bundle && jekyll serve --config _config.yml,_config_overrides.yml -s . -d versions/latest"
   },
   "license": "TBD",
   "devDependencies": {},
