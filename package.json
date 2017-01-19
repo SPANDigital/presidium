@@ -11,11 +11,11 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean -s",
-    "build": "npm run build:copy-content & npm run build:copy-presidium",
-    "build:copy-content": "cpx \"./content/**/*\" dist",
-    "build:copy-presidium": "cpx \"../presidium/**/*\" dist",
-    "build:copy-overrides": "cpx \"./_config.yml\" dist",
-    "postbuild": "cd ./dist && jekyll serve -s . -d versions/latest"
+    "build": "npm run build:copy-content & npm run build:copy-presidium & npm run build:copy-overrides",
+    "build:copy-content": "cpx --watch \"./content/**/*\" dist &",
+    "build:copy-presidium": "cpx --watch \"../presidium/**/*\" dist &",
+    "build:copy-overrides": "cpx --watch \"./_config_overrides.yml\" dist &",
+    "postbuild": "cd ./dist && jekyll serve --config _config.yml,_config_overrides.yml -s . -d versions/latest"
   },
   "license": "TBD",
   "devDependencies": {},
