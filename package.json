@@ -11,7 +11,7 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean -s",
-    "build": "npm run build:copy-content & npm run build:copy-presidium & npm run build:copy-overrides",
+    "build": "concurrently --kill-others  \"npm run build:copy-content\" \"npm run build:copy-presidium\" \"npm run build:copy-overrides\" \"npm run postbuild\"",
     "build:copy-content": "cpx --watch \"./content/**/*\" dist &",
     "build:copy-presidium": "cpx --watch \"../presidium-core/**/*\" dist &",
     "build:copy-overrides": "cpx --watch \"./_config_overrides.yml\" dist &",
@@ -20,7 +20,9 @@
   "license": "TBD",
   "devDependencies": {
     "cpx": "^1.5.0",
-    "rimraf": "^2.5.4"
+    "rimraf": "^2.5.4",
+    "concurrently": "^3.1.0"
   },
-  "dependencies": {}
+  "dependencies": {
+  }
 }
