@@ -1,8 +1,12 @@
 {
-  "name": "presidium-reference",
+  "name": "presidium",
   "version": "0.0.1",
-  "description": "Reference documentation powered by Presidium.",
+  "description": "Technical documentation powered by Presidium.",
   "authors": [
+    {
+      "name": "Paco Mendes",
+      "email": "paco.mendes@spandigital.com"
+    },
     {
       "name": "Dominic Follett-Smith",
       "email": "dominic@spandigital.com"
@@ -11,17 +15,17 @@
   "scripts": {
     "clean": "rimraf dist/*",
     "prebuild": "npm run clean -s",
-    "build": "concurrently --kill-others  \"npm run build:copy-content\" \"npm run build:copy-presidium\" \"npm run build:copy-overrides\" \"npm run postbuild\"",
-    "build:copy-content": "cpx --watch \"./content/**/*\" dist &",
-    "build:copy-presidium": "cpx --watch \"../presidium-core/**/*\" dist &",
-    "build:copy-overrides": "cpx --watch \"./_config_overrides.yml\" dist &",
-    "postbuild": "cd ./dist && jekyll serve --config _config.yml,_config_overrides.yml -s . -d versions/latest"
+    "build": "npm run build:presidium & npm run build:content & npm run build:media & npm run build:config & wait",
+    "build:content": "cpx --watch \"./content/**/*\" dist",
+    "build:media": "cpx --watch \"./media/**/*\" dist/media",
+    "build:presidium": "cpx --watch \".build/presidium-core/**/*\" dist",
+    "build:config": "cpx \"./_config.yml\" ./dist",
+    "serve": "cd ./dist && jekyll serve"
   },
   "license": "TBD",
   "devDependencies": {
     "cpx": "^1.5.0",
-    "rimraf": "^2.5.4",
-    "concurrently": "^3.1.0"
+    "rimraf": "^2.5.4"
   },
   "dependencies": {
   }

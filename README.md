@@ -1,5 +1,7 @@
 # Presidium
 
+OUT OF DATE... requires updating
+
 A reference documentation site using Presidium.
 
 ## Installation Requirements
@@ -10,7 +12,7 @@ A reference documentation site using Presidium.
 ### Install latest npm
 
 ```sh
-$ bew install node
+$ brew install node
 $ brew update
 $ brew upgrade node
 ```
