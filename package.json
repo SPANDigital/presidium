@@ -19,7 +19,7 @@
     "build:content": "cpx --watch \"./content/**/*\" dist",
     "build:media": "cpx --watch \"./media/**/*\" dist/media",
     "build:presidium": "cpx --watch \".build/presidium-core/**/*\" dist",
-    "build:config": "cpx \"./_config.yml\" ./dist",
+    "build:config": "cpx --watch \"./_config.yml\" ./dist",
     "serve": "cd ./dist && jekyll serve"
   },
   "license": "TBD",

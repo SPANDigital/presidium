@@ -1,0 +1,83 @@
+
+baseurl:
+name: Presidium
+
+#
+# Collections for content articles
+#
+menu:
+  1:
+    title: "Overview"
+    path: "/"
+  2:
+    title: "Prerequisites"
+    path: "/prerequisites/"
+  3:
+    title: "Key Concepts"
+    path: "/key-concepts/"
+  4:
+    title: "Getting Started"
+    path: "/getting-started/"
+    1:
+      title: "Sub Menu"
+      path: "/getting-started/#"
+  5:
+    title: "References"
+    path: "/references/"
+  6:
+    title: "Recipes"
+    path: "/recipes/"
+  7:
+    title: "Tools"
+    path: "/tools/"
+  8:
+    title: "Testing & Debugging"
+    path: "/testing/"
+  9:
+    title: "Updates"
+    path: "/updates/"
+
+#
+# Collections for content articles
+#
+
+collections:
+    best_practices:
+    getting_started:
+    key_concepts:
+    overview:
+    prerequisites:
+    recipes:
+    references:
+        output: true
+        permalink: /references/:path/
+    testing:
+    tools:
+    typical_scenarios:
+    updates:
+
+#
+# Exclude the following files from the generated site
+#
+exclude: [
+    "README.md",
+    "LICENSE",
+    "_TEMPLATE.md",
+    ".gitignore"
+]
+
+#
+# System wide defaults
+#
+defaults:
+    -
+        scope:
+            path: ""
+        values:
+            layout: "container"
+
+#
+# Sass settings
+#
+sass:
+    sass_dir: media/css/_sass
