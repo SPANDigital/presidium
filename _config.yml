@@ -1,40 +1,37 @@
-
-baseurl:
 name: Presidium
+baseurl:
 
 #
-# Collections for content articles
+# Menu Structure. To include all articles add the collection.
 #
 menu:
-  1:
-    title: "Overview"
+  - title: "Overview"
     path: "/"
-  2:
-    title: "Prerequisites"
+
+  - title: "Prerequisites"
     path: "/prerequisites/"
-  3:
-    title: "Key Concepts"
+
+  - title: "Key Concepts"
     path: "/key-concepts/"
-  4:
-    title: "Getting Started"
+
+  - title: "Getting Started"
     path: "/getting-started/"
-    1:
-      title: "Sub Menu"
-      path: "/getting-started/#"
-  5:
-    title: "References"
+    collection: 'getting_started'
+
+  - title: "References"
     path: "/references/"
-  6:
-    title: "Recipes"
+    collection: "references"
+
+  - title: "Recipes"
     path: "/recipes/"
-  7:
-    title: "Tools"
+
+  - title: "Tools"
     path: "/tools/"
-  8:
-    title: "Testing & Debugging"
+
+  - title: "Testing & Debugging"
     path: "/testing/"
-  9:
-    title: "Updates"
+
+  - title: "Updates"
     path: "/updates/"
 
 #
@@ -55,6 +52,9 @@ collections:
     tools:
     typical_scenarios:
     updates:
+
+github:
+  path:
 
 #
 # Exclude the following files from the generated site
