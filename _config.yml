@@ -4,7 +4,7 @@ baseurl:
 #
 # Menu Structure. To include all articles add the collection.
 #
-menu:
+structure:
   - title: "Overview"
     path: "/"
 
