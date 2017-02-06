@@ -1,7 +1,0 @@
-{
-  logo : "{{ site.logo }}",
-  brandName : "{{ site.name }}",
-  baseUrl :  {% if site.baseurl == "" %} "/" {% else %} "{{ site.baseurl }}" {% endif %},
-  currentPage : "{{page.url}}",
-  structure : {% include menu_structure.json %}
-}

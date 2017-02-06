@@ -3,4 +3,4 @@ dist
 npm-debug.log
 *.iml
 .idea/
-docs/.sass-cache
+dist/.sass-cache

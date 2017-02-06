@@ -15,25 +15,26 @@
   "scripts": {
     "clean": "rimraf dist/*",
 
-    "copy:content": "cpx \"./content/**/*\" docs",
-    "copy:media": "cpx \"./media/**/*\" docs/media",
-    "copy:presidium": "cpx \".build/presidium-core/**/*\" docs",
-    "copy:config": "cpx \"./_config.yml\" ./docs",
+    "copy:content": "cpx \"./content/**/*\" dist",
+    "copy:media": "cpx \"./media/**/*\" dist/media",
+    "copy:presidium": "cpx \".build/presidium-core/**/*\" dist",
+    "copy:config": "cpx \"./_config.yml\" ./dist",
     "build": "npm run copy:presidium && npm run copy:content && npm run copy:media && npm run copy:config",
 
-    "watch:content": "cpx --watch \"./content/**/*\" docs",
-    "watch:media": "cpx --watch \"./media/**/*\" docs/media",
-    "watch:presidium": "cpx --watch \".build/presidium-core/**/*\" docs",
-    "watch:config": "cpx --watch \"./_config.yml\" ./docs",
-    "serve": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config & cd ./docs && jekyll serve & wait",
+    "watch:content": "cpx --watch \"./content/**/*\" dist",
+    "watch:media": "cpx --watch \"./media/**/*\" dist/media",
+    "watch:presidium": "cpx --watch \".build/presidium-core/**/*\" dist",
+    "watch:config": "cpx --watch \"./_config.yml\" ./dist",
+    "serve": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config & cd ./dist && jekyll serve & wait",
 
-    "gh-pages": "npm run clean && npm run build"
+    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory dist/"
   },
 
   "license": "TBD",
   "devDependencies": {
     "cpx": "^1.5.0",
-    "rimraf": "^2.5.4"
+    "rimraf": "^2.5.4",
+    "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
   }
