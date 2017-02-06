@@ -1,7 +1,7 @@
 {
   "name": "presidium",
   "version": "0.0.1",
-  "description": "Technical documentation powered by Presidium.",
+  "description": "Jekyll based technical documentation template.",
   "authors": [
     {
       "name": "Paco Mendes",
@@ -14,14 +14,22 @@
   ],
   "scripts": {
     "clean": "rimraf dist/*",
-    "prebuild": "npm run clean -s",
-    "build": "npm run build:presidium & npm run build:content & npm run build:media & npm run build:config & wait",
-    "build:content": "cpx --watch \"./content/**/*\" dist",
-    "build:media": "cpx --watch \"./media/**/*\" dist/media",
-    "build:presidium": "cpx --watch \".build/presidium-core/**/*\" dist",
-    "build:config": "cpx --watch \"./_config.yml\" ./dist",
-    "serve": "cd ./dist && jekyll serve"
+
+    "copy:content": "cpx \"./content/**/*\" docs",
+    "copy:media": "cpx \"./media/**/*\" docs/media",
+    "copy:presidium": "cpx \".build/presidium-core/**/*\" docs",
+    "copy:config": "cpx \"./_config.yml\" ./docs",
+    "build": "npm run copy:presidium && npm run copy:content && npm run copy:media && npm run copy:config",
+
+    "watch:content": "cpx --watch \"./content/**/*\" docs",
+    "watch:media": "cpx --watch \"./media/**/*\" docs/media",
+    "watch:presidium": "cpx --watch \".build/presidium-core/**/*\" docs",
+    "watch:config": "cpx --watch \"./_config.yml\" ./docs",
+    "serve": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config & cd ./docs && jekyll serve & wait",
+
+    "gh-pages": "npm run clean && npm run build"
   },
+
   "license": "TBD",
   "devDependencies": {
     "cpx": "^1.5.0",

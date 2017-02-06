@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ site.baseurl | append: '/media/images/favicon.ico' | replace: '//','/'}}" type="image/X-icon">
+    <title>{{ site.name }}</title>
+
+    <link rel="stylesheet" href="{{ site.baseurl | append: '/media/css/presidium.css' | replace: '//','/'}}" type="text/css" media="screen"/>
+
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div id="nav-container" class="col-sm-3 col-lg-2"></div>
+        <div class="content col-sm-9 col-lg-8">
+            {% include content.html %}
+            {% include footer.html %}
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+</div>
+
+
+<!-- Components -->
+<script src="{{ site.baseurl | append: '/media/js/presidium.js' | replace: '//','/'}}"></script>
+<script>
+    window.presidium.menu.load({% include menu.json %}, 'nav-container');
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+[
+  {% for section in site.structure %}
+
+  {% assign groups = site[section.collection] | group_by: "category" %}
+  {% assign ungrouped_articles = site[section.collection] %}
+
+  {% if groups.size == 1 and groups[0].name.size == 0 %}
+  {
+    "title" : "{{ section.title }}",
+    "path" : "{{ baseurl }}{{section.path}}",
+    "articles" : [
+      {% for article in ungrouped_articles %}
+      {
+        "title" : "{{ article.title }}",
+        "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}"
+      }{% if article != ungrouped_articles.last%},{% endif %}
+      {% endfor %}
+    ]
+  }{% if section != site.menu.last%},{% endif %}
+
+  {% else %}
+  {% assign section_name = section.title | slugify %}
+  {% assign page_name = page.title | slugify %}
+  {
+    "title" : "{{ section.title }}",
+    "path" : "{{ baseurl }}{{ section.path }}",
+    "groups" : [
+      {% for group in groups %}
+      {% assign articles = site[section.collection] | where: "category", group.name %}
+      {% if group.name.size > 0 %}
+      {
+        "title" : "{{ group.name }}",
+        "path"  : "#",
+        "articles" : [
+          {% for article in articles %}
+          {
+            "title" : "{{ article.title }}",
+            "path" : "{{ baseurl }}{{ section.path }}#{{ article.title | slugify}}"
+          }{% if article != articles.last%},{% endif %}
+          {% endfor %}
+        ]
+      }{% if group != groups.last%},{% endif %}
+      {% endif %}
+      {% endfor %}
+    ]
+  }{% if section != site.menu.last%},{% endif %}
+  {% endif %}
+  {% endfor %}
+]

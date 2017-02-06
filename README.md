@@ -1,15 +1,14 @@
 # Presidium
 
-OUT OF DATE... requires updating
+Presidium is a technical documentation template based on Jekyll
 
-A reference documentation site using Presidium.
-
-## Installation Requirements
+## Prerequisites
 
 - OS: Mac OSX
-- [Homebrew](http://brew.sh/)
+    - [Homebrew](http://brew.sh/)
+    - [npm](http://www.npmjs.com)
  
-### Install latest npm
+### Install npm
 
 ```sh
 $ brew install node
@@ -27,9 +26,46 @@ On OS X El Capitan, Yosemite, Mavericks, and macOS Sierra, Ruby 2.0 is included.
 $ gem install jekyll
 ```
 
-## Build & Run
+## Initialize
 
 ```sh
 $ npm install
-$ npm run build
+```
+
+## Run
+
+Run a local jekyll server and watches for changes http://localhost:4000/
+```sh
+$ npm run serve
+```
+
+## Publish
+To publish to gh-pages using the docs directory:
+```sh
+$ npm run gh-pages
+```
+
+## Directory Structure
+
+```
+presidium/
+
+    content/
+        [section folders]/ : Content folders for sections
+
+    media/ : 
+        css/ : Sass styling overrides
+        images/ : Image resources
+        [other]/ : Static files
+    
+    dist/ : TODO review: Distribution directory with packaged Jekyll site
+    docs/ : TODO review: gh-pages
+    
+    .build/ : Presidium dependencies
+        presidium-core/ : submodule dependency to presidium core jekyll template
+        presidium-js/ : submodule dependency to presidium javascript components
+    
+    _config.yml : Jekyll configuration
+    
+    package.json : npm build, package and serve scripts        
 ```

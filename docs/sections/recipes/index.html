@@ -1,0 +1,26 @@
+---
+title: "Recipes" 
+author: "presidium"
+permalink: /recipes/
+---
+
+<h1 class="primary">{{ page.title | upcase }}</h1>
+
+{% for recipe in site.recipes %}
+    <h1 id="{{ recipe.title | slugify }}" class="secondary">{{ recipe.title }}</h1>
+    <article>
+        <div class="article-meta">
+            {% if practice.author %}
+                <a href="{{ page.github-url }}{{ recipe.author }}" class="post-author">
+                <img src="{{ page.github-url }}{{ recipe.author }}.png" class="avatar" alt="{{ recipe.author }} avatar" width="24" height="24">
+                {{ recipe.author }}</a>
+            {% endif %}
+            <span class="date">{{recipe.publication-date}}</span>
+        </div>
+        <div class="article-content">
+            {{ recipe.content }}
+        </div>
+    </article>
+{% else %}
+    {% include empty-article.html %}
+{% endfor %}
