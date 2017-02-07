@@ -24,7 +24,6 @@ structure:
 
   - title: "Prerequisites"
     path: "/prerequisites/"
-    collection: prerequisites
 
   - title: "Key Concepts"
     path: "/key-concepts/"

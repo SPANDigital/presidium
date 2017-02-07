@@ -84,9 +84,13 @@ To change the theme or to provide your own styling you can provide overrides usi
 
 ## Publish to Github Pages
 
-To publish to Github pages, you must configure your repository to use a gh-pages branch. Further details may be found on [Github](https://help.github.com/articles/about-github-pages-and-jekyll/)
+To publish to Github pages, you must configure your repository to use a gh-pages branch. 
 
 Once you are ready to publish your site, run:
 ```sh
 $ npm run gh-pages
 ```
+
+This pushes your site and to a gh-pages branch on your repo.
+
+Further details may be found on [Github](https://help.github.com/articles/about-github-pages-and-jekyll/)
