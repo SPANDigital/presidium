@@ -1,6 +1,0 @@
-[submodule ".build/presidium-core"]
-	path = .build/presidium-core
-	url = https://github.com/SPANDigital/presidium-core.git
-[submodule ".build/presidium-js"]
-	path = .build/presidium-js
-	url = https://github.com/SPANDigital/presidium-js.git

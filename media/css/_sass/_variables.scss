@@ -1,5 +1,12 @@
-// Variable Overrides
-$brand-primary: #e49134 !default;
+// Override any bootstrap or bootswatch variables as you need:
+//$brand-primary: #e49134 !default;
 
-// Base Theme
+// Available Bootswatch Themes
 @import 'themes/cosmo';
+//@import 'themes/darkly';
+//@import 'themes/simplex';
+//@import 'themes/spacelab';
+//@import 'themes/united';
+
+
+

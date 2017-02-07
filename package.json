@@ -2,6 +2,11 @@
   "name": "presidium",
   "version": "0.0.1",
   "description": "Jekyll based technical documentation template.",
+  "config": {
+    "dist" : "dist",
+    "core" : "node_modules/presidium-core",
+    "cooldown" : "2"
+  },
   "authors": [
     {
       "name": "Paco Mendes",
@@ -13,29 +18,36 @@
     }
   ],
   "scripts": {
-    "clean": "rimraf dist/*",
 
-    "copy:content": "cpx \"./content/**/*\" dist",
-    "copy:media": "cpx \"./media/**/*\" dist/media",
-    "copy:presidium": "cpx \".build/presidium-core/**/*\" dist",
-    "copy:config": "cpx \"./_config.yml\" ./dist",
-    "build": "npm run copy:presidium && npm run copy:content && npm run copy:media && npm run copy:config",
+    "install": "bundle install --gemfile=.bundle/Gemfile",
 
-    "watch:content": "cpx --watch \"./content/**/*\" dist",
-    "watch:media": "cpx --watch \"./media/**/*\" dist/media",
-    "watch:presidium": "cpx --watch \".build/presidium-core/**/*\" dist",
-    "watch:config": "cpx --watch \"./_config.yml\" ./dist",
-    "serve": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config & cd ./dist && jekyll serve & wait",
+    "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
+    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist",
+    "copy:content": "cpx \"./content/**/*\" $npm_package_config_dist",
+    "copy:media": "cpx \"./media/**/*\" $npm_package_config_dist/media",
+    "copy:config": "cpx \"./_config.yml\" ./$npm_package_config_dist",
+    "copy:clean" : "rm -f $npm_package_config_dist/{package.json,LICENSE,NOTICE,README.md}",
+    "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
+    "build": "npm run copy && npm run copy:clean && bundle exec jekyll build",
+
+    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist",
+    "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist",
+    "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist/media",
+    "watch:config": "cpx --watch \"./_config.yml\" ./$npm_package_config_dist",
+    "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
+
+    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && cd ./$npm_package_config_dist && jekyll serve",
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory dist/"
   },
 
-  "license": "TBD",
+  "license": "MIT",
   "devDependencies": {
     "cpx": "^1.5.0",
     "rimraf": "^2.5.4",
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
+    "presidium-core" : "^0.0.1"
   }
 }
