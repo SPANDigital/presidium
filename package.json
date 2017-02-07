@@ -38,6 +38,7 @@
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
 
     "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && cd ./$npm_package_config_dist && bundle exec jekyll serve --incremental",
+
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist"
   },
 
