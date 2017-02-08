@@ -17,10 +17,10 @@ REPLACE WITH a summary paragraph of the recommended practice.
     """
 ```
 
-# Discussion 
+## Discussion 
 
 REPLACE WITH a discussion of the recommended practice. Add subheadings, code snippets and tables as required.
 
-# See Also
+## See Also
 
 * [REPLACE WITH a link description](http://www.google.com) 

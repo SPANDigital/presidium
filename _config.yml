@@ -6,7 +6,7 @@
 # - footer: Footer copy
 # - logo: Menu bar logo
 #
-name: Presidium
+name: ADSS 
 baseurl:
 footer: SPAN Digital
 logo: media/images/logo.png
@@ -27,6 +27,7 @@ structure:
 
   - title: "Key Concepts"
     path: "/key-concepts/"
+    collection: key_concepts
 
   - title: "Getting Started"
     path: "/getting-started/"
@@ -35,6 +36,10 @@ structure:
   - title: "References"
     path: "/references/"
     collection: references
+
+  - title: "Best Practices"
+    path: "/best-practices/"
+    collection: best_practices   
 
   - title: "Recipes"
     path: "/recipes/"
@@ -59,6 +64,8 @@ collections:
     best_practices:
     getting_started:
     key_concepts:
+        output: true
+        permalink: /key-concepts/:path/
     overview:
     prerequisites:
     recipes:
