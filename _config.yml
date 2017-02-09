@@ -22,12 +22,12 @@ structure:
   - title: "Overview"
     path: "/"
 
-  - title: "Prerequisites"
-    path: "/prerequisites/"
-
   - title: "Key Concepts"
     path: "/key-concepts/"
     collection: key_concepts
+
+  - title: "Prerequisites"
+    path: "/prerequisites/"
 
   - title: "Getting Started"
     path: "/getting-started/"
@@ -64,8 +64,6 @@ collections:
     best_practices:
     getting_started:
     key_concepts:
-        output: true
-        permalink: /key-concepts/:path/
     overview:
     prerequisites:
     recipes:

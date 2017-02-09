@@ -1,0 +1,6 @@
+---
+title: "Systems Designers and Managers"
+id: "system-designers-and-managers" 
+author: "VirtualTraveler"
+---
+ADSS allows system designers and managers to correct and enhance the automatically collected data allowing them to improve the fidleity of model and guide the system in how t classify the data it collects. The data curation process is ongoing but keeps the workload to the minimum required to maintain data quality. 
