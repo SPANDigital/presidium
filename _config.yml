@@ -28,14 +28,19 @@ structure:
 
   - title: "Prerequisites"
     path: "/prerequisites/"
+    collection: prerequisites
 
   - title: "Getting Started"
     path: "/getting-started/"
     collection: getting_started
 
-  - title: "References"
-    path: "/references/"
-    collection: references
+  - title: "Reference"
+    path: "/reference/"
+    collection: reference
+
+  - title: "Scenarios"
+    path: "/scenarios/"
+    collection: scenarios
 
   - title: "Best Practices"
     path: "/best-practices/"
@@ -67,12 +72,12 @@ collections:
     overview:
     prerequisites:
     recipes:
-    references:
+    reference:
         output: true
-        permalink: /references/:path/
+        permalink: /reference/:path/
     testing:
     tools:
-    typical_scenarios:
+    scenarios:
     updates:
 
 #

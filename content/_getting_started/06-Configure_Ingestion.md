@@ -1,7 +1,7 @@
 ---
-title: "Article 1"
-id: "getting-started-1" 
-author: "author"
+title: "Configure Ingestion"
+id: "configure-ingestion" 
+author: "VirtualTraveler"
 ---
 
 # Article 1
