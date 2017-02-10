@@ -1,5 +1,6 @@
 ---
 title: "Logical View"
+category: "Model Views"
 id: "logical-view" 
 author: "VirtualTraveler"
 ---

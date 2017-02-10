@@ -1,5 +1,6 @@
 ---
 title: "Physical View"
+category: "Model Views"
 id: "physical-view" 
 author: "VirtualTraveler"
 ---

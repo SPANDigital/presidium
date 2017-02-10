@@ -1,4 +1,5 @@
-title: "Organizsations"
+title: "Organizations"
+category: "Model Structure"
 id: "organizations" 
 author: "VirtualTraveler"
 ---

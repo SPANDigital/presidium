@@ -1,5 +1,6 @@
 ---
 title: "Directory Services"
+category: "Data Sources"
 id: "directory-services" 
 author: "VirtualTraveler"
 ---

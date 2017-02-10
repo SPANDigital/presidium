@@ -1,4 +1,5 @@
 title: "People"
+category: "Model Structure"
 id: "people" 
 author: "VirtualTraveler"
 ---

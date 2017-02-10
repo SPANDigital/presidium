@@ -1,6 +1,6 @@
 {
   "name": "presidium",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "description": "Jekyll based technical documentation template.",
   "config": {
     "dist" : "dist",
@@ -49,6 +49,6 @@
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
-    "presidium-core" : "^0.0.1"
+    "presidium-core" : "^0.0.2"
   }
 }

@@ -1,5 +1,6 @@
 ---
 title: "Process View"
+category: "Model Views"
 id: "process-view" 
 author: "VirtualTraveler"
 ---

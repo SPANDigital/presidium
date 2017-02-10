@@ -1,4 +1,5 @@
 title: "Functional Areas"
+category: "Model Structure"
 id: "functional-areas" 
 author: "VirtualTraveler"
 ---

@@ -1,5 +1,6 @@
 ---
 title: "Social View"
+category: "Model Views"
 id: "social-view" 
 author: "VirtualTraveler"
 ---

@@ -1,5 +1,6 @@
 ---
 title: "Configuration Management Systems"
+category: "Data Sources"
 id: "configuration-management-systems" 
 author: "VirtualTraveler"
 ---
