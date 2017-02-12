@@ -3,7 +3,7 @@ title: Model Implementation Technologies
 id: "model-implementation-technologies"
 author: "Virtual Traveler"
 ---
-It is common to want to track all the containers that use a particular implementation technology. For example all the Data Containers implemented using Redis, or all the Message Containers using Kafka, or all the Functional Containers implemented in Java. This is helpful when doing security audits, license reviews, or impact analysis for technology upgrades. 
+It is common to want to track all the Containers that use a particular implementation technology. For example all the Data Containers implemented using Redis, or all the Message Containers using Kafka, or all the Functional Containers implemented in Java. This is helpful when doing security audits, license reviews, or impact analysis for technology upgrades. 
 
 Modeling implementation Technologies can be achieved by creating a containment relationship between a container and the system it is implemented on 
 

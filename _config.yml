@@ -50,6 +50,10 @@ structure:
     path: "/recipes/"
     collection: recipes
 
+  - title: "Glossay"
+    path: "/glossary/"
+    collection: glossary
+
   - title: "Tools"
     path: "/tools/"
     collection: tools
@@ -75,6 +79,7 @@ collections:
     reference:
         output: true
         permalink: /reference/:path/
+    glossary:
     testing:
     tools:
     scenarios:

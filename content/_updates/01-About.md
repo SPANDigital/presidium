@@ -8,7 +8,7 @@ publication-date: "2017-02-09"
 
 Version **0.3.1-alpha**
 
-Email: info@spandigital.com
+Email: adss-support@spandigital.com
 
 Copyright 2017 SPAN Digital
 333 Bryant St, Suite 110
