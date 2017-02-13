@@ -1,7 +1,7 @@
 ---
 title: "DSS Introduction"
 category: "DSS"
-id: "DSS
+id: "DSS-introduction"
 author: "VirtualTraveler"
 ---
 The visual display of diagrams produced by ADSS can be controlled and modified by diagram style sheets. Similar to CSS, A DSS rule-set consists of one or more selectors and a declaration block.

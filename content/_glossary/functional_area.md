@@ -1,6 +1,6 @@
-title: "Functional Areas"
-category: "Model Structure"
-id: "functional-areas" 
+---
+title: "Functional Area"
+id: "functional-area" 
 author: "VirtualTraveler"
 ---
 Functional Areas are used to losely group Objects together on diagrams. They can be arranged hierachically, used in search queries, and can be owned by a Person. Functional Areas are specific to the Model they are used by. 

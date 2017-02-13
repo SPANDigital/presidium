@@ -3,7 +3,6 @@ title: "Prerequisites"
 id: "prerequisites" 
 author: "VirtualTraveler"
 ---
-
 ## Technical Competencies
 
 Before starting to use ADSS, you are advised to have the following technologies and skills because they are either used by, or commonly used with, the product.

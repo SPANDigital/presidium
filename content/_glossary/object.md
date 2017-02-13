@@ -1,6 +1,5 @@
-title: "Objects"
-category: "Model"
-id: "objects" 
+title: "Object"
+id: "object" 
 author: "VirtualTraveler"
 ---
 Objects are the parts of the modeled system. There are four types of Object.

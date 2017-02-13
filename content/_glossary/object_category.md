@@ -1,6 +1,6 @@
-title: "Objects Categories"
-category: "Model"
-id: "objects" 
+---
+title: "Object Category"
+id: "object-category" 
 author: "VirtualTraveler"
 ---
 There are four types of object (System, Container, Component, Class) and three categories (Functional, Data, Messaging). These can be combined in the following ways.

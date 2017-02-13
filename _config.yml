@@ -34,10 +34,6 @@ structure:
     path: "/getting-started/"
     collection: getting_started
 
-  - title: "Reference"
-    path: "/reference/"
-    collection: reference
-
   - title: "Scenarios"
     path: "/scenarios/"
     collection: scenarios
@@ -46,11 +42,15 @@ structure:
     path: "/best-practices/"
     collection: best_practices   
 
+  - title: "Reference"
+    path: "/reference/"
+    collection: reference
+
   - title: "Recipes"
     path: "/recipes/"
     collection: recipes
 
-  - title: "Glossay"
+  - title: "Glossary"
     path: "/glossary/"
     collection: glossary
 

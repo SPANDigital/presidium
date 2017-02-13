@@ -1,6 +1,6 @@
 ---
 title: "ADSS About"
-author: "VirtualTraveler
+author: "VirtualTraveler"
 publication-date: "2017-02-09"
 ---
 # ADSS
