@@ -6,7 +6,7 @@ publication-date: "2017-02-09"
 # ADSS
 ## Architecture Decision Support System 
 
-Version **0.3.1-alpha**
+Version **0.3.0-alpha**
 
 Email: adss-support@spandigital.com
 
