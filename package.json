@@ -1,25 +1,16 @@
 {
-  "name": "presidium",
+  "name": "adss-docs",
   "version": "0.0.1",
-  "description": "Jekyll based technical documentation template.",
+  "description": "Architecture decision support system documentation.",
   "config": {
     "dist" : "dist",
     "core" : "node_modules/presidium-core",
     "cooldown" : "2"
   },
-  "authors": [
-    {
-      "name": "Paco Mendes",
-      "email": "paco.mendes@spandigital.com"
-    },
-    {
-      "name": "Dominic Follett-Smith",
-      "email": "dominic@spandigital.com"
-    }
-  ],
+  "private": true,
   "scripts": {
 
-    "install": "mkdir -p $npm_package_config_dist && bundle install --gemfile=.bundle/Gemfile",
+    "install": "mkdir -p $npm_package_config_dist && bundle install --path=.bundle --deployment",
 
     "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
     "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist",
@@ -29,7 +20,7 @@
     "copy:clean" : "rm -f $npm_package_config_dist/{package.json,LICENSE,NOTICE,README.md}",
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
-    "build": "npm run copy && npm run copy:clean && cd ./$npm_package_config_dist && bundle exec jekyll build",
+    "build": "npm run copy && npm run copy:clean && bundle exec jekyll build -s $npm_package_config_dist -d $npm_package_config_dist/_site",
 
     "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist",
     "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist",
@@ -37,12 +28,11 @@
     "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist",
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
 
-    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && cd ./$npm_package_config_dist && bundle exec jekyll serve --incremental",
+    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && bundle exec jekyll serve --incremental -s $npm_package_config_dist -d $npm_package_config_dist/_site",
 
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist"
   },
 
-  "license": "MIT",
   "devDependencies": {
     "cpx": "^1.5.0",
     "rimraf": "^2.5.4",
