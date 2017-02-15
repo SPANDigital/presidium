@@ -3,7 +3,6 @@ title: "Architecture Decision Support System"
 id: "overview" 
 author: "VirtualTraveler"
 ---
-# Architecture Decision Support System (ADSS)
 ADSS is an Architecture Decision Support System, its primary purpose is to provide Developers, Technical Leads, Product Owners, and Executive Leadership with up-to-date information and historic trends for the software systems they control. ADSS automatically visualizes and quantifies many aspects of software systems that are usually obscure and difficult to assess, in doing so, it supports stratigic and technical decision making at all levels in the organization.
 
 ## Models

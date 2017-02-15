@@ -3,11 +3,13 @@
 #
 # - name: Site name
 # _ baseurl: Optional URL to use where documentation is hosted in a subdirectory `domain.com/{baseurl}`
+# - images: Base URL to image root
 # - footer: Footer copy
 # - logo: Menu bar logo
 #
-name: ADSS 
-baseurl:
+name: ADSS
+baseurl: /adss-docs
+images: /adss-docs/media/images
 footer: SPAN Digital
 logo: media/images/logo.png
 
@@ -24,7 +26,7 @@ structure:
 
   - title: "Key Concepts"
     path: "/key-concepts/"
-    collection: key_concepts
+    collection: key-concepts
 
   - title: "Prerequisites"
     path: "/prerequisites/"
@@ -32,7 +34,7 @@ structure:
 
   - title: "Getting Started"
     path: "/getting-started/"
-    collection: getting_started
+    collection: getting-started
 
   - title: "Scenarios"
     path: "/scenarios/"
@@ -40,7 +42,7 @@ structure:
 
   - title: "Best Practices"
     path: "/best-practices/"
-    collection: best_practices   
+    collection: best-practices
 
   - title: "Reference"
     path: "/reference/"
@@ -70,15 +72,15 @@ structure:
 # Jekyll collections definitions that use layout templates from presidium-core
 #
 collections:
-    best_practices:
-    getting_started:
-    key_concepts:
+    best-practices:
+    getting-started:
+    key-concepts:
+      output: true
+      permalink: /key-concepts/:categories/:name
     overview:
     prerequisites:
     recipes:
     reference:
-        output: true
-        permalink: /reference/:path/
     glossary:
     testing:
     tools:
@@ -103,10 +105,15 @@ defaults:
         scope:
             path: ""
         values:
-            layout: "container"
+            layout: "content"
 
 #
 # Sass settings
 #
 sass:
     sass_dir: media/css/_sass
+
+#
+# Github Metadata Settings
+#
+repository:

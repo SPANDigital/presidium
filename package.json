@@ -10,7 +10,10 @@
   "private": true,
   "scripts": {
 
-    "install": "mkdir -p $npm_package_config_dist && bundle install --path=.bundle --deployment",
+    "check:requirements" : "(cd $npm_package_config_core/bin && chmod +x requirements.sh && ./requirements.sh)",
+    "install:directories" : "mkdir -p $npm_package_config_dist",
+    "install:gems" : "(cd .jekyll && bundle install --path=.bundle --deployment)",
+    "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
 
     "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
     "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist",
@@ -20,15 +23,16 @@
     "copy:clean" : "rm -f $npm_package_config_dist/{package.json,LICENSE,NOTICE,README.md}",
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
-    "build": "npm run copy && npm run copy:clean && bundle exec jekyll build -s $npm_package_config_dist -d $npm_package_config_dist/_site",
+    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../$npm_package_config_dist -d ../$npm_package_config_dist/_site)",
+    "build": "npm run copy && npm run copy:clean && npm run build:jekyll",
 
     "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist",
     "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist",
     "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist/media",
     "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist",
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
-
-    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && bundle exec jekyll serve --incremental -s $npm_package_config_dist -d $npm_package_config_dist/_site",
+    "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../$npm_package_config_dist -d ../$npm_package_config_dist/_site)",
+    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist"
   },
@@ -39,6 +43,6 @@
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
-    "presidium-core" : "^0.0.2"
+    "presidium-core" : "^0.0.9"
   }
 }

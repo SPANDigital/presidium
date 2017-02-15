@@ -1,7 +1,6 @@
 ---
 title: "Data Sources"
 category: "Data Sources"
-id: "key-concepts" 
 author: "VirtualTraveler"
 ---
 Models are composed from data obtained from multiple sources. Data is automatically ingested fro multiple sources and then categorized and loaded to the model.  
