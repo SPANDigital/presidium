@@ -82,6 +82,8 @@ collections:
     recipes:
     reference:
     glossary:
+        output: true
+        permalink: /glossary/:path/
     testing:
     tools:
     scenarios:
