@@ -1,6 +1,5 @@
 title: "Combining Selectors"
 category: "DSS"
-id: "Combining-Selectors"
 author: "VirtualTraveler"
 ---
 Selectors can be combined in two ways

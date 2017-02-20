@@ -1,6 +1,6 @@
 ---
 title: "Diagram Screen"
-id: "diagram-screen" 
+category: "Application UI"
 author: "VirtualTraveler"
 ---
 The diagram screen comprises four areas 

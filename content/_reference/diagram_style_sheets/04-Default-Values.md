@@ -1,7 +1,6 @@
 ---
 title: "Default Values"
 category: "DSS"
-id: "default-values"
 author: "VirtualTraveler"
 ---
 The following table shows which attributes are available for which elements 

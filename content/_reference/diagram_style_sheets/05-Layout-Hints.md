@@ -1,8 +1,7 @@
 ---
-title: "REPLACE WITH Reference Title"
-category: "REPLACE WITH api / classes / models / views / controllers, etc."
-id: "reference-title"
-author: "REPLACE WITH github-username"
+title: "Layout Hints"
+category: "DSS"
+author: "VirtualTraveler"
 ---
 The layout of the diagram can be influenced by providing hints to the layout optimizer. These hints may be ignored if the optimizer decides they are too difficult to follow.
 

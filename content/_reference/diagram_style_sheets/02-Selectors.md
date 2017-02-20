@@ -1,7 +1,6 @@
 ---
 title: "Selectors"
 category: "DSS"
-id: "Selectors"
 author: "VirtualTraveler"
 ---
 In DSS, selectors are patterns used to select the diagram element(s) that you want to style. 

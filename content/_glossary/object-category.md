@@ -1,9 +1,9 @@
 ---
 title: "Object Category"
-id: "object-category" 
-author: "VirtualTraveler"
+author: "virtualtraveler"
+status: "draft"
 ---
-There are four types of object (System, Container, Component, Class) and three categories (Functional, Data, Messaging). These can be combined in the following ways.
+The major role an object performs within the modeled system. There are four types of object (System, Container, Component, Class) and three categories (Functional, Data, Messaging). These can be combined in the following ways.
 
 | Object Category         | Description 
 |:------------------------|:-----------------------------------------------
@@ -15,9 +15,11 @@ There are four types of object (System, Container, Component, Class) and three c
 | Data Component          | A schema or collection of tables
 | Message Component       | A message channel or topic
 | Functional Class        | An object, a collection of methods and data structures
-| Data Class              | A data structure, table or list
-flight)
+| Data Class              | A data structure, table or list flight)
 | Message Class           | A message type
 
-###See Also
-- [
+The Object Mame and Object Category, taken together, uniquely identify the object in it's model. 
+
+# See Also
+
+- []()

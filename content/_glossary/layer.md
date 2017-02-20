@@ -1,8 +1,8 @@
 ---
 title: "Layer"
-id: "layer" 
 author: "VirtualTraveler"
+status: "review"
 ---
-Layers are the logical strat of the model. They group together objects that perform a similar role within the systems. For example; Persistent Datastores, Internal Services, External Service, Cleints, Intergation Partner Services, etc.  Layers are specific to teh Model they are used by.
+The logical strata of the model, Layers group together objects that perform a similar role within the modeled systems. For example; Persistent Data-stores, Internal Services, External Service, Clients, Integration Partner Services, etc.  Layers are specific to the Model they are used by.
 
-### See Also 
+# See Also 

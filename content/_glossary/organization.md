@@ -1,6 +1,7 @@
+---
 title: "Organization"
-id: "organization" 
 author: "VirtualTraveler"
+status: "review"
 ---
 The organizational divisions, groups, and units that comprise the Enterprise. Organizations can be arranged in a reporting hierarchy and may each be managed by a [Person](/key-concepts/facts_and_dimensions/people/) and can own [Objects](/key-concept/facts_and_dimensions/object). Organizations are shared by all models in the enterprise. 
 

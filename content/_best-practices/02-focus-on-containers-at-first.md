@@ -8,7 +8,7 @@ Containers are the core of the ADSS model. They are the bridge between the logic
 
 ## Discussion 
 
-Containers are physically deployable collections of componenets. They come in three variaties 
+Containers are physically deployable collections of components. They come in three variaties 
 
 - **Functional** A logical service or application whose primary role is to implement application or business logic. This may be a client application or a backend services.    
 - **Messaging** A logical messaging channel, topic, or queue. A messaging container carries messages, events or work items from one part of the system to another. 

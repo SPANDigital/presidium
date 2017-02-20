@@ -10,7 +10,7 @@ Modeling implementation Technologies can be achieved by creating a containment r
 ## Discussion 
 
 1. Create a System object in ADSS, name it after the implementation technology you wish to track (Eg. Oracle, Redis, Apache Solr, Kafka, etc.)  Do not assign a layer to the system - this will prevent it from being drawn on the diagram.  
-2. [Edit the Container](/references/screens/object-management/) whose implementation technology you want to track. The system must be contained by the container not the other way around. 
+2. [Edit the Container](/references/screens/object-management/) whose implementation technology you want to track. Create a contains relationship from the Container to the Sytem it is implemented on. The system must be contained by the container not the other way around. 
 
 ## See Also
 

@@ -1,15 +1,14 @@
 ---
 title: "Context Menu"
-id: "context-menu" 
 author: "VirtualTraveler"
 ---
 The top context menu can take three forms depending on the context 
 
-### Enterprise Administration
+# Enterprise Administration
 When in enterprise context the top menu displays the name of the Enterprise 
 
-### Model Administration
+# Model Administration
 When in model administration mode the top menu displays the name of the Model 
 
-### Model View
+# Model View
 When in model view mode the top menu displays teh name of the model and a date 
