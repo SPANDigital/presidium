@@ -19,6 +19,6 @@ A two-part description of the stage an object has reached in its life-cycle. The
 The final status of deleted is used for objects that were created by mistake.
 
 # See Also
-- [Establish Enterprise Standards](/best-practices/establish-enterprise-standards/)
-- [Focus on Containers First](/best-practices/focus-on-containers-first/)
-- [Using Replaces Relationships](/best-practices/using-replaces-relationships)
+- [Establish Enterprise Standards]({{site.baseurl}}//best-practices/establish-enterprise-standards/)
+- [Focus on Containers First]({{site.baseurl}}//best-practices/focus-on-containers-first/)
+- [Using Replaces Relationships]({{site.baseurl}}//best-practices/using-replaces-relationships)

@@ -13,4 +13,4 @@ A type of relationship that can exist between objects in a model.
 
 # See Also 
 
-[Using Replaces Relationships](/best-practices/using-replaces-relationships)
+[Using Replaces Relationships]({{site.baseurl}}//best-practices/using-replaces-relationships)
