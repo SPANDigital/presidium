@@ -24,7 +24,7 @@
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
     "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../$npm_package_config_dist -d ../$npm_package_config_dist/_site)",
-    "build": "npm run copy && npm run copy:clean && npm run build:jekyll",
+    "build": "npm run clean && sleep 10 && npm run copy && npm run copy:clean && npm run build:jekyll",
 
     "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist",
     "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist",
@@ -32,7 +32,7 @@
     "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist",
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
     "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../$npm_package_config_dist -d ../$npm_package_config_dist/_site)",
-    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
+    "start": "npm run clean && npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist"
   },
