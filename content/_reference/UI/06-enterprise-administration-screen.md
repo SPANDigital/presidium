@@ -1,4 +1,5 @@
----Enterprise Administration Screen"
+---
+title: "Enterprise Administration Screen"
 category: "UI"
 author: "VirtualTraveler"
 status: "draft"

@@ -9,7 +9,8 @@ The diagram display screen enables users to define a selection of objects from a
 
 The diagram display screen comprises four areas. 
 
-- [Context Menu]({{site.baseurl}}/reference/ui/#top-context-menu)
-- [Select Menu]({{site.baseurl}}/reference/ui/#left-selection-menu)
-- [View Menu]({{site.baseurl}}/reference/ui/#right-view-menu) 
+- [Context Menu]({{site.baseurl}}/reference/ui/#top-context-menu) where the model can be chosen
+- [Select Menu]({{site.baseurl}}/reference/ui/#left-selection-menu) where the selection to be displayed can be created 
+- [Right View Menu]({{site.baseurl}}/reference/ui/#right-view-menu) where the selected view can be adjusted
 - [Canvas Area]({{site.baseurl}}/reference/ui/#canvas-area)
+where the diagram is created 
