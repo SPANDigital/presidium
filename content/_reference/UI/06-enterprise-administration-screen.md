@@ -1,8 +1,9 @@
----
-title: "Diagram Screen"
-category: "Application UI"
+---Enterprise Administration Screen"
+category: "UI"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 The diagram screen comprises four areas 
 
 - The Context Menu 

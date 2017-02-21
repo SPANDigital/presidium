@@ -2,7 +2,9 @@
 title: "Default Values"
 category: "DSS"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 The following table shows which attributes are available for which elements 
 
 | PropertyName | Description | Values |

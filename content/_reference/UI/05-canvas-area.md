@@ -1,6 +1,8 @@
 ---
 title: "Canvas Area"
-category: "Application UI"
+category: "UI"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 The diagram is drawn on the cavnvas area.

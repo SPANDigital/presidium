@@ -2,7 +2,9 @@
 title: "Layout Hints"
 category: "DSS"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 The layout of the diagram can be influenced by providing hints to the layout optimizer. These hints may be ignored if the optimizer decides they are too difficult to follow.
 
 | HintName              | Description                                    |

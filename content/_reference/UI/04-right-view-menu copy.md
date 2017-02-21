@@ -1,8 +1,10 @@
 ---
-title: "Context Menu"
-category: "Application UI"
+title: "Right View Menu"
+category: "UI"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 The top context menu can take three forms depending on the context 
 
 # Enterprise Administration

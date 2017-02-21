@@ -1,7 +1,10 @@
+---
 title: "Combining Selectors"
 category: "DSS"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 Selectors can be combined in two ways
 
 ```Layer=Services + Category=FunctionalContainer```

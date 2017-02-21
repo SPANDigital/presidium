@@ -81,7 +81,13 @@ collections:
     prerequisites:
     recipes:
     reference:
+      output: true
+      layout: content
+      permalink: /reference/:categories/:name
     glossary:
+      output: true
+      layout: content
+      permalink: /glossary/:name
     testing:
     tools:
     scenarios:

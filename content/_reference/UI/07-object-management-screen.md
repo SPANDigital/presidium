@@ -1,8 +1,10 @@
 ---
-title: "Diagram Screen"
-category: "Application UI"
+title: "Object Management Screen"
+category: "UI"
 author: "VirtualTraveler"
+status: "draft"
 ---
+
 The diagram screen comprises four areas 
 
 - The Context Menu 
