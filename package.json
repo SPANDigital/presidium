@@ -43,6 +43,6 @@
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
-    "presidium-core" : "^0.0.9"
+    "presidium-core" : "^0.0.16"
   }
 }
