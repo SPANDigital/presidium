@@ -4,8 +4,8 @@
   "description": "A Jekyll based project using Presidium technical documentation templates.",
   "config": {
     "dist" : "dist",
-    "dist-src" : "dist/src",
-    "dist-site" : "dist/site",
+    "dist_src" : "dist/src",
+    "dist_site" : "dist/site",
     "core" : "node_modules/presidium-core",
     "cooldown" : "2"
   },
