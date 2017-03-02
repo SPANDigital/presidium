@@ -1,9 +1,11 @@
 {
   "name": "presidium",
   "version": "0.0.1",
-  "description": "Jekyll based technical documentation template.",
+  "description": "A Jekyll based project using Presidium technical documentation templates.",
   "config": {
     "dist" : "dist",
+    "dist-src" : "dist/src",
+    "dist-site" : "dist/site",
     "core" : "node_modules/presidium-core",
     "cooldown" : "2"
   },
@@ -17,38 +19,46 @@
       "email": "dominic@spandigital.com"
     }
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SPANDigital/presidium"
+  },
+  "license": "Apache-2.0",
+
   "scripts": {
 
-    "install": "mkdir -p $npm_package_config_dist && bundle install --gemfile=.bundle/Gemfile",
+    "check:requirements" : "(cd $npm_package_config_core/bin && chmod +x requirements.sh && ./requirements.sh)",
+    "install:directories" : "mkdir -p $npm_package_config_dist",
+    "install:gems" : "(cd .jekyll && bundle install --path=.bundle --deployment)",
+    "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
 
     "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
-    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist",
-    "copy:content": "cpx \"./content/**/*\" $npm_package_config_dist",
-    "copy:media": "cpx \"./media/**/*\" $npm_package_config_dist/media",
-    "copy:config": "cpx \"./_config.yml\" $npm_package_config_dist",
-    "copy:clean" : "rm -f $npm_package_config_dist/{package.json,LICENSE,NOTICE,README.md}",
+    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist_src",
+    "copy:content": "cpx \"./content/**/*\" $npm_package_config_dist_src",
+    "copy:media": "cpx \"./media/**/*\" $npm_package_config_dist_src/media",
+    "copy:config": "cpx \"./_config.yml\" $npm_package_config_dist_src",
+    "copy:clean" : "rm -fR $npm_package_config_dist_src/{package.json,LICENSE,NOTICE,README.md,bin/}",
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
-    "build": "npm run copy && npm run copy:clean && cd ./$npm_package_config_dist && bundle exec jekyll build",
+    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../$npm_package_config_dist_src -d ../$npm_package_config_dist_site)",
+    "build": "npm run copy && npm run copy:clean && npm run build:jekyll",
 
-    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist",
-    "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist",
-    "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist/media",
-    "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist",
+    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist_src",
+    "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist_src",
+    "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist_src/media",
+    "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist_src",
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
+    "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../$npm_package_config_dist_src -d ../$npm_package_config_dist_site)",
+    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
-    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && cd ./$npm_package_config_dist && bundle exec jekyll serve --incremental",
-
-    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist"
+    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist_src"
   },
-
-  "license": "MIT",
   "devDependencies": {
     "cpx": "^1.5.0",
     "rimraf": "^2.5.4",
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
-    "presidium-core" : "^0.0.1"
+    "presidium-core" : "^0.0.19"
   }
 }

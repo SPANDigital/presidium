@@ -32,9 +32,9 @@ structure:
     path: "/getting-started/"
     collection: getting_started
 
-  - title: "References"
-    path: "/references/"
-    collection: references
+  - title: "Reference"
+    path: "/reference/"
+    collection: reference
 
   - title: "Recipes"
     path: "/recipes/"
@@ -62,9 +62,9 @@ collections:
     overview:
     prerequisites:
     recipes:
-    references:
+    reference:
         output: true
-        permalink: /references/:path/
+        permalink: /reference/:path/
     testing:
     tools:
     typical_scenarios:
