@@ -30,6 +30,7 @@
     "check:requirements" : "(cd $npm_package_config_core/bin && chmod +x requirements.sh && ./requirements.sh)",
     "install:directories" : "mkdir -p $npm_package_config_dist",
     "install:gems" : "(cd .jekyll && bundle install --path=.bundle --deployment)",
+    "update:gems" : "(cd .jekyll && bundle update)",
     "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
 
     "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
