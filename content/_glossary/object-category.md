@@ -19,7 +19,3 @@ The major role an object performs within the modeled system. There are four type
 | Message Class           | A message type
 
 The Object Mame and Object Category, taken together, uniquely identify the object in it's model. 
-
-# See Also
-
-- []()
