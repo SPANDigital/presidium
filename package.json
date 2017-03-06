@@ -3,9 +3,6 @@
   "version": "0.0.1",
   "description": "A Jekyll based project using Presidium technical documentation templates.",
   "config": {
-    "dist" : "dist",
-    "dist_src" : "dist/src",
-    "dist_site" : "dist/site",
     "core" : "node_modules/presidium-core",
     "cooldown" : "2"
   },
@@ -28,31 +25,31 @@
   "scripts": {
 
     "check:requirements" : "(cd $npm_package_config_core/bin && chmod +x requirements.sh && ./requirements.sh)",
-    "install:directories" : "mkdir -p $npm_package_config_dist",
+    "install:directories" : "mkdir -p dist",
     "install:gems" : "(cd .jekyll && bundle install --path=.bundle --deployment)",
     "update:gems" : "(cd .jekyll && bundle update)",
     "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
 
-    "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
-    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist_src",
-    "copy:content": "cpx \"./content/**/*\" $npm_package_config_dist_src",
-    "copy:media": "cpx \"./media/**/*\" $npm_package_config_dist_src/media",
-    "copy:config": "cpx \"./_config.yml\" $npm_package_config_dist_src",
-    "copy:clean" : "rm -fR $npm_package_config_dist_src/{package.json,LICENSE,NOTICE,README.md,bin/}",
+    "clean": "rm -rf dist && mkdir dist",
+    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" dist/src",
+    "copy:content": "cpx \"./content/**/*\" dist/src",
+    "copy:media": "cpx \"./media/**/*\" dist/src/media",
+    "copy:config": "cpx \"./_config.yml\" dist/src",
+    "copy:clean" : "rm -f dist/src/{package.json,LICENSE,NOTICE,README.md} && rm -fR dist/src/bin/",
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
-    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../$npm_package_config_dist_src -d ../$npm_package_config_dist_site)",
+    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../dist/src -d ../dist/site)",
     "build": "npm run copy && npm run copy:clean && npm run build:jekyll",
 
-    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist_src",
-    "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist_src",
-    "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist_src/media",
-    "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist_src",
+    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" dist/src",
+    "watch:content": "cpx --watch \"./content/**/*\" dist/src",
+    "watch:media": "cpx --watch \"./media/**/*\" dist/src/media",
+    "watch:config": "cpx --watch \"./_config.yml\" dist/src",
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
-    "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../$npm_package_config_dist_src -d ../$npm_package_config_dist_site)",
+    "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../dist/src -d ../dist/site)",
     "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
-    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist_src"
+    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory dist/src"
   },
   "devDependencies": {
     "cpx": "^1.5.0",
