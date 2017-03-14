@@ -1,7 +1,6 @@
 ---
 title: "People"
-category: "Model Structure"
-id: "people" 
+status: "review"
 author: "VirtualTraveler"
 ---
 

@@ -1,7 +1,7 @@
 ---
 title: "Relationship Type"
 author: "VirtualTraveler"
-status: ""
+status: "review"
 ---
 
 A type of relationship that can exist between objects in a model. 

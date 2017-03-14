@@ -1,7 +1,7 @@
 ---
 title: "Object Category"
-author: "virtualtraveler"
-status: "draft"
+author: "VirtualTraveler"
+status: "review"
 ---
 
 The major role an object performs within the modeled system. There are four types of object (System, Container, Component, Class) and three categories (Functional, Data, Messaging). These can be combined in the following ways.

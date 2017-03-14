@@ -1,7 +1,6 @@
 ---
 title: "Using Classes"
 category: "model-curation"
-id: "using-classes"
 author: "Virtual Traveler"
 ---
 ADSS supports the defintion of classes. In general it is best to avoid classes. They are implementation details tht tend to change rapidly and are best encapsulated in components. However there are a few cases when classes can be useful.

@@ -1,5 +1,6 @@
 ---
 title: "Tracking Object Status"
+category: "model-curation"
 author: "Virtual Traveler"
 status: "draft"
 ---

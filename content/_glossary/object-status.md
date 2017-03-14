@@ -1,7 +1,7 @@
 ---
 title: "Object Status"
 author: "VirtualTraveler"
-status: "draft"
+status: "review"
 ---
 
 A two-part description of the stage an object has reached in its life-cycle. There are three statuses and six life-cycle stages. 

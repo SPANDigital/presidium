@@ -1,10 +1,10 @@
 ---
 title: Focus on Containers first
-id: "focus-on-containers-first"
 author: "VirtualTraveler"
+status: "review"
 ---
 
-Containers are the core of the ADSS model. They are the bridge between the logical and physical views. Once you have completed the setup of your model, defined in the [Getting Started](/getting-started/) section, you should complete an inventory of Containers.
+Containers are the core of the ADSS model. They are the bridge between the logical and physical views. Once you have completed the setup of your model, defined in the [Getting Started]({{site.baseurl}}/getting-started/) section, you should complete an inventory of Containers.
 
 ## Discussion 
 
@@ -16,12 +16,8 @@ Containers are physically deployable collections of components. They come in thr
 
 When creating containers add as many other details as you can. 
 
-- **Layer** The layer the Container should be displayed in. **Note:** The container will not be displayed on the logical diagram if it doesn't have a layer.
+- **Layer** The layer the Container should be displayed in. **Note:** The container will **NOT** be displayed on the logical diagram if it has no layer.
 - **Owner** The person who takes responsibility for the Container
 - **Organization** The organization that takes responsibility for the Container
 - **Functional Area** The area the container belongs to 
 - **Lifecycle Stage** The Status of the Container
-
-## See Also
-
-* [REPLACE WITH a link description](http://www.google.com) 
