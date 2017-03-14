@@ -16,25 +16,26 @@
     "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
 
     "clean": "rm -rf $npm_package_config_dist && mkdir $npm_package_config_dist",
-    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist",
-    "copy:content": "cpx \"./content/**/*\" $npm_package_config_dist",
-    "copy:media": "cpx \"./media/**/*\" $npm_package_config_dist/media",
-    "copy:config": "cpx \"./_config.yml\" $npm_package_config_dist",
-    "copy:clean" : "rm -f $npm_package_config_dist/{package.json,LICENSE,NOTICE,README.md}",
+    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" $npm_package_config_dist_src",
+    "copy:content": "cpx \"./content/**/*\" $npm_package_config_dist_src",
+    "copy:media": "cpx \"./media/**/*\" $npm_package_config_dist_src/media",
+    "copy:config": "cpx \"./_config.yml\" $npm_package_config_dist_src",
+    "copy:clean" : "rm -fR $npm_package_config_dist_src/{package.json,LICENSE,NOTICE,README.md,bin/}",
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
-    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../$npm_package_config_dist -d ../$npm_package_config_dist/_site)",
-    "build": "npm run clean && sleep 10 && npm run copy && npm run copy:clean && npm run build:jekyll",
+    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../$npm_package_config_dist/src -d ../$npm_package_config_dist/site)",
+    "build": "npm run copy && npm run copy:clean && npm run build:jekyll",
 
-    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist",
-    "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist",
-    "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist/media",
-    "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist",
+    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" $npm_package_config_dist/src",
+    "watch:content": "cpx --watch \"./content/**/*\" $npm_package_config_dist/src",
+    "watch:media": "cpx --watch \"./media/**/*\" $npm_package_config_dist/src/media",
+    "watch:config": "cpx --watch \"./_config.yml\" $npm_package_config_dist/src",
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
-    "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../$npm_package_config_dist -d ../$npm_package_config_dist/_site)",
+    "serve" : "(cd .jekyll && bundle exec jekyll serve --force_polling -s ../$npm_package_config_dist/src -d ../$npm_package_config_dist/site)",
+
     "start": "npm run clean && npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
-    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist"
+    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory $npm_package_config_dist/src"
   },
 
   "devDependencies": {
@@ -43,6 +44,6 @@
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
-    "presidium-core" : "^0.0.16"
+    "presidium-core" : "^0.0.23"
   }
 }

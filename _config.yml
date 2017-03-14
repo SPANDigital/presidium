@@ -6,12 +6,14 @@
 # - images: Base URL to image root
 # - footer: Footer copy
 # - logo: Menu bar logo
+# - show-status: Hide of show article status labels true | false
 #
 name: Architecture Decision Support System
 baseurl: /adss-docs
 images: /adss-docs/media/images
 footer: SPAN Digital
 logo: media/images/logo.png
+show-status: true
 
 #
 # Menu Structure
