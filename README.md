@@ -1,26 +1,28 @@
 # Presidium
 
-Presiduim is a Jekyll based documentation template for writing technical documentation that may be published to Github pages or as a static site.
-Jekyll is used to build a static site from markdown using a set of standard templates and layouts.
+Presiduim is a Jekyll based documentation framework that enforces industry best practices for documenting software systems. 
+Presidium provides software teams with familiar tools to acquire, revise, categorize, utilize and evaluate small 
+document fragments that get aggregated into well structured website.
 
 ## Quick Start
 
-- Requires `ruby`, `bundler` and `npm` to run locally. See the [prerequisites](#prerequisites) for further details and requirements.
+- Download the [template project](https://github.com/SPANDigital/presidium)
+- Requires `ruby`, `bundler` and `npm`. See [setting up your environment](#setup) for further details and requirements.
 - To install the required dependencies and start the documentation server locally, run:
 ```sh
 $ npm install
 $ npm start
 ```
 
-This will install all required dependencies and fire up a Jekyll server on: http://localhost:4000/`baseurl`
-Add and edit your content in `content` and `media`
+This will install all required dependencies and fire up a Jekyll server on: http://localhost:4000/
 
-`baseurl` is an optional path configuration set in `_config.yml`
+Add and edit your content using examples in `content` and `media`
+Configure your site using options in `_config.yml`
 
 ## Setup and Configuration
 
 ### Directory Structure
-
+Presidium uses the following directories:
 ```
 presidium/
 
@@ -32,42 +34,49 @@ presidium/
         images/ : Image resources
         [other]/ : Static files
     
-    dist/ : Distribution directory with Jekyll sources and site
-        _site/ : Generated static site
+    dist/ : Distribution directory 
+        src/: Presidium and Jekyll sources
+        site/ : Generated static site
     
-    .jekyll/ : Dependencies for Jekyll and Github pages
+    .jekyll/ : Jekyll dependencies
         
-    node_modules/ : node module dependencies, including the presidium templates and structure
+    node_modules/ : node module dependencies, including the Presidium templates and structure
         
-    _config.yml : Base Jekyll configuration file
+    _config.yml : Jekyll configuration file
     
     package.json : npm build scripts
 ```
 
 ### Content
-Content and media resources are kept separate from the underlying Jekyll templates and layouts.
-All content updates are done using the sections and markdown templates in `content`.
+All content updates are done using the sections and markdown templates in `content` using markdown. See the [template project](https://github.com/SPANDigital/presidium) for example usage.
+* [Jekyll](http://jekyllrb.com/) a simple, blog-aware, static site generator that integrates with GitHub
+* [GitHub Flavored Markdown](https://help.github.com/articles/github-flavored-markdown/) GitHub Flavored Markdown to document your content.
+
 Static sources such as images, files and custom styles should be added to the `media`.
+
+Content and media resources are kept separate from the underlying Jekyll layouts and templates.
 
 ### Build Scripts
 The following build scripts manage the main workflows:
 - `npm install` : Installs all npm and Jekyll dependencies required to build, run and publish your site.
-- `npm start` : Serves the Jekyll site from `dist/` and Watches for any changes to `content` and `media`.
-- `npm run build` : Build your Jekyll site to `dist/`.
-- `npm run gh-pages` : Publishes your site `dist/` to a `gh-pages` branch in your current repo.
+- `npm start` : Serves the Jekyll site from `dist/site` and Watches for any changes to `content` and `media`.
+- `npm run build` : Build your Jekyll site to `dist/site`.
+- `npm run gh-pages` : Publishes `dist/site` to a `gh-pages` branch in your current repo.
 
 ### Configuration
 Site configuration such as the site name and menu structure can be done in `_config.yml`. Changes made to config require a site rebuild to take effect.
 
 ### Styling and Theming
-All styles are based on Bootstrap with Bootswatch themes and sass overrides.
+All styles are based on Bootstrap with Bootswatch themes and sass overrides. Jekyll themes are not supported.
 
-To change a theme or to provide your own styling, make changes to:
+* [Sass](http://sass-lang.com/) a CSS extension language
+* [Bootswatch](https://bootswatch.com/) Boostrap-based themes
+
+To change a theme or to provide your own styling or overrides, make changes to:
  - `_custom.scss` : any custom styles that you would like to apply
  - `_variables.scss` : change the theme and override and bootstrap or bootswatch variables
  
 ### Publishing to Github Pages
-
 To publish your documentation to Github pages, run:
 ```sh
 $ npm run gh-pages
@@ -77,15 +86,15 @@ This pushes your site and to a gh-pages branch on your repo. To enable your site
 
 Further details may be found on [Github](https://help.github.com/articles/about-github-pages-and-jekyll/)
 
-## <a name="prerequisites"></a>Prerequisites 
-`Only OSX is currently supported`
+## <a name="setup"></a>Setting up your Environment
+`Instructions are currently only available for OSX`
 
 The following tools are required to build and run Presidium locally:
 
 - OS: Mac OSX 
-    - [npm](http://www.npmjs.com) > 3.10
-    - [ruby](https://www.ruby-lang.org/en/documentation/installation/) > 2.1
-    - [bundler](http://bundler.io/) > 1.14.3
+    - [npm](http://www.npmjs.com) > 3.10 : Node package manager to build, serve and publish
+    - [ruby](https://www.ruby-lang.org/en/documentation/installation/) > 2.1 : To build Jekyll site
+    - [bundler](http://bundler.io/) > 1.14.3 : To manage Jekyll dependencies
 
 ### NPM
 
@@ -114,10 +123,9 @@ $ gem install bundler
 
 For further details on setting up Jekyll for Github pages, see: [Setting up github pages locally](https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/)
 
-
 ## Build Server
 
-### Debian Based Provisioning:
+### Provisioning a Debian Based build server:
 
 ```sh
 #!/bin/bash

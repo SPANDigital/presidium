@@ -10,6 +10,7 @@ name: Presidium
 baseurl:
 footer: SPAN Digital
 logo: media/images/logo.png
+show-status: true
 
 #
 # Menu Structure
@@ -30,7 +31,7 @@ structure:
 
   - title: "Getting Started"
     path: "/getting-started/"
-    collection: getting_started
+    collection: getting-started
 
   - title: "Reference"
     path: "/reference/"
@@ -53,11 +54,22 @@ structure:
     collection: updates
 
 #
+# Optional filters that may be used to filter articles by role.
+#
+roles:
+  label: "Show documentation for role"
+  all: "All Roles"
+  options:
+    - "Business Analyst"
+    - "Developer"
+    - "Tester"
+
+#
 # Jekyll collections definitions that use layout templates from presidium-core
 #
 collections:
-    best_practices:
-    getting_started:
+    best-practices:
+    getting-started:
     key_concepts:
     overview:
     prerequisites:

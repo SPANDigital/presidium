@@ -45,8 +45,10 @@
     "watch:content": "cpx --watch \"./content/**/*\" dist/src",
     "watch:media": "cpx --watch \"./media/**/*\" dist/src/media",
     "watch:config": "cpx --watch \"./_config.yml\" dist/src",
+
+
     "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
-    "serve" : "(cd .jekyll && bundle exec jekyll serve --incremental -s ../dist/src -d ../dist/site)",
+    "serve" : "(cd .jekyll && bundle exec jekyll serve --port 4001 --incremental -s ../dist/src -d ../dist/site)",
     "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory dist/src"
@@ -57,6 +59,6 @@
     "git-directory-deploy": "^1.5.1"
   },
   "dependencies": {
-    "presidium-core" : "^0.0.19"
+    "presidium-core" : "^0.0.28"
   }
 }
