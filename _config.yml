@@ -6,9 +6,10 @@
 # - footer: Footer copy
 # - logo: Menu bar logo
 # - show: Hide or show article components. Defaults to true
+# - external: Links to external sources
 #
 name: Presidium
-baseurl:
+baseurl: /presidium
 footer: SPAN Digital
 logo: media/images/logo.png
 show:
