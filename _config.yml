@@ -5,12 +5,17 @@
 # _ baseurl: Optional URL to use where documentation is hosted in a subdirectory `domain.com/{baseurl}`
 # - footer: Footer copy
 # - logo: Menu bar logo
+# - show: Hide or show article components. Defaults to true
 #
 name: Presidium
 baseurl:
 footer: SPAN Digital
 logo: media/images/logo.png
-show-status: true
+show:
+  status: true
+  author: true
+external:
+  authors-url: https://github.com/orgs/SPANDigital/people/
 
 #
 # Menu Structure
@@ -28,6 +33,7 @@ structure:
 
   - title: "Key Concepts"
     path: "/key-concepts/"
+    collection: key-concepts
 
   - title: "Getting Started"
     path: "/getting-started/"
@@ -70,7 +76,7 @@ roles:
 collections:
     best-practices:
     getting-started:
-    key_concepts:
+    key-concepts:
     overview:
     prerequisites:
     recipes:
@@ -79,7 +85,7 @@ collections:
         permalink: /reference/:path/
     testing:
     tools:
-    typical_scenarios:
+    typical-scenarios:
     updates:
 
 #

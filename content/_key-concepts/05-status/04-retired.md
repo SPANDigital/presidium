@@ -1,6 +1,6 @@
 ---
 title: Retired
-category: Article Status
+category: Status
 status: retired
 ---
 

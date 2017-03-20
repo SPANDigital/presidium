@@ -1,6 +1,6 @@
 ---
 title: "Published"
-category: Article Status
+category: Status
 status: published
 ---
 

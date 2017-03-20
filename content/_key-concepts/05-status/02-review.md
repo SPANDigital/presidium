@@ -1,6 +1,6 @@
 ---
 title: Review
-category: Article Status
+category: Status
 status: review
 ---
 

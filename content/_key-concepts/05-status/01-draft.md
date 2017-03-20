@@ -1,6 +1,6 @@
 ---
 title: "Draft"
-category: Article Status
+category: Status
 status: draft
 ---
 

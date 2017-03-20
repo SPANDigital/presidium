@@ -5,7 +5,7 @@ category: Roles
 
 Various roles can be added to a site to allow readers to 
 filter by a target audience. This is an optional feature that can be 
-enabled by setting roles in your site config as in this example:
+enabled by setting roles in your site config:
 
 ```
 roles:
