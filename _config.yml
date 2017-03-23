@@ -6,14 +6,18 @@
 # - images: Base URL to image root
 # - footer: Footer copy
 # - logo: Menu bar logo
-# - show-status: Hide of show article status labels true | false
+# - show: Hide or show article components. Defaults to true
 #
 name: Architecture Decision Support System
 baseurl: /adss-docs
 images: /adss-docs/media/images
 footer: SPAN Digital
 logo: media/images/logo.png
-show-status: true
+show:
+  - status: true
+  - author: false
+external:
+  authors-url: https://github.com/
 
 #
 # Menu Structure
@@ -25,6 +29,8 @@ show-status: true
 structure:
   - title: "Overview"
     path: "/"
+    collection: overview
+    expandable: false
 
   - title: "Key Concepts"
     path: "/key-concepts/"
