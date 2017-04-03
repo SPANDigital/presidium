@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "description": "A Jekyll based project using Presidium technical documentation templates.",
   "config": {
-    "core" : "node_modules/presidium-core",
+    "core" : "/Users/paco/Workspace/span/presidium/presidium-core",
     "cooldown" : "2"
   },
   "authors": [
