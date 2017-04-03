@@ -1,6 +1,5 @@
 ---
 title: "Business Analyst"
-category: Roles/Analyst & Developer
 roles: Business Analyst
 ---
 

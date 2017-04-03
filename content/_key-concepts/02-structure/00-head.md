@@ -1,6 +1,5 @@
 ---
 title: "Head"
-category: Structure
 ---
 
 Articles follow the natural alphabetic ordering of files and folders. 

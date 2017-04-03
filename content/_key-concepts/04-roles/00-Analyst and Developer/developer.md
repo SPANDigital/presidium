@@ -1,6 +1,5 @@
 ---
 title: "Developer"
-category: Roles/Analyst & Developer
 roles: Developer
 ---
 

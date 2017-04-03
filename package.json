@@ -31,15 +31,17 @@
     "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
 
     "clean": "rm -rf dist && mkdir dist",
+
+    "structure" : "presidium structure",
     "copy:presidium": "cpx \"$npm_package_config_core/**/*\" dist/src",
     "copy:content": "cpx \"./content/**/*\" dist/src",
     "copy:media": "cpx \"./media/**/*\" dist/src/media",
     "copy:config": "cpx \"./_config.yml\" dist/src",
-    "copy:clean" : "rm -f dist/src/{package.json,LICENSE,NOTICE,README.md} && rm -fR dist/src/bin/",
+    "copy:clean" : "rm -f dist/src/{package.json,LICENSE,NOTICE,README.md} && rm -fr dist/src/bin/ && rm -fr dist/src/sections/ && rm -fr dist/src/test/",
     "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
 
-    "build:jekyll": "(cd .jekyll && bundle exec --verbose jekyll build -s ../dist/src -d ../dist/site)",
-    "build": "npm run copy && npm run copy:clean && npm run build:jekyll",
+    "build:jekyll": "(cd .jekyll && bundle exec jekyll build --trace -s ../dist/src -d ../dist/site)",
+    "build": "npm run copy && npm run copy:clean && npm run structure && sleep $npm_package_config_cooldown && npm run build:jekyll",
 
     "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" dist/src",
     "watch:content": "cpx --watch \"./content/**/*\" dist/src",
@@ -52,13 +54,13 @@
     "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
 
     "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory dist/src"
+
+
   },
   "devDependencies": {
     "cpx": "^1.5.0",
     "rimraf": "^2.5.4",
-    "git-directory-deploy": "^1.5.1"
-  },
-  "dependencies": {
+    "git-directory-deploy": "^1.5.1",
     "presidium-core" : "^0.0.31"
   }
 }

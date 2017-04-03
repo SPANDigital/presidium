@@ -18,6 +18,11 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
+content-path:  ./content/
+section-path: ./dist/src/sections/
+include-path: ./dist/src/_includes/
+
+#
 #
 # Menu Structure
 #
@@ -25,12 +30,11 @@ external:
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
-structure:
+sections:
   - title: "Overview"
     path: "/"
-
-  - title: "Prerequisites"
-    path: "/prerequisites/"
+    collection: overview
+    expandable: false
 
   - title: "Key Concepts"
     path: "/key-concepts/"
@@ -44,6 +48,10 @@ structure:
     path: "/reference/"
     collection: reference
 
+  - title: "Glossary"
+    path: "/glossary/"
+    collection: glossary
+
   - title: "Recipes"
     path: "/recipes/"
     collection: recipes
@@ -52,19 +60,16 @@ structure:
     path: "/tools/"
     collection: tools
 
-  - title: "Testing & Debugging"
-    path: "/testing/"
-    colletion: testing
-
   - title: "Updates"
     path: "/updates/"
     collection: updates
+
 
 #
 # Optional filters that may be used to filter articles by role.
 #
 roles:
-  label: "Show documentation for role"
+  label: "Show documentation for"
   all: "All Roles"
   options:
     - "Business Analyst"
@@ -78,6 +83,7 @@ collections:
     best-practices:
     getting-started:
     key-concepts:
+    glossary:
     overview:
     prerequisites:
     recipes:

@@ -1,6 +1,5 @@
 ---
 title: "Tail"
-category: Structure
 ---
 
 Last Article in:
