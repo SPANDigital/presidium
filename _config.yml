@@ -18,9 +18,13 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
+
 content-path:  ./content/
-section-path: ./dist/src/sections/
-include-path: ./dist/src/_includes/
+dist-src-path: ./dist/src
+media-path:    ./dist/src/media/
+sections-path: ./dist/src/sections/
+includes-path: ./dist/src/_includes/
+layouts-path:  ./dist/src/_layouts/
 
 #
 #

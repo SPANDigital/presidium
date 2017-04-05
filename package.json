@@ -3,13 +3,15 @@
   "version": "0.0.1",
   "description": "A Jekyll based project using Presidium technical documentation templates.",
   "config": {
-    "core" : "/Users/paco/Workspace/span/presidium/presidium-core",
-    "cooldown" : "2"
   },
   "authors": [
     {
       "name": "Paco Mendes",
       "email": "paco.mendes@spandigital.com"
+    },
+    {
+      "name": "Travis Pawley",
+      "email": "travis@spandigital.com"
     },
     {
       "name": "Dominic Follett-Smith",
@@ -23,43 +25,13 @@
   "license": "Apache-2.0",
 
   "scripts": {
-
-    "check:requirements" : "(cd $npm_package_config_core/bin && chmod +x requirements.sh && ./requirements.sh)",
-    "install:directories" : "mkdir -p dist",
-    "install:gems" : "(cd .jekyll && bundle install --path=.bundle --deployment)",
-    "update:gems" : "(cd .jekyll && bundle update)",
-    "install": "npm run check:requirements && npm run install:directories && npm run install:gems",
-
-    "clean": "rm -rf dist && mkdir dist",
-
-    "structure" : "presidium structure",
-    "copy:presidium": "cpx \"$npm_package_config_core/**/*\" dist/src",
-    "copy:content": "cpx \"./content/**/*\" dist/src",
-    "copy:media": "cpx \"./media/**/*\" dist/src/media",
-    "copy:config": "cpx \"./_config.yml\" dist/src",
-    "copy:clean" : "rm -f dist/src/{package.json,LICENSE,NOTICE,README.md} && rm -fr dist/src/bin/ && rm -fr dist/src/sections/ && rm -fr dist/src/test/",
-    "copy": "npm run copy:presidium & npm run copy:content & npm run copy:media & npm run copy:config",
-
-    "build:jekyll": "(cd .jekyll && bundle exec jekyll build --trace -s ../dist/src -d ../dist/site)",
-    "build": "npm run copy && npm run copy:clean && npm run structure && sleep $npm_package_config_cooldown && npm run build:jekyll",
-
-    "watch:presidium": "cpx --watch \"$npm_package_config_core/**/*\" dist/src",
-    "watch:content": "cpx --watch \"./content/**/*\" dist/src",
-    "watch:media": "cpx --watch \"./media/**/*\" dist/src/media",
-    "watch:config": "cpx --watch \"./_config.yml\" dist/src",
-
-
-    "watch": "npm run watch:presidium & npm run watch:content & npm run watch:media & npm run watch:config",
-    "serve" : "(cd .jekyll && bundle exec jekyll serve --port 4001 --incremental -s ../dist/src -d ../dist/site)",
-    "start": "npm run watch & sleep $npm_package_config_cooldown && echo LOADED WATCHES...  && npm run serve",
-
-    "gh-pages": "npm run clean && npm run build && git-directory-deploy --directory dist/src"
-
-
+    "clean": "presidium clean",
+    "install": "presidium install",
+    "build": "presidium build",
+    "start": "presidium start",
+    "publish": "presidium publish"
   },
   "devDependencies": {
-    "cpx": "^1.5.0",
-    "rimraf": "^2.5.4",
     "git-directory-deploy": "^1.5.1",
     "presidium-core" : "^0.0.31"
   }
