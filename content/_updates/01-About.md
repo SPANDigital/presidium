@@ -1,11 +1,11 @@
 ---
 title: "ADSS About"
 author: "Madelein Crews"
-publication-date: "2017-03-23"
+publication-date: "2017-04-10"
 ---
 ## Architecture Decision Support System 
 
-Version **0.3.6-alpha**
+Version **0.3.8-alpha**
 
 Email: adss-support@spandigital.com
 
