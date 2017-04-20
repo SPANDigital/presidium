@@ -29,10 +29,9 @@
     "install": "presidium install",
     "build": "presidium build",
     "start": "presidium start",
-    "publish": "presidium publish"
+    "gh-pages": "presidium gh-pages"
   },
   "devDependencies": {
-    "git-directory-deploy": "^1.5.1",
-    "presidium-core" : "^0.0.31"
+    "presidium-core" : "^0.0.34"
   }
 }

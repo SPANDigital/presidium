@@ -18,13 +18,7 @@ show:
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
-
-content-path:  ./content/
-dist-src-path: ./dist/src
-media-path:    ./dist/src/media/
-sections-path: ./dist/src/sections/
-includes-path: ./dist/src/_includes/
-layouts-path:  ./dist/src/_layouts/
+include-nested-articles: true
 
 #
 #
@@ -35,38 +29,38 @@ layouts-path:  ./dist/src/_layouts/
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
 sections:
-  - title: "Overview"
-    path: "/"
-    collection: overview
-    expandable: false
+#  - title: "Overview"
+#    path: "/"
+#    collection: overview
+#    collapsed: true
 
   - title: "Key Concepts"
     path: "/key-concepts/"
     collection: key-concepts
 
-  - title: "Getting Started"
-    path: "/getting-started/"
-    collection: getting-started
-
-  - title: "Reference"
-    path: "/reference/"
-    collection: reference
-
-  - title: "Glossary"
-    path: "/glossary/"
-    collection: glossary
-
-  - title: "Recipes"
-    path: "/recipes/"
-    collection: recipes
-
-  - title: "Tools"
-    path: "/tools/"
-    collection: tools
-
-  - title: "Updates"
-    path: "/updates/"
-    collection: updates
+#  - title: "Getting Started"
+#    path: "/getting-started/"
+#    collection: getting-started
+#
+#  - title: "Reference"
+#    path: "/reference/"
+#    collection: reference
+#
+#  - title: "Glossary"
+#    path: "/glossary/"
+#    collection: glossary
+#
+#  - title: "Recipes"
+#    path: "/recipes/"
+#    collection: recipes
+#
+#  - title: "Tools"
+#    path: "/tools/"
+#    collection: tools
+#
+#  - title: "Updates"
+#    path: "/updates/"
+#    collection: updates
 
 
 #
