@@ -29,38 +29,38 @@ include-nested-articles: true
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
 sections:
-#  - title: "Overview"
-#    path: "/"
-#    collection: overview
-#    collapsed: true
+  - title: "Overview"
+    url: "/"
+    collection: overview
+    collapsed: true
 
   - title: "Key Concepts"
-    path: "/key-concepts/"
+    url: "/key-concepts/"
     collection: key-concepts
 
-#  - title: "Getting Started"
-#    path: "/getting-started/"
-#    collection: getting-started
-#
-#  - title: "Reference"
-#    path: "/reference/"
-#    collection: reference
-#
-#  - title: "Glossary"
-#    path: "/glossary/"
-#    collection: glossary
-#
-#  - title: "Recipes"
-#    path: "/recipes/"
-#    collection: recipes
-#
-#  - title: "Tools"
-#    path: "/tools/"
-#    collection: tools
-#
-#  - title: "Updates"
-#    path: "/updates/"
-#    collection: updates
+  - title: "Getting Started"
+    url: "/getting-started/"
+    collection: getting-started
+
+  - title: "Reference"
+    url: "/reference/"
+    collection: reference
+
+  - title: "Glossary"
+    url: "/glossary/"
+    collection: glossary
+
+  - title: "Recipes"
+    url: "/recipes/"
+    collection: recipes
+
+  - title: "Tools"
+    url: "/tools/"
+    collection: tools
+
+  - title: "Updates"
+    url: "/updates/"
+    collection: updates
 
 
 #
