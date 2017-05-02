@@ -40,11 +40,11 @@ presidium/
     
     .jekyll/ : Jekyll dependencies
         
-    node_modules/ : node module dependencies, including the Presidium templates and structure
+    node_modules/ : node module dependencies, (including the Presidium core templates)
         
     _config.yml : Jekyll configuration file
     
-    package.json : npm build scripts
+    package.json : npm build script
 ```
 
 ### Content
@@ -92,22 +92,16 @@ Further details may be found on [Github](https://help.github.com/articles/about-
 The following tools are required to build and run Presidium locally:
 
 - OS: Mac OSX 
-    - [npm](http://www.npmjs.com) > 3.10 : Node package manager to build, serve and publish
+    - [npm](https://nodejs.org/en/) > 3.10 : Node package manager to build, serve and publish
     - [ruby](https://www.ruby-lang.org/en/documentation/installation/) > 2.1 : To build Jekyll site
     - [bundler](http://bundler.io/) > 1.14.3 : To manage Jekyll dependencies
 
 ### NPM
 
-- node v6.10.1
+- node v6.10.2 (LTS)
 - npm v3.10.10
 
-For [homebrew](http://brew.sh/) users, install and upgrade node:
-
-```sh
-$ brew install node
-$ brew update
-$ brew upgrade node
-```
+Install using the [node package](https://nodejs.org/en/) or [nvm](http://nvm.sh)
 
 ### Ruby
 
