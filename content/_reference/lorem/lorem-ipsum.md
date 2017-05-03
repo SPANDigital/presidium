@@ -1,7 +1,6 @@
 ---
 title: "Lorem Ipsum"
 category: "Lorem"
-id: "reference-title"
 author: "author"
 ---
 

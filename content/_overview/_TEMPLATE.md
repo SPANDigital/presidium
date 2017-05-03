@@ -5,7 +5,6 @@
 # 3) Delete this line and all lines above so that the front matter below is at the top of the file. 
 ---
 title: "Overview"
-id: "overview" 
 author: "REPLACE WITH github-username>"
 ---
 

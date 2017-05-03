@@ -6,7 +6,6 @@
 ---
 title: "REPLACE WITH Reference Title"
 category: "REPLACE WITH api / classes / models / views / controllers, etc."
-id: "reference-title"
 author: "REPLACE WITH github-username"
 ---
 

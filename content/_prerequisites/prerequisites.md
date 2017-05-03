@@ -1,6 +1,5 @@
 ---
 title: "Prerequisites"
-id: "prerequisites" 
 author: "author"
 ---
 
