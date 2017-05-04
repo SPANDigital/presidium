@@ -1,12 +1,13 @@
 // Override any bootstrap or bootswatch variables as you need:
 //$brand-primary: #e49134 !default;
+$navbar-default-link-hover-color: #e49033;
 $navbar-default-link-hover-bg: white;
 
 // Available Bootswatch Themes
+@import 'themes/spacelab';
 //@import 'themes/cosmo';
 //@import 'themes/darkly';
 //@import 'themes/simplex';
-@import 'themes/spacelab';
 //@import 'themes/united';
 
 

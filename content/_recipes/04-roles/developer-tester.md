@@ -1,6 +1,5 @@
 ---
 title: "For Developers and Testers"
-category: Roles
 roles: [Developer, Tester]
 ---
 

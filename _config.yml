@@ -9,7 +9,7 @@
 # - external: Links to external sources
 #
 name: Presidium
-baseurl: /presidium
+#baseurl: /presidium
 footer: SPAN Digital
 logo: media/images/logo.png
 show:
@@ -49,6 +49,7 @@ sections:
   - title: "Glossary"
     url: "/glossary/"
     collection: glossary
+    export-all: true
 
   - title: "Recipes"
     url: "/recipes/"
@@ -62,6 +63,22 @@ sections:
     url: "/updates/"
     collection: updates
 
+#
+# Jekyll collections
+#
+collections:
+    best-practices:
+    getting-started:
+    key-concepts:
+    glossary:
+    overview:
+    prerequisites:
+    recipes:
+    reference:
+    testing:
+    tools:
+    typical-scenarios:
+    updates:
 
 #
 # Optional filters that may be used to filter articles by role.
@@ -73,45 +90,6 @@ roles:
     - "Business Analyst"
     - "Developer"
     - "Tester"
-
-#
-# Jekyll collections definitions that use layout templates from presidium-core
-#
-collections:
-    best-practices:
-    getting-started:
-    key-concepts:
-    glossary:
-    overview:
-    prerequisites:
-    recipes:
-    reference:
-        output: true
-        permalink: /reference/:path/
-    testing:
-    tools:
-    typical-scenarios:
-    updates:
-
-#
-# Exclude the following files from the generated site
-#
-exclude: [
-    "README.md",
-    "LICENSE",
-    "_TEMPLATE.md",
-    ".gitignore"
-]
-
-#
-# System wide defaults
-#
-defaults:
-    -
-        scope:
-            path: ""
-        values:
-            layout: "container"
 
 #
 # Sass settings

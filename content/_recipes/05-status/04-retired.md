@@ -1,6 +1,5 @@
 ---
 title: Retired
-category: Status
 status: retired
 ---
 

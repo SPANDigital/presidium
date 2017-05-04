@@ -1,6 +1,5 @@
 ---
 title: "For Developers Only"
-category: Roles
 roles: Developer
 ---
 

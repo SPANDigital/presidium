@@ -1,6 +1,5 @@
 ---
 title: "Published"
-category: Status
 status: published
 ---
 

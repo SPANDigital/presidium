@@ -1,6 +1,5 @@
 ---
 title: "For Business Analyst Only"
-category: Roles
 roles: Business Analyst
 ---
 

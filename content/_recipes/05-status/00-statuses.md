@@ -1,6 +1,5 @@
 ---
 title: "Article Statuses"
-category: Status
 ---
 
 Each article may be assigned a status to track its lifecycle:

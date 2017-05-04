@@ -1,4 +1,3 @@
 ---
 title: Author
 ---
-> Author Category

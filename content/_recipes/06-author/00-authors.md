@@ -1,6 +1,5 @@
 ---
 title: "With an Author"
-category: Authors
 author: pacomendes
 ---
 

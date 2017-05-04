@@ -1,6 +1,5 @@
 ---
 title: "For All Roles"
-category: Roles
 ---
 
 Articles and menu items are shown depending on the selected role.

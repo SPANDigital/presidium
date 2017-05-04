@@ -1,6 +1,5 @@
 ---
 title: "Using Roles"
-category: Roles
 ---
 
 Various roles can be added to a site to allow readers to 
