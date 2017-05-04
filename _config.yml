@@ -64,9 +64,15 @@ sections:
 #    url: "/tools/"
 #    collection: tools
 #
+  - title: "Support"
+    url: "/support/"
+    collection: support
+    collapsed: true
+
   - title: "Updates"
     url: "/updates/"
     collection: updates
+
 
 #
 # Jekyll collections
@@ -83,6 +89,7 @@ collections:
     testing:
     tools:
     typical-scenarios:
+    support:
     updates:
 
 #
