@@ -19,6 +19,7 @@ external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
 include-nested-articles: true
+cname: presidium.spandigital.net
 
 #
 #
