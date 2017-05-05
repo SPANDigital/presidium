@@ -5,7 +5,7 @@ Presidium provides software teams with the tools to acquire, revise, categorize,
 document fragments that get aggregated into a well structured static website. Presidium is based on familar tools already in use by many software development teams. 
 
 ## Quick Start
-- Download the [template project](https://github.com/SPANDigital/presidium)
+- Download the [template project](https://github.com/SPANDigital/presidium-template)
 - Requires `ruby`, `bundler` and `npm`. See [setting up your environment](#setup) for further details and requirements.
 - To install the required dependencies and start the documentation server locally, run:
 ```sh
