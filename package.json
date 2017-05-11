@@ -27,7 +27,8 @@
     "install": "presidium install",
     "build": "presidium build",
     "start": "presidium start",
-    "gh-pages": "presidium gh-pages"
+    "gh-pages": "presidium gh-pages",
+    "validate": "presidium validate"
   },
   "devDependencies": {
     "presidium-core" : "^0.1.2"
