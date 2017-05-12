@@ -46,6 +46,7 @@ sections:
   - title: "Getting Started"
     url: "/getting-started/"
     collection: getting-started
+    collapsed: true
 
 #  - title: "Reference"
 #    url: "/reference/"
