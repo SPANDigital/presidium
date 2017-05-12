@@ -20,6 +20,8 @@ external:
 
 include-nested-articles: true
 cname: presidium.spandigital.net
+#scripts:
+#  - xxx-xxx.js
 
 #
 #
