@@ -38,10 +38,13 @@ title: My Java Package
 
 <div>
     <iframe
-            src='{{site.baseurl}}/media/import/javadoc/my-project/com/spandigital/presidium/index.html'
+            src='{{site.baseurl}}/media/import/javadoc/my-project/com/spandigital/presidium/package-summary.html'
     </iframe>
 </div>
 ```
+
+You are also able to *frame* content either at the package level (as above) or class level - here, you can create 
+multiple markdown files for each class, and structure them appropriately in the left-hand side navigation.
 
 # Styling
 
