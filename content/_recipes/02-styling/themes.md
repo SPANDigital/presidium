@@ -23,7 +23,7 @@ Presidium gives you the supported themes listed above. Uncomment the theme that 
 Then, if you called Presidium with `npm start`, it will pick up the change and (the hotloader) will update the 
 styles allowing you to refresh the browser window and view the new theme.
 
-Note that if you want a *pure* `spacelab` theme for example, you must remove the overrides as displayed above.
+Note that if you want a pure `spacelab` theme for example, you must remove the overrides as shown above (`$brand-info` ... etc).
 
 ## Logo
 

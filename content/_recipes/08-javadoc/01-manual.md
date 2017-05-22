@@ -43,7 +43,7 @@ title: My Java Package
 </div>
 ```
 
-You are also able to *frame* content either at the package level (as above) or class level - here, you can create 
+You are also able to frame content either at the package level (as above) or class level - here, you can create 
 multiple markdown files for each class, and structure them appropriately in the left-hand side navigation.
 
 # Styling
