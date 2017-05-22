@@ -1,8 +1,8 @@
 ---
-title: Embed Generated Documentation Manually
+title: Manually Embed Generated Documentation
 ---
 
-One way in which to pull in auto generated documentation (Like Javadoc) is to embed it within an iframe.  We'll use
+One way in which to pull in auto generated documentation (like Javadoc) is to embed it within an iframe.  We'll use
 Javadoc as an example.
 
 
@@ -12,14 +12,14 @@ First generate your site documentation by running Javadoc:
 
 `javadoc -sourcepath src -d docs com.spandigital.presidium -notree -noindex -nohelp -nonavbar`
 
-Note the options given, the most important is the `nonavbar` setting which excludes all the top header clutter.
+Note that, of the options given, the most important is the `nonavbar` setting which excludes all the top header clutter.
 
 # Serve
 
 In order for the documentation to be statically served by Presidium, place the documentation
-somewhere within the `/media` folder:
+somewhere within the `/media` folder, the Presidium convention is to place it under `/media/import`:
 
-`/media/javadoc/my-project/`
+`/media/import/javadoc/my-project/`
 
 # Reference
 
@@ -38,14 +38,17 @@ title: My Java Package
 
 <div>
     <iframe
-            src='{{site.baseurl}}/media/my-project/com/spandigital/presidium/package-summary.html'
-            sandbox="allow-top-navigation allow-scripts allow-same-origin">
+            src='{{site.baseurl}}/media/import/javadoc/my-project/com/spandigital/presidium/index.html'
     </iframe>
 </div>
 ```
 
 # Styling
 
-You can override the Javadoc styling to include presidium.css, this will align the styling to
-the Presidium side, ensuring that the look and feel remains constant as we've included Javadoc
-classes in our css.
+The default styles that you provide to your javadoc will be used when rendering the content in the iframe.
+
+You are able to override those styles by passing the presidium stylesheet as an argument to the javadoc command:
+
+`javadoc ... -stylesheetfile ./dist/site/media/css/presidium.css`
+
+The Presidium css file is available in ./dist after a build or serve.
