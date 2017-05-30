@@ -16,9 +16,10 @@ sections:
 This generated static site will include html files for all articles: 
 
 ```
-├── glossary
-│   ├── article-a.html
-│   ├── article-b.html
-│   ├── article-c.html
-│   └── index.html
+  .
+  └── glossary
+      ├── article-a.html
+      ├── article-b.html
+      ├── article-c.html
+      └── index.html
 ```
