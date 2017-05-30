@@ -6,7 +6,7 @@ One way in which to pull in auto generated documentation (like Javadoc) is to em
 Javadoc as an example.
 
 
-# Generate
+# Generation
 
 First generate your site documentation by running Javadoc:
 
