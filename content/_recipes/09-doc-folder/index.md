@@ -1,3 +1,3 @@
 ---
-title: Hosting Within Application Docs Folder
+title: Hosting Presidium in /docs
 ---
