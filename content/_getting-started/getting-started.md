@@ -10,7 +10,7 @@ title: Setting up your First Site
 $ npm install
 ```
 
-If you get an error, check that you have the following [prerequisites](/prerequisites) installed on your environment:
+If you get an error, check that you have the following [prerequisites](/prerequisites/) installed on your environment:
 - npm v3.10+
 - ruby v2.1+
 - bundler v1.14.3+
@@ -36,7 +36,7 @@ Structural or changes to configuration currently require a server restart.
 
 # Publish your Site
 The simplest way to publish a github repository is to use Github Pages, but you can also host the generated site on any Web server.
-## Github Pages
+## To Github Pages
 To publish using Github Pages, commit and push your site to a Github repository and run the following:
 ```sh
 $ npm run gh-pages
@@ -45,5 +45,5 @@ This will push your generated site to a gh-pages branch in your repository. You 
 [enable gh-pages](https://help.github.com/articles/configuring-a-publishing-source-for-github-pages/) 
 in your repository.
 
-## Static Site
+## As a Static Site
 The generated static site can be found in `dist/site`
