@@ -37,9 +37,9 @@ sections:
     collection: overview
     collapsed: true
 
-#  - title: "Key Concepts"
-#    url: "/key-concepts/"
-#    collection: key-concepts
+  - title: "Key Concepts"
+    url: "/key-concepts/"
+    collection: key-concepts
 
   - title: "Prerequisites"
     url: "/prerequisites/"
