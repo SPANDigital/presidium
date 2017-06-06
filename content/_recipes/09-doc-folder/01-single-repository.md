@@ -9,11 +9,11 @@ sub folder, e.g. `/docs`
 
 ## Getting Presidium
 
-The easiest way to incorpate Presidium into your project is to get the latest archived version from [https://github.com/SPANDigital/presidium-template/archive/master.zip](https://github.com/SPANDigital/presidium-template/archive/master.zip) and uncompressing it into your projects empty /docs folder.  If you wish to clone the project instead
-just make sure you remove the .git folder from docs/ as we want your application repo to manage
-the docs/ folder and not the presidium template repo.
+The easiest way to incorporate Presidium into your project is to get the [latest archived version](https://github.com/SPANDigital/presidium-template/archive/master.zip) and uncompress it into your project's empty `/docs` folder.  If you wish to clone the project instead,
+be sure to remove the `.git` folder from `docs/` after cloning as your project repo will manage
+the `docs/` folder and **not** the presidium template repo.
 
-The contents of your docs/ folder should look something like this:
+The contents of your `docs/` folder should look something like this:
 
 ```bash
 LICENSE
@@ -32,6 +32,7 @@ Add the following to your project's `.gitignore` file:
 $ echo "docs/node_modules/" >> .gitignore
 $ echo "docs/.jekyll/" >> .gitignore
 $ echo "docs/dist/" >> .gitignore
+$ echo "docs/dist/.versions" >> .gitignore
 ```
 
-From this point onwards you can follow the getting started guide, where your documentation root is simply in `/docs`
+From this point onwards you can follow the getting started guide, where your documentation root is simply in `/docs`.
