@@ -1,5 +1,5 @@
 ---
-title: "Article Authors"
+title: "Authors"
 ---
 
 Each article may include an author in the `front matter`:

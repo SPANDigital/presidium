@@ -37,9 +37,10 @@ sections:
     collection: overview
     collapsed: true
 
-#  - title: "Key Concepts"
-#    url: "/key-concepts/"
-#    collection: key-concepts
+  - title: "Key Concepts"
+    url: "/key-concepts/"
+    collection: key-concepts
+    collapsed: true
 
   - title: "Prerequisites"
     url: "/prerequisites/"
@@ -62,9 +63,10 @@ sections:
     url: "/recipes/"
     collection: recipes
 
-#  - title: "Tools"
-#    url: "/tools/"
-#    collection: tools
+  - title: "Tools"
+    url: "/tools/"
+    collection: tools
+    collapsed: true
 
   - title: "Support"
     url: "/support/"
