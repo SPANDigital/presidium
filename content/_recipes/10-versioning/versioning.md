@@ -32,6 +32,14 @@ $ git push -u origin gh-pages
 $ git checkout master
 ```
 
+# Update .gitignore
+
+Presidium uses a hidden folder as a staging area for publishing. To make sure you don't accidentally commit this run the following command:
+
+```sh
+$ echo ".versions" >> .gitignore
+```
+
 # Set The Base Url & Turn On Versioning
 
 In order to use Presidium versioning on gh-pages, you are required to use the base url of the repository. You must ensure that this is set in `_config.yml` in the root of your project:
