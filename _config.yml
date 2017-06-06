@@ -13,8 +13,8 @@ name: Presidium
 footer: SPAN Digital
 logo: media/images/logo.png
 show:
-  status: true
-  author: true
+  status: false
+  author: false
 external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
@@ -50,14 +50,13 @@ sections:
     collection: getting-started
     collapsed: true
 
+#  - title: "Best Practices"
+#    url: "/best-practices/"
+#    collection: best-practices
+
 #  - title: "Reference"
 #    url: "/reference/"
 #    collection: reference
-#
-#  - title: "Glossary"
-#    url: "/glossary/"
-#    collection: glossary
-#    export-all: true
 
   - title: "Recipes"
     url: "/recipes/"
@@ -66,7 +65,7 @@ sections:
 #  - title: "Tools"
 #    url: "/tools/"
 #    collection: tools
-#
+
   - title: "Support"
     url: "/support/"
     collection: support
@@ -75,7 +74,6 @@ sections:
   - title: "Updates"
     url: "/updates/"
     collection: updates
-
 
 #
 # Jekyll collections
@@ -89,22 +87,20 @@ collections:
     prerequisites:
     recipes:
     reference:
-    testing:
     tools:
-    typical-scenarios:
     support:
     updates:
 
 #
 # Optional filters that may be used to filter articles by role.
 #
-roles:
-  label: "Show documentation for"
-  all: "All Roles"
-  options:
-    - "Business Analyst"
-    - "Developer"
-    - "Tester"
+#roles:
+#  label: "Show documentation for"
+#  all: "All Roles"
+#  options:
+#    - "Business Analyst"
+#    - "Developer"
+#    - "Tester"
 
 #
 # Sass settings
