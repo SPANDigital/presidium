@@ -1,5 +1,5 @@
 ---
-title: "Article Statuses"
+title: "Statuses"
 ---
 
 Each article may be assigned a status to track its lifecycle:
@@ -21,4 +21,4 @@ simply enable or disable the following setting in the `site config`:
 
 ```
 show-status: true|false
-```
+```‰
