@@ -1,5 +1,5 @@
 ---
-title: Exporting Article HTML
+title: Exporting Articles
 ---
 
 The raw html of an article may be exported when building a site.

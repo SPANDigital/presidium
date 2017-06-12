@@ -2,9 +2,8 @@
 title: Site Structure
 ---
 
-Articles may be grouped by sub-sections using folders.
+Articles follow the natural alphabetic ordering of files and folders which may be grouped in sub-sections.
 
-Articles follow the natural alphabetic ordering of files and folders.
 The following example demonstrates how you could order and organise articles and sub-sections using numeric prefixes:
 
 ```
@@ -19,8 +18,8 @@ The following example demonstrates how you could order and organise articles and
     └── index.md
 ```
 
-The title of a sub-section uses the folder name, 
-but may be set by providing an `index.md` file in the folder with the following `front matter`:
+The title of a sub-section is derived from the folder name, but may be set by providing 
+an `index.md` file in the folder with the following `front matter`:
 
 ```
 ---
