@@ -8,7 +8,7 @@ Image
 
 Behaviour
 
-A significant feature of the menu, is that it acts like a zoom function. Clicking on any section or subsection in the menu will render a page whose contents is that which exists recursively underneath. Another way to think of it is as a tree structure. Each section or subsection is a node, and all content is simply a traversal from this node through its children. A convention that Presidium applies, is that the node ‘name’ or title then becomes the main header of the page.
+A significant feature of the menu, is that it has a tree structure: each **section or subsection is a node**, and all content is simply a traversal from this node through its children. A convention that Presidium applies, is that the node ‘name’ or title then becomes the main header of the page and everything outside of that sub-tree is not presented on the page.
 
 Image
 
