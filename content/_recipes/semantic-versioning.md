@@ -8,7 +8,8 @@ Presidium supports semantic versioning of your documentation when publishing to 
 # Branch Setup
 
 Presidium versioning relies on the use of the gh-pages branch to publish current and versioned documentation.
-In order to use Predidium versioning, you will need to ensure you have a gh-pages branch set up in your repository. You may skip these step if you already have a branch set up.
+In order to use Presidium versioning, you will need to ensure you have a gh-pages branch set up in your repository. 
+You may skip these step if you already have a branch set up.
 
 Change the directory to the root of your project:
 

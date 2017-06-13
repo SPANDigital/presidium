@@ -1,6 +1,5 @@
 ---
 title: Themes
-role: Developer
 ---
 
 Presidium uses [http://bootswatch.com/](http://bootswatch.com/) for managing its themes.  If you wish to change the 
