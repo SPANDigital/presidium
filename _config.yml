@@ -9,10 +9,10 @@
 # - external: Links to external sources
 #
 #name:
-baseurl: /presidium-test/
-images: /presidium-test/media/images
+baseurl: /
+images: /media/images
 footer: SPAN Digital
-logo: /presidium-test/media/images/logo.png
+logo: /media/images/logo.png
 show:
   status: false
   author: false
@@ -20,7 +20,7 @@ external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
 include-nested-articles: true
-#cname: presidium.spandigital.net
+cname: presidium.spandigital.net
 #scripts:
 #  - xxx-xxx.js
 
@@ -32,7 +32,7 @@ include-nested-articles: true
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
-sections-baseurl: /presidium-test/docs/
+sections-baseurl: /docs/
 sections:
   - title: "Overview"
     url: "/"

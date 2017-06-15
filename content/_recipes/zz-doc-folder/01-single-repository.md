@@ -1,7 +1,6 @@
 ---
 title: Single Repository
 author: torabisu
-roles: Developer
 ---
 
 Presidium does not have to be hosted in a repository of its own.  It can exist within your software project in a 

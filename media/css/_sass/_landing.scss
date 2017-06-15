@@ -39,10 +39,6 @@ $landing-box-shadow-up: 0px -2px 4px $landing-shadow;
       margin: 20px;
       img {
         height: 20px;
-        @media (max-width: $grid-float-breakpoint) {
-          padding-top: 5px;
-          height: 30px;
-        }
       }
     }
     .links {
