@@ -1,0 +1,263 @@
+$landing-theme: $brand-info;
+
+$landing-light: #FFFFFF;
+$landing-med: #666666;
+$landing-dark: #333333;
+$landing-grey: #BBBBBB;
+
+$landing-action: #AAFB0E;
+$landing-shadow: rgba(0, 0, 0, 0.4);
+$landing-cmd-1: #FFFFFF;
+$landing-cmd-2: #59D2F8;
+$landing-cmd-3: #FFDE84;
+$landing-cmd-4: #A8ED4C;
+
+$landing-box-shadow-down: 0px 2px 4px $landing-shadow;
+$landing-box-shadow-up: 0px -2px 4px $landing-shadow;
+
+.presidium-landing-container {
+  padding-left: 0;
+  padding-right: 0;
+  .row {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .presidium-landing-header {
+    background-color: $landing-dark;
+    height: 60px;
+
+    position: fixed;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: $landing-box-shadow-down;
+
+    .logo {
+      float: left;
+      margin: 20px;
+      img {
+        height: 20px;
+        @media (max-width: $grid-float-breakpoint) {
+          padding-top: 5px;
+          height: 30px;
+        }
+      }
+    }
+    .links {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      float: right;
+
+      .link {
+        display: inline-block;
+        margin-right: 40px;
+        @media (max-width: $grid-float-breakpoint) {
+          margin-right: 20px;
+        }
+        :hover {
+          text-decoration: none;
+          color: $brand-info;
+        }
+        img {
+          height: 30px;
+          vertical-align:middle;
+        }
+        span {
+          padding-left: 10px;
+          font-size: 10pt;
+          color: $landing-light;
+          @media (max-width: $grid-float-breakpoint) {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+
+  .presidium-landing-lead {
+    margin-top: 60px;
+    text-align: center;
+    background-color: $landing-theme;
+    box-shadow: $landing-box-shadow-down;
+
+    .presidium-landing-lead-title {
+      margin: 20px auto;
+      display: block;
+      width: 80vw;
+      max-width: 780px;
+      img {
+        margin: 30px 0;
+        width: 100%;
+      }
+      div.punchline {
+        color: $landing-dark;
+        text-align: center;
+        font-size: 4.1vw;
+        font-weight: bold;
+        @media (min-width: 1000px) {
+          font-size: 30pt;
+        }
+      }
+      div.overview {
+        text-align: left;
+        color: $landing-light;
+        font-size: 12pt;
+        line-height: 1.3;
+        @media (min-width: 1000px) {
+          font-size: 18pt;
+        }
+      }
+    }
+
+    .presidium-landing-lead-actions {
+      margin: 40px 0;
+      .btn {
+        font-weight: bold;
+        padding: 6px 36px;
+      }
+      .btn-primary {
+        @include button-variant($landing-theme, $landing-light, $landing-light);
+        border: 2px solid $landing-light;
+        margin-right: 20px;
+      }
+
+      .btn-info {
+        @include button-variant($landing-light, $landing-theme, $landing-light);
+        border: 2px solid $landing-light;
+        margin-left: 20px;
+      }
+    }
+
+  }
+
+  .presidium-landing-benefits {
+    background-color: $landing-light;
+    margin-top: 4em;
+    margin-bottom: 4em;
+    line-height: 150%;
+    .benefit {
+      padding: 0 10px;
+      height: 120px;
+      @media (max-width: $grid-float-breakpoint) {
+        height: auto;
+      }
+      p {
+        color: $landing-med;
+        font-size: 12pt;
+        &:first-child {
+          color: $brand-info;
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .presidium-landing-running {
+    box-shadow: $landing-box-shadow-up, $landing-box-shadow-down;
+    z-index: 10;
+    background-color: $landing-theme;
+    padding: 40px 0;
+    .quick-start {
+     .title {
+       font-size: 21pt;
+       font-weight: bold;
+       color: $landing-dark;
+     }
+     .term {
+        background-color: $landing-dark;
+        padding: 20px;
+        max-width: 680px;
+
+        p {
+          overflow-wrap: break-word;
+          word-wrap: break-word;
+          margin-bottom: 0px;
+          font-family: "Courier New", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+          font-weight: bold;
+          font-size: 12pt;
+
+          .cmd-1 {
+            color: $landing-cmd-1;
+          }
+          .cmd-2 {
+            color: $landing-cmd-2;
+          }
+          .cmd-3 {
+            color: $landing-cmd-3;
+          }
+          .cmd-4 {
+            color: $landing-cmd-4;
+          }
+        }
+      }
+    }
+
+    .more-info {
+      :first-child {
+        margin-top: 20px;
+        @media (min-width: $screen-lg-min)  {
+          margin-top: 110px;
+        }
+      }
+      p {
+        line-height: 0.8;
+        color: $landing-light;
+        font-weight: bold;
+        a {
+          color: $landing-action;
+        }
+
+      }
+
+    }
+  }
+
+  .presidium-landing-tools {
+    background-color: $landing-light;
+    margin: 20px 0;
+    .tools-intro {
+      margin: 20px 0;
+      p {
+        font-size: 12pt;
+        color: $landing-med;
+        &:first-child {
+          color: $brand-info;
+          font-weight: bold;
+        }
+      }
+    }
+    .tool-icons {
+      text-align: center;
+      img {
+        height: 110px;
+      }
+    }
+  }
+
+  .presidium-landing-footer {
+    width: 100%;
+    //margin-top: 10px;
+    height: 60px;
+    color: $landing-grey;
+    background-color: $landing-dark;
+    box-shadow: $landing-box-shadow-up;
+    display: inline-block;
+    .credit {
+      float: left;
+      margin-left: 20px;
+      margin-top: 18px;
+    }
+    img {
+      height: 30px;
+      margin-top: 15px;
+    }
+    .copyright {
+      float: right;
+      margin-right: 20px;
+      margin-top: 18px;
+    }
+  }
+}
+

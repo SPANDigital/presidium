@@ -8,10 +8,11 @@
 # - show: Hide or show article components. Defaults to true
 # - external: Links to external sources
 #
-name: Presidium
-#baseurl: /presidium
+#name:
+baseurl: /presidium-test/
+images: /presidium-test/media/images
 footer: SPAN Digital
-logo: media/images/logo.png
+logo: /presidium-test/media/images/logo.png
 show:
   status: false
   author: false
@@ -19,7 +20,7 @@ external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 
 include-nested-articles: true
-cname: presidium.spandigital.net
+#cname: presidium.spandigital.net
 #scripts:
 #  - xxx-xxx.js
 
@@ -31,6 +32,7 @@ cname: presidium.spandigital.net
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
+sections-baseurl: /presidium-test/docs/
 sections:
   - title: "Overview"
     url: "/"
@@ -56,7 +58,7 @@ sections:
 #    collection: best-practices
 
 #  - title: "Reference"
-#    url: "/reference/"
+#    url: "/docs/reference/"
 #    collection: reference
 
   - title: "Recipes"
