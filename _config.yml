@@ -51,10 +51,10 @@ sections:
     collection: getting-started
     collapsed: true
 
-#  - title: "Best Practices"
-#    url: "/best-practices/"
-#    collection: best-practices
-
+  - title: "Best Practices"
+    url: "/best-practices/"
+    collection: best-practices
+    
 #  - title: "Reference"
 #    url: "/reference/"
 #    collection: reference

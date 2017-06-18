@@ -1,10 +1,7 @@
 ---
-title: Separate Repositories
+title: Hosting as a Sub-module
 author: torabisu
-roles: Developer
 ---
-
-# Separate Repositories
 
 If you wish to keep your documentation stored in a separate repository, but still use it within your project, you can use git submodules:
 

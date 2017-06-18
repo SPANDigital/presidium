@@ -1,11 +1,10 @@
 ---
-title: Single Repository
+title: Hosting in a Shared Repo
 author: torabisu
-roles: Developer
 ---
 
-Presidium does not have to be hosted in a repository of its own.  It can exist within your software project in a 
-sub folder, e.g. `/docs`
+Presidium does not have to be hosted in a repository of its own.  It can exist within a sub folder, e.g. `/docs` in your existing software project Repo.
+
 
 ## Getting Presidium
 
@@ -28,11 +27,11 @@ package.json
 
 Add the following to your project's `.gitignore` file:
 
-```bash
-$ echo "docs/node_modules/" >> .gitignore
-$ echo "docs/.jekyll/" >> .gitignore
-$ echo "docs/dist/" >> .gitignore
-$ echo "docs/dist/.versions" >> .gitignore
+```
+docs/node_modules/
+docs/.jekyll/
+docs/dist/
+docs/dist/.versions
 ```
 
-From this point onwards you can follow the getting started guide, where your documentation root is simply in `/docs`.
+From this point onwards you can follow the getting started guide. The only difference is that your documentation root is `/docs`.
