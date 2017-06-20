@@ -27,7 +27,7 @@ cname: presidium.spandigital.net
 #
 #
 # Menu Structure
-#
+# - secions-baseurl: Optional base url if sections are to be hosted in a sub path to the baseurl.
 # - tile: Menu item title
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
