@@ -21,4 +21,4 @@ simply enable or disable the following setting in the `site config`:
 
 ```
 show-status: true|false
-```‰
+```

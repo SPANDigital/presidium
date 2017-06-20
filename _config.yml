@@ -8,10 +8,11 @@
 # - show: Hide or show article components. Defaults to true
 # - external: Links to external sources
 #
-name: Presidium
-#baseurl: /presidium
+#name:
+baseurl: /
+images: /media/images
 footer: SPAN Digital
-logo: media/images/logo.png
+logo: /media/images/logo.png
 show:
   status: false
   author: false
@@ -26,11 +27,12 @@ cname: presidium.spandigital.net
 #
 #
 # Menu Structure
-#
+# - secions-baseurl: Optional base url if sections are to be hosted in a sub path to the baseurl.
 # - tile: Menu item title
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
+sections-baseurl: /docs/
 sections:
   - title: "Overview"
     url: "/"
@@ -56,7 +58,7 @@ sections:
 #    collection: best-practices
 
 #  - title: "Reference"
-#    url: "/reference/"
+#    url: "/docs/reference/"
 #    collection: reference
 
   - title: "Recipes"

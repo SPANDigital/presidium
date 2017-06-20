@@ -1,7 +1,6 @@
 ---
 title: Separate Repositories
 author: torabisu
-roles: Developer
 ---
 
 # Separate Repositories
