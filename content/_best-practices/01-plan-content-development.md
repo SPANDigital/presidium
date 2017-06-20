@@ -20,7 +20,3 @@ We have found that the following outline plan is useful for small and large proj
 # Discussion 
 
 Your most important task in planning your activities is to identify the scope of your documentation efforts. This is best started by understanding the needs of your audience. Presidium is preconfigured with standard sections commonly found in software documentation, these can be used to help guide your initial scoping efforts.
-
-# See Also
-
-* [REPLACE WITH a link description](http://www.google.com) 

@@ -23,12 +23,6 @@ First Decide which of the pre-configured sections are not required for your cont
 | Tools             | A list of tools and services that can be used with this solution
 | Updates           | New releases, patches or other announcements of interest to the user community. 
 
-
-
 # Discussion 
 
 Once you have identified the sections you want to use for your documentation, define the learning objectives for each section. Compile a comprehensive list of learning objectives. 
-
-# See Also
-
-* [REPLACE WITH a link description](http://www.google.com) 
