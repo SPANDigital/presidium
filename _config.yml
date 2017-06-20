@@ -9,7 +9,7 @@
 # - external: Links to external sources
 #
 #name:
-baseurl: /
+#baseurl: /
 images: /media/images
 footer: SPAN Digital
 logo: /media/images/logo.png
