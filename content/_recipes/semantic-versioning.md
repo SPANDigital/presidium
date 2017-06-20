@@ -100,5 +100,3 @@ $ npm run gh-pages
 1. Turning off versioning does not prevent access to the version if the url is known.
 1. Currently, only publishing to Github pages is supported.
 1. If the use of a CNAME is disabled, it is not removed from `.versions` on a subsequent republish.
-1. When running Presidium locally the following error is reported: `../versions.json' not found.` on the console.
-
