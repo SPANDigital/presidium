@@ -27,10 +27,11 @@
     "install": "presidium install",
     "build": "presidium build",
     "start": "presidium start",
+    "develop": "presidium develop",
     "gh-pages": "presidium gh-pages",
     "validate": "presidium validate"
   },
   "devDependencies": {
-    "presidium-core" : "^0.1.7"
+    "presidium-core" : "^0.1.8"
   }
 }
