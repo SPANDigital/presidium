@@ -1,0 +1,123 @@
+---
+title: Configuration
+---
+
+Configuration for presidum 
+
+Defaults
+#
+# Site Metadata
+#
+# - name: Site name
+# _ baseurl: Optional URL to use where documentation is hosted in a subdirectory `domain.com/{baseurl}`
+# - footer: Footer copy
+# - logo: Menu bar logo
+# - show: Hide or show article components. Defaults to true
+# - external: Links to external sources
+#
+name: Presidium
+baseurl: /docs/presidium-test
+footer: SPAN Digital
+logo: media/images/logo.png
+show:
+  status: true
+  author: true
+external:
+  authors-url: https://github.com/
+
+include-nested-articles: true
+#cname: presidium-test.spandigital.net
+scripts:
+  - presidium-enterprise.js
+
+#
+#
+# Menu Structure
+#
+# - tile: Menu item title
+# - path: Path to generated article collection
+# - collection: The collection to use for generating a sub menu of articles (optional).
+#
+sections:
+  - title: "Overview"
+    url: "/"
+    collection: overview
+    collapsed: true
+
+#  - title: "Key Concepts"
+#    url: "/key-concepts/"
+#    collection: key-concepts
+
+  - title: "Prerequisites"
+    url: "/prerequisites/"
+    collection: prerequisites
+
+  - title: "Getting Started"
+    url: "/getting-started/"
+    collection: getting-started
+    collapsed: true
+
+  - title: "Reference"
+    url: "/reference/"
+    collection: reference
+    export-all: true
+
+  - title: "Glossary"
+    url: "/glossary/"
+    collection: glossary
+    export-articles: true
+
+  - title: "Recipes"
+    url: "/recipes/"
+    collection: recipes
+
+#  - title: "Tools"
+#    url: "/tools/"
+#    collection: tools
+#
+  - title: "Support"
+    url: "/support/"
+    collection: support
+    collapsed: true
+
+  - title: "Updates"
+    url: "/updates/"
+    collection: updates
+
+#
+# Jekyll collections
+#
+collections:
+    best-practices:
+    getting-started:
+    key-concepts:
+    glossary:
+    overview:
+    prerequisites:
+    recipes:
+    reference:
+    testing:
+    tools:
+    typical-scenarios:
+    support:
+    updates:
+
+#
+# Optional filters that may be used to filter articles by role.
+#
+roles:
+  label: "Show documentation for"
+  all: "All Roles"
+  options:
+    - "Business Analyst"
+    - "Developer"
+    - "Tester"
+
+# Optional support for versioning.
+versioned: true
+
+#
+# Sass settings
+#
+sass:
+    sass_dir: media/css/_sass
