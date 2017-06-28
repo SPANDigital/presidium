@@ -32,10 +32,10 @@ cname: presidium.spandigital.net
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
 #
-sections-baseurl: /docs/
+#sections-baseurl: /docs/
 sections:
   - title: "Overview"
-    url: "/"
+    url: "/overview"
     collection: overview
     collapsed: true
 
@@ -57,9 +57,9 @@ sections:
     url: "/best-practices/"
     collection: best-practices
     
-#  - title: "Reference"
-#    url: "/docs/reference/"
-#    collection: reference
+  - title: "Reference"
+    url: "/reference/"
+    collection: reference
 
   - title: "Recipes"
     url: "/recipes/"
@@ -78,6 +78,10 @@ sections:
   - title: "Updates"
     url: "/updates/"
     collection: updates
+
+  - title: "Glossary"
+    url: "/glossary/"
+    collection: glossary
 
 #
 # Jekyll collections
