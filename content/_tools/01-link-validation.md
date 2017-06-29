@@ -42,3 +42,7 @@ BROKEN:         /recipes/structure/#incorrect-anchor
 ```sh
 WARNING:        /recipes/structure is missing a trailing '/'
 ```
+
+# Known Issues:
+
+1. The link validator will currently mark any assets served out of `/media` as BROKEN.
