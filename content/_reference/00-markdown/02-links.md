@@ -12,7 +12,7 @@ External link: <https://github.com/SPANDigital/presidium>
 
 Alternative: [Presidium on Github](https://github.com/SPANDigital/presidium)
 
-
+{% raw %}
 ```md
 Internal link: [Presidium Authors]({{site.baseurl}}/recipes/#authors)
 
@@ -20,3 +20,4 @@ External link: <https://github.com/SPANDigital/presidium>
 
 Alternative: [Presidium on Github](https://github.com/SPANDigital/presidium)
 ```
+{% endraw %}
