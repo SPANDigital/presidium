@@ -16,6 +16,8 @@ Automatic tooltips reference glossary entries. If a glossary article by the name
 
 # Link Override
 
-You may also supply an internal article as a source for a tooltip. Presidium will use the article's first paragraph to construct the tooltip. You are required to ensure, however, that the first paragraph is semantically sufficient to be used as a tooltip. Note that the text used for the demarcation of a tooltip need not match the article title.
+You may also supply an internal article as a source for a tooltip. Presidium will use the article's first paragraph to construct the tooltip. You are required to ensure, however, that the first paragraph is semantically sufficient to be used as a tooltip. Note that the text used for the demarcation of a tooltip need not match the article title like [the following text on article templates]({{site.baseurl}}/best-practices/#use-article-templates 'presidium-tooltip').
 
-[Article Templates]({{site.baseurl}}/best-practices/#use-article-templates 'presidium-tooltip')
+```md
+[the following text on article templates]({{site.baseurl}}/best-practices/#use-article-templates 'presidium-tooltip')
+```
