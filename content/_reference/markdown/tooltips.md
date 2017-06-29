@@ -1,5 +1,0 @@
----
-title: Headers
----
-
-Tooltip reference

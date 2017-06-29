@@ -1,5 +1,0 @@
----
-title: Headers
----
-
-sample tables...
