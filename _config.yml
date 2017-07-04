@@ -51,7 +51,7 @@ sections:
   - title: "Getting Started"
     url: "/getting-started/"
     collection: getting-started
-    collapsed: true
+    collapsed: false
 
   - title: "Best Practices"
     url: "/best-practices/"
