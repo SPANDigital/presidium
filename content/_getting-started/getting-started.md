@@ -1,6 +1,9 @@
+<!--
 ---
 title: Setting up your First Site
 ---
+This has been broken up into bitesized pieces to make it easier for someone to get started.
+-->
 
 # Create a New Site
 1. Download and extract the [sample template](https://github.com/SPANDigital/presidium-template)
