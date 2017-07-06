@@ -32,3 +32,11 @@ $ git commit --allow-empty --m "Initialize gh-pages"
 $ git push -u origin gh-pages
 $ git checkout master
 ```
+
+# Update .gitignore
+
+Presidium uses a hidden folder as a staging area for publishing. To make sure you don't accidentally commit this run the following command:
+
+```sh
+$ echo ".versions" >> .gitignore
+```
