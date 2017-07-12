@@ -38,7 +38,7 @@ Present a set of clear steps to explain how todo something useful or unusual wit
 
 ## Glossary
 
-Bite-sized pieces of knowledge that explain a concept, resolve jargon, or lists multiple synonyms for a particular term. Since all content here can be used for automatic tooltip generation, a useful yardstick here is to ensure the content can reasonably fulfill the role of a tooltip without verbosity or introducing confusion.
+Bite-sized pieces of knowledge that explain a concept, resolve jargon, or lists multiple synonyms for a particular term. Since all content in the Glossary can be used for automatic tooltip generation, a useful yardstick here is to ensure the content can reasonably fulfill the role of a tooltip without verbosity or introducing confusion.
 
 ## More
 

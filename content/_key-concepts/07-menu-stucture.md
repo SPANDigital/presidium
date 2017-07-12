@@ -1,12 +1,12 @@
 ---
-title: Menu Structure & Behaviour
+title: Menu Structure & Behavior
 ---
 
 # Structure
 
-The menu structure and associated directory structure are the same. for simplicity and transparency. Content reuse across a site is overrated. focus on creating a meaningful simple default navigation structure where articles have one and only one home.
+For simplicity and transparency, the menu structure and associated directory structure are the same.
 
-# Behaviour
+# Behavior
 
 A significant feature of the menu, is that it has a tree structure: each **section or subsection is a node**, and all content is simply a traversal from this node through its children. A convention that Presidium applies, is that the node ‘name’ or title then becomes the main header of the page and everything outside of that sub-tree is not presented on the page. In this example, Content Structure has been clicked on, the content shown is everything that falls under that section:
 
