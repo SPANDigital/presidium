@@ -2,6 +2,6 @@
 title: Inside Presidium
 ---
 
-It's a static website generator with fancy Javascript for navigation and bells a whistles. but its good enough for most uses. We keep it static to make it easy to publish using github as a platform. you don't need to ask permission or get a server setup. you can do it now, today.
+Presidium at face value is simply a static website generator built on Jekyll that includes React components for features like navigation and search. Using this model Presidium optimizes for the common case, where users ultimately want to start publishing their content quickly and painlessly. Being static allows Presidium to make the job of publishing easier - you don't need to provision a server, you can host your documentation in a matter of seconds on Github Pages. 
 
-Its more than a framework. Its a framework built around a process. Yes it's opinionated, but its good enough, and who wants to spend time documenting code? Software documentation that doesn't suck is not just a tagline.
+However, its more than a framework. Its a framework built around a process. And, yes it's opinionated, but informed - who wants to spend time documenting code? Software documentation that doesn't suck is not just a tagline.
