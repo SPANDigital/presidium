@@ -6,7 +6,7 @@ Presidium provides workflows templates and tools for building and managing a sta
 All user documentation for a system may be written in markdown and built into a static site using 
 Presidium as illustrated:
 
-![Documentation Workflow](/media/images/doc-workflow.png "Documentation Workflow")
+![Documentation Workflow]({{ site.baseurl }}/media/images/doc-workflow.png "Documentation Workflow")
 *High-level Workflow and Dependencies*
 
 
