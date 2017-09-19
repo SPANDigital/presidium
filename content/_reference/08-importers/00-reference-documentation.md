@@ -11,7 +11,7 @@ system being documented.
 
 Presidium will provide support for the following documentation sources:
 - [javadoc comments](#javadoc)
-- jsdoc comments (under development)
-- swagger api (under development)
+- [jsdoc comments](#jsdoc)
+- [swagger api](#swagger)
 
 For other sources that do not yet have an importer, documentation can be [embedded](#embed) into references.

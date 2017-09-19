@@ -1,9 +1,20 @@
+<!--
 ---
 title: Setting up your First Site
 ---
+This has been broken up into bitesized pieces to make it easier for someone to get started.
+-->
 
 # Create a New Site
 1. Download and extract the [sample template](https://github.com/SPANDigital/presidium-template)
+2. Run the following from your project directory to install required dependencies:
+
+```sh
+$ npm install
+```
+
+# Use an Existing Presidium Site
+1. Clone the git repository.
 2. Run the following from your project directory to install required dependencies:
 
 ```sh
