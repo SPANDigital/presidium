@@ -1,5 +1,5 @@
 ---
-title: Documentation Workflow
+title: Presidium Workflow
 ---
 
 Presidium provides workflows templates and tools for building and managing a static technical documentation site.
@@ -9,13 +9,12 @@ Presidium as illustrated:
 ![Documentation Workflow]({{ site.baseurl }}/media/images/doc-workflow.png "Documentation Workflow")
 *High-level Workflow and Dependencies*
 
-
 # Content Owners
 
- - Write and structure their articles and user documentation in a `git` repo
- - Include media assets (images, attachments) as required
- - Include reference documentation sources as required
- - Configure and publish their site
+ - Write and structure their articles and user documentation in a `git` repo.
+ - Include media assets (images, attachments) as required.
+ - Include reference documentation sources as required.
+ - Configure and publish their site.
  
 # Presidium
 
@@ -32,6 +31,6 @@ Presidium as illustrated:
     - [Jekyll](https://jekyllrb.com/) integration and workflows via `npm`
     - Reference documentation import:
       - Javadoc
-      - Swagger (under development)
-      - JSDoc (under development)
+      - Swagger
+      - JSDoc
     - Linting and validation tools

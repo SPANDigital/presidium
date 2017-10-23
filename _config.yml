@@ -42,7 +42,7 @@ sections:
   - title: "Key Concepts"
     url: "/key-concepts/"
     collection: key-concepts
-    collapsed: true
+    collapsed: false
 
   - title: "Prerequisites"
     url: "/prerequisites/"
