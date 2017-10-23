@@ -4,6 +4,17 @@
 <!doctype html>
 <html lang="en">
 <head>
+    {% if site.google-analytics.enabled %}
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google-analytics.id }}"></script>
+        <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', '{{ site.google-analytics.id }}');
+        </script>
+    {% endif %}
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{site.baseurl}}/media/images/favicon.ico" type="image/X-icon">

@@ -111,6 +111,13 @@ collections:
 #    - "Tester"
 
 #
+# Google Analytics ID
+#
+google-analytics:
+  enabled: true
+  id: UA-43395313-4
+
+#
 # Sass settings
 #
 sass:
