@@ -1,5 +1,6 @@
 ---
-title:  Benefitsauthor:  virtualtraveler
+title:  Benefits
+author:  virtualtraveler
 ---
 # Easy Install
 
