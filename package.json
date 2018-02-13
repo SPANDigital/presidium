@@ -32,6 +32,6 @@
     "validate": "presidium validate"
   },
   "devDependencies": {
-    "presidium-core" : "^0.1.9"
+    "presidium-core": "^0.1.9"
   }
 }
