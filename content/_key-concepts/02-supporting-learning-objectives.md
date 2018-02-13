@@ -2,7 +2,7 @@
 title: Presidium's Learning Model
 ---
 
-Presidium is not only a framework for producing documentation. It asks you to think about, structure, author and publish content according to sensible pedagogical best practices.
+Presidium is more than a framework for producing documentation. It asks you to think about, structure, author and publish content according to sensible pedagogical best practices.
 In this way, you will write effective documentation and not produce documentation for documentation's sake.
 
 # Supporting Learning Objectives & Efficiency
@@ -34,7 +34,7 @@ Store content here that enriches or supports anything from other sections: impor
 
 ## Recipes
 
-Present a set of clear steps to explain how todo something useful or unusual with your product or service.
+Present a set of clear steps that explain how to do something useful or unusual with your product or service.
 
 ## Glossary
 

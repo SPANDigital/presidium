@@ -2,7 +2,11 @@
 title: Overview
 ---
 
-Front Matter serves two purposes, it denotes that the file should be included as an article in the build process, and, it alows you to set properties on your article. For example:
+Front Matter serves two purposes:
+* Indicates that the file should be included as an article in the build process
+* Allows you to set properties for your article
+
+For example:
 
 {% raw %}
 ```md
@@ -15,11 +19,11 @@ status: Draft
 ```
 {% endraw %}
 
-Front matter variables available for use in Presidium are listed below:
+Presidium includes the following front matter variables:
 
 | variable                                       | description |
 |------------------------------------------------|-------------|
-|title | A string representing the article title, or [the title of the subsection]({{ site.baseurl }}/recipes/content-structure/#directory-structure). |
+|title | A string representing the article or subsection title or [the title of the subsection]({{ site.baseurl }}/recipes/content-structure/#directory-structure). |
 |[author]({{ site.baseurl }}/reference/front-matter/#authors)   | A string, generally the Github username of the main author of the article. |
-|[roles]({{ site.baseurl }}/reference/front-matter/#user-roles) | A list of strings representing the roles best associated with an article. |
-|[status]({{ site.baseurl }}/reference/front-matter/#statuses)  | A string indicating whether the article is complete, in progress or needing review etc. |
+|[roles]({{ site.baseurl }}/reference/front-matter/#user-roles) | A list of strings representing the appropriate roles for an article. |
+|[status]({{ site.baseurl }}/reference/front-matter/#statuses)  | A string that indicates the status of the article (draft, complete, in progress, etc.) |
