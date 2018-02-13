@@ -1,7 +1,6 @@
 ---
-title:  Features
+title: Features
 ---
-
 
 Presidium is an open source software documentation management system for agile teams, and their users. 
  

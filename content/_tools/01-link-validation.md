@@ -1,5 +1,5 @@
 ---
-title:  Link Validation
+title: Link Validation
 ---
 A **link** **validation** tool is provided so that you can validate all the links in your site.
 The tool will indicate which links are valid, broken and/or external and will provide a warning for potentially broken links.

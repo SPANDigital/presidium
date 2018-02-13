@@ -1,7 +1,7 @@
 ---
-title:  Benefits
-author:  virtualtraveler
+title: Benefits
 ---
+
 # Easy Install
 
 Presidium uses Github pages to publish content. If you have access to Github and [Github Pages](https://pages.github.com/) is turned on for your site, then you have everything you need. Write your content, commit changes, and it's published automatically. It really is that easy.
