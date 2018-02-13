@@ -1,14 +1,12 @@
 ---
 title: Link Validation
 ---
-
-A link validation tool is provided so that you can validate all the links in your site. 
+A **link** **validation** tool is provided so that you can validate all the links in your site.
 The tool will indicate which links are valid, broken and/or external and will provide a warning for potentially broken links.
-
 
 # Run Link Validator
 
-```sh
+```
 $ npm run validate
 ```
 
@@ -16,30 +14,29 @@ $ npm run validate
 
 The validator tool will produce the following output for each unique link found in your site:
 
-
 ## Valid Links:
 
-```sh
+```
 VALID:          /recipes/structure/
 VALID:          /recipes/structure/#nested-articles
 ```
 
 ## External Links:
 
-```sh
+```
 EXTERNAL:       http://bootswatch.com/
 ```
 
 ## Broken Links:
 
-```sh
+```
 BROKEN:         /broken-link
 BROKEN:         /recipes/structure/#incorrect-anchor
 ```
 
 ## Potentially Broken Links:
 
-```sh
+```
 WARNING:        /recipes/structure is missing a trailing '/'
 ```
 
