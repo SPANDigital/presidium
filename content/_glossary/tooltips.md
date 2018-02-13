@@ -2,4 +2,4 @@
 title: Tooltips
 ---
 
-This is an example of a Glossary entry that will be used as a tooltip.
+This is an example of a Glossary entry linked to from [here]({{site.baseurl}}/reference/markdown/#tooltips).
