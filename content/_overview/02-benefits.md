@@ -19,7 +19,7 @@ This Presidium documentation site not only explains the Presidium software but a
 
 # Easy Content Maintenance
 
-Presidium is designed to make it easy to write *and* maintain your documentation. Instead of one vast document, Presidium manages a directory structure of micro-articles. The directory structure maps to the sections of your site, while the articles are joined together to build the content of each section. You can create a directory to add new sections and sub-sections. Each section contains a sample article template you can use as a starting point when creating new content. This site explains other [best practices]({{site.base_url}}/best-practices/) for writing articles.
+Presidium is designed to make it easy to write *and* maintain your documentation. Instead of a monolithic document, Presidium manages a directory structure of micro-articles. The directory structure maps to the sections of your site, while the articles are joined together to build the content of each section. You can create a directory to add new sections and sub-sections. Each section contains a sample article template you can use as a starting point when creating new content. This site explains other [best practices]({{site.base_url}}/best-practices/) for writing articles.
 
 If you know how to  maintain a codebase in a Github repository, you already know how to maintain Presidium documentation. You can use your team's current Github workflow to manage the approval and publication process and use Github’s features to handle merge conflicts and other issues, just as you do for your source code.
 
