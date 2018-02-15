@@ -4,7 +4,9 @@ title: Landing Page
 
 # Configure
 
-If you wish for your documentation to have a landing page, you can achieve this by editing your `_config.yml`, so that no section has `/` as its url:
+If you want your documentation to have a landing page, edit your `_config.yml`, so that no section has `/` as its url.
+
+Change this:
 
 ```yml
   - title: "Overview"
@@ -13,7 +15,7 @@ If you wish for your documentation to have a landing page, you can achieve this 
     collapsed: true
 ```
 
-becomes:
+to this:
 
 ```yml
   - title: "Overview"
@@ -22,10 +24,9 @@ becomes:
     collapsed: true
 ```
 
-# Create A Landing Page
+# Create a Landing Page
 
-In the root of `./content` add a file called `index.html`, the example below is excerpt from Presidium's landing page. Take note of the front matter at the top,
-this is required so that paths are rendered correctly.
+In the root of `./content`, add a file called `index.html`. The example below is an excerpt from Presidium's landing page. Note the front matter at the top which is required for paths to be rendered correctly.
 
 {% raw %}
 ```html
@@ -45,7 +46,7 @@ this is required so that paths are rendered correctly.
 
 # Create & Resolve Links
 
-Create links to content, and resolve them by including the `baseurl` in the path:
+Create links to content and resolve them by including the `baseurl` in the path:
 
 {% raw %}
 ```html
