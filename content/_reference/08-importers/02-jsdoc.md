@@ -2,7 +2,7 @@
 title: Jsdoc
 ---
 
-Presidium includes a template-based tool ( [presidium-jsdoc](https://www.npmjs.com/package/presidium-jsdoc), based off of [Jsdoc](http://usejsdoc.org/)) to import Javascript comments into your Presidium documentation.
+Presidium includes a template-based tool, [presidium-jsdoc](https://www.npmjs.com/package/presidium-jsdoc), based off of [Jsdoc](http://usejsdoc.org/)) to import Javascript comments into your Presidium documentation.
 
 1. Add the [presidium-jsdoc](https://www.npmjs.com/package/presidium-jsdoc) dependency to your site's `package.json` or run `npm install --save presidium-jsdoc`.
 1. Add a script that invokes the tool.
