@@ -3,7 +3,7 @@ title:  Features
 ---
 
 
-Presidium is an open source software documentation creation system for Agile teams and their users.
+Presidium is an open-source software documentation creation system for Agile teams and their users.
 
 Presidium is easy to install and configure, supports flexible content authoring and publishing workflows, and includes predefined article templates to quickly you get off and running.  Using Presidium a team can:
 * Develop new content
@@ -22,7 +22,7 @@ Presidium provides the features you need without the bloat of many commercial so
   - Ingestion of markedup source code and API specs allow you to reuse existing documentation investments.
 
 - **Filtering by Role**
-  - Define user roles and filter site content by a specific selected role
+  - Define user roles and filter site content by a specific selected role.
 
 - **Link Checking**
   - Make sure your links actually go somewhere!
