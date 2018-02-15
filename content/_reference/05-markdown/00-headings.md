@@ -2,7 +2,7 @@
 title: "Headings & Emphasis"
 ---
 
-Heading are indicated in Markdown with a hash.
+Heading are indicated with a hash.
 
 # Heading 1
 

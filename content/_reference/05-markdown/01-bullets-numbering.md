@@ -2,9 +2,9 @@
 title: "Bullets & Numbering"
 ---
 
-Markdown allows bullets and numbering to be nested:
+Markdown allows bullets and numbering to be nested.
 
-Use bullets when listing unordered items.
+Use bullets to list unordered items.
 
 # Bullets
 
@@ -24,7 +24,7 @@ Use bullets when listing unordered items.
 
 # Numbering
 
-Use a numbered list when describing steps in a process. You can number the list yourself, or allow Presidium to do numbering automatically:
+Use a numbered list for steps that should be done in order. You can number the list yourself or have Presidium do the numbering automatically:
 
 1. One
 1. Two

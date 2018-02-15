@@ -18,7 +18,7 @@ Unusual content can be included in blockquotes, which always begin with a closed
   - List in blockquote
 ```
 
-# Other Examples:
+# Other Examples
 
 > <span class="glyphicon glyphicon-list-alt"/> **TODO**:
 
