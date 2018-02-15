@@ -2,7 +2,7 @@
 title: Configure
 ---
 
-# Update Variables In _config.yml
+# Update Variables in _config.yml
 
 Presidum supports the use of simple variables in `_config.yml`. To use versioning, you must make sure that any helper variables that include the base url of your site are defined using a `${...}` variable.
 
@@ -19,7 +19,7 @@ baseurl: /myRepositoryName
 code_examples: /myRepositoryName/media/code_examples
 ```
 
-Be careful not to introduce circular dependencies when using variables.
+Make sure you don't introduce circular dependencies when using variables.
 
 # Set the Base URL & Turn on Versioning
 
