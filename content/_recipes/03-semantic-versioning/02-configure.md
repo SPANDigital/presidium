@@ -4,25 +4,26 @@ title: Configure
 
 # Update Variables In _config.yml
 
-Presidum supports the use of simple variables in `_config.yml`. In order to use versioning you must make sure that any helper variables that include the base url of your site are defined using a `${...}` variable. For example, this is incorrect:
+Presidum supports the use of simple variables in `_config.yml`. To use versioning, you must make sure that any helper variables that include the base url of your site are defined using a `${...}` variable.
+
+For example, this is correct:
+
+```yaml
+baseurl: /myRepositoryName
+code_examples: ${baseurl}/media/code_examples
+```
+This is incorrect:
 
 ```yaml
 baseurl: /myRepositoryName
 code_examples: /myRepositoryName/media/code_examples
 ```
 
-This is correct:
+Be careful not to introduce circular dependencies when using variables.
 
-```yaml
-baseurl: /myRepositoryName
-code_examples: ${baseurl}/media/code_examples
-```
+# Set the Base URL & Turn on Versioning
 
-Be careful to not introduce circular dependencies with the use of variables.
-
-# Set The Base Url & Turn On Versioning
-
-In order to use Presidium versioning on `gh-pages`, you are required to use the base url of the repository. You must ensure that this is set in `_config.yml` in the root of your project:
+To use Presidium versioning on `gh-pages`, you must use the base url of the repository. Make sure that this is set in `_config.yml` in the root of your project. (Note the lack of a trailing slash.)
 
 ```yaml
 baseurl: /myRepositoryName
@@ -31,5 +32,3 @@ baseurl: /myRepositoryName
 # Optional Support For Versioning
 versioned: true
 ```
-
-Note the lack of a trailing slash.
