@@ -3,7 +3,7 @@ title: Code Blocks
 ---
 
 To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language directly after the first set of backticks.
-Alternatively, simply indent your code / machine output to treat as preformatted text. For single line inline code, use a single backtick.
+Alternatively, you can indent your code / machine output to treat it as preformatted text. For single line inline code, use a single backtick.
 
 # Javascript
 
@@ -43,4 +43,4 @@ int * my_func(int * in) {
 
 # Others
 
-Github-flavoured Markdown supports many languages for code blocks, a full list may be found on [Github](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml).
+Github-flavoured Markdown supports many languages for code blocks. For a full list, go to [Github](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml).

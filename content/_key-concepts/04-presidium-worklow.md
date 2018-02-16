@@ -3,8 +3,8 @@ title: Presidium Workflow
 ---
 
 Presidium provides workflows templates and tools for building and managing a static technical documentation site.
-All user documentation for a system may be written in markdown and built into a static site using 
-Presidium as illustrated:
+As shown below, all user documentation for a system can be written in Markdown and built into a static site using
+Presidium:
 
 ![Documentation Workflow]({{ site.baseurl }}/media/images/doc-workflow.png "Documentation Workflow")
 *High-level Workflow and Dependencies*
@@ -15,16 +15,16 @@ Presidium as illustrated:
  - Include media assets (images, attachments) as required.
  - Include reference documentation sources as required.
  - Configure and publish their site.
- 
+
 # Presidium
 
   - Provides:
-    - Base templates, styling and themes
+    - Base templates, styling, and themes
     - Common UI components
-    - Build Workflows via `npm`:
+    - Build workflows via `npm`:
       - Import
       - Build
-      - Serve 
+      - Serve
       - Publish
       - Version
       - Dependencies
@@ -33,4 +33,4 @@ Presidium as illustrated:
       - Javadoc
       - Swagger
       - JSDoc
-    - Linting and validation tools
+    - Linking and validation tools

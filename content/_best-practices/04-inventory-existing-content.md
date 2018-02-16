@@ -3,22 +3,25 @@ title: Inventory Existing Content
 author: virtualtraveler
 ---
 
-When starting a documentation initiative it is advisable to review existing content. In most cases it is possible to identify  content that can be re-purposed. Content can be obtained from a variety of sources:  
+When starting a new documentation project, you should first review and evaluate existing content. Content from multiple sources, such as those listed below, can be repurposed:
 
 - Existing software documentation
 - Wikis and message boards
-- Design documents 
-- Work tickets (Epics and Stories, Bugs)
+- Design documents
+- Work tickets (epics and stories, bugs)
 - API specifications  
 - README files
 - Code comments and markup
 - Help files
-- emails
+- Emails
 - Meeting notes
-- Project planning materials 
+- Project planning materials
 
-Compile a list of existing content sources and identify how each item could be decomposed or converted into an article. Identify where these articles fit in your documentation structure. 
+Before starting:
+1. Compile a list of existing content sources.
+2. Identify how each item could be decomposed or converted into an article.
+3. Identify where these articles can fit in your documentation structure.
 
-# Discussion 
+# Discussion
 
-Unless someone has already created a comprehensive set of documentation that you can start from you will typically find that some areas have been well documented while others are poorly defined or even missing altogether. Expect to find duplicate and outdated content. Keep a list of the best documentation you have found for any learning objective.  
+If there is no existing documentation set, some areas will be well documented, while others will either be poorly defined or missing. Expect to find duplicate and outdated content. Maintain a list of the best documentation you find for any learning objective.  

@@ -2,10 +2,9 @@
 title: "User Roles"
 ---
 
-Various roles can be added to a site to allow readers to filter by a target audience. 
-Articles and menu items are filtered based on the selected role. 
+Various roles can be added to a site to allow readers to filter articles and menu items by a target audience.  
 
-This is an optional feature that can be enabled by defining user roles in the `site config`
+This optional feature can be enabled by defining user roles in the `site config`.
 
 ```
 roles:
@@ -19,9 +18,9 @@ roles:
 ```
 
 
-If a role is not specified, an article defaults to `roles.all`.
+If a role is not specified, articles default to `roles.all`.
 
-Articles may have one or more roles defined in article `front matter`:
+Articles can have one or more roles defined in `front matter`:
 
 ```
 ---

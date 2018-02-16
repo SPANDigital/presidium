@@ -2,7 +2,7 @@
 title: Host
 ---
 
-The simplest way to publish a github repository is to use Github Pages, but you can also host the generated site on any Web server.
+The simplest way to publish a Github repository is to use Github Pages, but you can also host the generated site on any web server.
 
 ## On Github Pages
 

@@ -26,7 +26,7 @@ This can be simplified by removing extra spaces, hyphens, and bars.
 
 # In HTML
 
-Markdown tables support single-line cells. For multi-line content, use an HTML table:
+Markdown tables support single-line cells. For multi-line content, use an HTML table.
 
 <table>
     <thead>

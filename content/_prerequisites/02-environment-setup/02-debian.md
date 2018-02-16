@@ -1,7 +1,7 @@
 ---
 title: Debian
 ---
-The following script may be used to provision a Debian based environment:
+The following script can be used to provision a Debian based environment:
 
 ```sh
 #!/bin/bash
