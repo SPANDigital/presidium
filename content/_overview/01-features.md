@@ -16,7 +16,7 @@ Presidium provides the features you need without the bloat of many commercial so
   - The left navigation menu is dynamically created every time you publish your site. Various options are available to control navigation behavior.
 
 - **Versioning**
-  - Support for multiple documentation versions. You can easily switch between versions without losing context.  
+  - Support for multiple documentation versions. You can easily switch between versions without losing context.
 
 - **Markup Ingestion**
   - Ingestion of markedup source code and API specs allow you to reuse existing documentation investments.

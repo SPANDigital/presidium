@@ -1,8 +1,6 @@
 ---
-title:   Run
+title: Run
 ---
-
-
 
 To start your site, run the following from your project folder:
 ```sh
