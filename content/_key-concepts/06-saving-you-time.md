@@ -20,7 +20,7 @@ Read more [here]({{site.baseurl}}/reference/importers/).
 
 # Publishing & Versioning
 
-* [Publishing]({{site.baseurl}}/getting-started/#host): A simple command line utility to publish straight to your repository's Github pages.
+* [Publishing]({{site.baseurl}}/recipes/hosting/): A simple command line utility to build and publish your documentation on Github Pages or Bitbucket.
 * [Versioning]({{site.baseurl}}/recipes/versioning/): A way to easily provide multiple versions of your documentation.
 
 # More
