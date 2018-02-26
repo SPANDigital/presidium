@@ -2,7 +2,7 @@
 title: "Statuses"
 ---
 
-Each article may be assigned a status to track its lifecycle:
+Each article can be assigned a status to track its lifecycle:
 
 - draft
 - review
@@ -16,8 +16,7 @@ status: draft|review|published|retired
 ---
 ```
 
-To enable or disable statuses from showing on your generated site, 
-simply enable or disable the following setting in the `site config`:
+To show or hide statuses on your generated site, use the following setting in the `site config`:
 
 ```
 show-status: true|false

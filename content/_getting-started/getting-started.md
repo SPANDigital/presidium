@@ -7,7 +7,7 @@ This has been broken up into bitesized pieces to make it easier for someone to g
 
 # Create a New Site
 1. Download and extract the [sample template](https://github.com/SPANDigital/presidium-template)
-2. Run the following from your project directory to install required dependencies:
+2. Run the following from your project directory to install the required dependencies:
 
 ```sh
 $ npm install
@@ -15,7 +15,7 @@ $ npm install
 
 # Use an Existing Presidium Site
 1. Clone the git repository.
-2. Run the following from your project directory to install required dependencies:
+2. Run the following from your project directory to install the required dependencies:
 
 ```sh
 $ npm install
@@ -36,17 +36,17 @@ This will build your site to `dist/site` and serve it locally on: [http://localh
 
 # Edit Content
 
-Once your site is up and running, you can start making changes to the following files and folders:
+After your site is up and running, you can start making changes to the following files and folders:
 
 - `content/` Content folder for all your articles
-- `media/` Media folder for static assets such as images, attachments or css
+- `media/` Media folder for static assets such as images, attachments, or css
 - `_config.yml` Site configuration properties
 
-Updates to content, media or css can be made without having to restart the local server. 
-Structural or changes to configuration currently require a server restart.
+Updates to content, media, or css can be made without having to restart the local server. 
+Structural or configuration changes currently require a server restart.
 
 # Publish your Site
-The simplest way to publish a github repository is to use Github Pages, but you can also host the generated site on any Web server.
+The simplest way to publish a github repository is to use Github Pages, but you can also host the generated site on any web server.
 ## To Github Pages
 To publish using Github Pages, commit and push your site to a Github repository and run the following:
 ```sh

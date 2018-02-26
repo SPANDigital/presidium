@@ -3,26 +3,33 @@ title: Design Documentation Structure
 author: virtualtraveler
 ---
 
-Before starting to write content it is best to define the structure of your documentation. How many sections should it have?, what should each section cover?, should some sections have sub-sections. Answering these questions helps to scope the work ahead and define the content that needs to be found or written. While you should decide on the structure of your site at the start be prepared to change it as you gain a deeper understanding of your content. With Presidium it is easy to move artciles between directories.
+Before starting to write content, you should define the documentation structure to answer questions such as:
+* How many sections do I need?
+* What should each section cover?
+* Do some sections need sub-sections?
 
-Presidium comes pre-configured with a standard menu structure that you can use to start scoping your documentation. You can add new sections to Presidum but we have found that the standard section are usually adequate. 
+Answering these and other questions will help you scope the project and define the content that needs to be found or written.
 
-First Decide which of the pre-configured sections are not required for your content. 
+Keep in mind that although you should decide on the structure of your site at the beginning, you might need to make changes as you gain a deeper understanding of the content. With Presidium, it's easy to change the structure by moving articles.
 
-| Section           | Description of Content|
+Presidium is pre-configured with a standard menu structure that you can use to start scoping your documentation. You can add new sections but in most cases, the standard sections will suffice.
+
+Review the following table to decide which of the pre-configured sections you will need:
+
+| Section           | Description|
 |-------------------|-----------------------|
-| Overview          | Brief business-level overview of the solution with an explanation of the main benefits vs alternative solutions.
-| Key Concepts      | Introductory description of the key concepts, components, and structures of the solution that detail each component's role and responsibilities. 
-| Prequisites       | Description of the knowledge, skills, and software needed to sucessfully use the solution.
-| Getting Started   | Description of how to get started using the solution
-| Best Practices    | A recommended approach that should be followed when using this solution.
-| Reference         | Detailed descriptions explaining the usage of each part of the solution. Usually arranged by conceptual area. This section contains the main technical content of the site. APIs, Data structures etc. 
-| Recipes           | A solution for a specific problem or way to achieve achieves a specific objective. Recipes are used to show a user how to do something. 
-| Glossary          | A list of definitions for terms with specific meanings in the solution documentation.
-| Use Cases         | How the components of the solution work together to enable commonly implemented scenarios, with code examples.
-| Tools             | A list of tools and services that can be used with this solution
-| Updates           | New releases, patches or other announcements of interest to the user community. 
+| Overview          | A brief, business-level overview of the solution that includes the main benefits vs. alternative solutions.
+| Key Concepts      | Introductory descriptions of the solution's key concepts, components, and structures that include roles and responsibilities for the component.
+| Prerequisites       | A summary of the required knowledge, skills, and software to successfully use the solution.
+| Getting Started   | Information on how to get started using the solution.
+| Best Practices    | The recommended approach for using the solution.
+| Reference         | Information on the technical content of the site. APIs, data structures, etc. Reference material should also include detailed descriptions of how to use each part of the solution, arranged by conceptual area.
+| Recipes           | A solution for a specific problem or a way to achieve a specific objective. Recipes are used to show a user how to do something.
+| Glossary          | A list of definitions for terms that have specific meanings in the solution documentation.
+| Use Cases         | Descriptions of how the solution's components  work together to enable commonly implemented scenarios. Use cases should include code examples.
+| Tools             | A list of tools and services that can be used with the solution.
+| Updates           | New releases, patches, or other announcements of interest to the user community.
 
-# Discussion 
+# Discussion
 
-Once you have identified the sections you want to use for your documentation, define the learning objectives for each section. Compile a comprehensive list of learning objectives. 
+After you have identified the sections you want to use for your documentation, define and compile a list of the learning objectives for each section.

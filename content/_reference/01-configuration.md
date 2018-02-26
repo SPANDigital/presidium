@@ -2,7 +2,7 @@
 title: Configuration
 ---
 
-This is an example configuration file for Presidium:
+This is a sample Presidium configuration file:
 
 ```yml
 #

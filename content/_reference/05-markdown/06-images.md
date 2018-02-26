@@ -6,7 +6,7 @@ title: Images
 
 ## Fully Resolved
 
-Place any images you wish to include in `<project root>/media/images` directory and reference them in the text. Note the exclamation point.
+Put any images you want to include in the `<project root>/media/images` directory and reference them in the text. Note the exclamation point.
 The image path may be fully resolved:
 
 {% raw %}
@@ -41,10 +41,10 @@ images: ${site.baseurl}/media/images
 
 ## Captions
 
-To include a caption, follow an image link with a `*Caption*`, e.g.:
+To include a caption, add  `*Caption*` after an image link. For example:
 
 {% raw %}
-```markdown 
+```markdown
 ![Sample Image With Caption]({{site.baseurl}}/media/images/logo.png)
 *Sample Image With Caption*
 ```

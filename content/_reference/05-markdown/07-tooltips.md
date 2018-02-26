@@ -2,11 +2,13 @@
 title: Tooltips
 ---
 
-Tooltips provide a quick definition for an item. There are two ways of creating tooltip: automatically from the glossary, and via a link override.
+Tooltips display a short definition of an item. There are two ways to create tooltips:
+* Automatically from the Glossary
+* Via a link override
 
 # Automatic Tooltips
 
-Automatic tooltips reference glossary entries. If a glossary article by the name of "Tooltips" exists, then a tooltip will be available for the following item:
+Automatic tooltips reference Glossary entries. If a Glossary article by the name of "Tooltips" exists, a tooltip will be available for the following item:
 
 [Tooltips](# 'presidium-tooltip')
 
@@ -16,7 +18,7 @@ Automatic tooltips reference glossary entries. If a glossary article by the name
 
 # Link Override
 
-You may also supply an internal article as a source for a tooltip. Presidium will use the article's first paragraph to construct the tooltip. You are required to ensure, however, that the first paragraph is semantically sufficient to be used as a tooltip. Note that the text used for the demarcation of a tooltip need not match the article title, like [this,]({{site.baseurl}}/best-practices/#use-article-templates 'presidium-tooltip') which links to an article on templates.
+You can use an internal article as the source of a tooltip. Presidium will use the first paragraph of the article to construct the tooltip, so you should make sure the text will work as a tooltip. Note that the text used for the demarcation of a tooltip does not need to match the article title, like [this,]({{site.baseurl}}/best-practices/#use-article-templates 'presidium-tooltip') which links to an article on templates.
 
 {% raw %}
 ```md

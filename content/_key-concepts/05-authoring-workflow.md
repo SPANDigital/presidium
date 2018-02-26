@@ -2,33 +2,32 @@
 title: Authoring Workflow
 ---
 
-The suggested workflow for authoring content using Presidium is as follows:
+The following workflow is recommended for authoring content using Presidium.
 
-# Take Ownership
+# Identify the Author
 
-Whether you're creating a single article or an entire section, make sure you include the author tag in the front matter.
+Whether you're creating a single article or an entire section, make sure to include the author tag in the front matter.
 
 # Work Locally
 
-Presidium encourages you to write documentation and review it locally on your machine. There are many benefits to this as opposed to making changes directly on Github:
+Presidium encourages you to write and review documentation on your local machine, rather than making changes directly on Github. The advantages to this workflow are:
 
-* Changes are immediately viewable.
-* You can leverage Presidium's validation tools.
-* Git commit history has less noise.
+* Changes are immediately viewable
+* You can leverage Presidium's validation tools
+* Git commit history will have less noise
 
 # Protect Master
 
-If you own the documentation project, ensure that you prevent other members from making commits, or pushing to, the Master branch.
-This is the branch you should be publishing from so you'll want to maintain its integrity.
+If you own the documentation project, make sure you prevent others from making commits or pushing to the Master branch. You will be publishing from the Master branch, so you want to maintain its integrity.
 
 # Work On a Branch
 
-If you're adding new content, start out on a branch based off of develop.
+If you're adding new content, start out on a branch based off of Develop.
 
 # Review
 
-Changes should be submitted as Pull Requests. Review all changes and merge into your develop branch, tag the release as a release for verification.
+Changes should be submitted as Pull Requests. Review all changes and merge into your Develop branch, then tag the release as a release for verification.
 
 # Tag, Release & Publish
 
-Once you're happy with the new content, merge it into Master, tag it as a release, and then publish to github pages.
+After you've finalized the new content, merge it into Master, tag it as a release, then publish to Github pages.

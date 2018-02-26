@@ -2,27 +2,27 @@
 title:  Time Saving Features
 ---
 
-Presidium ships with tools to make it easier for you to compose, verify and publish your documentation:
+Presidium includes tools to make it easier to compose, verify, and publish your documentation.
 
 # Importers
 
-Presidium currently supports automatic ingestion of:
+Presidium supports the automatic ingestion of the following into your documentation project:
 
 * Javadoc
 * Jsdoc
 * Swagger
 
-into your documentation project. Read more [here]({{site.baseurl}}/reference/importers/). 
+Read more [here]({{site.baseurl}}/reference/importers/).
 
 # Validation
 
-* [Link Validation]({{site.baseurl}}/tools/) - alerts you to broken links in your documentation.
+* [Link Validation]({{site.baseurl}}/tools/): Finds broken links in your documentation.
 
 # Publishing & Versioning
 
-* [Publishing]({{site.baseurl}}/getting-started/#host) - simple command line utility to publish straight to yur repository's Github Pages.
-* [Versioning]({{site.baseurl}}/recipes/versioning/) - effortlessly provide multiple versions of your documentation.
+* [Publishing]({{site.baseurl}}/recipes/hosting/): A simple command line utility to build and publish your documentation on Github Pages or Bitbucket.
+* [Versioning]({{site.baseurl}}/recipes/versioning/): A way to easily provide multiple versions of your documentation.
 
 # More
 
-Many more features are yet to come!
+Many more features are in the pipeline!

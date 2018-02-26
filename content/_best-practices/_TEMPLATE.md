@@ -5,7 +5,7 @@
 # 3) Delete this line and all lines above so that the front matter below is at the top of the file. 
 ---
 title: REPLACE WITH Best Practice Title
-author: REPLACE WITH github-username
+author: REPLACE WITH repository-username
 ---
 
 REPLACE WITH a summary paragraph of the recommended practice.
