@@ -1,8 +1,8 @@
 ---
-title: Run
+title: Run Presidium
 ---
 
-To start your site, run the following from your project folder:
+Run the following from your project folder to start your site:
 ```sh
 $ npm start
 ```

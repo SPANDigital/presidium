@@ -1,6 +1,5 @@
 ---
-title: Hosting as a Sub-module
-author: torabisu
+title: Sub Module
 ---
 
 If you want to store your documentation in a separate repository but still use it within your project, you can use Git submodules:

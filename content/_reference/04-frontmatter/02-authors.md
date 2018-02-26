@@ -16,6 +16,11 @@ external:
   authors-url: https://github.com/orgs/SPANDigital/people/
 ```
 
+```
+external:
+  authors-url: https://bitbucket.org/
+```
+
 To hide or show authors on your generated site,
 enable or disable the component in the `site config`:
 

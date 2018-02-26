@@ -1,10 +1,14 @@
 ---
-title: Install
+title: Install Required Dependencies
 ---
 
-1. Download and extract the [sample template](https://github.com/SPANDigital/presidium-template).
-2. Run the following from your project directory to install the required dependencies:
+Run the following from your project directory to install the required dependencies:
 
 ```sh
 $ npm install
 ```
+
+> If you get an error, make sure you have the following [prerequisites](/prerequisites/) installed in your environment:
+- npm v3.10+
+- ruby v2.1+
+- bundler v1.14.3+

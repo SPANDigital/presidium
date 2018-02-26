@@ -1,5 +1,5 @@
 ---
-title: Create
+title: Update Content
 ---
 
 After your site is up and running, you can start making changes to the following files and folders:

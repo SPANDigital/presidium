@@ -5,7 +5,7 @@
 # 3) Delete this line and all lines above so that the front matter below is at the top of the file.
 ---
 title: "REPLACE WITH the latest semantic version number XX.YY.ZZ"
-author: "REPLACE WITH github-username"
+author: "REPLACE WITH username"
 publication-date: "<YYYY-MM-DD>"
 ---
 
