@@ -1,6 +1,6 @@
 # Presidium
 
-[Presidium](http://presidium.spandigital.net) is a software documentation management system for Agile teams and their users made from the stuff software engineers love. Presidium uses familiar tools already in use by many software development teams to easily compose and publish and manage quality documentation.
+[Presidium](http://presidium.spandigital.net) is a software documentation management system for agile teams and their users made from the stuff software engineers love. Presidium uses familiar tools already in use by many software development teams to easily compose and publish and manage quality documentation.
 
 Read Presidium's [documentation](http://presidium.spandigital.net/overview/) for details on all features and for help on setting up a new project using the [sample template](https://github.com/SPANDigital/presidium-template).
 
