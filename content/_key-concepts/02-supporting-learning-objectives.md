@@ -6,7 +6,7 @@ Presidium is more than a framework for producing documentation. It asks you to t
 
 # Supporting Learning Objectives & Efficiency
 
-Presidium recommends creating small 'micro' articles that convey enough information to fulfill a learning objective. Small articles are advantageous because they:
+Presidium recommends creating small micro-articles that convey enough information to fulfill a learning objective. Small articles are advantageous because they:
 * Usually only require a single author
 * Force the author to focus on effectively describe a single concept
 * Enable authors to quickly add documentation while also working on a product or service.
