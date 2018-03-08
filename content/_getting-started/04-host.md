@@ -1,5 +1,5 @@
 ---
-title: Publish your Site
+title: Publish Your Site
 ---
 
 Presidium builds a static website in the `dist/site` directory which may be hosted by [any web server]({{site.baseurl}}/recipes/hosting/#custom-hosting).
