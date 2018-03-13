@@ -2,4 +2,4 @@
 title: Download the Template
 ---
 
-Download and extract the [sample template](https://github.com/SPANDigital/presidium-template).
+Download the [sample template](https://github.com/SPANDigital/presidium-template) and extract the contents to a working directory.
