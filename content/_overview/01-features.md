@@ -11,19 +11,18 @@ Presidium is based on sound theoretical strategies for developing learning conte
 
 Presidium supports:
 
-* **Automatic menus**: The left navigation menu is dynamically created every time you publish your site. Various options are available to control navigation behavior. [Menu Structure ]({{site.baseurl}}/key-concepts/#menu-structure-and-behavior)
+* [Automatic Menus]({{site.baseurl}}/key-concepts/#menu-structure-and-behavior): The left navigation menu is dynamically created every time you publish your site.
 
-* **Versioning**: Support for multiple documentation versions. You can easily switch between versions without losing context. [Versioning]({{site.baseurl}}/recipes/versioning/)
+* [Versioning]({{site.baseurl}}/recipes/versioning/): Support for multiple documentation versions. You can easily switch between versions without losing context.
 
-* **Markup Ingestion**: Ingestion of markedup source code and API specs allow you to reuse existing documentation investments. [Importers]({{site.baseurl}}/reference/importers/)
+* [Documentation Importers]({{site.baseurl}}/reference/importers/): Import documentation from source code and specs using the [Swagger]({{site.baseurl}}/reference/importers/#swagger), [JSDoc]({{site.baseurl}}/reference/importers/#javadoc) and [JSDoc]({{site.baseurl}}/reference/importers/#jsdoc) importers.
 
-* **Filtering by Role**: Define user roles and filter site content by a specific selected role. [User Roles]({{site.baseurl}}/reference/front-matter/#user-roles)
+* [Theming]({{site.baseurl}}/reference/#themes): Easily select and modify [Bootswatch](https://bootswatch.com/) themes that meet your brand requirements.
 
-* **Link Checking**: Make sure your links actually go somewhere! [Link Validation]({{site.baseurl}}/tools/)
+* [Role Filtering]({{site.baseurl}}/reference/front-matter/#user-roles): Define user roles and filter site content by a specific selected role.
 
-* **Article Status Tracking**: Track the status of an article and manage simple authoring workflow. [Statuses]({{site.baseurl}}/reference/#directories)
+* [Article Status Tracking]({{site.baseurl}}/reference/#directories): Track the status of an article and manage simple authoring workflows.
 
-* **Themes**: Easily select and modify [Bootswatch](https://bootswatch.com/) themes that meet your brand requirements. [Themes]({{site.baseurl}}/reference/#themes)
-
+* [Link Validation]({{site.baseurl}}/tools/): Make sure your links actually go somewhere!
 
 Presidium was created by [SPAN Digital](http://www.spandigital.com) and is licensed under [Apache 2.0](/updates/#license)
