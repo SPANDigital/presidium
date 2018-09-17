@@ -15,7 +15,7 @@ Presidium supports:
 
 * [Versioning]({{site.baseurl}}/recipes/versioning/): Support for multiple documentation versions. You can easily switch between versions without losing context.
 
-* [Documentation Importers]({{site.baseurl}}/reference/importers/): Import documentation from source code and specs using the [Swagger]({{site.baseurl}}/reference/importers/#swagger), [JSDoc]({{site.baseurl}}/reference/importers/#javadoc) and [JSDoc]({{site.baseurl}}/reference/importers/#jsdoc) importers.
+* [Documentation Importers]({{site.baseurl}}/reference/importers/): Import documentation from source code and specs using the [Swagger]({{site.baseurl}}/reference/importers/#swagger), [Javadoc]({{site.baseurl}}/reference/importers/#javadoc) and [JSDoc]({{site.baseurl}}/reference/importers/#jsdoc) importers.
 
 * [Theming]({{site.baseurl}}/reference/#themes): Easily select and modify [Bootswatch](https://bootswatch.com/) themes that meet your brand requirements.
 
