@@ -9,6 +9,10 @@ Presidium gives Agile teams a way to evangelize, explain, and support solutions 
 
 Presidium is based on sound theoretical strategies for developing learning content and managing knowledge assets. The core of this approach is the development of specific focused micro-articles that explain individual concepts. Predefined article templates and a menu structure get you up and running quickly.
 
+In addition to the template for software documentation, Presidium includes templates for:
+* On-boarding
+* Design systems
+
 Presidium supports:
 
 * **Automatic menus**: The left navigation menu is dynamically created every time you publish your site. Various options are available to control navigation behavior. [Menu Structure ]({{site.baseurl}}/key-concepts/#menu-structure-and-behavior)

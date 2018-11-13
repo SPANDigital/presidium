@@ -2,4 +2,21 @@
 title: Download the Template
 ---
 
-Download and extract the [sample template](https://github.com/SPANDigital/presidium-template).
+Presidium includes templates for:
+* Software documentation
+* On-boarding
+* Design systems
+
+Download the desired template and extract the contents to a working directory. Or, just run:
+
+```sh
+$ git clone https://github.com/SPANDigital/presidium-template.git
+```
+
+```sh
+$ git clone https://github.com/SPANDigital/presidium-template-onboarding.git
+```
+
+```sh
+$ git clone https://github.com/SPANDigital/presidium-template-design.git
+```
