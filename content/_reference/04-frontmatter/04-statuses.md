@@ -19,5 +19,6 @@ status: draft|review|published|retired
 To show or hide statuses on your generated site, use the following setting in the `site config`:
 
 ```
-show-status: true|false
+show:
+    status: true|false
 ```

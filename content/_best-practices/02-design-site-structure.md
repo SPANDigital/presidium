@@ -12,9 +12,9 @@ Answering these and other questions will help you scope the project and define t
 
 Keep in mind that although you should decide on the structure of your site at the beginning, you might need to make changes as you gain a deeper understanding of the content. With Presidium, it's easy to change the structure by moving articles.
 
-Presidium is pre-configured with a standard menu structure that you can use to start scoping your documentation. You can add new sections but in most cases, the standard sections will suffice.
+The Presidium templates are pre-configured with a standard menu structure that you can use to start scoping your documentation. You can add new sections but in most cases, the standard sections will suffice.
 
-Review the following table to decide which of the pre-configured sections you will need:
+The following table shows the pre-configured sections in the software documentation template:
 
 | Section           | Description|
 |-------------------|-----------------------|

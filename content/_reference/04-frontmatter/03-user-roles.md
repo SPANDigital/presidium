@@ -39,3 +39,10 @@ roles: [Developer]
 roles: Business Analyst
 ---
 ```
+
+To show or hide roles on articles in your generated site, use the following setting in the `site config`:
+
+```
+show:
+    roles: true|false
+```
