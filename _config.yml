@@ -32,6 +32,10 @@ cname: presidium.spandigital.net
 # - tile: Menu item title
 # - path: Path to generated article collection
 # - collection: The collection to use for generating a sub menu of articles (optional).
+# - external-url:
+#     href: URL of a section that opens up an external site
+#     new-tab: Whether the external-url should open up in a new tab (optional - defaults to true)
+# - scope: Optional scope for all articles in section [internal|external]
 #
 #sections-baseurl: /docs/
 sections:
