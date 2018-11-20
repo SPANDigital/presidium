@@ -1,14 +1,14 @@
 ---
-title: Install Required Dependencies
+title: Install Dependencies
 ---
 
-Run the following from your project directory to install the required dependencies:
+Install the required dependencies by running the following command from your working directory:
 
 ```sh
 $ npm install
 ```
 
-> If you get an error, make sure you have the following [prerequisites](/prerequisites/) installed in your environment:
+> Make sure you have the following [prerequisites](/prerequisites/) installed if you encounter any errors:
 - npm v3.10+
 - ruby v2.1+
 - bundler v1.14.3+

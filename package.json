@@ -1,6 +1,6 @@
 {
   "name": "presidium",
-  "version": "0.1.9",
+  "version": "0.2.1",
   "description": "A Jekyll based project using Presidium technical documentation templates.",
   "license": "Apache-2.0",
   "homepage": "http://presidium.spandigital.net/",
@@ -32,6 +32,6 @@
     "validate": "presidium validate"
   },
   "devDependencies": {
-    "presidium-core" : "^0.1.30"
+    "presidium-core": "^0.1.38"
   }
 }
