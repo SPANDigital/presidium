@@ -1,0 +1,5 @@
+{{ define "content" }}
+    {{ range .Data.Pages }}
+    {{ partial "article" . }}
+    {{ end }}
+{{ end }}

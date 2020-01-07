@@ -1,0 +1,28 @@
+<!-- 
+== if site.article-edit-dropdowns ==
+<div class="article-edit-menu">
+    == for item in site.article-edit-dropdowns ==
+    == if item.url_variable ==
+    <a data-url-variable="--item.url_variable--"
+       style="display:none"
+       class="dropdown-item"
+       onclick="--item.onclick | default: (0)--"
+       href="--item.href | default: 'javascript:void(0)'--">
+        <div class="-- item.icon_class --"></div>
+        <div class="label">-- item.label --</div>
+    </a>
+    == else ==
+    <a class="dropdown-item"
+       onclick="--item.onclick | default: (0)--"
+       href="--item.href | default: 'javascript:void(0)'--">
+        <div class="-- item.icon_class --"></div>
+        <div class="label">-- item.label --</div>
+    </a>
+    == endif ==
+
+    == endfor ==
+</div>
+== endif ==
+ -->
+
+

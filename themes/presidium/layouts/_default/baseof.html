@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/X-icon">
+    <title>{{ block "title" . }}{{ .Site.Title }} {{ with .Params.Title }} | {{ . }}{{ end }}{{ end }}</title>
+    {{ .Hugo.Generator }}
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/presidium.css" type="text/css" media="all"/>
+
+</head>
+<body>
+
+<!-- == if site.enterprise ==
+    <div data-key="-- site.enterprise.key --"
+         data-title="-- site.enterprise.name --"
+         id="presidium-enterprise"
+         class="presidium-enterprise">
+        == include enterprise-placeholder.html ==
+    </div>
+== endif == -->
+
+<div id="presidium-navigation">
+    {{ partial "navigation-placeholder.html" .}}
+</div>
+<div id="presidium-container" class="container-fluid">
+    <div class="row">
+        <div id="presidium-content" class="col-lg-10 col-md-12">
+            <h1 class="page-title">{{ .Title }}</h1>
+            <hr/>
+            <section>
+                {{ partial "info.html" }}
+                {{ block "content" . }}
+                {{ end }}
+                {{ .Content }}
+            </section>
+            {{ partial "footer.html" }}
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+</div>
+
+{{ partial "modal.html" }}
+
+<!-- Components -->
+<script src="/js/presidium.js"></script>
+<script>
+    window.presidium.config = {
+        name: "-- site.name --",
+        baseurl:  "-- site.baseurl --",
+        brandurl:  "-- site.brandurl --",
+        repourl:  "-- site.repourl --"
+    }
+    // window.presidium['versions'] = { siteroot: "-- site.siteroot --" };
+    window.presidium['versions'] = { siteroot: "/" };
+    window.presidium.menu.load(== include menu.json ==, 'presidium-navigation');
+    window.presidium.tooltips.load({ "baseurl": "-- site.baseurl --" });
+</script>
+
+<!-- == if site.enterprise.script ==
+<script src="-- site.enterprise.script | append: script | replace: '//','/'--"></script>
+== endif ==
+
+== for script in site.scripts ==
+<script src="-- site.baseurl | append: '/media/js/' | append: script | replace: '//','/'--"></script>
+== endfor == -->
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+#presidium-content {
+
+  //Article Images
+  img {
+    max-width: 100%;
+    display: block;
+    padding: 10px;
+    margin: 10px auto 5px auto;
+    border: 1px solid $table-border-color;
+    border-radius: 0;
+
+    &.scalable {
+      cursor: pointer;
+    }
+
+    // Markdown Caption Conventions
+    + em {
+      display: block;
+      text-align: center;
+      margin-bottom: 5px;
+    }
+
+  }
+}
+
+#presidium-modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.85);
+
+  @media (max-width: $grid-float-breakpoint) {
+    margin-top: 55px;
+    padding-top: 55px;
+  }
+
+  .modal-close {
+    position: fixed;
+    top: 15px;
+    right: 6%;
+
+    @media (max-width: $grid-float-breakpoint) {
+      margin-top: 55px;
+      top: 15px;
+    }
+
+    span {
+      color: white;
+      font-size: 30px;
+      font-weight: bold;
+      line-height: 1;
+      text-shadow: 0 1px 0 #000;
+      opacity: 0.6;
+      filter: alpha(opacity=60);
+      &:hover, &:focus {
+        text-decoration: none;
+        cursor: pointer;
+        opacity: 0.9;
+        filter: alpha(opacity=90);
+      }
+    }
+  }
+
+  img {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    padding: 10px;
+    background-color: white;
+
+    @media (max-width: $grid-float-breakpoint) {
+      max-width: 200%;
+    }
+  }
+
+  .modal-caption {
+    color: white;
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+    text-align: center;
+    padding: 10px 0;
+    height: 150px;
+  }
+
+}

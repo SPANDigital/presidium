@@ -1,0 +1,94 @@
+/* These settings inherit largely from the selected theme, and are overridable in each project's _variables.scss. */
+
+/* Misc. */
+$tooltip-cursor: help;
+$tooltip-text-color: $text-color;
+$tooltip-box-shadow: 0px 0px 5px 5px rgba(218, 218, 218, 1);
+$tooltip-animation: all 0.3s ease-in-out;
+$tooltip-hover-delay: 1s;
+$tooltip-y-overflow: auto;
+$tooltip-background: $popover-bg;
+
+/* Tooltip term styling. */
+$tooltip-border-bottom-color: $brand-info;
+$tooltip-border-bottom-line: 1px dashed;
+
+/* Height and width. */
+$tooltip-max-height: $popover-max-width;
+$tooltip-width: $popover-max-width;
+
+/* Triangle styles. */
+$tooltip-triangle-border-top: 8px solid #FFFFFF;
+$tooltip-triangle-border-right: 8px solid transparent;
+$tooltip-triangle-border-left: 8px solid transparent;
+$tooltip-triangle-margin-left: -8px;
+$tooltip-triangle-left: 50%;
+$tooltip-triangle-top: -20%;
+
+.tooltips-term {
+  position: relative;
+  display: inline-block;
+  border-bottom: $tooltip-border-bottom-line $tooltip-border-bottom-color;
+  font-style: normal;
+  cursor: $tooltip-cursor;
+  color: $tooltip-text-color;
+  text-decoration: none;
+
+  .tooltips-text {
+    p {
+      padding: 10px;
+    }
+    visibility: collapse;
+    position: absolute;
+    opacity: 0;
+    height: auto;
+    max-height: $tooltip-max-height;
+    width: $tooltip-width;
+    font-style: normal;
+    background: $tooltip-background;
+    -webkit-box-shadow: $tooltip-box-shadow;
+    -moz-box-shadow: $tooltip-box-shadow;
+    box-shadow: $tooltip-box-shadow;
+    color: $tooltip-text-color;
+    text-align: left;
+    border-radius: 6px;
+    bottom: 120%;
+    padding: 5px;
+    margin-left: -165px;
+    z-index: $zindex-popover;
+
+    -webkit-transition: $tooltip-animation;
+    -moz-transition: $tooltip-animation;
+    -ms-transition: $tooltip-animation;
+    -o-transition: $tooltip-animation;
+    transition: $tooltip-animation;
+  }
+  &:hover .tooltips-text {
+    transition-delay: $tooltip-hover-delay;
+    -webkit-transition-delay: $tooltip-hover-delay;
+    -ms-transition-delay: $tooltip-hover-delay;
+    -o-transition-delay: $tooltip-hover-delay;
+    visibility: visible;
+    overflow-y: $tooltip-y-overflow;
+    opacity: 1;
+  }
+  &:hover {
+    color: $tooltip-text-color;
+    text-decoration: none;
+  }
+}
+
+.tooltips-term::after {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 0;
+  top: $tooltip-triangle-top;
+  left: $tooltip-triangle-left;
+  z-index: $zindex-popover;
+  margin-left: $tooltip-triangle-margin-left;
+  border-top: $tooltip-triangle-border-top;
+  border-right: $tooltip-triangle-border-right;
+  border-left: $tooltip-triangle-border-left;
+}
+

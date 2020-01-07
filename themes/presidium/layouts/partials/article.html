@@ -1,0 +1,20 @@
+<div class="article" data-roles="--article-roles--">
+    <span class="anchor" id="--article-slug--" data-id="--article-id--"></span>
+    <div class='article-title == if site.repo.edit == edit == endif =='>
+        <h2>
+            {{ .Title }} {{ partial "edit-link.html" }}
+        </h2>
+        <div class="permalink">
+            <a class="link-icon" href="--article-url--" title="Permalink to this article"></a>
+        </div>
+    </div>
+
+    <!-- == if article.roles or site.show.author and article.author ==
+    <div class="article-header">
+        == include author.html == == include status.html == == include roles.html ==
+    </div>
+    == endif == -->
+
+    <article>{{ .Content }}</article>
+    <hr/>
+</div>

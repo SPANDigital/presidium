@@ -1,0 +1,60 @@
+<div data-reactroot="" id="presidium-scrollable-container" class="scrollable-container">
+    <nav>
+        <div class="navbar-header">
+            <a href="{{ .Site.BaseURL }}" class="brand">
+                <img src="{{ .Site.BaseURL }}images/logo.png" alt="">
+            </a>
+            <!-- react-text: 6 -->
+            <!-- /react-text -->
+            <button class="toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-items">
+            <!-- react-text: 13 -->
+            <!-- /react-text -->
+            {{ $currentPage := . }}
+            <ul>
+                {{ range .Site.Menus.Main }}
+                <li class="menu-parent_{{ .Title }}">
+                        <div class="menu-row level-one">
+                            <div class="menu-expander"></div>
+                            <div class="menu-title">
+                                <a data-id="content/_overview/" href="{{ .Permalink }}">{{ .Title }}</a>
+                            </div>
+                        </div>
+                    </li>                    
+                {{ end }}
+                <li class="menu-parent_overview">
+                    <div class="menu-row  level-one">
+                        <div class="menu-expander"></div>
+                        <div class="menu-title">
+                            <a data-id="content/_overview/" href="/overview">Overview</a>
+                        </div>
+                    </div>
+                    
+                    <ul class="hidden">
+                        <li class="">
+                            <div class="menu-row  level-two">
+                                <div class="menu-expander"></div>
+                                <div class="menu-title">
+                                    <a data-id="content/_overview/01-features.md" href="#the-big-picture">The Big Picture</a>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="presidium-js-version" style="text-align: center; color: rgb(167, 165, 165); margin-top: 10px; font-size: 12px;">
+                    <!-- react-text: 476 -->v
+                    <!-- /react-text -->
+                    <!-- react-text: 477 -->0.2.1
+                    <!-- /react-text -->
+                </li>
+            </ul>
+        </div>
+    </nav>
+</div>

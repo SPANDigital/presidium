@@ -1,0 +1,20 @@
+baseURL: "http://example.org/"
+languageCode: "en-us"
+title: "Presidium"
+theme: "presidium"
+pluralizelisttitles: "false"
+sectionPagesMenu: "main"
+menu:
+  main:
+    - identifier: overview
+      name: Overview
+      url: /overview
+      weight: 1
+    - identifier: key-concepts
+      name: Key Concepts
+      url: /key-concepts
+      weight: 2
+    - identifier: best-practices
+      name: Best Practices
+      url: /best-practicies
+      weight: 3
