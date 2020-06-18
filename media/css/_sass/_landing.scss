@@ -47,6 +47,63 @@ $landing-box-shadow-up: 0px -2px 4px $landing-shadow;
       float: right;
 
       .link {
+        position: relative;
+        height: 40px;
+        cursor: pointer;
+
+        &.dropdown {
+          cursor: default;
+          ul {
+            padding-top: 8px;
+            padding-left: 0;
+            visibility: hidden;
+            opacity: 0;
+            margin-top: 1rem;
+            display: none;
+            background-color: $landing-dark;
+            position: absolute;
+
+            &:hover {
+              visibility: visible;
+              opacity: 1;
+              display: block;
+              span:hover {
+                color: $brand-info;
+              }
+            }
+
+            span {
+              padding-left: 0;
+            }
+
+            li {
+              padding: 3px 10px;
+              display: block;
+              white-space: nowrap;
+
+              &.header {
+                text-align: center;
+                :hover {
+                  cursor: default;
+                  color: $landing-light;
+                }
+                span {
+                  font-size: 9pt;
+                }
+              }
+            }
+          }
+          &:hover {
+            span {
+              color: $landing-light;
+            }
+            ul {
+              visibility: visible;
+              opacity: 1;
+              display: block;
+            }
+          }
+        }
         display: inline-block;
         margin-right: 40px;
         @media (max-width: $grid-float-breakpoint) {
