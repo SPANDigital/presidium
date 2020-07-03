@@ -53,6 +53,7 @@ collections:
 # - path: Path to generated article collection
 # - collection: The Jekyll collection to use for generating a sub menu of articles (optional).
 # - collapsed: Whether articles should show in a tree or collapsed into a single item
+# - always-expanded: Boolean indicating whether the section should be expanded by default and   never collapse
 #
 sections:
   - title: "Overview"
