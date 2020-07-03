@@ -35,7 +35,33 @@
 
 
 <div class="article" data-roles="">
+    <span class="anchor" id="" data-id="content/_recipes/01-source-control/index.md"></span>
+    
+    
+
+    
+    <h1>
+        Source Control
+    </h1>
+    
+
+    <article>
+</article>
+
+    
+    
+</div>
+
+
+
+
+
+
+
+
+<div class="article" data-roles="">
     <span class="anchor" id="approaches" data-id="content/_recipes/01-source-control/01-approaches.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -68,8 +94,9 @@
 <p>A dedicated repo is simpler to configure and easier to manage independently. Managing content within in a sub directory inside the a source code repo keeps everything in one place and makes it easier to update the documents while changing the code. A sub-module may be the best of both worlds, but is slightly more complex to manage.</p>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -81,6 +108,7 @@
 
 <div class="article" data-roles="">
     <span class="anchor" id="sub-folder" data-id="content/_recipes/01-source-control/02-sub-folder.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -112,7 +140,7 @@ the <code class="highlighter-rouge">docs/</code> folder and <strong>not</strong>
 
 <p>The contents of your <code class="highlighter-rouge">docs/</code> folder should look something like this:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>LICENSE
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>LICENSE
 NOTICE
 README.md
 _config.yml
@@ -120,23 +148,22 @@ content/
 dist/
 media/
 package.json
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>Add the following to your project’s <code class="highlighter-rouge">.gitignore</code> file:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>docs/node_modules/
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>docs/node_modules/
 docs/.jekyll/
 docs/dist/
 docs/dist/.versions
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>From this point on, you can follow instructions in the Getting Started section. The only difference is that your documentation root is <code class="highlighter-rouge">/docs</code>.</p>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -148,6 +175,7 @@ docs/dist/.versions
 
 <div class="article" data-roles="">
     <span class="anchor" id="sub-module" data-id="content/_recipes/01-source-control/03-sub-module.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -172,17 +200,42 @@ docs/dist/.versions
 
     <article><p>If you want to store your documentation in a separate repository but still use it within your project, you can use Git submodules:</p>
 
-<div class="language-bash highlighter-rouge"><pre class="highlight"><code>
-<span class="gp">$ </span><span class="nb">cd </span>my-project
-<span class="gp">$ </span>git submodule add https://github.com/my-company/my-project-docs docs
-<span class="gp">$ </span>git submodule status
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nv">$ </span><span class="nb">cd </span>my-project
+<span class="nv">$ </span>git submodule add https://github.com/my-company/my-project-docs docs
+<span class="nv">$ </span>git submodule status
  6a1ed31b9cb215657a1bd4b4de6737c07b41c896 docs <span class="o">(</span>heads/master<span class="o">)</span>
-</code></pre>
+</code></pre></div></div>
+</article>
+
+    <hr/>
+    
+    
 </div>
+
+
+
+
+
+
+
+
+<div class="article" data-roles="">
+    <span class="anchor" id="" data-id="content/_recipes/02-documentation-structure/index.md"></span>
+    
+    
+
+    
+    <h1>
+        Content Structure
+    </h1>
+    
+
+    <article>
 </article>
 
     
-    <hr/>
+    
 </div>
 
 
@@ -194,6 +247,7 @@ docs/dist/.versions
 
 <div class="article" data-roles="">
     <span class="anchor" id="directory-structure" data-id="content/_recipes/02-documentation-structure/00-directory-structure.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -220,7 +274,7 @@ docs/dist/.versions
 
 <p>The following is an example of how you can order and organize files and directories using numeric prefixes:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>    .
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    .
     ├── 01-article-2.1.md
     ├── 02-article-2.2.md
     ├── 02-Directory-2.3
@@ -229,24 +283,23 @@ docs/dist/.versions
     │   ├── index.md
     ├── 03-article-2.4.md
     └── index.md
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>The directory and filenames are used for sorting; they are generally not displayed in the generated site. To make it easier to edit and arrange your content, we recommend that the filename contains the title of the article and the directory name contains the name of the section.</p>
 
 <p>The title of a sub-section should be set by providing  an <code class="highlighter-rouge">index.md</code> file in the folder with the following <code class="highlighter-rouge">front matter</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>---
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>---
 title: Sub Section Heading
 ---
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>If no index file is provided, the directory name is used as the section name.</p>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -258,6 +311,7 @@ title: Sub Section Heading
 
 <div class="article" data-roles="">
     <span class="anchor" id="article-concatenation" data-id="content/_recipes/02-documentation-structure/01-article-concatenation.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -284,13 +338,13 @@ title: Sub Section Heading
 
 <p>This behavior is enabled by default, but can be disabled using the following <code class="highlighter-rouge">site config</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>include-nested-articles: true | false
-</code></pre>
-</div>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>include-nested-articles: true | false
+</code></pre></div></div>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -302,6 +356,7 @@ title: Sub Section Heading
 
 <div class="article" data-roles="">
     <span class="anchor" id="generating-article-html" data-id="content/_recipes/02-documentation-structure/02-exporting-articles.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -329,28 +384,52 @@ title: Sub Section Heading
 <p>When building a site, you can set whether the html for each article is generated separately.
 To generate html for all articles in a section, set the <code class="highlighter-rouge">export-articles</code> property in the <code class="highlighter-rouge">site config</code>:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>sections:
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sections:
   - title: "Glossary"
     url: "/glossary/"
     collection: glossary
     export-articles: true
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <p>In this example, when <code class="highlighter-rouge">export-articles</code> is set to true, the generated site will include html files for all articles in the Glossary section:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>  .
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  .
   └── glossary
       ├── article-a.html
       ├── article-b.html
       ├── article-c.html
       └── index.html
-</code></pre>
+</code></pre></div></div>
+</article>
+
+    <hr/>
+    
+    
 </div>
+
+
+
+
+
+
+
+
+<div class="article" data-roles="">
+    <span class="anchor" id="" data-id="content/_recipes/03-hosting/index.md"></span>
+    
+    
+
+    
+    <h1>
+        Hosting
+    </h1>
+    
+
+    <article>
 </article>
 
     
-    <hr/>
+    
 </div>
 
 
@@ -362,6 +441,7 @@ To generate html for all articles in a section, set the <code class="highlighter
 
 <div class="article" data-roles="">
     <span class="anchor" id="github-pages" data-id="content/_recipes/03-hosting/01-gh-pages.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -395,8 +475,9 @@ in your repository settings to make your documentation available online.</li>
 </ol>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -408,6 +489,7 @@ in your repository settings to make your documentation available online.</li>
 
 <div class="article" data-roles="">
     <span class="anchor" id="bitbucket" data-id="content/_recipes/03-hosting/02-bitbucket.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -444,8 +526,9 @@ in your repository settings to make your documentation available online.</li>
 </blockquote>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -457,6 +540,7 @@ in your repository settings to make your documentation available online.</li>
 
 <div class="article" data-roles="">
     <span class="anchor" id="custom-hosting" data-id="content/_recipes/03-hosting/03-custom-hosting.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -484,8 +568,34 @@ in your repository settings to make your documentation available online.</li>
 <p>Running <code class="highlighter-rouge">npm run build</code> will build the generated static website in the <code class="highlighter-rouge">dist/site</code> directory. This may be copied over and served by any host such as Apache HTTP, Nginx or an AWS S3.</p>
 </article>
 
-    
     <hr/>
+    
+    
+</div>
+
+
+
+
+
+
+
+
+<div class="article" data-roles="">
+    <span class="anchor" id="" data-id="content/_recipes/04-semantic-versioning/index.md"></span>
+    
+    
+
+    
+    <h1>
+        Versioning
+    </h1>
+    
+
+    <article>
+</article>
+
+    
+    
 </div>
 
 
@@ -497,6 +607,7 @@ in your repository settings to make your documentation available online.</li>
 
 <div class="article" data-roles="">
     <span class="anchor" id="setup" data-id="content/_recipes/04-semantic-versioning/01-setup.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -532,39 +643,36 @@ Skip these steps if you already have a branch set up.</p>
   <li>Change the directory to the root of your project:</li>
 </ol>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="nb">cd </span>path/to/your/project
-</code></pre>
-</div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cd </span>path/to/your/project
+</code></pre></div></div>
 
 <p>If the branch already exists (be sure you know what you are doing), you can clean <code class="highlighter-rouge">gh-pages</code> and start again:</p>
 
-<div class="highlighter-rouge"><pre class="highlight"><code>$ git push origin --delete gh-pages
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ git push origin --delete gh-pages
 $ git branch -D gh-pages
-</code></pre>
-</div>
+</code></pre></div></div>
 
 <ol>
   <li>Create a new <code class="highlighter-rouge">gh-pages</code> branch with nothing in it:</li>
 </ol>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git checkout --orphan gh-pages <span class="o">&amp;&amp;</span> git reset --hard
-<span class="gp">$ </span>git commit --allow-empty --m <span class="s2">"Initialize gh-pages"</span>
-<span class="gp">$ </span>git push -u origin gh-pages
-<span class="gp">$ </span>git checkout master
-</code></pre>
-</div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>git checkout <span class="nt">--orphan</span> gh-pages <span class="o">&amp;&amp;</span> git reset <span class="nt">--hard</span>
+<span class="nv">$ </span>git commit <span class="nt">--allow-empty</span> <span class="nt">--m</span> <span class="s2">"Initialize gh-pages"</span>
+<span class="nv">$ </span>git push <span class="nt">-u</span> origin gh-pages
+<span class="nv">$ </span>git checkout master
+</code></pre></div></div>
 
 <h1 id="update-gitignore">Update .gitignore</h1>
 
 <p>Presidium uses a hidden folder as a staging area for publishing. To make sure you don’t accidentally commit this folder, run the following command:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span><span class="nb">echo</span> <span class="s2">".versions"</span> &gt;&gt; .gitignore
-</code></pre>
-</div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">echo</span> <span class="s2">".versions"</span> <span class="o">&gt;&gt;</span> .gitignore
+</code></pre></div></div>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -576,6 +684,7 @@ $ git branch -D gh-pages
 
 <div class="article" data-roles="">
     <span class="anchor" id="configure" data-id="content/_recipes/04-semantic-versioning/02-configure.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -604,16 +713,14 @@ $ git branch -D gh-pages
 
 <p>For example, this is correct:</p>
 
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">baseurl</span><span class="pi">:</span> <span class="s">/myRepositoryName</span>
-<span class="s">code_examples</span><span class="pi">:</span> <span class="s">${baseurl}/media/code_examples</span>
-</code></pre>
-</div>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">baseurl</span><span class="pi">:</span> <span class="s">/myRepositoryName</span>
+<span class="na">code_examples</span><span class="pi">:</span> <span class="s">${baseurl}/media/code_examples</span>
+</code></pre></div></div>
 <p>This is incorrect:</p>
 
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">baseurl</span><span class="pi">:</span> <span class="s">/myRepositoryName</span>
-<span class="s">code_examples</span><span class="pi">:</span> <span class="s">/myRepositoryName/media/code_examples</span>
-</code></pre>
-</div>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">baseurl</span><span class="pi">:</span> <span class="s">/myRepositoryName</span>
+<span class="na">code_examples</span><span class="pi">:</span> <span class="s">/myRepositoryName/media/code_examples</span>
+</code></pre></div></div>
 
 <p>Make sure you don’t introduce circular dependencies when using variables.</p>
 
@@ -621,17 +728,17 @@ $ git branch -D gh-pages
 
 <p>To use Presidium versioning on <code class="highlighter-rouge">gh-pages</code>, you must use the base url of the repository. Make sure that this is set in <code class="highlighter-rouge">_config.yml</code> in the root of your project. (Note the lack of a trailing slash.)</p>
 
-<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">baseurl</span><span class="pi">:</span> <span class="s">/myRepositoryName</span>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">baseurl</span><span class="pi">:</span> <span class="s">/myRepositoryName</span>
 <span class="nn">...</span>
 
 <span class="c1"># Optional Support For Versioning</span>
-<span class="s">versioned</span><span class="pi">:</span> <span class="s">true</span>
-</code></pre>
-</div>
+<span class="na">versioned</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
 
@@ -643,6 +750,7 @@ $ git branch -D gh-pages
 
 <div class="article" data-roles="">
     <span class="anchor" id="run" data-id="content/_recipes/04-semantic-versioning/03-run.md"></span>
+    
     
     <div class='article-title '>
         <h2>
@@ -667,15 +775,13 @@ $ git branch -D gh-pages
 
     <article><p>To publish a specific version:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>npm run gh-pages -- -v 1.2
-</code></pre>
-</div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm run gh-pages <span class="nt">--</span> <span class="nt">-v</span> 1.2
+</code></pre></div></div>
 
 <p>To publish the latest version:</p>
 
-<div class="language-sh highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>npm run gh-pages
-</code></pre>
-</div>
+<div class="language-sh highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>npm run gh-pages
+</code></pre></div></div>
 
 <h1 id="versioning-conventions">Versioning Conventions</h1>
 
@@ -696,8 +802,9 @@ $ git branch -D gh-pages
 </ul>
 </article>
 
-    
     <hr/>
+    
+    
 </div>
 
             </section>
@@ -705,8 +812,8 @@ $ git branch -D gh-pages
   <div class="spacer"></div>
   <div>
       
-        <p>&copy; Copyright 2018 SPAN Digital</p>
-        <p class="text-muted">Generated on Nov 21, 2018</p>
+        <p>&copy; Copyright 2020 SPAN Digital</p>
+        <p class="text-muted">Generated on Jul  3, 2020</p>
         
   </div>
 </footer>
@@ -733,7 +840,7 @@ $ git branch -D gh-pages
         repourl:  ""
     }
     window.presidium['versions'] = { siteroot: "/" };
-    window.presidium.menu.load({"logo":"/media/images/logo.png","brandName":"","brandUrl":"","baseUrl":"/","roles":{"label":"","all":"","options":[]},"children":[{"type":"section","id":"content/_overview/","title":"Overview","level":1,"collapsed":true,"newTab":false,"path":"content/_overview/","url":"/overview","roles":[],"scope":[],"children":[{"type":"article","id":"content/_overview/01-features.md","path":"content/_overview/01-features.md","url":"/overview/#the-big-picture","slug":"the-big-picture","title":"The Big Picture","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_key-concepts/","title":"Key Concepts","level":1,"collapsed":false,"newTab":false,"path":"content/_key-concepts/","url":"/key-concepts/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_key-concepts/02-supporting-learning-objectives.md","path":"content/_key-concepts/02-supporting-learning-objectives.md","url":"/key-concepts/#presidiums-learning-model","slug":"presidiums-learning-model","title":"Presidium's Learning Model","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/03-menu-stucture.md","path":"content/_key-concepts/03-menu-stucture.md","url":"/key-concepts/#menu-structure-and-behavior","slug":"menu-structure-and-behavior","title":"Menu Structure & Behavior","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/04-templates.md","path":"content/_key-concepts/04-templates.md","url":"/key-concepts/#templates","slug":"templates","title":"Templates","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/05-authoring-workflow.md","path":"content/_key-concepts/05-authoring-workflow.md","url":"/key-concepts/#authoring-workflow","slug":"authoring-workflow","title":"Authoring Workflow","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/06-learning-objective.md","path":"content/_key-concepts/06-learning-objective.md","url":"/key-concepts/#learning-objectives","slug":"learning-objectives","title":"Learning Objectives","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/07-markdown.md","path":"content/_key-concepts/07-markdown.md","url":"/key-concepts/#markdown","slug":"markdown","title":"Markdown","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/08-presidium-microarticles.md","path":"content/_key-concepts/08-presidium-microarticles.md","url":"/key-concepts/#micro-articles","slug":"micro-articles","title":"Micro-articles","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/09-reference-document-ingestion.md","path":"content/_key-concepts/09-reference-document-ingestion.md","url":"/key-concepts/#importing-reference-documents","slug":"importing-reference-documents","title":"Importing Reference Documents","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/10-content-maintenance.md","path":"content/_key-concepts/10-content-maintenance.md","url":"/key-concepts/#content-maintenance","slug":"content-maintenance","title":"Content Maintenance","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/11-publication-workflow.md","path":"content/_key-concepts/11-publication-workflow.md","url":"/key-concepts/#hosting-and-versioning","slug":"hosting-and-versioning","title":"Hosting & Versioning","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_prerequisites/","title":"Prerequisites","level":1,"collapsed":false,"newTab":false,"path":"content/_prerequisites/","url":"/prerequisites/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_prerequisites/01-required-software.md","path":"content/_prerequisites/01-required-software.md","url":"/prerequisites/#required-software","slug":"required-software","title":"Required Software","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"category","id":"content/_prerequisites/02-environment-setup","level":2,"collapsed":false,"title":"Local Environment Setup","slug":"local-environment-setup","path":"content/_prerequisites/02-environment-setup","url":"/prerequisites/local-environment-setup/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_prerequisites/02-environment-setup/01-osx.md","path":"content/_prerequisites/02-environment-setup/01-osx.md","url":"/prerequisites/local-environment-setup/#osx","slug":"osx","title":"OSX","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_prerequisites/02-environment-setup/02-debian.md","path":"content/_prerequisites/02-environment-setup/02-debian.md","url":"/prerequisites/local-environment-setup/#linuxdebian","slug":"linuxdebian","title":"Linux/Debian","level":3,"collapsed":true,"roles":[],"scope":[]}]}]},{"type":"section","id":"content/_getting-started/","title":"Getting Started","level":1,"collapsed":false,"newTab":false,"path":"content/_getting-started/","url":"/getting-started/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_getting-started/00-download.md","path":"content/_getting-started/00-download.md","url":"/getting-started/#download-the-template","slug":"download-the-template","title":"Download the Template","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/01-install.md","path":"content/_getting-started/01-install.md","url":"/getting-started/#install-dependencies","slug":"install-dependencies","title":"Install Dependencies","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/02-run.md","path":"content/_getting-started/02-run.md","url":"/getting-started/#run-presidium","slug":"run-presidium","title":"Run Presidium","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/03-content.md","path":"content/_getting-started/03-content.md","url":"/getting-started/#update-content","slug":"update-content","title":"Update Content","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/04-host.md","path":"content/_getting-started/04-host.md","url":"/getting-started/#publish-your-site","slug":"publish-your-site","title":"Publish Your Site","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_best-practices/","title":"Best Practices","level":1,"collapsed":false,"newTab":false,"path":"content/_best-practices/","url":"/best-practices/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_best-practices/01-plan-content-development.md","path":"content/_best-practices/01-plan-content-development.md","url":"/best-practices/#plan-content-development","slug":"plan-content-development","title":"Plan Content Development","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/02-design-site-structure.md","path":"content/_best-practices/02-design-site-structure.md","url":"/best-practices/#design-documentation-structure","slug":"design-documentation-structure","title":"Design Documentation Structure","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/03-define-learning-objectives.md","path":"content/_best-practices/03-define-learning-objectives.md","url":"/best-practices/#define-learning-objectives","slug":"define-learning-objectives","title":"Define Learning Objectives","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/04-inventory-existing-content.md","path":"content/_best-practices/04-inventory-existing-content.md","url":"/best-practices/#inventory-existing-content","slug":"inventory-existing-content","title":"Inventory Existing Content","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/05-use-article-templates.md","path":"content/_best-practices/05-use-article-templates.md","url":"/best-practices/#use-article-templates","slug":"use-article-templates","title":"Use Article Templates","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/06-write-effective-articles.md","path":"content/_best-practices/06-write-effective-articles.md","url":"/best-practices/#writing-effective-articles","slug":"writing-effective-articles","title":"Writing Effective Articles","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_reference/","title":"Reference","level":1,"collapsed":false,"newTab":false,"path":"content/_reference/","url":"/reference/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/01-configuration.md","path":"content/_reference/01-configuration.md","url":"/reference/#configuration","slug":"configuration","title":"Configuration","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/02-theming.md","path":"content/_reference/02-theming.md","url":"/reference/#themes","slug":"themes","title":"Themes","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/03-directories.md","path":"content/_reference/03-directories.md","url":"/reference/#directories","slug":"directories","title":"Directories","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"category","id":"content/_reference/04-frontmatter","level":2,"collapsed":false,"title":"Front matter","slug":"front-matter","path":"content/_reference/04-frontmatter","url":"/reference/front-matter/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/04-frontmatter/01-frontmatter.md","path":"content/_reference/04-frontmatter/01-frontmatter.md","url":"/reference/front-matter/#overview","slug":"overview","title":"Overview","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/02-authors.md","path":"content/_reference/04-frontmatter/02-authors.md","url":"/reference/front-matter/#authors","slug":"authors","title":"Authors","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/03-user-roles.md","path":"content/_reference/04-frontmatter/03-user-roles.md","url":"/reference/front-matter/#user-roles","slug":"user-roles","title":"User Roles","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/04-statuses.md","path":"content/_reference/04-frontmatter/04-statuses.md","url":"/reference/front-matter/#statuses","slug":"statuses","title":"Statuses","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/05-scopes.md","path":"content/_reference/04-frontmatter/05-scopes.md","url":"/reference/front-matter/#scopes","slug":"scopes","title":"Scopes","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/06-external-urls.md","path":"content/_reference/04-frontmatter/06-external-urls.md","url":"/reference/front-matter/#external-urls","slug":"external-urls","title":"External URLs","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_reference/05-markdown","level":2,"collapsed":false,"title":"Markdown","slug":"markdown","path":"content/_reference/05-markdown","url":"/reference/markdown/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/05-markdown/00-headings.md","path":"content/_reference/05-markdown/00-headings.md","url":"/reference/markdown/#headings-and-emphasis","slug":"headings-and-emphasis","title":"Headings & Emphasis","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/01-bullets-numbering.md","path":"content/_reference/05-markdown/01-bullets-numbering.md","url":"/reference/markdown/#bullets-and-numbering","slug":"bullets-and-numbering","title":"Bullets & Numbering","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/02-links.md","path":"content/_reference/05-markdown/02-links.md","url":"/reference/markdown/#links","slug":"links","title":"Links","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/03-tables.md","path":"content/_reference/05-markdown/03-tables.md","url":"/reference/markdown/#tables","slug":"tables","title":"Tables","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/04-blockquotes.md","path":"content/_reference/05-markdown/04-blockquotes.md","url":"/reference/markdown/#blockquotes","slug":"blockquotes","title":"Blockquotes","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/05-code-blocks.md","path":"content/_reference/05-markdown/05-code-blocks.md","url":"/reference/markdown/#code-blocks","slug":"code-blocks","title":"Code Blocks","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/06-images.md","path":"content/_reference/05-markdown/06-images.md","url":"/reference/markdown/#images","slug":"images","title":"Images","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/07-tooltips.md","path":"content/_reference/05-markdown/07-tooltips.md","url":"/reference/markdown/#tooltips","slug":"tooltips","title":"Tooltips","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"article","id":"content/_reference/06-landing-page.md","path":"content/_reference/06-landing-page.md","url":"/reference/#landing-page","slug":"landing-page","title":"Landing Page","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"category","id":"content/_reference/08-importers","level":2,"collapsed":false,"title":"Importers","slug":"importers","path":"content/_reference/08-importers","url":"/reference/importers/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/08-importers/00-reference-documentation.md","path":"content/_reference/08-importers/00-reference-documentation.md","url":"/reference/importers/#importing-documentation","slug":"importing-documentation","title":"Importing Documentation","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/01-swagger.md","path":"content/_reference/08-importers/01-swagger.md","url":"/reference/importers/#swagger","slug":"swagger","title":"Swagger","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/02-javadoc.md","path":"content/_reference/08-importers/02-javadoc.md","url":"/reference/importers/#javadoc","slug":"javadoc","title":"Javadoc","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/03-jsdoc.md","path":"content/_reference/08-importers/03-jsdoc.md","url":"/reference/importers/#jsdoc","slug":"jsdoc","title":"Jsdoc","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/04-embed.md","path":"content/_reference/08-importers/04-embed.md","url":"/reference/importers/#embed","slug":"embed","title":"Embed","level":3,"collapsed":true,"roles":[],"scope":[]}]}]},{"type":"section","id":"content/_recipes/","title":"Recipes","level":1,"collapsed":false,"newTab":false,"path":"content/_recipes/","url":"/recipes/","roles":[],"scope":[],"children":[{"type":"category","id":"content/_recipes/01-source-control","level":2,"collapsed":false,"title":"Source Control","slug":"source-control","path":"content/_recipes/01-source-control","url":"/recipes/source-control/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/01-source-control/01-approaches.md","path":"content/_recipes/01-source-control/01-approaches.md","url":"/recipes/source-control/#approaches","slug":"approaches","title":"Approaches","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/01-source-control/02-sub-folder.md","path":"content/_recipes/01-source-control/02-sub-folder.md","url":"/recipes/source-control/#sub-folder","slug":"sub-folder","title":"Sub Folder","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/01-source-control/03-sub-module.md","path":"content/_recipes/01-source-control/03-sub-module.md","url":"/recipes/source-control/#sub-module","slug":"sub-module","title":"Sub Module","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_recipes/02-documentation-structure","level":2,"collapsed":false,"title":"Content Structure","slug":"content-structure","path":"content/_recipes/02-documentation-structure","url":"/recipes/content-structure/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/02-documentation-structure/00-directory-structure.md","path":"content/_recipes/02-documentation-structure/00-directory-structure.md","url":"/recipes/content-structure/#directory-structure","slug":"directory-structure","title":"Directory Structure","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/02-documentation-structure/01-article-concatenation.md","path":"content/_recipes/02-documentation-structure/01-article-concatenation.md","url":"/recipes/content-structure/#article-concatenation","slug":"article-concatenation","title":"Article Concatenation","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/02-documentation-structure/02-exporting-articles.md","path":"content/_recipes/02-documentation-structure/02-exporting-articles.md","url":"/recipes/content-structure/#generating-article-html","slug":"generating-article-html","title":"Generating Article HTML","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_recipes/03-hosting","level":2,"collapsed":false,"title":"Hosting","slug":"hosting","path":"content/_recipes/03-hosting","url":"/recipes/hosting/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/03-hosting/01-gh-pages.md","path":"content/_recipes/03-hosting/01-gh-pages.md","url":"/recipes/hosting/#github-pages","slug":"github-pages","title":"Github Pages","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/03-hosting/02-bitbucket.md","path":"content/_recipes/03-hosting/02-bitbucket.md","url":"/recipes/hosting/#bitbucket","slug":"bitbucket","title":"Bitbucket","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/03-hosting/03-custom-hosting.md","path":"content/_recipes/03-hosting/03-custom-hosting.md","url":"/recipes/hosting/#custom-hosting","slug":"custom-hosting","title":"Custom Hosting","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_recipes/04-semantic-versioning","level":2,"collapsed":false,"title":"Versioning","slug":"versioning","path":"content/_recipes/04-semantic-versioning","url":"/recipes/versioning/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/04-semantic-versioning/01-setup.md","path":"content/_recipes/04-semantic-versioning/01-setup.md","url":"/recipes/versioning/#setup","slug":"setup","title":"Setup","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/04-semantic-versioning/02-configure.md","path":"content/_recipes/04-semantic-versioning/02-configure.md","url":"/recipes/versioning/#configure","slug":"configure","title":"Configure","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/04-semantic-versioning/03-run.md","path":"content/_recipes/04-semantic-versioning/03-run.md","url":"/recipes/versioning/#run","slug":"run","title":"Run","level":3,"collapsed":true,"roles":[],"scope":[]}]}]},{"type":"section","id":"content/_tools/","title":"Tools","level":1,"collapsed":true,"newTab":false,"path":"content/_tools/","url":"/tools/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_tools/01-link-validation.md","path":"content/_tools/01-link-validation.md","url":"/tools/#link-validation","slug":"link-validation","title":"Link Validation","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_support/","title":"Support","level":1,"collapsed":true,"newTab":false,"path":"content/_support/","url":"/support/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_support/Issues.md","path":"content/_support/Issues.md","url":"/support/#issues","slug":"issues","title":"Issues","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_updates/","title":"Updates","level":1,"collapsed":false,"newTab":false,"path":"content/_updates/","url":"/updates/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_updates/91-v0.1.42.md","path":"content/_updates/91-v0.1.42.md","url":"/updates/#v0.1.42","slug":"v0.1.42","title":"v0.1.42","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/92-v0.1.41.md","path":"content/_updates/92-v0.1.41.md","url":"/updates/#v0.1.41","slug":"v0.1.41","title":"v0.1.41","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/93-v0.1.39.md","path":"content/_updates/93-v0.1.39.md","url":"/updates/#v0.1.39","slug":"v0.1.39","title":"v0.1.39","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/94-v0.1.38.md","path":"content/_updates/94-v0.1.38.md","url":"/updates/#v0.1.38","slug":"v0.1.38","title":"v0.1.38","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/95-v0.1.37.md","path":"content/_updates/95-v0.1.37.md","url":"/updates/#v0.1.37","slug":"v0.1.37","title":"v0.1.37","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/96-v0.1.9.md","path":"content/_updates/96-v0.1.9.md","url":"/updates/#v0.1.9","slug":"v0.1.9","title":"v0.1.9","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/97-v0.1.8.md","path":"content/_updates/97-v0.1.8.md","url":"/updates/#v0.1.8","slug":"v0.1.8","title":"v0.1.8","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/98-v0.1.7.md","path":"content/_updates/98-v0.1.7.md","url":"/updates/#v0.1.7","slug":"v0.1.7","title":"v0.1.7","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/99-v0.1.6.md","path":"content/_updates/99-v0.1.6.md","url":"/updates/#v0.1.6","slug":"v0.1.6","title":"v0.1.6","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/license.md","path":"content/_updates/license.md","url":"/updates/#license","slug":"license","title":"License","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_glossary/","title":"Glossary","level":1,"collapsed":false,"newTab":false,"path":"content/_glossary/","url":"/glossary/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_glossary/tooltips.md","path":"content/_glossary/tooltips.md","url":"/glossary/#tooltips","slug":"tooltips","title":"Tooltips","level":2,"collapsed":true,"roles":[],"scope":[]}]}]}, 'presidium-navigation');
+    window.presidium.menu.load({"logo":"/media/images/logo.png","brandName":"","brandUrl":"","baseUrl":"/","roles":{"label":"","all":"","options":[]},"children":[{"type":"section","id":"content/_overview/","title":"Overview","level":1,"collapsed":true,"alwaysExpanded":false,"newTab":false,"path":"content/_overview/","url":"/overview","roles":[],"scope":[],"children":[{"type":"article","id":"content/_overview/01-features.md","path":"content/_overview/01-features.md","url":"/overview/#the-big-picture","slug":"the-big-picture","title":"The Big Picture","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_key-concepts/","title":"Key Concepts","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_key-concepts/","url":"/key-concepts/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_key-concepts/02-supporting-learning-objectives.md","path":"content/_key-concepts/02-supporting-learning-objectives.md","url":"/key-concepts/#presidiums-learning-model","slug":"presidiums-learning-model","title":"Presidium's Learning Model","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/03-menu-stucture.md","path":"content/_key-concepts/03-menu-stucture.md","url":"/key-concepts/#menu-structure-and-behavior","slug":"menu-structure-and-behavior","title":"Menu Structure & Behavior","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/04-templates.md","path":"content/_key-concepts/04-templates.md","url":"/key-concepts/#templates","slug":"templates","title":"Templates","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/05-authoring-workflow.md","path":"content/_key-concepts/05-authoring-workflow.md","url":"/key-concepts/#authoring-workflow","slug":"authoring-workflow","title":"Authoring Workflow","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/06-learning-objective.md","path":"content/_key-concepts/06-learning-objective.md","url":"/key-concepts/#learning-objectives","slug":"learning-objectives","title":"Learning Objectives","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/07-markdown.md","path":"content/_key-concepts/07-markdown.md","url":"/key-concepts/#markdown","slug":"markdown","title":"Markdown","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/08-presidium-microarticles.md","path":"content/_key-concepts/08-presidium-microarticles.md","url":"/key-concepts/#micro-articles","slug":"micro-articles","title":"Micro-articles","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/09-reference-document-ingestion.md","path":"content/_key-concepts/09-reference-document-ingestion.md","url":"/key-concepts/#importing-reference-documents","slug":"importing-reference-documents","title":"Importing Reference Documents","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/10-content-maintenance.md","path":"content/_key-concepts/10-content-maintenance.md","url":"/key-concepts/#content-maintenance","slug":"content-maintenance","title":"Content Maintenance","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_key-concepts/11-publication-workflow.md","path":"content/_key-concepts/11-publication-workflow.md","url":"/key-concepts/#hosting-and-versioning","slug":"hosting-and-versioning","title":"Hosting & Versioning","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_prerequisites/","title":"Prerequisites","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_prerequisites/","url":"/prerequisites/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_prerequisites/01-required-software.md","path":"content/_prerequisites/01-required-software.md","url":"/prerequisites/#required-software","slug":"required-software","title":"Required Software","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"category","id":"content/_prerequisites/02-environment-setup","level":2,"collapsed":false,"title":"Local Environment Setup","slug":"local-environment-setup","path":"content/_prerequisites/02-environment-setup","url":"/prerequisites/local-environment-setup/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_prerequisites/02-environment-setup/01-osx.md","path":"content/_prerequisites/02-environment-setup/01-osx.md","url":"/prerequisites/local-environment-setup/#osx","slug":"osx","title":"OSX","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_prerequisites/02-environment-setup/02-debian.md","path":"content/_prerequisites/02-environment-setup/02-debian.md","url":"/prerequisites/local-environment-setup/#linuxdebian","slug":"linuxdebian","title":"Linux/Debian","level":3,"collapsed":true,"roles":[],"scope":[]}]}]},{"type":"section","id":"content/_getting-started/","title":"Getting Started","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_getting-started/","url":"/getting-started/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_getting-started/00-download.md","path":"content/_getting-started/00-download.md","url":"/getting-started/#download-the-template","slug":"download-the-template","title":"Download the Template","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/01-install.md","path":"content/_getting-started/01-install.md","url":"/getting-started/#install-dependencies","slug":"install-dependencies","title":"Install Dependencies","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/02-run.md","path":"content/_getting-started/02-run.md","url":"/getting-started/#run-presidium","slug":"run-presidium","title":"Run Presidium","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/03-content.md","path":"content/_getting-started/03-content.md","url":"/getting-started/#update-content","slug":"update-content","title":"Update Content","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_getting-started/04-host.md","path":"content/_getting-started/04-host.md","url":"/getting-started/#publish-your-site","slug":"publish-your-site","title":"Publish Your Site","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_best-practices/","title":"Best Practices","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_best-practices/","url":"/best-practices/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_best-practices/01-plan-content-development.md","path":"content/_best-practices/01-plan-content-development.md","url":"/best-practices/#plan-content-development","slug":"plan-content-development","title":"Plan Content Development","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/02-design-site-structure.md","path":"content/_best-practices/02-design-site-structure.md","url":"/best-practices/#design-documentation-structure","slug":"design-documentation-structure","title":"Design Documentation Structure","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/03-define-learning-objectives.md","path":"content/_best-practices/03-define-learning-objectives.md","url":"/best-practices/#define-learning-objectives","slug":"define-learning-objectives","title":"Define Learning Objectives","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/04-inventory-existing-content.md","path":"content/_best-practices/04-inventory-existing-content.md","url":"/best-practices/#inventory-existing-content","slug":"inventory-existing-content","title":"Inventory Existing Content","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/05-use-article-templates.md","path":"content/_best-practices/05-use-article-templates.md","url":"/best-practices/#use-article-templates","slug":"use-article-templates","title":"Use Article Templates","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_best-practices/06-write-effective-articles.md","path":"content/_best-practices/06-write-effective-articles.md","url":"/best-practices/#writing-effective-articles","slug":"writing-effective-articles","title":"Writing Effective Articles","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_reference/","title":"Reference","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_reference/","url":"/reference/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/01-configuration.md","path":"content/_reference/01-configuration.md","url":"/reference/#configuration","slug":"configuration","title":"Configuration","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/02-theming.md","path":"content/_reference/02-theming.md","url":"/reference/#themes","slug":"themes","title":"Themes","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/03-directories.md","path":"content/_reference/03-directories.md","url":"/reference/#directories","slug":"directories","title":"Directories","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"category","id":"content/_reference/04-frontmatter","level":2,"collapsed":false,"title":"Front matter","slug":"front-matter","path":"content/_reference/04-frontmatter","url":"/reference/front-matter/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/04-frontmatter/01-frontmatter.md","path":"content/_reference/04-frontmatter/01-frontmatter.md","url":"/reference/front-matter/#overview","slug":"overview","title":"Overview","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/02-authors.md","path":"content/_reference/04-frontmatter/02-authors.md","url":"/reference/front-matter/#authors","slug":"authors","title":"Authors","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/03-user-roles.md","path":"content/_reference/04-frontmatter/03-user-roles.md","url":"/reference/front-matter/#user-roles","slug":"user-roles","title":"User Roles","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/04-statuses.md","path":"content/_reference/04-frontmatter/04-statuses.md","url":"/reference/front-matter/#statuses","slug":"statuses","title":"Statuses","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/05-scopes.md","path":"content/_reference/04-frontmatter/05-scopes.md","url":"/reference/front-matter/#scopes","slug":"scopes","title":"Scopes","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/04-frontmatter/06-external-urls.md","path":"content/_reference/04-frontmatter/06-external-urls.md","url":"/reference/front-matter/#external-urls","slug":"external-urls","title":"External URLs","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_reference/05-markdown","level":2,"collapsed":false,"title":"Markdown","slug":"markdown","path":"content/_reference/05-markdown","url":"/reference/markdown/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/05-markdown/00-headings.md","path":"content/_reference/05-markdown/00-headings.md","url":"/reference/markdown/#headings-and-emphasis","slug":"headings-and-emphasis","title":"Headings & Emphasis","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/01-bullets-numbering.md","path":"content/_reference/05-markdown/01-bullets-numbering.md","url":"/reference/markdown/#bullets-and-numbering","slug":"bullets-and-numbering","title":"Bullets & Numbering","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/02-links.md","path":"content/_reference/05-markdown/02-links.md","url":"/reference/markdown/#links","slug":"links","title":"Links","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/03-tables.md","path":"content/_reference/05-markdown/03-tables.md","url":"/reference/markdown/#tables","slug":"tables","title":"Tables","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/04-blockquotes.md","path":"content/_reference/05-markdown/04-blockquotes.md","url":"/reference/markdown/#blockquotes","slug":"blockquotes","title":"Blockquotes","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/05-code-blocks.md","path":"content/_reference/05-markdown/05-code-blocks.md","url":"/reference/markdown/#code-blocks","slug":"code-blocks","title":"Code Blocks","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/06-images.md","path":"content/_reference/05-markdown/06-images.md","url":"/reference/markdown/#images","slug":"images","title":"Images","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/05-markdown/07-tooltips.md","path":"content/_reference/05-markdown/07-tooltips.md","url":"/reference/markdown/#tooltips","slug":"tooltips","title":"Tooltips","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"article","id":"content/_reference/06-landing-page.md","path":"content/_reference/06-landing-page.md","url":"/reference/#landing-page","slug":"landing-page","title":"Landing Page","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"category","id":"content/_reference/08-importers","level":2,"collapsed":false,"title":"Importers","slug":"importers","path":"content/_reference/08-importers","url":"/reference/importers/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_reference/08-importers/00-reference-documentation.md","path":"content/_reference/08-importers/00-reference-documentation.md","url":"/reference/importers/#importing-documentation","slug":"importing-documentation","title":"Importing Documentation","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/01-swagger.md","path":"content/_reference/08-importers/01-swagger.md","url":"/reference/importers/#swagger","slug":"swagger","title":"Swagger","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/02-javadoc.md","path":"content/_reference/08-importers/02-javadoc.md","url":"/reference/importers/#javadoc","slug":"javadoc","title":"Javadoc","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/03-jsdoc.md","path":"content/_reference/08-importers/03-jsdoc.md","url":"/reference/importers/#jsdoc","slug":"jsdoc","title":"Jsdoc","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_reference/08-importers/04-embed.md","path":"content/_reference/08-importers/04-embed.md","url":"/reference/importers/#embed","slug":"embed","title":"Embed","level":3,"collapsed":true,"roles":[],"scope":[]}]}]},{"type":"section","id":"content/_recipes/","title":"Recipes","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_recipes/","url":"/recipes/","roles":[],"scope":[],"children":[{"type":"category","id":"content/_recipes/01-source-control","level":2,"collapsed":false,"title":"Source Control","slug":"source-control","path":"content/_recipes/01-source-control","url":"/recipes/source-control/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/01-source-control/01-approaches.md","path":"content/_recipes/01-source-control/01-approaches.md","url":"/recipes/source-control/#approaches","slug":"approaches","title":"Approaches","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/01-source-control/02-sub-folder.md","path":"content/_recipes/01-source-control/02-sub-folder.md","url":"/recipes/source-control/#sub-folder","slug":"sub-folder","title":"Sub Folder","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/01-source-control/03-sub-module.md","path":"content/_recipes/01-source-control/03-sub-module.md","url":"/recipes/source-control/#sub-module","slug":"sub-module","title":"Sub Module","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_recipes/02-documentation-structure","level":2,"collapsed":false,"title":"Content Structure","slug":"content-structure","path":"content/_recipes/02-documentation-structure","url":"/recipes/content-structure/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/02-documentation-structure/00-directory-structure.md","path":"content/_recipes/02-documentation-structure/00-directory-structure.md","url":"/recipes/content-structure/#directory-structure","slug":"directory-structure","title":"Directory Structure","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/02-documentation-structure/01-article-concatenation.md","path":"content/_recipes/02-documentation-structure/01-article-concatenation.md","url":"/recipes/content-structure/#article-concatenation","slug":"article-concatenation","title":"Article Concatenation","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/02-documentation-structure/02-exporting-articles.md","path":"content/_recipes/02-documentation-structure/02-exporting-articles.md","url":"/recipes/content-structure/#generating-article-html","slug":"generating-article-html","title":"Generating Article HTML","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_recipes/03-hosting","level":2,"collapsed":false,"title":"Hosting","slug":"hosting","path":"content/_recipes/03-hosting","url":"/recipes/hosting/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/03-hosting/01-gh-pages.md","path":"content/_recipes/03-hosting/01-gh-pages.md","url":"/recipes/hosting/#github-pages","slug":"github-pages","title":"Github Pages","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/03-hosting/02-bitbucket.md","path":"content/_recipes/03-hosting/02-bitbucket.md","url":"/recipes/hosting/#bitbucket","slug":"bitbucket","title":"Bitbucket","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/03-hosting/03-custom-hosting.md","path":"content/_recipes/03-hosting/03-custom-hosting.md","url":"/recipes/hosting/#custom-hosting","slug":"custom-hosting","title":"Custom Hosting","level":3,"collapsed":true,"roles":[],"scope":[]}]},{"type":"category","id":"content/_recipes/04-semantic-versioning","level":2,"collapsed":false,"title":"Versioning","slug":"versioning","path":"content/_recipes/04-semantic-versioning","url":"/recipes/versioning/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_recipes/04-semantic-versioning/01-setup.md","path":"content/_recipes/04-semantic-versioning/01-setup.md","url":"/recipes/versioning/#setup","slug":"setup","title":"Setup","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/04-semantic-versioning/02-configure.md","path":"content/_recipes/04-semantic-versioning/02-configure.md","url":"/recipes/versioning/#configure","slug":"configure","title":"Configure","level":3,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_recipes/04-semantic-versioning/03-run.md","path":"content/_recipes/04-semantic-versioning/03-run.md","url":"/recipes/versioning/#run","slug":"run","title":"Run","level":3,"collapsed":true,"roles":[],"scope":[]}]}]},{"type":"section","id":"content/_tools/","title":"Tools","level":1,"collapsed":true,"alwaysExpanded":false,"newTab":false,"path":"content/_tools/","url":"/tools/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_tools/01-link-validation.md","path":"content/_tools/01-link-validation.md","url":"/tools/#link-validation","slug":"link-validation","title":"Link Validation","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_support/","title":"Support","level":1,"collapsed":true,"alwaysExpanded":false,"newTab":false,"path":"content/_support/","url":"/support/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_support/Issues.md","path":"content/_support/Issues.md","url":"/support/#issues","slug":"issues","title":"Issues","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_updates/","title":"Updates","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_updates/","url":"/updates/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_updates/91-v0.1.42.md","path":"content/_updates/91-v0.1.42.md","url":"/updates/#v0.1.42","slug":"v0.1.42","title":"v0.1.42","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/92-v0.1.41.md","path":"content/_updates/92-v0.1.41.md","url":"/updates/#v0.1.41","slug":"v0.1.41","title":"v0.1.41","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/93-v0.1.39.md","path":"content/_updates/93-v0.1.39.md","url":"/updates/#v0.1.39","slug":"v0.1.39","title":"v0.1.39","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/94-v0.1.38.md","path":"content/_updates/94-v0.1.38.md","url":"/updates/#v0.1.38","slug":"v0.1.38","title":"v0.1.38","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/95-v0.1.37.md","path":"content/_updates/95-v0.1.37.md","url":"/updates/#v0.1.37","slug":"v0.1.37","title":"v0.1.37","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/96-v0.1.9.md","path":"content/_updates/96-v0.1.9.md","url":"/updates/#v0.1.9","slug":"v0.1.9","title":"v0.1.9","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/97-v0.1.8.md","path":"content/_updates/97-v0.1.8.md","url":"/updates/#v0.1.8","slug":"v0.1.8","title":"v0.1.8","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/98-v0.1.7.md","path":"content/_updates/98-v0.1.7.md","url":"/updates/#v0.1.7","slug":"v0.1.7","title":"v0.1.7","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/99-v0.1.6.md","path":"content/_updates/99-v0.1.6.md","url":"/updates/#v0.1.6","slug":"v0.1.6","title":"v0.1.6","level":2,"collapsed":true,"roles":[],"scope":[]},{"type":"article","id":"content/_updates/license.md","path":"content/_updates/license.md","url":"/updates/#license","slug":"license","title":"License","level":2,"collapsed":true,"roles":[],"scope":[]}]},{"type":"section","id":"content/_glossary/","title":"Glossary","level":1,"collapsed":false,"alwaysExpanded":false,"newTab":false,"path":"content/_glossary/","url":"/glossary/","roles":[],"scope":[],"children":[{"type":"article","id":"content/_glossary/tooltips.md","path":"content/_glossary/tooltips.md","url":"/glossary/#tooltips","slug":"tooltips","title":"Tooltips","level":2,"collapsed":true,"roles":[],"scope":[]}]}]}, 'presidium-navigation');
     window.presidium.tooltips.load({ "baseurl": "" });
 </script>
 
