@@ -36,6 +36,7 @@ cname: presidium.spandigital.net
 #     href: URL of a section that opens up an external site
 #     new-tab: Whether the external-url should open up in a new tab (optional - defaults to true)
 # - scope: Optional scope for all articles in section [internal|external]
+# - always-expanded: Boolean indicating whether the section should be expanded by default and never collapse
 #
 #sections-baseurl: /docs/
 sections:
