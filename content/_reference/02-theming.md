@@ -30,3 +30,13 @@ The default logo image is placed and loaded from `/media/images/logo.png`.  To u
 the existing file in the folder. Use the following size ratio:
 
 `260px × 124px`
+
+Additional styling can be added to the `_custom.scss` file to change the position or size of the logo.
+
+## Favicon
+
+A default icon does not exist, but can be added to `/media/images/favicon.ico`. Different favicon sizes are not supported yet.
+
+## Title tag
+
+The browser `<title>` tag is populated with the `name` key found in the configuration file.

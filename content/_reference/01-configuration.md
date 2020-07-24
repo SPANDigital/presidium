@@ -8,7 +8,7 @@ This is a sample Presidium configuration file:
 #
 # Site Metadata
 #
-# - name: Site name
+# - name: Site name, also used for <title> tag
 # _ baseurl: Optional URL to use if documentation is hosted in a subdirectory `domain.com/{baseurl}`
 # - footer: Footer copy
 # - logo: Menu bar logo.
