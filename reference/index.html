@@ -64,7 +64,7 @@
 <div class="language-yml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#</span>
 <span class="c1"># Site Metadata</span>
 <span class="c1">#</span>
-<span class="c1"># - name: Site name</span>
+<span class="c1"># - name: Site name, also used for &lt;title&gt; tag</span>
 <span class="c1"># _ baseurl: Optional URL to use if documentation is hosted in a subdirectory `domain.com/{baseurl}`</span>
 <span class="c1"># - footer: Footer copy</span>
 <span class="c1"># - logo: Menu bar logo.</span>
@@ -239,6 +239,16 @@ styles, allowing you view the new theme after refreshing the browser window.</p>
 the existing file in the folder. Use the following size ratio:</p>
 
 <p><code class="highlighter-rouge">260px × 124px</code></p>
+
+<p>Additional styling can be added to the <code class="highlighter-rouge">_custom.scss</code> file to change the position or size of the logo.</p>
+
+<h2 id="favicon">Favicon</h2>
+
+<p>A default icon does not exist, but can be added to <code class="highlighter-rouge">/media/images/favicon.ico</code>. Different favicon sizes are not supported yet.</p>
+
+<h2 id="title-tag">Title tag</h2>
+
+<p>The browser <code class="highlighter-rouge">&lt;title&gt;</code> tag is populated with the <code class="highlighter-rouge">name</code> key found in the configuration file.</p>
 </article>
 
     <hr/>
@@ -2084,7 +2094,7 @@ The Presidium convention is to place it under <code class="highlighter-rouge">/m
   <div>
       
         <p>&copy; Copyright 2020 SPAN Digital</p>
-        <p class="text-muted">Generated on Jul  3, 2020</p>
+        <p class="text-muted">Generated on Jul 24, 2020</p>
         
   </div>
 </footer>
