@@ -3,11 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/X-icon">
-    <title>{{ block "title" . }}{{ .Site.Title }} {{ with .Params.Title }} | {{ . }}{{ end }}{{ end }}</title>
+    <link rel="shortcut icon" href="{{ .Site.BaseURL }}/media/images/favicon.ico" type="image/X-icon">
     {{ .Hugo.Generator }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}css/presidium.css" type="text/css" media="all"/>
-
+    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/presidium.css" type="text/css" media="all"/>
+    <title>{{ .Site.Title }}</title>
 </head>
 <body>
 
