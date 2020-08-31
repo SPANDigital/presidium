@@ -1,0 +1,302 @@
+// Fonts
+@import url("https://cloud.typography.com/6096418/6668412/css/fonts.css");
+@import url("https://use.typekit.net/cpr8cmy.css");
+
+// Custom SASS
+body {
+    font-family: "proxima-nova";
+    font-size: 15px;
+    color: $color-grey;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Gotham A", "Gotham B";
+    font-style: normal;
+    font-weight: normal;
+    color: $color-grey;
+}
+
+.presidium-pro-tip,
+.presidium-prerequisite,
+.presidium-for-example,
+.presidium-suggested-reading,
+.presidium-suggested-courses,
+.presidium-best-practice,
+.presidium-warning {
+    padding: 9px 10px 10px 10px;
+    margin-bottom: 10px;
+    border: 2px solid;
+    border-radius: 4px;
+    font-style: normal;
+
+    em {
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    a {
+        text-decoration: underline;
+        color: $color-grey;
+    }
+
+    span {
+        font-size: 18px;
+        line-height: 21px;
+        font-weight: 500;
+        letter-spacing: 0;
+        margin-bottom: 4px;
+        display: flex;
+        font-family: "Gotham A", "Gotham B";
+    }
+
+    &::before {
+        display: flex;
+        font-size: 13px;
+        font-weight: 500;
+        letter-spacing: 0;
+        line-height: 15px;
+        text-transform: uppercase;
+        margin-bottom: 4px;
+        font-family: "Gotham A", "Gotham B";
+    }
+}
+
+.presidium-pro-tip {
+    background-color: #FEF7EF;
+    border-color: $color-orange-1;
+
+    &::before, a:hover {
+        color: $color-orange-1;
+    }
+
+    &::before {
+        content: "span pro tip";
+    }
+}
+
+.presidium-prerequisite {
+    background-color: #F9F8ED;
+    border-color: $color-yellow-green;
+
+    &::before {
+        content: "prerequisite";
+    }
+
+    &::before, a:hover {
+        color: $color-yellow-green;
+    }
+}
+
+.presidium-for-example {
+    background-color: #F6F9F0;
+    border-color: $color-green-1;
+
+    &::before {
+        content: "for example...";
+    }
+
+    &::before, a:hover {
+        color: $color-green-1;
+    }
+}
+
+.presidium-suggested-reading {
+    background-color: #F1F6FC;
+    border-color: $color-blue-1;
+
+    &::before {
+        content: "suggested reading";
+    }
+
+    &::before, a:hover {
+        color: $color-blue-1;
+    }
+}
+
+.presidium-suggested-courses {
+    background-color: #F1F6FC;
+    border-color: #4586CD;
+
+    &::before {
+        content: "suggested courses";
+    }
+
+    &::before, a:hover {
+        color: #4586CD;
+    }
+}
+
+
+.presidium-best-practice {
+    background-color: #FEF7EF;
+    border-color: $color-orange-1;
+
+    &::before {
+        content: "best practice";
+    }
+
+    &::before, a:hover {
+        color: $color-orange-1;
+    }
+}
+
+.presidium-warning {
+    background-color: #FFF3F2;
+    border-color: $color-red-1;
+
+    &::before {
+        content: "warning";
+    }
+
+    &::before, a:hover {
+        color: $color-red-1;
+    }
+}
+
+
+
+
+#presidium-container #presidium-content {
+    hr {
+        margin-top: 20px;
+    }
+
+    .page-title {
+        font-weight: bold;
+        text-transform: none;
+    }
+
+    .article {
+        h3 {
+            font-size: 15px;
+            font-weight: bold;
+        }
+    }
+
+    .article-title {
+        h2 {
+            margin-top: 0px;
+        }
+        font-style: normal;
+    }
+
+    .article-author {
+        a {
+            text-decoration: underline;
+            color: $color-grey;
+
+            &:hover {
+                color: $navbar-default-link-hover-color;
+            }
+        }
+    }
+    // TODO: Remove this as presidium core does not support article statuses
+    .article-status {
+        .status-draft,
+        .status-review,
+        .status-published,
+        .status-retired {
+            font-family: "Gotham A", "Gotham B";
+            font-size: 14px!important;
+            font-style: normal!important;
+            background-repeat: no-repeat;
+            background-position: left;
+            background-size: 24px 19px;
+            padding: 2px 2px 2px 31px;
+            background-color: unset;
+            display: inline-block!important;
+            vertical-align: middle!important;
+        }
+
+        .status-draft {
+            background-image: url('../images/status-draft.svg');
+            color: $color-yellow-green!important;
+        }
+        .status-review {
+            background-image: url('../images/status-review.svg');
+            color: $color-yellow-green!important;
+        }
+        .status-published {
+            background-image: url('../images/status-published.svg');
+            color: $color-green-1!important;
+        }
+        .status-retired {
+            background-image: url('../images/status-retired.svg');
+            color: $color-grey!important;
+        }
+    }
+     // TODO: Remove this as presidium core does not support article roles
+    section .article-header  .article-role {
+        .label {
+            background-image: url('../images/role-icon.svg');
+            background-repeat: no-repeat;
+            background-size: 25px 15px;
+            background-color: unset;
+            background-position: left center;
+            font-family: "Gotham A", "Gotham B"!important;
+            font-size: 14px!important;
+            font-weight: 300!important;
+            font-style: normal!important;
+            color: $color-grey-2!important;
+            line-height: 18px;
+            padding: 2px 2px 2px 33px;
+        }
+    }
+}
+
+#presidium-navigation nav {
+    .menu-title {
+        font-size: 11px;
+        font-family: "Gotham A", "Gotham B";
+    }
+
+    .menu-row {
+        padding: 11px 10px;
+    }
+
+    .navbar-header {
+        .brand-name {
+            color: $color-grey;
+            font-family: "Gotham A", "Gotham B";
+            font-size: 15px;
+            font-weight: bold;
+            line-height: 18px;
+            text-transform: none;
+            padding: 10px;
+            margin-bottom: 5px;
+        }
+    }
+
+    ul li {
+        font-size: 11px;
+        background-color: $color-grey-lighter;
+
+        li > .level-two, .level-three, .level-four {
+            background-color: $color-grey-lighter!important;
+        }
+
+        li.on-article > .menu-row {
+            background-color: $navbar-default-link-hover-color!important;
+        }
+        li.in-section > .menu-row {
+            background-color: $navbar-default-link-hover-color!important;
+        }
+        li.in-section.expanded > .menu-row {
+            background-color: $color-grey-lighter!important;
+        }
+
+        .level-one {
+            font-weight: bold;
+        }
+    }
+}
+
+// For consistent behavior in Chrome and Firefox
+summary {
+  display: list-item;
+}

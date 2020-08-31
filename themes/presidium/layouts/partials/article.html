@@ -16,5 +16,12 @@
     == endif == -->
 
     <article>{{ .Content }}</article>
-    <hr/>
+
+    {{ range sort .Data.Pages "RelPermalink" }}
+
+        {{ partial "article" . }}
+
+    {{ end }}
+
+
 </div>

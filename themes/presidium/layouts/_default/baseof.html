@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ .Site.BaseURL }}/media/images/favicon.ico" type="image/X-icon">
     {{ .Hugo.Generator }}
-    <link rel="stylesheet" href="{{ .Site.BaseURL }}/css/presidium.css" type="text/css" media="all"/>
+    {{ $sass := resources.Get "/presidium.scss" }}
+    {{ $style := $sass | resources.ToCSS }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
     <title>{{ .Site.Title }}</title>
 </head>
 <body>

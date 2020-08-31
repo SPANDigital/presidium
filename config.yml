@@ -4,21 +4,71 @@ title: "Presidium"
 theme: "presidium"
 pluralizelisttitles: "false"
 sectionPagesMenu: "main"
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+  blackfriday:
+   plainIDAnchors: true
+   hrefTargetBlank: true
 menu:
   main:
-    - identifier: overview
-      name: Overview
-      url: /overview
+    - identifier: introduction
+      name: Introduction
+      url: /introduction
       weight: 1
-    - identifier: key-concepts
-      name: Key Concepts
-      url: /key-concepts
+    - identifier: onboarding
+      name: Onboarding
+      url: /onboarding
       weight: 2
-    - identifier: best-practices
-      name: Best Practices
-      url: /best-practices
+    - identifier: people-operations
+      name: People Operations
+      url: /people-operations
       weight: 3
+    - identifier: business-operations
+      name: Business Operations
+      url: /business-operations
+      weight: 4
+    - identifier: projects
+      name: Projects
+      url: /business-operations
+      weight: 5
+    - identifier: products
+      name: Products
+      url: /products
+      weight: 6
+    - identifier: solutions
+      name: Solutions
+      url: /solutions
+      weight: 7
+    - identifier: technology
+      name: Technology
+      url: /technology
+      weight: 8
+    - identifier: production-line
+      name: Production line
+      url: /production-line
+      weight: 9
+    - identifier: handbook-contribution
+      name: Handbook Contribution
+      url: handbook-contribution
+      weight: 10
     - identifier: glossary
       name: Glossary
-      url: /glossary
-      weight: 4
+      url: glossary
+      weight: 11
+    - identifier: reference
+      name: Reference
+      url: reference
+      weight: 12
+    - identifier: updates
+      name: Updates
+      url: updates
+      weight: 13
+    - identifier: suggestions
+      name: Suggestions
+      url: suggestions
+      weight: 14
+
+
+

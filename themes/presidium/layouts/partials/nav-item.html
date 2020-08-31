@@ -1,0 +1,22 @@
+{{ $childLevel := add .Level 1 }}
+{{ $levelCssClasses := dict "1" "level-one" "2" "level-two" "3" "level-three" "4" "level-four" "5" "level-five" "6" "level-six"}}
+{{ $cssClass := index $levelCssClasses (string $childLevel) }}
+{{ $currentPage := .CurrentPage}}
+{{ $onArticle := eq .CurrentPage .NavPage }}
+{{ $isAncestor := .NavPage.IsAncestor .CurrentPage }}
+{{ $expanded := or $onArticle $isAncestor}}
+<li class="menu-parent_{{ .NavPage.Slug }}{{if $onArticle}} on-article{{end}}">
+    <div class="menu-row {{ $cssClass }}">
+        <div class="menu-expander"></div>
+        <div class="menu-title">
+            <a data-id="content/_overview/" href="{{ .NavPage.URL }}">{{ .NavPage.Name }}</a>
+        </div>
+    </div>
+    {{ if .NavPage.Data.Pages }}
+        <ul class="dropdown {{if $expanded}}expanded{{ else }}hidden{{end}}">
+            {{ range .NavPage.Data.Pages }}
+                {{ partial "nav-item" (dict "CurrentPage" $currentPage "NavPage" . "Level" $childLevel) }}
+            {{ end }}
+        </ul>
+    {{ end }}
+</li>

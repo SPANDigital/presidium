@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
+	"strconv"
 	"strings"
 )
 
@@ -36,6 +39,59 @@ func fileExists(path string) bool {
 	return true
 }
 
+func addFrontMatter(path string, params map[string]string) error {
+	log.Println("Adding front matter",params,"to", path)
+	b, err := ioutil.ReadFile(path) // just pass the file name
+	if err != nil {
+		return err
+	}
+	//re := regexp.MustCompile(`(\-\-\-)(.+)(\-\-\-)(.*)`)
+	re := regexp.MustCompile(`^(?s:(---\n)(.*)(---\n)(.*))$`)
+	matches := re.FindSubmatch(b)
+
+	if matches != nil {
+		f, err := os.Create(path)
+		if err != nil {
+			return err
+		}
+		f.Write(matches[1])
+		f.Write(matches[2])
+		for key, value := range params {
+			f.WriteString(fmt.Sprintf("%s: %s\n", key, value))
+		}
+		f.Write(matches[3])
+		f.Write(matches[4])
+
+		return f.Close()
+	}
+	return nil
+}
+
+func injectWeight(path string) error {
+	parts := strings.Split(path, "/")
+	lastPart := parts[len(parts)-1]
+	weight, _ := deduceWeight(lastPart)
+	if weight > 0 {
+		return addFrontMatter(path, map[string]string{
+			"weight": fmt.Sprintf("%d", weight),
+		})
+	}
+	return nil
+}
+
+func injectSlugAndWeightForIndex(indexFile string) error {
+	dir := filepath.Dir(indexFile)
+	parts := strings.Split(dir, "/")
+	lastPart := parts[len(parts)-1]
+	weight, slug := deduceWeight(lastPart)
+	m := make(map[string]string)
+	m["slug"] = slug
+	if weight > 0 {
+		m["weight"] =fmt.Sprintf("%d", weight)
+	}
+	return addFrontMatter(indexFile, m)
+}
+
 func checkForDirIndex(path string) error {
 	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
@@ -52,13 +108,21 @@ func checkForDirIndex(path string) error {
 				return nil
 			}
 			addIndex(path)
+		} else {
+			if info.Name() != "_index.md" && info.Name() != "index.md" {
+				log.Println("Checking weight of ", path)
+				return injectWeight(path)
+			}
 		}
 		return nil
 	})
 	for _, path := range idxRenameList {
 		log.Printf("Renaming %v/index.md to _index.md...", path)
 		os.Rename(path+"/index.md", path+"/_index.md")
-
+		err := injectSlugAndWeightForIndex(path+"/_index.md")
+		if err != nil {
+			return err
+		}
 	}
 	return nil
 }
@@ -71,6 +135,17 @@ func unSlugify(name string) string {
 	return name
 }
 
+// unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
+func deduceWeight(filename string) (int64, string) {
+	re := regexp.MustCompile(`((?P<numeric>\d+)\-)?(?P<rest>.*)(?P<extension>\..*)?`)
+	matches := re.FindStringSubmatch(filename)
+	weight, err := strconv.ParseInt(matches[2], 10, 64)
+	if err != nil {
+		weight = 0
+	}
+	return weight, matches[3]
+}
+
 // addIndex adds a directory index file to override the title of the folder, "unslugified"
 func addIndex(path string) error {
 	log.Printf("Adding an _index.md file to %v...", path)
@@ -80,9 +155,15 @@ func addIndex(path string) error {
 	}
 	defer f.Close()
 	parts := strings.Split(path, "/")
-	title := unSlugify(parts[len(parts)-1])
+	lastPart := parts[len(parts)-1]
+	title := unSlugify(lastPart)
+	weight, slug := deduceWeight(lastPart)
 	f.WriteString("---\n")
 	f.WriteString("title: " + title + "\n")
+	f.WriteString("slug: " + slug + "\n")
+	if weight > 0 {
+		f.WriteString(fmt.Sprintf("weight: %d\n", weight))
+	}
 	f.WriteString("---\n")
 	return nil
 }

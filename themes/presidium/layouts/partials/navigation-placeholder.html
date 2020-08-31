@@ -18,15 +18,10 @@
             <!-- /react-text -->
             {{ $currentPage := . }}
             <ul>
-                {{ range .Site.Menus.main }}
-                <li class="menu-parent_{{ .Title }}">
-                        <div class="menu-row level-one">
-                            <div class="menu-expander"></div>
-                            <div class="menu-title">
-                                <a data-id="content/_overview/" href="{{ .URL }}">{{ .Name }}</a>
-                            </div>
-                        </div>
-                    </li>
+                {{ range $menu := .Site.Menus.main.ByWeight }}
+                    {{ with $.Site.GetPage "section" $menu.Identifier }}
+                        {{ partial "nav-item" (dict "CurrentPage" $currentPage "NavPage" . "Level" 1 "Expanded" true) }}
+                    {{ end }}
                 {{ end }}
 <!--                <li class="menu-parent_overview">-->
 <!--                    <div class="menu-row  level-one">-->
