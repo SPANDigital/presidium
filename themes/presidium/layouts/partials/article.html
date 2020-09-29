@@ -1,11 +1,12 @@
-<div class="article" data-roles="--article-roles--">
-    <span class="anchor" id="--article-slug--" data-id="--article-id--"></span>
-    <div class='article-title == if site.repo.edit == edit == endif =='>
+{{ $roles := .Params.roles | default "All roles" }}
+<div class="article" data-roles="{{ $roles }}">
+    <span class="anchor" id="{{ .Slug }}" data-id="{{ with .File }}{{ .Filename }}{{ end }}"></span>
+    <div class="article-title">
         <h2>
             {{ .Title }} {{ partial "edit-link.html" }}
         </h2>
         <div class="permalink">
-            <a class="link-icon" href="--article-url--" title="Permalink to this article"></a>
+            <a class="link-icon" href="{{ .RelPermalink }}" title="Permalink to this article"></a>
         </div>
     </div>
 

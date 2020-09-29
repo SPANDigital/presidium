@@ -1,0 +1,4 @@
+<div {{with default "best-practice" (.Get "level") }}class="presidium-{{.}}"{{end}}>
+    {{with .Get "title"}}<span>{{.}}</span>{{end}}
+    {{ .Inner }}
+</div>

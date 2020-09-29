@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ .Site.BaseURL }}/media/images/favicon.ico" type="image/X-icon">
-    {{ .Hugo.Generator }}
+    {{ hugo.Generator }}
     {{ $sass := resources.Get "/presidium.scss" }}
     {{ $style := $sass | resources.ToCSS }}
     <link rel="stylesheet" href="{{ $style.Permalink }}">
@@ -22,7 +22,6 @@
 == endif == -->
 
 <div id="presidium-navigation">
-    {{ partial "navigation-placeholder.html" .}}
 </div>
 <div id="presidium-container" class="container-fluid">
     <div class="row">
@@ -44,18 +43,18 @@
 {{ partial "modal.html" }}
 
 <!-- Components -->
-<script src="/js/presidium.js"></script>
+{{ partial "javascript" . }}
 <script>
     window.presidium.config = {
-        name: "-- site.name --",
-        baseurl:  "-- site.baseurl --",
-        brandurl:  "-- site.brandurl --",
-        repourl:  "-- site.repourl --"
+        name: "Span handbook",
+        baseurl:  "/",
+        brandurl:  "",
+        repourl:  ""
     }
     // window.presidium['versions'] = { siteroot: "-- site.siteroot --" };
     window.presidium['versions'] = { siteroot: "/" };
-    window.presidium.menu.load(== include menu.json ==, 'presidium-navigation');
-    window.presidium.tooltips.load({ "baseurl": "-- site.baseurl --" });
+    window.presidium.menu.load({{ (partial "json-navigation" .) | jsonify | safeJS }}, "presidium-navigation");
+    window.presidium.tooltips.load({ "baseurl": "/" });
 </script>
 
 <!-- == if site.enterprise.script ==

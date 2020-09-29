@@ -1,0 +1,5 @@
+{{ with .Parent }}
+    {{ if (.Scratch.Get "useDefault") }}
+        {{ $.Inner }}
+    {{ end }}
+{{ end }}

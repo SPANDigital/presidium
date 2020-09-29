@@ -1,0 +1,33 @@
+{{ $childLevel := add .Level 1 }}
+{{ $items := slice }}
+{{ $link := "" }}
+{{ $section := .Section }}
+{{ $category := .Category }}
+{{ if eq .Level 1 }}
+    {{ $section = .Page.Title }}
+{{ end }}
+{{ if eq .Level 2 }}
+    {{ $category = .Page.Title }}
+{{ end }}
+
+{{ with .Page}}
+    {{ if .Data.Pages }}
+        {{ $link = .RelPermalink }}
+    {{ end }}
+    {{if not .Data.Pages }}
+        {{ $link = (printf "%v#%v" .Parent.RelPermalink .Params.Slug ) }}
+    {{end}}
+    {{ $scope := slice }}
+    {{ if .Params.Scope }}
+        {{ $scope = $scope | append .Params.Scope }}
+    {{ end }}
+    {{ if not (eq .Plain "") }}
+     {{ $items = $items | append (dict "id" .File.Filename "title" .Title "slug" .Params.Slug "url" $link "section" ($section | default "") "category" ($category | default "") "roles" (slice (.Params.Roles | default "All Roles")) "scope" $scope "author" .Params.Author "content" .Plain "updated" now  )}}
+    {{ end }}
+    {{ range .Data.Pages }}
+        {{ range (partial "searchmap-item" (dict "Page" . "Level" $childLevel "Section" $section "Category" $category ) ) }}
+          {{ $items = $items | append . }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+{{ return $items }}

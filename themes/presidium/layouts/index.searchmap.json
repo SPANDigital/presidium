@@ -1,0 +1,1 @@
+{{ (partial "searchmap-root" .) | jsonify }}

@@ -1,0 +1,10 @@
+{{ $value := .Get 0 }}
+{{ with .Parent }}
+    {{ if eq nil (.Scratch.Get "useDefault") }}
+    {{ .Scratch.Set "useDefault" true }}
+    {{ end }}
+    {{ if eq $value ($.Site.Params.Get (.Get 0)) -}}
+        {{ .Scratch.Set "useDefault" false }}
+        {{ $.Inner }}
+    {{ end }}
+{{ end }}

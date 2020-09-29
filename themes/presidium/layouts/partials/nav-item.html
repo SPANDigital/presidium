@@ -1,15 +1,30 @@
 {{ $childLevel := add .Level 1 }}
 {{ $levelCssClasses := dict "1" "level-one" "2" "level-two" "3" "level-three" "4" "level-four" "5" "level-five" "6" "level-six"}}
-{{ $cssClass := index $levelCssClasses (string $childLevel) }}
+{{ $cssClass := index $levelCssClasses (string .Level) }}
 {{ $currentPage := .CurrentPage}}
 {{ $onArticle := eq .CurrentPage .NavPage }}
 {{ $isAncestor := .NavPage.IsAncestor .CurrentPage }}
 {{ $expanded := or $onArticle $isAncestor}}
-<li class="menu-parent_{{ .NavPage.Slug }}{{if $onArticle}} on-article{{end}}">
+{{ $link := "Unset" }}
+{{ if .NavPage.Data.Pages }}
+    {{ $link = .NavPage.RelPermalink }}
+{{ end }}
+{{if not .NavPage.Data.Pages }}
+    {{ $link = (printf "%v#%v" .NavPage.Parent.RelPermalink .NavPage.Params.Slug ) }}
+{{end}}
+<li class="menu-parent_{{ .NavPage.Slug }}{{if $onArticle}} on-article{{end}}{{if $expanded}} expanded{{end}} ">
     <div class="menu-row {{ $cssClass }}">
-        <div class="menu-expander"></div>
+        <div class="menu-expander">
+            {{ if .NavPage.Data.Pages }}
+                {{ if $expanded }}
+                    <span class="glyphicon glyphicon-chevron-down"></span>
+                {{ else }}
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                {{ end }}
+            {{ end }}
+        </div>
         <div class="menu-title">
-            <a data-id="content/_overview/" href="{{ .NavPage.URL }}">{{ .NavPage.Name }}</a>
+            <a data-slug="{{ .NavPage.Slug }}" data-id="{{ .NavPage.File.Filename }}" href="{{ $link }}">{{ .NavPage.Name }}</a>
         </div>
     </div>
     {{ if .NavPage.Data.Pages }}

@@ -195,7 +195,6 @@ h6 {
             }
         }
     }
-    // TODO: Remove this as presidium core does not support article statuses
     .article-status {
         .status-draft,
         .status-review,
@@ -230,7 +229,6 @@ h6 {
             color: $color-grey!important;
         }
     }
-     // TODO: Remove this as presidium core does not support article roles
     section .article-header  .article-role {
         .label {
             background-image: url('../images/role-icon.svg');
