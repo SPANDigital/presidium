@@ -140,11 +140,11 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 		Modules: HugoModules{
 			Imports: []HugoImport{
 				{
-					Path:     "https://github.com/SPANDigital/presidium-theme-website",
+					Path:     "github.com/spandigital/presidium-theme-website",
 					Disabled: false,
 				},
 				{
-					Path:     "https://github.com/SPANDigital/presidium-theme-pdf",
+					Path:     "github.com/spandigital/presidium-theme-pdf",
 					Disabled: true,
 				},
 			},
