@@ -27,12 +27,21 @@ Your version needs to be at or greater then this version
 
 ### Tell git to use your ssh credentials for SPANDigital's private repos
 
+```
 git config --global url.git@github.com:.insteadOf https://github.com/
-export GOPRIVATE=github.com/SPANDigita
+export GOPRIVATE=github.com/SPANDigital
+```
 
-### Install binary
+### Install / upgrade binary
 
+To install first tyime
+```
 go install github.com/SPANDigital/presidium-hugo
+```
+To upgrade to latest version
+```
+go get -u github.com/SPANDigital/presidium-hugo
+```
 
 ### Converting a Jekyll content directory 
 
@@ -58,7 +67,7 @@ hugo serve
 ### Vendoring
 ````
 cd ~/mycontendirectory
-hugo serve
+hugo mod vendor
 ````
 
 ### Zipping for enterprise (requires vendoring)
