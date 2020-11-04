@@ -40,11 +40,30 @@ go install github.com/SPANDigital/presidium-hugo
 mkdir ~/mycontentdirectory
 cd ~/mycontendirectory
 presidium-hugo convert -s ~/spandigital/span-handbook-docs -p introduction
-
 ```
 
 ### Initializing Hugo's module system
 
+````
+cd ~/mycontendirectory
+hugo mod init github.com/spandigital/mycontendirectory
+hugo get -u
+````
+### Serving (non-enterprise)
+````
+cd ~/mycontendirectory
+hugo serve
+````
+
+### Vendoring
+````
+cd ~/mycontendirectory
+hugo serve
+````
+
+### Zipping for enterprise (requires vendoring)
+````
+zip -r documentation.zip content static config.yml _vendor
 ````
 
 ### Usage
