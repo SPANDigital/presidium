@@ -16,15 +16,15 @@ type JekyllExternal struct {
 
 type JekyllSectionItem struct {
 	Title string `yaml:"title""`
-	Url string   `yaml:"url""`
+	Url   string `yaml:"url""`
 }
 
 type JekyllConfig struct {
-	Name string                  `yaml:"name"`
-    Baseurl string               `yaml:"baseurl"`
-	Footer string                `yaml:"footer"`
-	Logo string                  `yaml:"logo"`
-	Show JekyllShow              `yaml:"show"`
+	Name     string              `yaml:"name"`
+	Baseurl  string              `yaml:"baseurl"`
+	Footer   string              `yaml:"footer"`
+	Logo     string              `yaml:"logo"`
+	Show     JekyllShow          `yaml:"show"`
 	External JekyllExternal      `yaml:"external"`
 	Sections []JekyllSectionItem `yaml::sections"`
 }
@@ -43,28 +43,38 @@ type HugoMarkup struct {
 
 type HugoMenuItem struct {
 	Identifier string `yaml:"identifier"`
-	Name string       `yaml:"name"`
-	Url string        `yaml:"url"`
-	Weight int   	  `yaml:"weight"`
+	Name       string `yaml:"name"`
+	Url        string `yaml:"url"`
+	Weight     int    `yaml:"weight"`
 }
 
 type HugoOutputFormat struct {
-	BaseName string  `yaml:"baseName"`
+	BaseName  string `yaml:"baseName"`
 	MediaType string `yaml:"mediaType"`
 }
 
 type HugoConfig struct {
-	BaseURL string                            `yaml:"baseURL"`
-	LanguageCode string                       `yaml:"languageCode"`
-	Title string                              `yaml:"title"`
-	Theme string                              `yaml:"theme"`
-	PluralizeListTitles bool                  `yaml:"pluralizelisttitles"`
-	Markup HugoMarkup		                  `yaml:"markup"`
-	Params map[string]string                  `yaml:"params"`
-	SectionPagesMenu string  	              `yaml:"sectionPagesMenu"`
-	Menu map[string][]HugoMenuItem            `yaml:"menu"`
-	OutputFormats map[string]HugoOutputFormat `yaml:"outputFormats"`
-	Outputs map[string][]string               `yaml:"outputs"`
+	BaseURL             string                      `yaml:"baseURL"`
+	LanguageCode        string                      `yaml:"languageCode"`
+	Title               string                      `yaml:"title"`
+	Theme               string                      `yaml:"theme"`
+	PluralizeListTitles bool                        `yaml:"pluralizelisttitles"`
+	Markup              HugoMarkup                  `yaml:"markup"`
+	Params              map[string]string           `yaml:"params"`
+	SectionPagesMenu    string                      `yaml:"sectionPagesMenu"`
+	Menu                map[string][]HugoMenuItem   `yaml:"menu"`
+	OutputFormats       map[string]HugoOutputFormat `yaml:"outputFormats"`
+	Outputs             map[string][]string         `yaml:"outputs"`
+	Modules             HugoModules                 `yaml:"modules"`
+}
+
+type HugoImport struct {
+	Path     string `yaml:"path"`
+	Disabled bool   `yaml:"disabled"`
+}
+
+type HugoModules struct {
+	Imports []HugoImport `yaml:"imports"`
 }
 
 func ReadJekyllConfig(path string) (*JekyllConfig, error) {
@@ -84,7 +94,7 @@ func ReadJekyllConfig(path string) (*JekyllConfig, error) {
 
 func WriteHugoConfig(path string, config *HugoConfig) error {
 	b, err := yaml.Marshal(config)
-	if (err != nil) {
+	if err != nil {
 		return err
 	}
 	return ioutil.WriteFile(path, b, 0755)
@@ -96,17 +106,17 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 	for idx, item := range config.Sections {
 		mainMenu = append(mainMenu, HugoMenuItem{
 			Identifier: item.Title,
-			Name: item.Title,
-			Url: item.Url,
-			Weight: idx+1,
+			Name:       item.Title,
+			Url:        item.Url,
+			Weight:     idx + 1,
 		})
 	}
 
 	hugoConfig := &HugoConfig{
-		BaseURL: config.Baseurl,
+		BaseURL:      config.Baseurl,
 		LanguageCode: "en-us",
-		Title: config.Name,
-		Theme: "presidium",
+		Title:        config.Name,
+		Theme:        "presidium",
 		Markup: HugoMarkup{
 			Goldmark: HugoGoldmark{
 				Renderer: HugoRenderer{
@@ -127,6 +137,18 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 				"RSS",
 				"MenuIndex",
 				"SearchMap",
+			},
+		},
+		Modules: HugoModules{
+			Imports: []HugoImport{
+				{
+					Path:     "https://github.com/SPANDigital/presidium-theme-website",
+					Disabled: false,
+				},
+				{
+					Path:     "https://github.com/SPANDigital/presidium-theme-pdf",
+					Disabled: true,
+				},
 			},
 		},
 	}

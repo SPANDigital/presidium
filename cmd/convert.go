@@ -27,7 +27,7 @@ var convertCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		sourceRepoDir := viper.GetString("sourceRepoDir")
-		destinationRepoDir := viper.GetString("destinationRepoDir")
+		destinationRepoDir := "/Users/richardwooding/spandigital/presidium-test-hugo-content"
 
 		if (sourceRepoDir != "") {
 
