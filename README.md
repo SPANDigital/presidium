@@ -34,7 +34,7 @@ export GOPRIVATE=github.com/SPANDigital
 
 ### Install / upgrade binary
 
-To install first tyime
+To install first time
 ```
 go install github.com/SPANDigital/presidium-hugo
 ```
@@ -56,7 +56,7 @@ presidium-hugo convert -s ~/spandigital/span-handbook-docs -p introduction
 ````
 cd ~/mycontendirectory
 hugo mod init github.com/spandigital/mycontendirectory
-hugo get -u
+hugo mod get -u
 ````
 ### Serving (non-enterprise)
 ````
