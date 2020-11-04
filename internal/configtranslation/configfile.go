@@ -57,7 +57,6 @@ type HugoConfig struct {
 	BaseURL             string                      `yaml:"baseURL"`
 	LanguageCode        string                      `yaml:"languageCode"`
 	Title               string                      `yaml:"title"`
-	Theme               string                      `yaml:"theme"`
 	PluralizeListTitles bool                        `yaml:"pluralizelisttitles"`
 	Markup              HugoMarkup                  `yaml:"markup"`
 	Params              map[string]string           `yaml:"params"`
@@ -116,7 +115,6 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 		BaseURL:      config.Baseurl,
 		LanguageCode: "en-us",
 		Title:        config.Name,
-		Theme:        "presidium",
 		Markup: HugoMarkup{
 			Goldmark: HugoGoldmark{
 				Renderer: HugoRenderer{

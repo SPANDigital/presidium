@@ -25,6 +25,11 @@ Your version needs to be at
 
 ```Hugo Static Site Generator v0.75.0```
 
+### Tell git to use your ssh credentials for SPANDigital's private repos
+
+git config --global url.git@github.com:.insteadOf https://github.com/
+export GOPRIVATE=github.com/SPANDigita
+
 ### Install binary
 
 go install github.com/SPANDigital/presidium-hugo
