@@ -64,7 +64,7 @@ type HugoConfig struct {
 	Menu                map[string][]HugoMenuItem   `yaml:"menu"`
 	OutputFormats       map[string]HugoOutputFormat `yaml:"outputFormats"`
 	Outputs             map[string][]string         `yaml:"outputs"`
-	Module              HugoModule                  `yaml:"modules"`
+	Module              HugoModule                  `yaml:"module"`
 }
 
 type HugoImport struct {
