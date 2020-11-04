@@ -101,6 +101,8 @@ var convertCmd = &cobra.Command{
 				log.Fatal(err)
 			}
 
+			os.MkdirAll(destinationContentDir, 0755)
+			
 			fmt.Println(colors.Labels.Underline("Emptying contents of:"), colors.Labels.Info(destinationContentDir))
 			err = RemoveContents(destinationContentDir)
 			if err != nil {
