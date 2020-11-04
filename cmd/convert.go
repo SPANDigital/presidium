@@ -27,7 +27,7 @@ var convertCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		sourceRepoDir := viper.GetString("sourceRepoDir")
-		destinationRepoDir := viper.GetString("destDir")
+		destinationRepoDir, _ := os.Getwd()
 
 		if (sourceRepoDir != "") {
 
@@ -102,7 +102,7 @@ var convertCmd = &cobra.Command{
 			}
 
 			os.MkdirAll(destinationContentDir, 0755)
-			
+
 			fmt.Println(colors.Labels.Underline("Emptying contents of:"), colors.Labels.Info(destinationContentDir))
 			err = RemoveContents(destinationContentDir)
 			if err != nil {
