@@ -21,7 +21,7 @@ Confirming your version:
 
 ```hugo version```
 
-Your version needs to be at
+Your version needs to be at or greater then this version
 
 ```Hugo Static Site Generator v0.75.0```
 
@@ -36,7 +36,16 @@ go install github.com/SPANDigital/presidium-hugo
 
 ### Converting a Jekyll content directory 
 
-```presidium-hugo convert -s ~/spandigital/span-handbook-docs -p introduction```
+```
+mkdir ~/mycontentdirectory
+cd ~/mycontendirectory
+presidium-hugo convert -s ~/spandigital/span-handbook-docs -p introduction
+
+```
+
+### Initializing Hugo's module system
+
+````
 
 ### Usage
 

@@ -64,7 +64,7 @@ type HugoConfig struct {
 	Menu                map[string][]HugoMenuItem   `yaml:"menu"`
 	OutputFormats       map[string]HugoOutputFormat `yaml:"outputFormats"`
 	Outputs             map[string][]string         `yaml:"outputs"`
-	Modules             HugoModules                 `yaml:"modules"`
+	Module              HugoModule                  `yaml:"modules"`
 }
 
 type HugoImport struct {
@@ -72,7 +72,7 @@ type HugoImport struct {
 	Disabled bool   `yaml:"disabled"`
 }
 
-type HugoModules struct {
+type HugoModule struct {
 	Imports []HugoImport `yaml:"imports"`
 }
 
@@ -137,7 +137,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 				"SearchMap",
 			},
 		},
-		Modules: HugoModules{
+		Module: HugoModules{
 			Imports: []HugoImport{
 				{
 					Path:     "github.com/spandigital/presidium-theme-website",
