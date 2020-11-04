@@ -137,7 +137,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 				"SearchMap",
 			},
 		},
-		Module: HugoModules{
+		Module: HugoModule{
 			Imports: []HugoImport{
 				{
 					Path:     "github.com/spandigital/presidium-theme-website",
