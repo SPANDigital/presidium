@@ -11,7 +11,8 @@ This is a sample Presidium configuration file:
 # - name: Site name, also used for <title> tag
 # _ baseurl: Optional URL to use if documentation is hosted in a subdirectory `domain.com/{baseurl}`
 # - footer: Footer copy
-# - logo: Menu bar logo.
+# - logo: Menu bar logo
+# - port: Optional port number to use when running locally. Defaults to 4000
 # - show: Hide or show article components. Defaults to true
 # - external: Links to external sources
 #    - authors-url: base url for article authors
@@ -20,6 +21,7 @@ name: Presidium Template
 #baseurl: /mysite
 footer: Template Footer
 logo: /media/images/logo.png
+port: 6543
 
 show:
   status: true
