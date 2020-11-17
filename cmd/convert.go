@@ -27,7 +27,11 @@ var convertCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 
 		sourceRepoDir := viper.GetString("sourceRepoDir")
-		destinationRepoDir, _ := os.Getwd()
+		destinationRepoDir := viper.GetString("destDir")
+
+		if destinationRepoDir == "" {
+			destinationRepoDir, _ = os.Getwd()
+		}
 
 		if (sourceRepoDir != "") {
 
