@@ -1,5 +1,5 @@
-{{ with .Parent }}
-    {{ if (.Scratch.Get "useDefault") }}
-        {{ $.Inner }}
-    {{ end }}
+{{ $_hugo_config := `{ "version": 1 }` }}
+{{ if (.Page.Scratch.Get "useDefault") }}
+    {{ $.Inner }}
 {{ end }}
+

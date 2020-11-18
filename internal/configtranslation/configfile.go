@@ -20,13 +20,16 @@ type JekyllSectionItem struct {
 }
 
 type JekyllConfig struct {
-	Name     string              `yaml:"name"`
-	Baseurl  string              `yaml:"baseurl"`
-	Footer   string              `yaml:"footer"`
-	Logo     string              `yaml:"logo"`
-	Show     JekyllShow          `yaml:"show"`
-	External JekyllExternal      `yaml:"external"`
-	Sections []JekyllSectionItem `yaml::sections"`
+	Name       string              `yaml:"name"`
+	Baseurl    string              `yaml:"baseurl"`
+	Footer     string              `yaml:"footer"`
+	Logo       string              `yaml:"logo"`
+	Audience   string              `yaml:"audience"`
+	Scope      string              `yaml:"scope"`
+	AppleScope string              `yaml:"apple_scope"`
+	Show       JekyllShow          `yaml:"show"`
+	External   JekyllExternal      `yaml:"external"`
+	Sections   []JekyllSectionItem `yaml:"sections"`
 }
 
 type HugoRenderer struct {
@@ -54,16 +57,17 @@ type HugoOutputFormat struct {
 }
 
 type HugoConfig struct {
-	LanguageCode        string                      `yaml:"languageCode"`
-	Title               string                      `yaml:"title"`
-	PluralizeListTitles bool                        `yaml:"pluralizelisttitles"`
-	Markup              HugoMarkup                  `yaml:"markup"`
-	Params              map[string]string           `yaml:"params"`
-	SectionPagesMenu    string                      `yaml:"sectionPagesMenu"`
-	Menu                map[string][]HugoMenuItem   `yaml:"menu"`
-	OutputFormats       map[string]HugoOutputFormat `yaml:"outputFormats"`
-	Outputs             map[string][]string         `yaml:"outputs"`
-	Module              HugoModule                  `yaml:"module"`
+	LanguageCode           string                      `yaml:"languageCode"`
+	Title                  string                      `yaml:"title"`
+	PluralizeListTitles    bool                        `yaml:"pluralizelisttitles"`
+	Markup                 HugoMarkup                  `yaml:"markup"`
+	Params                 map[string]string           `yaml:"params"`
+	SectionPagesMenu       string                      `yaml:"sectionPagesMenu"`
+	Menu                   map[string][]HugoMenuItem   `yaml:"menu"`
+	OutputFormats          map[string]HugoOutputFormat `yaml:"outputFormats"`
+	Outputs                map[string][]string         `yaml:"outputs"`
+	Module                 HugoModule                  `yaml:"module"`
+	EnableInlineShortcodes bool                        `yaml:"enableInlineShortcodes"`
 }
 
 type HugoImport struct {
@@ -148,8 +152,15 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 			},
 		},
 	}
+
 	if additionalParams != nil {
 		hugoConfig.Params = additionalParams
 	}
+	hugoConfig.Params["audience"] = config.Audience
+	hugoConfig.Params["scope"] = config.Scope
+	hugoConfig.Params["appleScope"] = config.AppleScope
+
+	hugoConfig.EnableInlineShortcodes = true
+
 	return hugoConfig
 }

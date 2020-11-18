@@ -9,7 +9,7 @@
     {{- end -}}
 {{- end -}}
 {{- if $tip -}}
-<a class="tooltips-term">{{ $term }}{{with $tip }}<span class="tooltips-text">{{ . | plainify }}</span>{{ end }}</a>
+<a class="tooltips-term">{{ $term }}{{ with $tip }}<span class="tooltips-text">{{ . | plainify }}</span>{{ end }}</a>
 {{- else -}}
 {{ $term }}
 {{- end -}}
