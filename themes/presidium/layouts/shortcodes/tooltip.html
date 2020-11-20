@@ -1,15 +1,17 @@
 {{- $glossary := $.Site.GetPage "glossary" -}}
 {{- $tip := "" -}}
+{{- $link := "" -}}
 {{- $term := .Get 0 -}}
 {{- with $glossary -}}
     {{- range .Data.Pages -}}
         {{- if eq (lower .Title) (lower $term) -}}
             {{- $tip = .Content -}}
+            {{- $link = .RelPermalink -}}
         {{- end -}}
     {{- end -}}
 {{- end -}}
 {{- if $tip -}}
-<a class="tooltips-term">{{ $term }}{{ with $tip }}<span class="tooltips-text">{{ . | plainify }}</span>{{ end }}</a>
+<a class="tooltips-term" href="{{ $link }}" >{{ $term }}{{ with $tip }}<span class="tooltips-text">{{ . | plainify }}</span>{{ end }}</a>
 {{- else -}}
 {{ $term }}
 {{- end -}}
