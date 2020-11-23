@@ -184,3 +184,29 @@ func TestStripTooltips(t *testing.T) {
 	assert.Equal(t, output, expectedOutput)
 }
 
+func TestReplaceComments(t *testing.T) {
+	input := `{% comment %} Comment Body {% endcomment %}`
+	expectedOutput := `{{< comment.inline >}}
+{{/* Comment Body */}}
+{{< /comment.inline >}}`
+	output := parseComments(input)
+	assert.Equal(t, output, expectedOutput)
+}
+
+func TestReplaceCommentsMultiline(t *testing.T) {
+	input := `{% comment %}
+{% comment %}
+Comment Body
+More Comment
+{% endcomment %}`
+	expectedOutput := `{{< comment.inline >}}
+{{/*
+{% comment %}
+Comment Body
+More Comment
+*/}}
+{{< /comment.inline >}}`
+	output := parseComments(input)
+	assert.Equal(t, output, expectedOutput)
+}
+

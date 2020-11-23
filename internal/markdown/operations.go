@@ -39,6 +39,7 @@ var markdownFileOperations = []operationInstruction{
 	{Key: "replaceCallOuts", Func: replaceCallOuts},
 	{Key: "replaceTooltips", Func: replaceTooltips},
 	{Key: "replaceIfVariables", Func: replaceIfVariables},
+	{Key: "replaceComments", Func: replaceComments},
 }
 
 // Run each operation on a path, making sure to check with viper to see if we must
@@ -337,6 +338,19 @@ func replaceIfVariables(path string) error {
 		strContent := string(content)
 		newContent := parseIfStatements(strContent)
 		_, err := io.WriteString(w, newContent)
+		return err
+	})
+}
+
+func parseComments(strContent string) string {
+	return CommentRe.ReplaceAllString(strContent, "{{< comment.inline >}}\n{{/*$1*/}}\n{{< /comment.inline >}}")
+}
+
+func replaceComments(path string) error {
+	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
+		strContent := string(content)
+		strContent = parseComments(strContent)
+		_, err := io.WriteString(w, strContent)
 		return err
 	})
 }

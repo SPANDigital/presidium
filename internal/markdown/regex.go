@@ -17,3 +17,4 @@ var IfVariablesRe = regexp.MustCompile(`(?msU){% if ([^}]*?) %}(.+)({% elsif ([^
 var IfConditionRe = regexp.MustCompile(`(?ms)(and|or)?\s??site.(\w+) ([!=]=) "(\w+)"`)
 var IfConditionShortcodeRe = regexp.MustCompile(`(?ms)site.(\w+) == "(\w+)"`)
 var ContainsShortcodeRe = regexp.MustCompile(`(?ms){{[%<].*?[%>]}}`)
+var CommentRe = regexp.MustCompile(`(?ms){% comment %}(.*?){% endcomment %}`)

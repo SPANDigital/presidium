@@ -20,6 +20,7 @@ type flags struct {
 	ReplaceTooltips bool
 	AddMissingTitles bool
 	ReplaceIfVariables bool
+	ReplaceComments bool
 	CopyMediaToStatic bool
 	ConvertConfigYml bool
 }
