@@ -41,7 +41,7 @@ type HugoGoldmark struct {
 }
 
 type HugoMarkup struct {
-	Goldmark HugoGoldmark `yanl:"goldmark"`
+	Goldmark HugoGoldmark `yaml:"goldmark"`
 }
 
 type HugoMenuItem struct {
@@ -59,6 +59,7 @@ type HugoOutputFormat struct {
 type HugoConfig struct {
 	LanguageCode           string                      `yaml:"languageCode"`
 	Title                  string                      `yaml:"title"`
+	Copyright              string                      `yaml:"copyright"`
 	PluralizeListTitles    bool                        `yaml:"pluralizelisttitles"`
 	Markup                 HugoMarkup                  `yaml:"markup"`
 	Params                 map[string]string           `yaml:"params"`
@@ -68,6 +69,7 @@ type HugoConfig struct {
 	Outputs                map[string][]string         `yaml:"outputs"`
 	Module                 HugoModule                  `yaml:"module"`
 	EnableInlineShortcodes bool                        `yaml:"enableInlineShortcodes"`
+	Frontmatter            HugoFrontmatter             `yaml:"frontmatter"`
 }
 
 type HugoImport struct {
@@ -77,6 +79,10 @@ type HugoImport struct {
 
 type HugoModule struct {
 	Imports []HugoImport `yaml:"imports"`
+}
+
+type HugoFrontmatter struct {
+	Lastmod []string `yaml:"lastmod"`
 }
 
 func ReadJekyllConfig(path string) (*JekyllConfig, error) {
@@ -159,8 +165,11 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 	hugoConfig.Params["audience"] = config.Audience
 	hugoConfig.Params["scope"] = config.Scope
 	hugoConfig.Params["appleScope"] = config.AppleScope
+	hugoConfig.Copyright = config.Footer
 
 	hugoConfig.EnableInlineShortcodes = true
+
+	hugoConfig.Frontmatter.Lastmod = []string{"lastmod", ":fileModTime", ":default"}
 
 	return hugoConfig
 }
