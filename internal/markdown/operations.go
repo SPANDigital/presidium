@@ -124,7 +124,7 @@ func fixImagesWithAttributes(path string) error {
 
 // Replaces references to site.baseurl with a shortcode
 func replaceBaseUrl(path string) error {
-	return simpleReplaceContentInMarkdown(path, []string{"{{site.baseurl}}"}, "{{% baseurl %}}")
+	return simpleReplaceContentInMarkdown(path, []string{"{{ site.baseurl }}"}, "{{% baseurl %}}")
 }
 
 // Removes target="_blank" (this is automatically for external links)
