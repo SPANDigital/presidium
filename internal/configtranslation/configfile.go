@@ -113,7 +113,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 	mainMenu := []HugoMenuItem{}
 	for idx, item := range config.Sections {
 		mainMenu = append(mainMenu, HugoMenuItem{
-			Identifier: item.Title,
+			Identifier: item.Url,
 			Name:       item.Title,
 			Url:        item.Url,
 			Weight:     idx + 1,
