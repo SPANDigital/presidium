@@ -190,6 +190,7 @@ func init() {
 	pflags.BoolVarP(&settings.Flags.UrlBasedOnFilename, "urlBasedOnFilename", "u", true, "Base front matter url on filename")
 	pflags.BoolVarP(&settings.Flags.CommonmarkAttributes, "commonmarkAttributes", "m", false, "Convert to commonmark attribute format")
 	pflags.BoolVarP(&settings.Flags.ReplaceBaseUrl, "replaceBaseUrl", "b", true, "Replace {{site.baseurl}} with {{ site.BaseURL }}")
+	pflags.BoolVarP(&settings.Flags.ReplaceBaseUrlWithSpaces, "replaceBaseUrlWithSpaces", "j", true, "Replace {{ site.baseurl }} with {{site.BaseURL}}")
 	pflags.BoolVarP(&settings.Flags.RemoveTargetBlank, "removeTargetBlank", "t", true, `Remove target="blank" variants`)
 	pflags.BoolVarP(&settings.Flags.FixImages, "fixImages", "i", true, "Fix images in same path")
 	pflags.BoolVarP(&settings.Flags.FixImagesWithAttributes, "fixImagesWithAttributes", "a",  true,"Replace images with attributes with shortcodes")

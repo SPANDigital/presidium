@@ -10,6 +10,7 @@ type flags struct {
 	UrlBasedOnFilename bool
 	CommonmarkAttributes bool
 	ReplaceBaseUrl bool
+	ReplaceBaseUrlWithSpaces bool
 	RemoveTargetBlank bool
 	FixImages bool
 	FixImagesWithAttributes bool

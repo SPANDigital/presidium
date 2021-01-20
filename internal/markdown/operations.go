@@ -33,6 +33,7 @@ var markdownFileOperations = []operationInstruction{
 	{Key: "commonmarkAttributes", Func: replaceCommonmarkAttributes},
 	{Key: "fixImages", Func: fixImages},
 	{Key: "replaceBaseUrl", Func: replaceBaseUrl},
+	{Key: "replaceBaseUrlWithSpaces", Func: replaceBaseUrlWithSpaces},
 	{Key: "removeTargetBlank", Func: removeTargetBlank},
 	{Key: "fixImagesWithAttributes", Func: fixImagesWithAttributes},
 	{Key: "removeRawTags", Func: removeRawTags},
@@ -124,6 +125,10 @@ func fixImagesWithAttributes(path string) error {
 
 // Replaces references to site.baseurl with a shortcode
 func replaceBaseUrl(path string) error {
+	return simpleReplaceContentInMarkdown(path, []string{"{{site.baseurl}}"}, "{{% baseurl %}}")
+}
+
+func replaceBaseUrlWithSpaces(path string) error {
 	return simpleReplaceContentInMarkdown(path, []string{"{{ site.baseurl }}"}, "{{% baseurl %}}")
 }
 
