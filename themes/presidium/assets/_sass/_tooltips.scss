@@ -56,13 +56,13 @@ $tooltip-triangle-top: -20%;
     padding: 5px;
     margin-left: -165px;
     z-index: $zindex-popover;
-
     -webkit-transition: $tooltip-animation;
     -moz-transition: $tooltip-animation;
     -ms-transition: $tooltip-animation;
     -o-transition: $tooltip-animation;
     transition: $tooltip-animation;
   }
+
   &:hover .tooltips-text {
     transition-delay: $tooltip-hover-delay;
     -webkit-transition-delay: $tooltip-hover-delay;
@@ -72,14 +72,24 @@ $tooltip-triangle-top: -20%;
     overflow-y: $tooltip-y-overflow;
     opacity: 1;
   }
+
   &:hover {
     color: $tooltip-text-color;
     text-decoration: none;
+
+    &::after {
+      transition-delay: $tooltip-hover-delay;
+      -webkit-transition-delay: $tooltip-hover-delay;
+      -ms-transition-delay: $tooltip-hover-delay;
+      -o-transition-delay: $tooltip-hover-delay;
+      visibility: visible;
+    }
   }
 }
 
 .tooltips-term::after {
   content: '';
+  visibility: collapse;
   position: absolute;
   height: 0;
   width: 0;
