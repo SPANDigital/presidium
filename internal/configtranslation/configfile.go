@@ -165,6 +165,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 	hugoConfig.Params["audience"] = config.Audience
 	hugoConfig.Params["scope"] = config.Scope
 	hugoConfig.Params["appleScope"] = config.AppleScope
+	hugoConfig.Params["logo"] = config.Logo
 	hugoConfig.Copyright = config.Footer
 
 	hugoConfig.EnableInlineShortcodes = true
