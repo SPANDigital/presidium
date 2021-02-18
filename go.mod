@@ -12,7 +12,7 @@ require (
 	github.com/otiai10/copy v1.4.2
 	github.com/pelletier/go-toml v1.8.1 // indirect
 	github.com/spandigital/presidium-theme-pdf v0.0.0-20201119081406-58ec420bb04c // indirect
-	github.com/spandigital/presidium-theme-website v0.0.0-20210217144028-a0db8e637758 // indirect
+	github.com/spandigital/presidium-theme-website v0.0.0-20210218063915-1f7fcabcdb91 // indirect
 	github.com/spf13/afero v1.5.1 // indirect
 	github.com/spf13/cast v1.3.1 // indirect
 	github.com/spf13/cobra v1.1.3
@@ -20,7 +20,7 @@ require (
 	github.com/spf13/viper v1.7.1
 	github.com/ugorji/go v1.1.4 // indirect
 	github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77 // indirect
-	golang.org/x/sys v0.0.0-20210217105451-b926d437f341 // indirect
+	golang.org/x/sys v0.0.0-20210218155724-8ebf48af031b // indirect
 	golang.org/x/text v0.3.5 // indirect
 	gopkg.in/ini.v1 v1.62.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0
