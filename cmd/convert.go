@@ -174,7 +174,7 @@ func copyOver(file string, des string) {
 	}
 	defer from.Close()
 
-	to, err := os.OpenFile(des+"/"+file, os.O_RDWR|os.O_CREATE, 0666)
+	to, err := os.OpenFile(filepath.Join(des, file), os.O_RDWR|os.O_CREATE, 0666)
 
 	if err != nil {
 		log.Fatal(err)
