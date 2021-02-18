@@ -1,7 +1,5 @@
 module github.com/SPANDigital/presidium-hugo
 
-replace github.com/spandigital/presidium-theme-website => /Users/robynthomas/Documents/projects/presidium-theme-website
-
 go 1.14
 
 require (
