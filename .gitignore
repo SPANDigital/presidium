@@ -6,3 +6,4 @@ resources/
 config.yml
 static/
 main
+node_modules
