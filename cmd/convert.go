@@ -2,20 +2,22 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/internal/configtranslation"
-	"path/filepath"
-	"github.com/SPANDigital/presidium-hugo/internal/colors"
-	"github.com/SPANDigital/presidium-hugo/internal/markdown"
-	"github.com/SPANDigital/presidium-hugo/internal/filewalking"
-	"github.com/SPANDigital/presidium-hugo/internal/paths"
-	"github.com/SPANDigital/presidium-hugo/internal/settings"
-	"github.com/spf13/viper"
+	"io"
 	"io/ioutil"
 	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
+	"github.com/SPANDigital/presidium-hugo/internal/colors"
+	"github.com/SPANDigital/presidium-hugo/internal/configtranslation"
+	"github.com/SPANDigital/presidium-hugo/internal/filewalking"
+	"github.com/SPANDigital/presidium-hugo/internal/markdown"
+	"github.com/SPANDigital/presidium-hugo/internal/paths"
+	"github.com/SPANDigital/presidium-hugo/internal/settings"
 	"github.com/otiai10/copy"
+	"github.com/spf13/viper"
+
 	"github.com/spf13/cobra"
 )
 
@@ -23,7 +25,7 @@ import (
 var convertCmd = &cobra.Command{
 	Use:   "convert",
 	Short: "Convert Jekyll to Hugo content",
-	Long: `Convert Jekyll to Hugo content`,
+	Long:  `Convert Jekyll to Hugo content`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		sourceRepoDir := viper.GetString("sourceRepoDir")
@@ -33,7 +35,7 @@ var convertCmd = &cobra.Command{
 			destinationRepoDir, _ = os.Getwd()
 		}
 
-		if (sourceRepoDir != "") {
+		if sourceRepoDir != "" {
 
 			stagingDir := settings.Flags.StagingDir
 
@@ -41,13 +43,13 @@ var convertCmd = &cobra.Command{
 			sourceRepoStaticDir := filepath.Join(sourceRepoDir, "media")
 			sourceRepoConfigYml := filepath.Join(sourceRepoDir, "_config.yml")
 
-
 			stagingContentDir := filepath.Join(stagingDir, "content")
 
 			destinationContentDir := filepath.Join(destinationRepoDir, "content")
 			destinationStaticDir := filepath.Join(destinationRepoDir, "static")
 			destinationMediaDir := filepath.Join(destinationStaticDir, "media")
 			desinationConfigYml := filepath.Join(destinationRepoDir, "config.yml")
+			// CopyF("package.json", destinationRepoDir)
 
 			fmt.Println()
 			fmt.Println(colors.Labels.Underline("Source repo dir:"), colors.Labels.Info(sourceRepoDir))
@@ -153,13 +155,36 @@ var convertCmd = &cobra.Command{
 
 			fmt.Println(colors.Labels.Underline("Removing"), colors.Labels.Info(stagingDir))
 			err = os.RemoveAll(stagingDir)
- 			if err != nil {
+			if err != nil {
 				log.Fatal(err)
 			}
+			copyOver("package.json", destinationRepoDir)
+			copyOver(".gitignore", destinationRepoDir)
+			copyOver("package-lock.json", destinationRepoDir)
 		}
+
 	},
 }
 
+// A function that copies over files in the convert
+func copyOver(file string, des string) {
+	from, err := os.Open(file)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer from.Close()
+
+	to, err := os.OpenFile(filepath.Join(des, file), os.O_RDWR|os.O_CREATE, 0666)
+
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer to.Close()
+	_, err = io.Copy(to, from)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
 func currentWorkingDirectory() string {
 	path, err := os.Getwd()
 	if err != nil {
@@ -184,7 +209,7 @@ func init() {
 	pflags := convertCmd.PersistentFlags()
 	pflags.BoolVarP(&settings.Flags.EnableColor, "enableColor", "c", true, "Enable colorful output")
 	pflags.StringVarP(&settings.Flags.SourceRepoDir, "sourceRepoDir", "s", "", "Source directory")
-	pflags.StringVarP(&settings.Flags.DestinationRepoDir, "destDir", "d",  currentWorkingDirectory(),"Destination directory")
+	pflags.StringVarP(&settings.Flags.DestinationRepoDir, "destDir", "d", currentWorkingDirectory(), "Destination directory")
 	pflags.BoolVarP(&settings.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", true, "Base front matter weight on filename")
 	pflags.BoolVarP(&settings.Flags.SlugBasedOnFileName, "slugBasedOnFileName", "g", true, "Base front matter slug on filename")
 	pflags.BoolVarP(&settings.Flags.UrlBasedOnFilename, "urlBasedOnFilename", "u", true, "Base front matter url on filename")
@@ -193,7 +218,7 @@ func init() {
 	pflags.BoolVarP(&settings.Flags.ReplaceBaseUrlWithSpaces, "replaceBaseUrlWithSpaces", "j", true, "Replace {{ site.baseurl }} with {{site.BaseURL}}")
 	pflags.BoolVarP(&settings.Flags.RemoveTargetBlank, "removeTargetBlank", "t", true, `Remove target="blank" variants`)
 	pflags.BoolVarP(&settings.Flags.FixImages, "fixImages", "i", true, "Fix images in same path")
-	pflags.BoolVarP(&settings.Flags.FixImagesWithAttributes, "fixImagesWithAttributes", "a",  true,"Replace images with attributes with shortcodes")
+	pflags.BoolVarP(&settings.Flags.FixImagesWithAttributes, "fixImagesWithAttributes", "a", true, "Replace images with attributes with shortcodes")
 	pflags.BoolVarP(&settings.Flags.EraseMarkdownWithNoContent, "eraseMarkdownWithNoContent", "e", true, "Erase markdown files with no content")
 	pflags.BoolVarP(&settings.Flags.RemoveRawTags, "removeRawTags", "R", true, "Remove {% raw %} tags")
 	pflags.StringVarP(&settings.Flags.ReplaceRoot, "replaceRoot", "p", "", "Replace this path with root")
@@ -213,8 +238,6 @@ func init() {
 	// convertCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
-
-
 func RemoveContents(dir string) error {
 	d, err := os.Open(dir)
 	if err != nil {
@@ -233,6 +256,3 @@ func RemoveContents(dir string) error {
 	}
 	return nil
 }
-
-
-
