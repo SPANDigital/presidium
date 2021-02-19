@@ -43,51 +43,11 @@ To upgrade to latest version
 go get -u github.com/SPANDigital/presidium-hugo
 ```
 
-### Version
-Ensure the Hugo version is
-
-```
-Hugo Static Site Generator v0.77.0-EF290125/extended darwin/amd64 BuildDate: 2020-10-30T10:19:31Z
-```
-
-```
-hugo version
-```
-
-If you need to downgrade or change the hugo version then follow these steps:
-
-
-```
-brew uninstall hugo
-```
- Install the correct **extended** version from [here](https://github.com/gohugoio/hugo/releases/download/v0.77.0/hugo_extended_0.77.0_macOS-64bit.tar.gz)
-
-*Note: If you need a different version you can browse from this [list of releases](https://github.com/gohugoio/hugo/releases/)*
-
-Then install hugo using the zip downloaded from above and place the the hugo file in ```/usr/local/bin```
-
-*Note: You may need to tell settings in mac os x to trust the binary.*
-
-After unpacking
-```
-cp ~/Downloads/hugo_extended_0.77.0_macOS-64bit/hugo /usr/local/bin
-```
-Click “allow anyway” to allow it to run
-
-Then after your version of hugo should be updated, to check:
-```
-hugo version
-```
-It should be:
-```
-Hugo Static Site Generator v0.77.0-EF290125/extended darwin/amd64 BuildDate: 2020-10-30T10:19:31Z
-```
-
 ### Converting a Jekyll content directory
 
 ```
 mkdir ~/Documents/mycontentdirectory
-cd ~/Documents/mycontendirectory
+cd ~/Documents/mycontentdirectory
 export PATH=$PATH:$HOME/go/bin
 presidium-hugo convert -s ~/spandigital/span-handbook-docs -p name-of-initial-section
 ```
