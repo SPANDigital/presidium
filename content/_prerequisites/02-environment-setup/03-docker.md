@@ -50,7 +50,7 @@ Using VS Code's extension [Remote - Containers](https://marketplace.visualstudio
     - Create a Persistent volume for every/related projects. Share a filesystem when needed and isolate them otherwise.
     - Create a unique volume per project. This is the least space efficient and means that no two projects can (easily) access each other's files.
     
-    The name you choose for your volume is entirely up to you and should have no impact on the project itself.
+    It is up to the developer to choose a name for their volume, this will not have an impact on the project itself.
 
 1. A prompt asking for a project name will pop-up, the pre-generated name is pulled from the github repository name, and is usually a good choice.
 
