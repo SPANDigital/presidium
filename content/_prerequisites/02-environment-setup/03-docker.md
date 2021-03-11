@@ -56,6 +56,6 @@ Using VS Code's extension [Remote - Containers](https://marketplace.visualstudio
 
 1. The container will start building, this could take a few minutes the first time as it is downloading the required images.
 
-1. A popup asking to "Add Development Configuration Files" may appear, select Jekyll (Community). You may need to click on the "Show All Definitions..." to find it. This popup will only appear if the repository does not already contain a `'.devcontainer'` folder containing the environment configuration details.
+1. A popup asking to "Add Development Configuration Files" may appear, select Jekyll (Community). The developer may need to click on the "Show All Definitions..." to find it. This popup will only appear if the repository does not already contain a `'.devcontainer'` folder containing the environment configuration details.
 
 1. The development container will continue building, the very bottom left corner of VS Code should say: `Dev Container: Jekyll (Community)` once the environment is ready.
