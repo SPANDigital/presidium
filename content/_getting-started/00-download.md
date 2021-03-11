@@ -15,3 +15,4 @@ $ git clone https://github.com/SPANDigital/presidium-template.git
 $ git clone https://github.com/SPANDigital/presidium-template-onboarding.git
 $ git clone https://github.com/SPANDigital/presidium-template-design.git
 ```
+**Note**: If you are using the [Docker](/prerequisites/local-environment-setup/#docker) instructions this step is not needed as you clone your repository as a part of the environment setup.
