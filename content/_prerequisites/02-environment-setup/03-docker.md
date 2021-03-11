@@ -46,7 +46,7 @@ Using VS Code's extension [Remote - Containers](https://marketplace.visualstudio
 1. A popup asking which branch to clone may appear. Select the one you want to checkout initally, once the container is created you are free to checkout any branch in the repository.
 
 1. When prompted for a [Volume](https://docs.docker.com/storage/volumes/) to use there are a few options:
-    - (Recommended) Create a single volume for all project. This is the most space efficient, and unless there is a reason two project should not share a filesystem, there is no harm to this for most development environments.
+    - (Recommended) Create a single volume for all projects. This is the most space efficient, and unless there is a reason two projects should not share a filesystem, there is no harm in this for most development environments.
     - Create a Persistent volume for every/related projects. Share a filesystem when needed and isolate them otherwise.
     - Create a unique volume per project. This is the least space efficient and means that no two projects can (easily) access each others files.
     
