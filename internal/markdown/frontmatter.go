@@ -18,7 +18,7 @@ func SetupExcludes()  {
 }
 
 // Add front matter keys and values to an existing markdown file
-func AddFrontMatter(path string, params map[string]string) error {
+func AddFrontMatter(path string, params map[string]interface{}) error {
 
 	fmt.Println("Adding front matter",colors.Labels.Wanted(params),"to", colors.Labels.Info(path))
 

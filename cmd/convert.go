@@ -146,7 +146,7 @@ var convertCmd = &cobra.Command{
 				if err != nil {
 					log.Fatal(err)
 				}
-				hugoConfig := configtranslation.ConvertConfig(jekyllConfig, map[string]string{})
+				hugoConfig := configtranslation.ConvertConfig(jekyllConfig, map[string]interface{}{})
 				err = configtranslation.WriteHugoConfig(desinationConfigYml, hugoConfig)
 				if err != nil {
 					log.Fatal(err)

@@ -62,7 +62,7 @@ type HugoConfig struct {
 	Copyright              string                      `yaml:"copyright"`
 	PluralizeListTitles    bool                        `yaml:"pluralizelisttitles"`
 	Markup                 HugoMarkup                  `yaml:"markup"`
-	Params                 map[string]string           `yaml:"params"`
+	Params                 map[string]interface{}       `yaml:"params"`
 	SectionPagesMenu       string                      `yaml:"sectionPagesMenu"`
 	Menu                   map[string][]HugoMenuItem   `yaml:"menu"`
 	OutputFormats          map[string]HugoOutputFormat `yaml:"outputFormats"`
@@ -108,7 +108,7 @@ func WriteHugoConfig(path string, config *HugoConfig) error {
 	return ioutil.WriteFile(path, b, 0755)
 }
 
-func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *HugoConfig {
+func ConvertConfig(config *JekyllConfig, additionalParams map[string]interface{}) *HugoConfig {
 
 	mainMenu := []HugoMenuItem{}
 	for idx, item := range config.Sections {
@@ -130,6 +130,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 				},
 			},
 		},
+
 		Menu: map[string][]HugoMenuItem{
 			"Main": mainMenu,
 		},
@@ -165,8 +166,11 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]string) *Hu
 	hugoConfig.Params["audience"] = config.Audience
 	hugoConfig.Params["scope"] = config.Scope
 	hugoConfig.Params["appleScope"] = config.AppleScope
-	hugoConfig.Params["logo"] = config.Logo
+	hugoConfig.Params["logo"] = config.Logo    
 	hugoConfig.Copyright = config.Footer
+	hugoConfig.Params["showStatus"] =  config.Show.Status
+	hugoConfig.Params["showAuthor"] =  config.Show.Author   
+
 
 	hugoConfig.EnableInlineShortcodes = true
 

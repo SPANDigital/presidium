@@ -3,7 +3,7 @@ package markdown
 import "io/ioutil"
 
 type Markdown struct {
-	FrontMatter map[string]string
+	FrontMatter map[string]interface{}
 	Content string
 }
 
@@ -15,7 +15,7 @@ func Parse(path string) (*Markdown, error) {
 	matches := MarkdownRe.FindSubmatch(b)
 	if matches != nil {
 		allFmMatches := FrontmatterRe.FindAllSubmatch(matches[2], -1)
-		fm := make(map[string]string, len(allFmMatches))
+		fm := make(map[string]interface{}, len(allFmMatches))
 		for _, fmMatches := range allFmMatches {
 			fm[string(fmMatches[1])] = string(fmMatches[2])
 

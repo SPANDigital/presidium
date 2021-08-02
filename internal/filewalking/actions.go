@@ -96,7 +96,7 @@ func CheckIndexForTitles(path string) error {
 			if _, ok := indexMarkdown.FrontMatter["title"]; !ok {
 				base := filepath.Base(filepath.Dir(path))
 				title := unSlugify(base)
-				markdown.AddFrontMatter(path, map[string]string{"title": title})
+				markdown.AddFrontMatter(path, map[string]interface{}{"title": title})
 			}
 		}
 		return nil
@@ -142,7 +142,7 @@ func injectSlugWeightAndURL(path string) error {
 		fmt.Println("Checking weight of ", colors.Labels.Info(path))
 		weight, slug, url := deduceWeightAndSlug(path)
 
-		m := make(map[string]string)
+		m := make(map[string]interface{})
 		m["slug"] = slug
 		m["url"] = url
 		if weight > 0 {
@@ -158,7 +158,7 @@ func injectSlugWeightAndURL(path string) error {
 func injectSlugWeightAndURLForIndex(indexFile string) error {
 	dir := filepath.Dir(indexFile)
 	weight, slug, url := deduceWeightAndSlug(dir)
-	m := make(map[string]string)
+	m := make(map[string]interface{})
 	m["slug"] = slug
 	m["url"] = url
 	if weight > 0 {
@@ -177,7 +177,7 @@ func addIndex(path string) error {
 
 	if (url != "") {
 
-		m := make(map[string]string)
+		m := make(map[string]interface{})
 		m["title"] = title
 		m["slug"] = slug
 		m["url"] = url
