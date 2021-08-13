@@ -8,6 +8,7 @@ import (
 type JekyllShow struct {
 	Status bool `yaml:"status""`
 	Author bool `yaml:"author""`
+	Roles bool `yaml:"role"`
 }
 
 type JekyllExternal struct {
@@ -30,6 +31,7 @@ type JekyllConfig struct {
 	Show       JekyllShow          `yaml:"show"`
 	External   JekyllExternal      `yaml:"external"`
 	Sections   []JekyllSectionItem `yaml:"sections"`
+	Roles		Roles				`yaml:"roles"`
 }
 
 type HugoRenderer struct {
@@ -83,6 +85,12 @@ type HugoModule struct {
 
 type HugoFrontmatter struct {
 	Lastmod []string `yaml:"lastmod"`
+}
+
+type Roles struct {
+	Label string `yaml:"label"`
+	All string `yaml:"all"`
+	Options []string `yaml:options`
 }
 
 func ReadJekyllConfig(path string) (*JekyllConfig, error) {
@@ -170,6 +178,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]interface{}
 	hugoConfig.Copyright = config.Footer
 	hugoConfig.Params["showStatus"] =  config.Show.Status
 	hugoConfig.Params["showAuthor"] =  config.Show.Author   
+	hugoConfig.Params["roles"] = config.Roles
 
 
 	hugoConfig.EnableInlineShortcodes = true
