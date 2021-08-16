@@ -1,8 +1,3 @@
-before:
-  hooks:
-    - go get -u github.com/gobuffalo/packr/v2/packr2
-    - go mod tidy
-    - packr2
 builds:
   - env:
       - CGO_ENABLED=0

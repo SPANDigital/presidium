@@ -15,7 +15,7 @@ import (
 )
 
 type Service struct {
-	templates *packr.Box
+	templates packd.Box
 }
 
 func New() Service {
