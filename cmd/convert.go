@@ -2,6 +2,13 @@ package cmd
 
 import (
 	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/markdown"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem/paths"
+	"github.com/spf13/viper"
 	"io"
 	"io/ioutil"
 	"log"
@@ -9,15 +16,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/SPANDigital/presidium-hugo/internal/colors"
-	"github.com/SPANDigital/presidium-hugo/internal/configtranslation"
-	"github.com/SPANDigital/presidium-hugo/internal/filewalking"
-	"github.com/SPANDigital/presidium-hugo/internal/markdown"
-	"github.com/SPANDigital/presidium-hugo/internal/paths"
-	"github.com/SPANDigital/presidium-hugo/internal/settings"
 	"github.com/otiai10/copy"
-	"github.com/spf13/viper"
-
 	"github.com/spf13/cobra"
 )
 
@@ -37,7 +36,7 @@ var convertCmd = &cobra.Command{
 
 		if sourceRepoDir != "" {
 
-			stagingDir := settings.Flags.StagingDir
+			stagingDir := config.Flags.StagingDir
 
 			sourceRepoContentDir := filepath.Join(sourceRepoDir, "content")
 			sourceRepoStaticDir := filepath.Join(sourceRepoDir, "media")
@@ -84,7 +83,7 @@ var convertCmd = &cobra.Command{
 			fmt.Println()
 
 			fmt.Println("Checking for directories to rename")
-			err = filewalking.CheckForDirRename(stagingContentDir)
+			err = filesystem.CheckForDirRename(stagingContentDir)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -96,13 +95,13 @@ var convertCmd = &cobra.Command{
 			}
 
 			fmt.Println("Checking for directory index")
-			err = filewalking.CheckForDirIndex(stagingContentDir)
+			err = filesystem.CheckForDirIndex(stagingContentDir)
 			if err != nil {
 				log.Fatal(err)
 			}
 
 			fmt.Println("Checking for missing index titles")
-			err = filewalking.CheckIndexForTitles(stagingContentDir)
+			err = filesystem.CheckIndexForTitles(stagingContentDir)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -201,33 +200,33 @@ func init() {
 	if err != nil {
 		log.Fatal("Could not create staging directory", err)
 	}
-	settings.Flags.StagingDir = stagingDir
+	config.Flags.StagingDir = stagingDir
 
 	// Cobra supports Persistent Flags which will work for this command
 	// and all subcommands, e.g.:
 	// convertCmd.PersistentFlags().String("foo", "", "A help for foo")
 	pflags := convertCmd.PersistentFlags()
-	pflags.BoolVarP(&settings.Flags.EnableColor, "enableColor", "c", true, "Enable colorful output")
-	pflags.StringVarP(&settings.Flags.SourceRepoDir, "sourceRepoDir", "s", "", "Source directory")
-	pflags.StringVarP(&settings.Flags.DestinationRepoDir, "destDir", "d", currentWorkingDirectory(), "Destination directory")
-	pflags.BoolVarP(&settings.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", true, "Base front matter weight on filename")
-	pflags.BoolVarP(&settings.Flags.SlugBasedOnFileName, "slugBasedOnFileName", "g", true, "Base front matter slug on filename")
-	pflags.BoolVarP(&settings.Flags.UrlBasedOnFilename, "urlBasedOnFilename", "u", true, "Base front matter url on filename")
-	pflags.BoolVarP(&settings.Flags.CommonmarkAttributes, "commonmarkAttributes", "m", false, "Convert to commonmark attribute format")
-	pflags.BoolVarP(&settings.Flags.ReplaceBaseUrl, "replaceBaseUrl", "b", true, "Replace {{site.baseurl}} with {{ site.BaseURL }}")
-	pflags.BoolVarP(&settings.Flags.ReplaceBaseUrlWithSpaces, "replaceBaseUrlWithSpaces", "j", true, "Replace {{ site.baseurl }} with {{site.BaseURL}}")
-	pflags.BoolVarP(&settings.Flags.RemoveTargetBlank, "removeTargetBlank", "t", true, `Remove target="blank" variants`)
-	pflags.BoolVarP(&settings.Flags.FixImages, "fixImages", "i", true, "Fix images in same path")
-	pflags.BoolVarP(&settings.Flags.FixImagesWithAttributes, "fixImagesWithAttributes", "a", true, "Replace images with attributes with shortcodes")
-	pflags.BoolVarP(&settings.Flags.EraseMarkdownWithNoContent, "eraseMarkdownWithNoContent", "e", true, "Erase markdown files with no content")
-	pflags.BoolVarP(&settings.Flags.RemoveRawTags, "removeRawTags", "R", true, "Remove {% raw %} tags")
-	pflags.StringVarP(&settings.Flags.ReplaceRoot, "replaceRoot", "p", "", "Replace this path with root")
-	pflags.BoolVarP(&settings.Flags.ReplaceCallOuts, "replaceCallOuts", "o", true, "Replace callout HTML with callout shortcodes")
-	pflags.BoolVarP(&settings.Flags.ReplaceTooltips, "replaceTooltips", "T", true, "Replace tooltip HTML with callout shortcodes")
-	pflags.BoolVarP(&settings.Flags.ReplaceIfVariables, "replaceIfVariables", "V", true, "Replace {% if site.variable =} with shortcodes")
-	pflags.BoolVarP(&settings.Flags.ReplaceComments, "replaceComments", "", true, "Replace {% comment %}...{% endcomment %} with HTML comments")
-	pflags.BoolVarP(&settings.Flags.CopyMediaToStatic, "copyMediaToStatic", "C", true, "Copy Jekyll media to Hugo static folder")
-	pflags.BoolVarP(&settings.Flags.ConvertConfigYml, "convertConfigYml", "y", true, "Convert jekyll _config.yml to hugo config.yml")
+	pflags.BoolVarP(&config.Flags.EnableColor, "enableColor", "c", true, "Enable colorful output")
+	pflags.StringVarP(&config.Flags.SourceRepoDir, "sourceRepoDir", "s", "", "Source directory")
+	pflags.StringVarP(&config.Flags.DestinationRepoDir, "destDir", "d", currentWorkingDirectory(), "Destination directory")
+	pflags.BoolVarP(&config.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", true, "Base front matter weight on filename")
+	pflags.BoolVarP(&config.Flags.SlugBasedOnFileName, "slugBasedOnFileName", "g", true, "Base front matter slug on filename")
+	pflags.BoolVarP(&config.Flags.UrlBasedOnFilename, "urlBasedOnFilename", "u", true, "Base front matter url on filename")
+	pflags.BoolVarP(&config.Flags.CommonmarkAttributes, "commonmarkAttributes", "m", false, "Convert to commonmark attribute format")
+	pflags.BoolVarP(&config.Flags.ReplaceBaseUrl, "replaceBaseUrl", "b", true, "Replace {{site.baseurl}} with {{ site.BaseURL }}")
+	pflags.BoolVarP(&config.Flags.ReplaceBaseUrlWithSpaces, "replaceBaseUrlWithSpaces", "j", true, "Replace {{ site.baseurl }} with {{site.BaseURL}}")
+	pflags.BoolVarP(&config.Flags.RemoveTargetBlank, "removeTargetBlank", "t", true, `Remove target="blank" variants`)
+	pflags.BoolVarP(&config.Flags.FixImages, "fixImages", "i", true, "Fix images in same path")
+	pflags.BoolVarP(&config.Flags.FixImagesWithAttributes, "fixImagesWithAttributes", "a", true, "Replace images with attributes with shortcodes")
+	pflags.BoolVarP(&config.Flags.EraseMarkdownWithNoContent, "eraseMarkdownWithNoContent", "e", true, "Erase markdown files with no content")
+	pflags.BoolVarP(&config.Flags.RemoveRawTags, "removeRawTags", "R", true, "Remove {% raw %} tags")
+	pflags.StringVarP(&config.Flags.ReplaceRoot, "replaceRoot", "p", "", "Replace this path with root")
+	pflags.BoolVarP(&config.Flags.ReplaceCallOuts, "replaceCallOuts", "o", true, "Replace callout HTML with callout shortcodes")
+	pflags.BoolVarP(&config.Flags.ReplaceTooltips, "replaceTooltips", "T", true, "Replace tooltip HTML with callout shortcodes")
+	pflags.BoolVarP(&config.Flags.ReplaceIfVariables, "replaceIfVariables", "V", true, "Replace {% if site.variable =} with with-param shortcodes")
+	pflags.BoolVarP(&config.Flags.ReplaceComments, "replaceComments", "", true, "Replace {% comment %}...{% endcomment %} with HTML comments")
+	pflags.BoolVarP(&config.Flags.CopyMediaToStatic, "copyMediaToStatic", "C", true, "Copy Jekyll media to Hugo static folder")
+	pflags.BoolVarP(&config.Flags.ConvertConfigYml, "convertConfigYml", "y", true, "Convert jekyll _config.yml to hugo config.yml")
 	viper.BindPFlags(pflags)
 
 	colors.Setup()

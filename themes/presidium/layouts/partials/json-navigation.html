@@ -1,9 +1,0 @@
-{{ $currentPage := . }}
-{{ $items := slice }}
-{{ $roles := slice }}
-{{ range $menu := .Site.Menus.main.ByWeight }}
-    {{ with $.Site.GetPage "section" $menu.Identifier }}
-        {{ $items = $items | append (partial "json-nav-item" (dict "CurrentPage" $currentPage "NavPage" . "Level" 1  "Roles" $roles )) }}
-    {{ end }}
-{{ end }}
-{{ return ( dict "logo" "" "brandName" "" "brandUrl" "/" "baseUrl" $.Site.BaseURL "roles" (dict "label" "Display documentation for" "all" "All roles" "options" $roles ) "children" $items) }}

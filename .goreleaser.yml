@@ -1,0 +1,45 @@
+before:
+  hooks:
+    - go get -u github.com/gobuffalo/packr/v2/packr2
+    - go mod tidy
+    - packr2
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+archives:
+  - replacements:
+      darwin: Darwin
+      linux: Linux
+      windows: Windows
+      386: i386
+      amd64: x86_64
+release:
+  prerelease: auto
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+brews:
+  - goarm: 6
+    tap:
+      owner: SPANDigital
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    commit_author:
+      name: goreleaserbot
+      email: goreleaser@spandigital.com
+    folder: Formula
+    homepage: "https://github.com/SPANDigital/presidium-hugo"
+    description: "presidium is a software documentation management system for agile teams"
+    download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+    custom_require: "lib/private"

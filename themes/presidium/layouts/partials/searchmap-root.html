@@ -1,8 +1,0 @@
-{{ $items := slice }}
-{{ $roles := slice }}
-{{ range $menu := .Site.Menus.main.ByWeight }}
-{{ with $.Site.GetPage "section" $menu.Identifier }}
-{{ $items = $items | append (partial "searchmap-item" (dict "Page" . "Level" 1) )}}
-{{ end }}
-{{ end }}
-{{ return $items }}

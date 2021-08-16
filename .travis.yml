@@ -1,0 +1,32 @@
+jobs:
+  include:
+  - stage: Tag code
+    if: branch IN (develop, master) AND type = push AND NOT (commit_message =~ /^.*\[NPM version\].*$/)
+    language: go
+    go:
+    - 1.14.x
+    services:
+    - docker
+    git:
+      depth: false
+    script:
+    - "./build/ci/tag_code.sh"
+  - stage: Release
+    if: tag IS present
+    language: go
+    go:
+    - 1.16.x
+    script:
+    - curl -sfL https://git.io/goreleaser | sh -s -- check
+    deploy:
+    - provider: script
+      skip_cleanup: true
+      script: curl -sL https://git.io/goreleaser | bash
+      on:
+        tags: true
+        condition: "${TRAVIS_TAG} =~ ^v[0-9]+\\.[0-9]+\\.[0-9]+$"
+    after_deploy:
+    - "./build/ci/tags_cleanup.sh"
+env:
+  global:
+
