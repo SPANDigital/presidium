@@ -29,17 +29,17 @@ changelog:
     exclude:
       - '^docs:'
       - '^test:'
-#brews:
-#  - goarm: 6
-#    tap:
-#      owner: SPANDigital
-#      name: homebrew-tap
-#      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
-#    commit_author:
-#      name: goreleaserbot
-#      email: goreleaser@spandigital.com
-#    folder: Formula
-#    homepage: "https://github.com/SPANDigital/presidium-hugo"
-#    description: "presidium is a software documentation management system for agile teams"
-#    download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
-#    custom_require: "lib/private"
+brews:
+  - goarm: 6
+    tap:
+      owner: SPANDigital
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
+    commit_author:
+      name: goreleaserbot
+      email: goreleaser@spandigital.com
+    folder: Formula
+    homepage: "https://github.com/SPANDigital/presidium-hugo"
+    description: "presidium is a software documentation management system for agile teams"
+    download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+    custom_require: "lib/private"
