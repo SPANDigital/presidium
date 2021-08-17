@@ -111,7 +111,7 @@ func deduceWeightAndSlug(path string) (int64, string, string) {
 	matches := re.FindStringSubmatch(base)
 	weight, err := strconv.ParseInt(strings.ReplaceAll(matches[2], ".", ""), 10, 64)
 	if err != nil {
-		weight = 0
+		weight = -1
 	}
 	var slug = matches[3]
 	var url string
@@ -145,7 +145,7 @@ func injectSlugWeightAndURL(path string) error {
 		m := make(map[string]interface{})
 		m["slug"] = slug
 		m["url"] = url
-		if weight > 0 {
+		if weight >= 0 {
 			m["weight"] = fmt.Sprintf("%d", weight)
 		}
 
