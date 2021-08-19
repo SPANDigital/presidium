@@ -10,7 +10,7 @@ import (
 var (
 	validateCommand = &cobra.Command{
 		Use:   "validate",
-		Short: "Validates a presidium site",
+		Short: "Validates links in a Presidium site",
 		Run: func(cmd *cobra.Command, args []string) {
 			validation, err := validation.New(args[0], 1, func(link validation.Link) {
 				status := " ok"
