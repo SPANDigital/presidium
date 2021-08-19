@@ -27,7 +27,7 @@ var (
 				fmt.Println()
 			})
 			if err != nil {
-				log.ErrorWithFields("Unable to validate site", log.Fields{
+				log.ErrorWithFields("Unable to validate links on the Presidium site", log.Fields{
 					"url":   args[0],
 					"error": err.Error(),
 				})
