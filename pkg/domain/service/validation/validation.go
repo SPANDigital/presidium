@@ -75,7 +75,6 @@ func (validation *Validation) Start() {
 	var link Link
 
 	for {
-
 		if queue.Len() == 0 {
 			break
 		}
