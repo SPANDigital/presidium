@@ -7,17 +7,25 @@ import (
 	"github.com/spf13/cobra"
 )
 
+const (
+	linkValid  = "VALID"
+	linkBroken = "BROKEN"
+)
+
 var (
 	validateCommand = &cobra.Command{
 		Use:   "validatelinks",
 		Short: "Validates page links in a Presidium site",
 		Run: func(cmd *cobra.Command, args []string) {
 			validation, err := validation.New(args[0], 1, func(link validation.Link) {
-				status := " ok"
-				if !link.Valid {
-					status = "err"
+				var linkStatus string
+				if link.Valid {
+					linkStatus = linkValid
+				} else {
+					linkStatus = linkBroken
 				}
-				fmt.Printf("%s: [%s]", status, link.Uri)
+
+				fmt.Printf("%s: [%s]", linkStatus, link.Uri)
 				if len(link.Text) > 0 {
 					fmt.Printf(" (%s)", link.Text)
 				}
