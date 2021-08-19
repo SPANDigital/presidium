@@ -33,7 +33,7 @@ var (
 				})
 				return
 			}
-			fmt.Printf("Validating: %s\n", args[0])
+			fmt.Printf("Validating links: %s\n", args[0])
 			validation.Start()
 		},
 	}
