@@ -16,14 +16,15 @@ type Link struct {
 	Message string
 	Level   int
 	Text    string
-	// --- private fields here: ---
-	page string
+	// --- private fields here (no need to expose it to the caller): ---
+	page string // Used to turn hrefs into URLS which can be references from the page.
 }
 
 type Validation struct {
-	seed    string
-	depth   int
-	respond func(link Link)
+	// Private fields  - no need to expose it to the caller!
+	seed    string          // The first address to look at
+	depth   int             // The depth to scan for links
+	respond func(link Link) // Configures in New() to respond back to the caller.
 }
 
 func New(
