@@ -1,7 +1,6 @@
 ---
-title: A Tool
-author: author
-slug: tool
-url: tools/tool
+title: Link Validation
+url: link-validation
+slug: link-validation
 ---
 Content...

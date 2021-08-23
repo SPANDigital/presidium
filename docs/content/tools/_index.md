@@ -1,5 +1,5 @@
 ---
-slug: Link Validation
-url: link-validation
-title: link-validation
+slug: tools
+url: tools
+title: Tools
 ---

@@ -35,22 +35,18 @@ menu:
       name: Reference
       url: /reference/
       weight: 6
-    - identifier: glossary
-      name: Glossary
-      url: /glossary/
-      weight: 7
     - identifier: recipes
       name: Recipes
       url: /recipes/
-      weight: 8
+      weight: 7
     - identifier: tools
       name: Tools
       url: /tools/
+      weight: 8
+    - identifier: glossary
+      name: Glossary
+      url: /glossary/
       weight: 9
-    - identifier: updates
-      name: Updates
-      url: /updates/
-      weight: 10
 outputFormats:
   MenuIndex:
     baseName: menu
