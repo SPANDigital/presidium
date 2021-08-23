@@ -3,50 +3,69 @@ package cmd
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/validation"
-	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/cobra"
-)
-
-const (
-	linkValid  = "VALID"
-	linkBroken = "BROKEN"
 )
 
 var (
 	validateCommand = &cobra.Command{
-		Use:   "validatelinks",
+		Use:   "validate",
 		Short: "Validates page links in a Presidium site",
 		Run: func(cmd *cobra.Command, args []string) {
-			validation, err := validation.New(args[0], 1, func(link validation.Link) {
-				var linkStatus string
-				if link.Valid {
-					linkStatus = linkValid
-				} else {
-					linkStatus = linkBroken
-				}
-
-				fmt.Printf("%s: [%s]", linkStatus, link.Uri)
-				if len(link.Text) > 0 {
-					fmt.Printf(" (%s)", link.Text)
-				}
-				if !link.Valid {
-					fmt.Printf("\t%s", link.Message)
-				}
-				fmt.Println()
-			})
+			path := args[0]
+			report, err := validation.New(path).Validate()
 			if err != nil {
-				log.ErrorWithFields("Unable to validate links on the Presidium site", log.Fields{
-					"url":   args[0],
-					"error": err.Error(),
-				})
+				fmt.Printf("error validating : %s\n", path)
+				fmt.Printf("%v\n", err.Error())
 				return
 			}
-			fmt.Printf("Validating links: %s\n", args[0])
-			validation.Start()
+
+			margin := 2
+			width := 0
+			width = longestMessage(width, report.Warnings)
+			width = longestMessage(width, report.Valid)
+			width = longestMessage(width, report.Broken)
+			width = longestMessage(width, report.External)
+
+			printHeader("Validation Report", width, margin)
+			printLine(width, margin)
+			fmt.Printf("\n")
+
+			broken := len(report.Broken)
+			valid := len(report.Valid)
+			warnings := len(report.Warnings)
+			external := len(report.External)
+			total := broken + valid + warnings + external
+			fmt.Printf("VALIDATION PATH: %s\n", path)
+			fmt.Printf("\n")
+			fmt.Printf("     total: %v\n", total)
+			fmt.Printf("    breken: %v\n", broken)
+			fmt.Printf("  external: %v\n", external)
+			fmt.Printf("  warnings: %v\n", warnings)
+
+			fmt.Printf("\n")
+			printLine(width, margin)
+
 		},
 	}
 )
 
 func init() {
 	rootCmd.AddCommand(validateCommand)
+}
+
+func longestMessage(longest int, links []validation.Link) int {
+
+	for _, link := range links {
+		if len(link.Message) > longest {
+			longest = len(link.Message)
+		}
+	}
+
+	return longest
+}
+
+func printHeader(header string, width int, margin int) {
+}
+
+func printLine(width int, margin int) {
 }

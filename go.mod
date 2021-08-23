@@ -18,11 +18,12 @@ require (
 	github.com/manifoldco/promptui v0.8.0
 	github.com/mitchellh/copystructure v1.2.0 // indirect
 	github.com/otiai10/copy v1.2.0
+	github.com/scylladb/go-set v1.0.2
 	github.com/sirupsen/logrus v1.8.1
 	github.com/spf13/cobra v1.2.1
 	github.com/spf13/viper v1.8.1
 	golang.org/x/crypto v0.0.0-20210813211128-0a44fdfbc16e // indirect
-	golang.org/x/sys v0.0.0-20210819072135-bce67f096156 // indirect
+	golang.org/x/sys v0.0.0-20210823070655-63515b42dcdf // indirect
 	golang.org/x/term v0.0.0-20210615171337-6886f2dfbf5b // indirect
 	gopkg.in/yaml.v2 v2.4.0
 )
