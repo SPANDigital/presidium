@@ -6,6 +6,9 @@ markup:
   goldmark:
     renderer:
       Unsafe: true
+    parser:
+      attribute:
+        block: true
 menu:
   Main:
   - identifier: introduction
