@@ -19,53 +19,43 @@ var (
 				return
 			}
 
-			margin := 2
-			width := 0
-			width = longestMessage(width, report.Warnings)
-			width = longestMessage(width, report.Valid)
-			width = longestMessage(width, report.Broken)
-			width = longestMessage(width, report.External)
-
-			printHeader("Validation Report", width, margin)
-			printLine(width, margin)
 			fmt.Printf("\n")
-
-			broken := len(report.Broken)
-			valid := len(report.Valid)
-			warnings := len(report.Warnings)
-			external := len(report.External)
-			total := broken + valid + warnings + external
 			fmt.Printf("VALIDATION PATH: %s\n", path)
 			fmt.Printf("\n")
-			fmt.Printf("     total: %v\n", total)
-			fmt.Printf("    breken: %v\n", broken)
-			fmt.Printf("  external: %v\n", external)
-			fmt.Printf("  warnings: %v\n", warnings)
-
+			fmt.Printf("        total: %v\n", report.TotalLinks)
+			fmt.Printf("  valid links: %v\n", report.Valid)
+			fmt.Printf("       broken: %v\n", report.Broken)
+			fmt.Printf("     external: %v\n", report.External)
+			fmt.Printf("     warnings: %v\n", report.Warning)
 			fmt.Printf("\n")
-			printLine(width, margin)
 
+			printLinks(report, validation.Broken)
+			printLinks(report, validation.Warning)
+			printLinks(report, validation.External)
 		},
 	}
 )
 
-func init() {
-	rootCmd.AddCommand(validateCommand)
-}
+func printLinks(report validation.Report, status validation.Status) {
 
-func longestMessage(longest int, links []validation.Link) int {
+	links, found := report.Data[status]
 
-	for _, link := range links {
-		if len(link.Message) > longest {
-			longest = len(link.Message)
-		}
+	if !found {
+		return
 	}
 
-	return longest
+	fmt.Printf("%s\n", status)
+	fmt.Printf("----------------------\n")
+
+	for _, link := range links {
+		message := ""
+		if len(link.Message) > 0 {
+			message = fmt.Sprintf(" %s", link.Message)
+		}
+		fmt.Printf("%s: %s [%s]%s\n", status, link.Uri, link.Label, message)
+	}
 }
 
-func printHeader(header string, width int, margin int) {
-}
-
-func printLine(width int, margin int) {
+func init() {
+	rootCmd.AddCommand(validateCommand)
 }

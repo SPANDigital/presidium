@@ -2,8 +2,10 @@ package validation
 
 import (
 	"container/list"
+	"errors"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/scylladb/go-set/strset"
 	"io/fs"
 	"net/url"
@@ -17,7 +19,6 @@ type LinkListener = func(link Link)
 type Validator interface {
 	Validate() (Report, error)
 	IsLocal() bool
-	IsInProgress() bool
 }
 
 type Link struct {
@@ -26,13 +27,16 @@ type Link struct {
 	Status     Status
 	Message    string
 	IsExternal bool
+	Label      string
 }
 
 type Report struct {
-	Broken   []Link
-	Warnings []Link
-	External []Link
-	Valid    []Link
+	Data       map[Status][]Link
+	Valid      int // How many valid links we have
+	Broken     int // How many broken links we have
+	External   int // How many external links we have
+	Warning    int // How many warning links we have
+	TotalLinks int // The total number of links processed
 }
 
 type Status string
@@ -44,22 +48,12 @@ const (
 	External = Status("external")
 )
 
-const (
-	validationPending = iota
-	validationInProgress
-	validationCompleted
-)
-
 type validation struct {
-	path    string      // The path being validated
-	seen    *strset.Set // Keep track of paths we have seen
-	isLocal bool        // Flag to determine validation live web site, or local file path
-	report  Report
-	state   int
-}
-
-func (validation validation) IsInProgress() bool {
-	return validation.state == validationInProgress
+	path    string                // The path being validated
+	seen    *strset.Set           // Keep track of paths we have seen
+	isLocal bool                  // TODO: Flag to determine validation live web site, or local file path
+	queue   *list.List            // Keep track of links still to be processed per page
+	tracked map[Status]*list.List // Keep track of collected links per status
 }
 
 func (validation validation) IsLocal() bool {
@@ -71,6 +65,8 @@ func New(path string) Validator {
 		path:    path,
 		isLocal: true,
 		seen:    strset.New(),
+		queue:   list.New(),
+		tracked: make(map[Status]*list.List),
 	}
 }
 
@@ -82,32 +78,30 @@ func (validation validation) hasSeen(f string) bool {
 	return seen
 }
 
+func (validation validation) cleanUp() {
+	validation.seen.Clear()
+	for k, v := range validation.tracked {
+		v.Init()
+		delete(validation.tracked, k)
+	}
+}
+
 func (validation validation) Validate() (Report, error) {
-
-	if validation.state == validationInProgress {
-		return validation.report, nil
-	}
-
-	validation.state = validationInProgress
-
-	validation.report = Report{
-		Broken:   make([]Link, 0),
-		Warnings: make([]Link, 0),
-		External: make([]Link, 0),
-		Valid:    make([]Link, 0),
-	}
 
 	validation.seen.Clear()
 
 	err := filepath.Walk(validation.path, func(path string, info fs.FileInfo, err error) error {
 
 		if err != nil {
+			log.ErrorWithFields(err, log.Fields{"validation_path": path})
 			return err
 		}
 
-		if !info.IsDir() && !validation.hasSeen(path) {
+		if !info.IsDir() {
+			log.DebugWithFields("validation started", log.Fields{"validation_path": path})
 			err = validation.process(path)
 			if err != nil {
+				log.ErrorWithFields(err, log.Fields{"validation_path": path})
 				return err
 			}
 		}
@@ -115,39 +109,118 @@ func (validation validation) Validate() (Report, error) {
 		return nil
 	})
 
-	validation.state = validationCompleted
+	if err != nil {
+		return Report{}, err
+	} else {
+		return validation.newReport(), err
+	}
 
-	return validation.report, err
+}
+
+func (validation validation) newReport() Report {
+
+	report := Report{
+		Data:       make(map[Status][]Link),
+		Valid:      0,
+		Broken:     0,
+		External:   0,
+		Warning:    0,
+		TotalLinks: 0,
+	}
+
+	for s, links := range validation.tracked {
+
+		countedLinks := links.Len()
+		report.TotalLinks += countedLinks
+		collected := make([]Link, 0)
+
+		var next *list.Element
+		for e := links.Front(); e != nil; e = next {
+			link := e.Value.(Link)
+			collected = append(collected, link)
+			next = e.Next()
+		}
+
+		report.Data[s] = collected
+
+		switch s {
+		case Valid:
+			report.Valid = countedLinks
+			break
+		case Broken:
+			report.Broken = countedLinks
+			break
+		case Warning:
+			report.Warning = countedLinks
+			break
+		case External:
+			report.External = countedLinks
+			break
+		}
+	}
+
+	return report
 }
 
 func (validation validation) process(path string) error {
 
 	s := strings.TrimSpace(strings.ToLower(path))
 
+	if validation.hasSeen(s) {
+		return nil
+	}
+
 	if !(strings.HasSuffix(s, ".html")) {
 		return nil
 	}
 
-	queue := list.New()
-
-	queue.PushFront(Link{
-		Uri:      path,
-		Location: path,
+	validation.queue.PushFront(Link{
+		Uri:        path,
+		Location:   path,
+		IsExternal: false,
 	})
 
 	for {
 
-		if queue.Len() == 0 {
+		if validation.queue.Len() == 0 {
 			break
 		}
 
-		todo := queue.Front()
-		queue.Remove(todo)
+		todo := validation.queue.Front()
+		validation.queue.Remove(todo)
 		link := todo.Value.(Link)
+
+		if validation.hasSeen(link.Uri) {
+			continue
+		}
+
+		if link.Uri == "/" {
+			continue
+		}
 
 		if link.IsExternal {
 			validation.reportLink(link, External, "")
 			continue
+		}
+
+		info, err := os.Stat(link.Uri)
+
+		if err != nil {
+			link.Message = err.Error()
+			continue
+		}
+
+		if info.IsDir() {
+			file := fmt.Sprintf("%s/index.html", link.Uri)
+			info, err = os.Stat(file)
+			if err == nil {
+				continue
+			}
+			if info.IsDir() {
+				link.Message = fmt.Sprintf("expected file here but found directory: %s", file)
+				continue
+			}
+			link.Uri = file
 		}
 
 		file, err := os.OpenFile(link.Uri, os.O_RDONLY, 0666)
@@ -166,7 +239,7 @@ func (validation validation) process(path string) error {
 			// Find all links referenced by this page!
 			doc.Find("a[href]").Each(func(i int, item *goquery.Selection) {
 				href, ok := item.Attr("href")
-				if !ok {
+				if !ok || len(href) == 0 || href == "/" {
 					return
 				}
 				validationHref := strings.ToLower(href)
@@ -174,25 +247,27 @@ func (validation validation) process(path string) error {
 				if strings.HasPrefix(validationHref, "mailto:") ||
 					strings.HasPrefix(validationHref, "tel:") {
 					validation.reportLink(link, Warning, fmt.Sprintf("Unhandled url scheme: %s", href))
-				} else if strings.HasPrefix(validationHref, "#") {
+				} else if strings.Contains(validationHref, "#") {
 					return
 				}
-				_, err := url.Parse(href)
 
-				var finalUri string
+				parsedLinkUrl, err := url.Parse(href)
 
-				if err == nil {
-					finalUri = href
-				} else if strings.HasPrefix(validationHref, "/") {
-					finalUri = fmt.Sprintf("%s%s", validation.path, href)
-				} else {
-					finalUri = fmt.Sprintf("%s/%s", link.Uri, href)
+				if err != nil {
+					link.Message = fmt.Sprintf("%v", err.Error())
+					return
 				}
 
-				queue.PushFront(Link{
-					Uri:        finalUri,
-					Location:   link.Uri,
-					IsExternal: err == nil,
+				link.IsExternal = len(parsedLinkUrl.Scheme) > 0
+
+				finalUri := fmt.Sprintf("%s%s", validation.path, href)
+
+				validation.reportLink(link, Valid, "")
+
+				validation.queue.PushFront(Link{
+					Uri:      finalUri,
+					Location: link.Uri,
+					Label:    strings.TrimSpace(item.Text()),
 				})
 			})
 		}
@@ -204,24 +279,30 @@ func (validation validation) process(path string) error {
 	return nil
 }
 
+func fileOnPath(path string, name string) (string, error) {
+	file := fmt.Sprintf("%s/%s", path, name)
+	info, err := os.Stat(file)
+	if err != nil {
+		return file, err
+	}
+	if info.IsDir() {
+		return file, errors.New(fmt.Sprintf("expected file but foun directory: %s", file))
+	}
+	return file, nil
+}
+
 func (validation validation) reportLink(link Link, status Status, message string) {
 
 	link.Status = status
+	link.Message = message
 
-	if len(message) == 0 {
-		link.Message = fmt.Sprintf("%v", status)
-	} else {
-		link.Message = fmt.Sprintf("%v: %s", status, message)
+	collection, found := validation.tracked[status]
+
+	if !found {
+		collection = list.New()
+		validation.tracked[status] = collection
 	}
 
-	if link.Status == Broken {
-		validation.report.Broken = append(validation.report.Broken, link)
-	} else if link.Status == Valid {
-		validation.report.Valid = append(validation.report.Valid, link)
-	} else if link.Status == Warning {
-		validation.report.Warnings = append(validation.report.Warnings, link)
-	} else if link.Status == External {
-		link.IsExternal = true
-		validation.report.External = append(validation.report.External, link)
-	}
+	collection.PushBack(link)
+
 }
