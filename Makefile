@@ -1,5 +1,8 @@
 FILENAME=main
 
+.DEFAULT_GOAL=build
+.PHONY: dist clean
+
 test:
 	go test ./...
 
@@ -13,6 +16,9 @@ build:
 	go build  -o $(FILENAME) main.go
 	packr2 clean
 
-default:
-	mkdir -p "dist"
-	go build -o "dist/presidium"
+clean:
+	rm -fr "dist"
+
+dist:
+	[ -d "dist" ] || mkdir "dist"
+	go build -o "dist/presidium" --tags extended
