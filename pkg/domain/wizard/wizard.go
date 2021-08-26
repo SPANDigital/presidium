@@ -2,6 +2,11 @@ package wizard
 
 import "github.com/manifoldco/promptui"
 
+const (
+	TrueValue  = "y"
+	FalseValue = "N"
+)
+
 type Wizard interface {
 	Run()
 }
@@ -22,6 +27,24 @@ func GetInputString(label, defaultValue string, validateFn promptui.ValidateFunc
 		return "", err
 	}
 	return result, err
+}
+
+func GetConfirmationFromUser(label string, defaultValue bool) (bool, error) {
+	def := FalseValue
+	if defaultValue {
+		def = TrueValue
+	}
+	prompt := promptui.Prompt{
+		Label:     label,
+		Default:   def,
+		IsConfirm: true,
+	}
+	confirm, err := prompt.Run()
+	if err != nil || confirm != TrueValue {
+		return false, nil
+	} else {
+		return true, nil
+	}
 }
 
 func GetSelectTemplate() *promptui.SelectTemplates {

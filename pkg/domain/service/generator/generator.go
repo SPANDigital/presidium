@@ -4,7 +4,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/template"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/wizard"
-	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/viper"
 	"io/fs"
 	"os"
@@ -27,9 +26,9 @@ func (g Generator) GenerateWithConfig(c Config) error {
 	tplSvc := template.New()
 	err = tplSvc.ProcessDirTemplates(theTemplate.Code(), c)
 	if err != nil {
-		log.Error(err)
 		return err
 	}
+
 	err = os.Mkdir(path.Join(c.ProjectName, "static"), fs.ModePerm)
 	if err != nil {
 		return err
@@ -50,6 +49,7 @@ func (g Generator) Generate() error {
 		ProjectName: viper.GetString(config.ProjectNameKey),
 		Theme:       theme.ModulePath(),
 		Template:    viper.GetString(config.TemplateNameKey),
+		Brand:       viper.GetString(config.BrandKey),
 	}
 
 	return g.GenerateWithConfig(c)

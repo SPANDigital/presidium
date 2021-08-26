@@ -5,4 +5,5 @@ type Config struct {
 	ProjectName string `json:"project_name"`
 	Theme       string `json:"theme"`
 	Template    string `json:"template"`
+	Brand       string `json:"brand"`
 }
