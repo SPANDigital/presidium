@@ -69,10 +69,10 @@ module:
     {{ if .Brand -}}
     - path: {{ .Brand }}
       mounts:
-        - source: assets/_sass/index.scss
-          target: assets/_sass/index.scss
-        - source: static/brand/images
-          target: static/images
+        - source: assets
+          target: assets
+        - source: static
+          target: static
     {{- end }}
     - path: {{ .Theme }}
 enableInlineShortcodes: true
