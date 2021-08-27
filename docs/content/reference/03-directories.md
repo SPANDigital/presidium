@@ -13,6 +13,6 @@ The `config.yaml` file is used to configure the project.
 |---------------|-----------------|
 | `./config.yaml` | General options to configure the project |
 | `./content` | Articles |
-| `./media` | Various resources for the project (images, imported content, etc.) |
+| `./static/media` | Various resources for the project (images, imported content, etc.) |
 
 All content changes are monitored; any change triggers a regeneration of the content.

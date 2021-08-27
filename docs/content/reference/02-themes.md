@@ -23,13 +23,22 @@ module:
 
 ## Logo
 
-The default logo image is placed and loaded from the pre-configured template. 
-[TODO] // Please provide information on how to update the Logo for a Presidium Site
-Use `260px × 124px` as the size ratio.
+The default Presidium logo image is placed and loaded from the pre-configured template. 
+
+To update the site's logo place the logo image into the static/images folder and update the site's ```config ``` logo variable as seen below
+```logo: [path to logo]```
+
+Ideally the logo should have the following specifications `260px × 124px` and can be of type: png, jpg or svg
 
 ## Favicon
 
-[TODO] // Please provide documentation on how to update a favicon
+The default Presidium favicon image is placed and 
+loaded from the pre-configured template. 
+
+To update the site's favicon place the favicon image into the static/images folder and update the site's ```config ``` favIcon variable as seen below
+```favIcon: [path to favicon]```
+
+Ideally the favIcon can be of type: png, jpg or svg, ico.
 
 ## Title tag
 
