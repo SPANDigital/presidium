@@ -3,6 +3,35 @@ on:
   - push
 
 jobs:
+  gh-pages:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Inject Golang Git Config
+        run: git config --global url."https://${PRIVATE_GITHUB_TOKEN}:@github.com/".insteadOf "https://github.com/"
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.87.0'
+          extended: true
+      - name: Build
+        working-directory: docs
+        run: hugo --minify --baseURL https://spandigital.github.io/presidium-hugo
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/public
+    env:
+      PRIVATE_GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+      GOPRIVATE: github.com/spandigital
   test:
     name: Test
     runs-on: ubuntu-latest

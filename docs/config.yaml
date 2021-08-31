@@ -15,6 +15,8 @@ menu:
       name: Overview
       url: /
       weight: 1
+      params:
+        collapsed: true
     - identifier: key-concepts
       name: Key Concepts
       url: /key-concepts/
@@ -69,3 +71,6 @@ frontmatter:
     - lastmod
     - :fileModTime
     - :default
+params:
+  logo: images/logo.png
+  favIcon: images/favicon.ico
