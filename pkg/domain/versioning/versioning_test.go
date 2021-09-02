@@ -13,7 +13,7 @@ import (
 
 type VersioningTestSuite struct {
 	suite.Suite
-	versioning  *versioning
+	versioning  Versioning
 	projectPath string
 	fs          filesystem.FileSystem
 }
@@ -34,13 +34,6 @@ func (s *VersioningTestSuite) SetupSuite() {
 	s.createContent("article.md", "# Best Practices")
 	s.versioning = New(s.projectPath)
 
-	assert.False(
-		s.T(),
-		s.versioning.activated,
-		"expected %s to not to be active",
-		s.versioning.projectRoot,
-	)
-
 	_ = filepath.Walk(s.projectPath, func(path string, info fs.FileInfo, err error) error {
 		println(path)
 		return nil
@@ -58,17 +51,17 @@ func (s *VersioningTestSuite) createContent(file string, content string) {
 }
 
 func (s *VersioningTestSuite) TestVersioning_IsEnabled() {
-	assert.True(s.T(), s.versioning.enabled)
+	assert.True(s.T(), s.versioning.IsEnabled())
 }
 
 func (s *VersioningTestSuite) TestVersioning_NextVersion() {
-	assert.False(s.T(), s.versioning.activated)
-	assert.Equal(s.T(), 0, s.versioning.versionNo)
+	assert.False(s.T(), s.versioning.IsActivated())
+	assert.Equal(s.T(), 0, s.versioning.GetLatestVersionNo())
 	s.versioning.NextVersion()
-	assert.True(s.T(), s.versioning.activated)
-	assert.Equal(s.T(), 1, s.versioning.versionNo)
+	assert.True(s.T(), s.versioning.IsActivated())
+	assert.Equal(s.T(), 1, s.versioning.GetLatestVersionNo())
 
 	s.versioning.NextVersion()
-	assert.Equal(s.T(), 2, s.versioning.versionNo)
+	assert.Equal(s.T(), 2, s.versioning.GetLatestVersionNo())
 
 }

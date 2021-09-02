@@ -34,10 +34,11 @@ type Versioning interface {
 	SetEnabled(enabled bool) bool // enables version if not set.
 	NextVersion()                 // activates the next version. Drop the oldest if exceeds more than 5 versions.
 	GrabLatest()                  // Updates the last version backup
+	IsActivated() bool            // Do we have a version?
+	GetLatestVersionNo() int      // returns the latest version no
 }
 
 type versioning struct {
-	Versioning
 	fileSystem       filesystem.FileSystem // Local file system for copy actions.
 	projectRoot      string                // The root the project
 	siteContent      string                // path to the site convent
@@ -47,6 +48,14 @@ type versioning struct {
 	versionLocalPath string                // location of this version, for example "versions/3"
 	activated        bool                  // flag to version set has been activated
 	statusFile       string                // keep track of the status
+}
+
+func (v *versioning) GetLatestVersionNo() int {
+	return v.versionNo
+}
+
+func (v *versioning) IsActivated() bool {
+	return v.activated
 }
 
 const maxVersionsToKeep = 5
@@ -77,7 +86,7 @@ func (v *versioning) activateLatest() {
 	}
 }
 
-func New(projectRoot string) *versioning {
+func New(projectRoot string) Versioning {
 
 	v := &versioning{
 		fileSystem:       filesystem.New(),
@@ -119,17 +128,9 @@ func (v *versioning) persist() {
 		panic(err)
 	}
 	defer file.Close()
-	_, _ = file.WriteString(fmt.Sprintf("%s\n", boolToStr(v.enabled)))
+	_, _ = file.WriteString(fmt.Sprintf("%s\n", strconv.FormatBool(v.enabled)))
 	_, _ = file.WriteString(fmt.Sprintf("%d\n", v.versionNo))
 	_ = file.Sync()
-}
-
-func boolToStr(b bool) string {
-	if b {
-		return "1"
-	} else {
-		return "0"
-	}
 }
 
 func (v *versioning) load() {
