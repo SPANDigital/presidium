@@ -27,6 +27,49 @@ func TestRunFileSystemSuite(t *testing.T) {
 	suite.Run(t, new(FileSystemTestSuite))
 }
 
+func (s *FileSystemTestSuite) TestFileSystem_MakeDirs() {
+	err := s.f.MakeDirs(filepath.Join(s.testDir, "some/dirs/to/create"))
+	assert.NoError(s.T(), err)
+}
+
+func (s *FileSystemTestSuite) TestFileSystem_DeleteDir() {
+
+	dirTree := []string{
+		"/documents",
+		"/documents/personal",
+		"/archives/documents/1",
+		"/archives/documents/2",
+	}
+
+	for _, dirPath := range dirTree {
+		dir := filepath.Join(s.testDir, dirPath)
+		err := os.MkdirAll(dir, os.ModePerm)
+		assert.NoError(s.T(), err)
+	}
+
+	err := s.f.DeleteDir(s.testDir)
+	assert.NoError(s.T(), err)
+}
+
+func (s *FileSystemTestSuite) TestFileSystem_Rename() {
+
+	var err error
+
+	old := filepath.Join(s.testDir, "old")
+	newDir := filepath.Join(s.testDir, "new")
+
+	err = os.MkdirAll(old, os.ModePerm)
+	assert.NoError(s.T(), err)
+
+	err = s.f.Rename(old, newDir)
+	assert.NoError(s.T(), err)
+
+	info, err := os.Stat(newDir)
+	assert.NoError(s.T(), err)
+	assert.True(s.T(), info.IsDir())
+
+}
+
 func (s *FileSystemTestSuite) TestFileSystem_Copy() {
 	srcPath := filepath.Join(s.testDir, "testfile1.md")
 	destPath := filepath.Join(s.testDir, "..", "testfile.md")
