@@ -1,3 +1,10 @@
+env:
+  - GO111MODULE=on
+before:
+  hooks:
+    - go mod download
+    - go install github.com/gobuffalo/packr/v2/packr2
+    - packr2
 builds:
   - env:
       - CGO_ENABLED=0
@@ -6,6 +13,8 @@ builds:
       - linux
       - windows
       - darwin
+    tags:
+      - extended
 archives:
   - replacements:
       darwin: Darwin

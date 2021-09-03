@@ -21,4 +21,4 @@ clean:
 
 dist:
 	[ -d "dist" ] || mkdir "dist"
-	go build -o "dist/presidium"
+	go build -o "dist/presidium" --tags extended

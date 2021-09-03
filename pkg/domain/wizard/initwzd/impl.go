@@ -8,6 +8,7 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/viper"
+	"golang.org/x/mod/module"
 	"strings"
 )
 
@@ -40,9 +41,15 @@ func (i initWizard) Run() {
 	}
 	promptSupportedTemplates()
 	promptSupportedThemes()
+	err = getBrandRepo()
+	if err != nil {
+		log.Error(err)
+		return
+	}
 	g := generator.New()
 	err = g.Generate()
 	if err != nil {
+		log.Error(err)
 		return
 	}
 }
@@ -74,6 +81,27 @@ func getProjectName() error {
 		return err
 	}
 	viper.Set(config.ProjectNameKey, projectName)
+	return nil
+}
+
+func getBrandRepo() error {
+
+	isBrand, err := wizard.GetConfirmationFromUser("Do you want to add a brand?", false)
+	if err != nil {
+		log.Error(err)
+		return err
+	}
+
+	if isBrand {
+		validate := func(input string) error {
+			return module.CheckPath(input)
+		}
+		repoURL, err := wizard.GetInputString("Provide your go module for branding", "", validate)
+		if err != nil {
+			return err
+		}
+		viper.Set(config.BrandKey, repoURL)
+	}
 	return nil
 }
 

@@ -6,6 +6,9 @@ markup:
   goldmark:
     renderer:
       Unsafe: true
+    parser:
+      attribute:
+        block: true
 menu:
   Main:
   - identifier: introduction
@@ -75,6 +78,14 @@ outputs:
   - SearchMap
 module:
   imports:
+  {{ if .Brand -}}
+  - path: {{ .Brand }}
+    mounts:
+      - source: assets
+        target: assets
+      - source: static
+        target: static
+  {{- end }}
   - path: {{ .Theme }}
 enableInlineShortcodes: true
 frontmatter:
