@@ -1,5 +1,5 @@
 ---
-title: Scopes
+title: Scoped Presidium Sites
 slug: scopes
 url: scopes
 ---
