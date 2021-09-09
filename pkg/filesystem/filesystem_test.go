@@ -47,7 +47,7 @@ func (s *FileSystemTestSuite) TestFileSystem_DeleteDir() {
 		assert.NoError(s.T(), err)
 	}
 
-	err := s.f.DeleteDir(s.testDir)
+	err := s.f.EmptyDir(s.testDir)
 	assert.NoError(s.T(), err)
 }
 

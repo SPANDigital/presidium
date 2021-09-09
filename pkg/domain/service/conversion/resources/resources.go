@@ -1,9 +1,9 @@
-package paths
+package resources
 
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"os"
 	"path/filepath"
 	"regexp"

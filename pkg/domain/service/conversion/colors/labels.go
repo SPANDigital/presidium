@@ -5,12 +5,15 @@ import (
 	"github.com/spf13/viper"
 )
 
+type StyleLabel = func(arg interface{}) aurora.Value
+
 type labels struct {
-	Underline func(arg interface{}) aurora.Value
-	Warning   func(arg interface{}) aurora.Value
-	Wanted    func(arg interface{}) aurora.Value
-	Unwanted  func(arg interface{}) aurora.Value
-	Info      func(arg interface{}) aurora.Value
+	Underline StyleLabel
+	Warning   StyleLabel
+	Wanted    StyleLabel
+	Unwanted  StyleLabel
+	Info      StyleLabel
+	Normal    StyleLabel
 }
 
 var Labels labels
@@ -27,6 +30,7 @@ func makeLabels(enabled bool) labels {
 		Wanted:    au.Green,
 		Unwanted:  au.Yellow,
 		Info:      au.BrightBlue,
+		Normal:    au.Black,
 	}
 	return labels
 }

@@ -41,7 +41,7 @@ func (s *VersioningTestSuite) SetupSuite() {
 }
 
 func (s *VersioningTestSuite) TearDownSuite() {
-	_ = filesystem.New().DeleteDir(s.projectPath)
+	_ = filesystem.New().EmptyDir(s.projectPath)
 }
 
 func (s *VersioningTestSuite) createContent(file string, content string) {

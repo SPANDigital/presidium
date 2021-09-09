@@ -3,23 +3,54 @@ package filesystem
 import (
 	"errors"
 	"fmt"
+	"github.com/otiai10/copy"
 	"io/fs"
 	"io/ioutil"
 	"os"
-	"strings"
-
 	"path/filepath"
+	"strings"
 )
 
 type FileSystem interface {
 	Copy(src, dest string, mode fs.FileMode) error
+	CopyWithOptions(src, dest string, options copy.Options) error
 	CopyDir(src, dest string) error
-	DeleteDir(path string) error
+	EmptyDir(path string) error
 	Rename(old string, new string) error
 	MakeDirs(path string) error
+	AbsolutePath(path string) (string, error) // TODO: Need to add unit test for this
+	GetWorkingDir() (string, error)
+	DirExists(dir string) bool
+	DeleteDir(dir string) error
 }
 
 type fileSystem struct {
+}
+
+func (f fileSystem) DeleteDir(dir string) error {
+	return os.RemoveAll(dir)
+}
+
+func (f fileSystem) DirExists(dir string) bool {
+	info, err := os.Stat(dir)
+	return err != nil && info.IsDir()
+}
+
+func (f fileSystem) GetWorkingDir() (string, error) {
+	return os.Getwd()
+}
+
+func (f fileSystem) CopyWithOptions(src, dest string, options copy.Options) error {
+	return copy.Copy(src, dest, options)
+}
+
+func (f fileSystem) AbsolutePath(path string) (string, error) {
+
+	if filepath.IsAbs(path) {
+		return path, nil
+	}
+
+	return filepath.Abs(path)
 }
 
 func (f fileSystem) MakeDirs(path string) error {
@@ -30,7 +61,8 @@ func (f fileSystem) Rename(old string, new string) error {
 	return os.Rename(old, new)
 }
 
-func (f fileSystem) DeleteDir(dir string) error {
+// EmptyDir removes all content leaving an empty directory
+func (f fileSystem) EmptyDir(dir string) error {
 
 	info, err := os.Stat(dir)
 	if err != nil {

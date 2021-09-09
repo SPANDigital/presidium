@@ -1,10 +1,10 @@
-package filesystem
+package fileactions
 
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/colors"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/markdown"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
@@ -43,7 +43,7 @@ func CheckForDirRename(path string) error {
 }
 
 func CheckForDirIndex(path string) error {
-	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if info.IsDir() {
 			fmt.Println(fmt.Sprintf("Checking %s for _index.md...\n", colors.Labels.Wanted(path)))
@@ -58,7 +58,7 @@ func CheckForDirIndex(path string) error {
 				idxRenameList = append(idxRenameList, path)
 				return nil
 			}
-			addIndex(path)
+			_ = addIndex(path)
 		} else { // is a file
 			if strings.HasSuffix(path, ".md") {
 				if info.Name() != "_index.md" && info.Name() != "index.md" {
@@ -75,6 +75,9 @@ func CheckForDirIndex(path string) error {
 		}
 		return nil
 	})
+	if err != nil {
+		return err
+	}
 	for _, path := range idxRenameList {
 		fmt.Println("Renaming", colors.Labels.Unwanted(fmt.Sprintf("%v/index.md", path)), "to", colors.Labels.Wanted("_index.md"))
 		os.Rename(path+"/index.md", path+"/_index.md")

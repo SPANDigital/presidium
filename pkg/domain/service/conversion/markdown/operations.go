@@ -2,8 +2,8 @@ package markdown
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/colors"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/html"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
 	"github.com/spf13/viper"
 	"io"
 	"os"
