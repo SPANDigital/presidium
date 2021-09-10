@@ -22,17 +22,17 @@ func fileExists(path string) bool {
 	return true
 }
 
-func CheckForDirRename(path string) error {
-	files, err := ioutil.ReadDir(path)
+func RemoveUnderscoreDirPrefix(dirPath string) error {
+	files, err := ioutil.ReadDir(dirPath)
 	if err != nil {
 		return err
 	}
 	for _, file := range files {
 		if file.IsDir() && strings.HasPrefix(file.Name(), "_") {
-			old := path + "/" + file.Name()
-			new := path + "/" + strings.TrimLeft(file.Name(), "_")
-			fmt.Println("Renaming", colors.Labels.Unwanted(old), "to", colors.Labels.Wanted(new))
-			err := os.Rename(old, new)
+			oldPath := dirPath + "/" + file.Name()
+			newPath := dirPath + "/" + strings.TrimLeft(file.Name(), "_")
+			fmt.Println("Renaming", colors.Labels.Unwanted(oldPath), "to", colors.Labels.Wanted(newPath))
+			err := os.Rename(oldPath, newPath)
 			if err != nil {
 				return err
 			}

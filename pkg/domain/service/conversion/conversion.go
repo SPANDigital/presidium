@@ -294,7 +294,7 @@ func (c *Converter) gatherResources() {
 func (c *Converter) performFileActions() {
 
 	c.messageUser(infoMessage("check directories for rename"))
-	if err := fileactions.CheckForDirRename(c.stagingContentDir); err != nil {
+	if err := fileactions.RemoveUnderscoreDirPrefix(c.stagingContentDir); err != nil {
 		log.Fatal(err)
 	}
 
