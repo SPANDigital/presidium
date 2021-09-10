@@ -299,7 +299,7 @@ func (c *Converter) performFileActions() {
 	}
 
 	c.messageUser(infoMessage("check directories for indexes"))
-	if err := fileactions.CheckForDirIndex(c.stagingContentDir); err != nil {
+	if err := fileactions.CheckForDirIndex(c.stagingDir, c.stagingContentDir); err != nil {
 		log.Fatal(err)
 	}
 
@@ -321,7 +321,11 @@ func (c *Converter) performFileActions() {
 
 func (c *Converter) processStaticMedia() {
 
-	if !viper.GetBool("copyMediaToStatic") || !c.fs.DirExists(c.sourceRepoStaticDir) {
+	if !viper.GetBool("copyMediaToStatic") {
+		return
+	}
+
+	if !c.fs.DirExists(c.sourceRepoStaticDir) {
 		return
 	}
 

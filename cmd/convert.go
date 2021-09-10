@@ -25,7 +25,8 @@ var convertCmd = &cobra.Command{
 		source := viper.GetString("sourceRepoDir")
 		destination := viper.GetString("destDir")
 
-		if err := c.Execute(source, destination); err != nil {
+		err := c.Execute(source, destination)
+		if err != nil {
 			log.Fatal(err)
 		}
 	},

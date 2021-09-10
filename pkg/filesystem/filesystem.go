@@ -33,7 +33,10 @@ func (f fileSystem) DeleteDir(dir string) error {
 
 func (f fileSystem) DirExists(dir string) bool {
 	info, err := os.Stat(dir)
-	return err != nil && info.IsDir()
+	if err == nil {
+		return info.IsDir()
+	}
+	return false
 }
 
 func (f fileSystem) GetWorkingDir() (string, error) {
