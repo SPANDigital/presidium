@@ -1,10 +1,9 @@
-package filesystem
+package fileactions
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/colors"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/convert/markdown"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
 	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
@@ -23,17 +22,17 @@ func fileExists(path string) bool {
 	return true
 }
 
-func CheckForDirRename(path string) error {
-	files, err := ioutil.ReadDir(path)
+func RemoveUnderscoreDirPrefix(dirPath string) error {
+	files, err := ioutil.ReadDir(dirPath)
 	if err != nil {
 		return err
 	}
 	for _, file := range files {
 		if file.IsDir() && strings.HasPrefix(file.Name(), "_") {
-			old := path + "/" + file.Name()
-			new := path + "/" + strings.TrimLeft(file.Name(), "_")
-			fmt.Println("Renaming", colors.Labels.Unwanted(old), "to", colors.Labels.Wanted(new))
-			err := os.Rename(old, new)
+			oldPath := dirPath + "/" + file.Name()
+			newPath := dirPath + "/" + strings.TrimLeft(file.Name(), "_")
+			fmt.Println("Renaming", colors.Labels.Unwanted(oldPath), "to", colors.Labels.Wanted(newPath))
+			err := os.Rename(oldPath, newPath)
 			if err != nil {
 				return err
 			}
@@ -42,8 +41,8 @@ func CheckForDirRename(path string) error {
 	return nil
 }
 
-func CheckForDirIndex(path string) error {
-	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+func CheckForDirIndex(stagingDir, path string) error {
+	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if info.IsDir() {
 			fmt.Println(fmt.Sprintf("Checking %s for _index.md...\n", colors.Labels.Wanted(path)))
@@ -58,11 +57,11 @@ func CheckForDirIndex(path string) error {
 				idxRenameList = append(idxRenameList, path)
 				return nil
 			}
-			addIndex(path)
+			_ = addIndex(stagingDir, path)
 		} else { // is a file
 			if strings.HasSuffix(path, ".md") {
 				if info.Name() != "_index.md" && info.Name() != "index.md" {
-					err := injectSlugWeightAndURL(path)
+					err := injectSlugWeightAndURL(stagingDir, path)
 					if err != nil {
 						return err
 					}
@@ -75,10 +74,13 @@ func CheckForDirIndex(path string) error {
 		}
 		return nil
 	})
+	if err != nil {
+		return err
+	}
 	for _, path := range idxRenameList {
 		fmt.Println("Renaming", colors.Labels.Unwanted(fmt.Sprintf("%v/index.md", path)), "to", colors.Labels.Wanted("_index.md"))
 		os.Rename(path+"/index.md", path+"/_index.md")
-		err := injectSlugWeightAndURLForIndex(path + "/_index.md")
+		err := injectSlugWeightAndURLForIndex(stagingDir, path+"/_index.md")
 		if err != nil {
 			return err
 		}
@@ -105,7 +107,7 @@ func CheckIndexForTitles(path string) error {
 }
 
 // unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
-func deduceWeightAndSlug(path string) (int64, string, string) {
+func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 	re := regexp.MustCompile(`(([\d\.]+)\-)?([^..]+)(\.[^\..]*)?`)
 	base := filepath.Base(path)
 	matches := re.FindStringSubmatch(base)
@@ -115,11 +117,11 @@ func deduceWeightAndSlug(path string) (int64, string, string) {
 	}
 	var slug = matches[3]
 	var url string
-	var contentDir = filepath.Join(config.Flags.StagingDir, "content")
+	var contentDir = filepath.Join(stagingDir, "content")
 	if path == contentDir {
 		url = ""
 	} else {
-		_, _, parentUrl := deduceWeightAndSlug(filepath.Dir(path))
+		_, _, parentUrl := deduceWeightAndSlug(stagingDir, filepath.Dir(path))
 		if parentUrl != "" {
 			url = parentUrl + "/" + slug
 		} else {
@@ -137,10 +139,10 @@ func deduceWeightAndSlug(path string) (int64, string, string) {
 	return weight, slug, url
 }
 
-func injectSlugWeightAndURL(path string) error {
+func injectSlugWeightAndURL(stagingDir, path string) error {
 	if markdown.IsRecognizableMarkdown(path) {
 		fmt.Println("Checking weight of ", colors.Labels.Info(path))
-		weight, slug, url := deduceWeightAndSlug(path)
+		weight, slug, url := deduceWeightAndSlug(stagingDir, path)
 
 		m := make(map[string]interface{})
 		m["slug"] = slug
@@ -155,9 +157,9 @@ func injectSlugWeightAndURL(path string) error {
 	return nil
 }
 
-func injectSlugWeightAndURLForIndex(indexFile string) error {
+func injectSlugWeightAndURLForIndex(stagingDir, indexFile string) error {
 	dir := filepath.Dir(indexFile)
-	weight, slug, url := deduceWeightAndSlug(dir)
+	weight, slug, url := deduceWeightAndSlug(stagingDir, dir)
 	m := make(map[string]interface{})
 	m["slug"] = slug
 	m["url"] = url
@@ -168,10 +170,10 @@ func injectSlugWeightAndURLForIndex(indexFile string) error {
 }
 
 // addIndex adds a directory index file to override the title of the folder, "unslugified"
-func addIndex(path string) error {
+func addIndex(stagingDir, path string) error {
 	base := filepath.Base(path)
 	title := unSlugify(base)
-	weight, slug, url := deduceWeightAndSlug(path)
+	weight, slug, url := deduceWeightAndSlug(stagingDir, path)
 
 	fmt.Println("Adding an", colors.Labels.Unwanted("_index.md"), "file to ", colors.Labels.Wanted(path))
 

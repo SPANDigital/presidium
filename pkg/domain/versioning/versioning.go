@@ -196,7 +196,7 @@ func (v *versioning) dropVersion(versionNo int) {
 	for i := versionNo; i < maxVersionsToKeep+1; i++ {
 		versionContentPath := filepath.Join(v.versionsRootPath, fmt.Sprintf("%d", i))
 		if i == versionNo {
-			_ = v.fileSystem.DeleteDir(versionContentPath)
+			_ = v.fileSystem.EmptyDir(versionContentPath)
 		} else {
 			newName := filepath.Join(v.versionsRootPath, fmt.Sprintf("%d", i-1))
 			_ = v.fileSystem.Rename(versionContentPath, newName)
