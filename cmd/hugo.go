@@ -6,6 +6,8 @@ import (
 )
 
 var (
+	// hugoCommand wraps hugo into Presidium.  This allows you to run hugo
+	// in Presidium, and makes it easier to debug etc.
 	hugoCommand = &cobra.Command{
 		Use:   "hugo",
 		Short: "Runs hugo against your presidium site",
