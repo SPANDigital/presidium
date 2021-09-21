@@ -176,8 +176,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]interface{}
 	hugoConfig.Params["appleScope"] = config.AppleScope
 	hugoConfig.Params["logo"] = config.Logo
 	hugoConfig.Copyright = config.Footer
-	hugoConfig.Params["showStatus"] = config.Show.Status
-	hugoConfig.Params["showAuthor"] = config.Show.Author
+	hugoConfig.Params["show"] = config.Show
 	hugoConfig.Params["roles"] = config.Roles
 
 	hugoConfig.EnableInlineShortcodes = true
