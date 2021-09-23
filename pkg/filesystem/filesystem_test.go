@@ -23,11 +23,16 @@ var (
 var _ = Describe("Filesystem", func() {
 	Describe("copy functionality", func() {
 		Context("when calling Copy()", func() {
-			testDir := "/home/testuser/testdata/copy/test"
-			FS.MkdirAll(testDir, 0755)
 			srcFileName := "testfile1.md"
 			dstFileName := "testfile.md"
-			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
+			testDir := "/home/testuser/testdata/copy/test"
+			BeforeEach(func() {
+				FS.MkdirAll(testDir, 0755)
+				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
+			})
+			AfterEach(func() {
+				// no need to clean up - memory mapped filesystem will just go away
+			})
 			It("Should correctly copy a file", func() {
 				srcPath := filepath.Join(testDir, srcFileName)
 				destPath := filepath.Join(testDir, "..", dstFileName)
@@ -55,11 +60,16 @@ var _ = Describe("Filesystem", func() {
 		})
 		Context("when calling CopyDir()", func() {
 			testDir := "/home/testuser/testdata/copydir/test"
-			FS.MkdirAll(testDir, 0755)
 			file1, file2, file3 := "file1.md", "file2.md", "file3.md"
-			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
-			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
-			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
+			BeforeEach(func() {
+				FS.MkdirAll(testDir, 0755)
+				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
+				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
+				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
+			})
+			AfterEach(func() {
+				// no need to clean up - memory mapped filesystem will just go away
+			})
 			It("Should copy the contents of a directory", func() {
 				srcPath := testDir
 				destPath := filepath.Join(testDir, "..", "result")
@@ -87,6 +97,9 @@ var _ = Describe("Filesystem", func() {
 	Describe("Rename functionality", func() {
 		Context("When calling Rename()", func() {
 			testDir := "/home/testuser/testdata/rename/test"
+			AfterEach(func() {
+				// no need to clean up - memory mapped filesystem will just go away
+			})
 			It("Should rename a folder correctly", func() {
 				old := filepath.Join(testDir, "old")
 				newDir := filepath.Join(testDir, "new")
@@ -106,6 +119,9 @@ var _ = Describe("Filesystem", func() {
 	Describe("Delete functionality", func() {
 		Context("When calling EmptyDir", func() {
 			testDir := "/home/testuser/testdata/delete/test"
+			AfterEach(func() {
+				// no need to clean up - memory mapped filesystem will just go away
+			})
 			It("Should delete everything in a folder, leaving an empty directory", func() {
 				dirTree := []string{
 					"/documents",

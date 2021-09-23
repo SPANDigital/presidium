@@ -33,8 +33,13 @@ var _ = Describe("Markdown", func() {
 		Context("ManipulateMarkdown", func() {
 			path := "/home/testuser/testdata"
 			filepath := fmt.Sprintf("%s/file.md", path)
-			FS.MkdirAll(path, 0755)
-			FSUtil.WriteFile(filepath, []byte(input), 0644)
+			BeforeEach(func() {
+				FS.MkdirAll(path, 0755)
+				FSUtil.WriteFile(filepath, []byte(input), 0644)
+			})
+			AfterEach(func() {
+				// no need to clean up - memory mapped filesystem will just go away
+			})
 			It("Should correctly translate tooltips", func() {
 				replaceTooltips(filepath)
 				content, err := FSUtil.ReadFile(filepath)
