@@ -236,6 +236,7 @@ func replaceTooltips(path string) error {
 		}
 		for _, matches := range allMatches {
 			fmt.Println("Creating tooltip for ", colors.Labels.Info(matches[1]))
+			fmt.Println("matches[0]: ", matches[0])
 			replacements = append(replacements, replacement{Find: matches[0], Replace: "{{< tooltip \"" + matches[1] + "\" >}}"})
 		}
 		for _, rep := range replacements {

@@ -1,116 +1,134 @@
 package filesystem
 
 import (
-	"bytes"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/suite"
+	"fmt"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+	"github.com/spf13/afero"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
-	"testing"
 )
 
-type FileSystemTestSuite struct {
-	suite.Suite
-	f       FileSystem
-	testDir string
+func init() {
+	FS = afero.NewMemMapFs()
+	FSUtil = &afero.Afero{Fs:FS}
 }
 
-func (s *FileSystemTestSuite) SetupSuite() {
-	s.f = New()
-	s.testDir = "../../test/data/pkg/filesystem/testdir"
-}
+var (
+	filesystem = New()
+)
 
-func TestRunFileSystemSuite(t *testing.T) {
-	suite.Run(t, new(FileSystemTestSuite))
-}
+var _ = Describe("Filesystem", func() {
+	Describe("copy functionality", func() {
+		Context("when calling Copy()", func() {
+			testDir := "/home/testuser/testdata/copy/test"
+			FS.MkdirAll(testDir, 0755)
+			srcFileName := "testfile1.md"
+			dstFileName := "testfile.md"
+			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
+			It("Should correctly copy a file", func() {
+				srcPath := filepath.Join(testDir, srcFileName)
+				destPath := filepath.Join(testDir, "..", dstFileName)
 
-func (s *FileSystemTestSuite) TestFileSystem_MakeDirs() {
-	err := s.f.MakeDirs(filepath.Join(s.testDir, "some/dirs/to/create"))
-	assert.NoError(s.T(), err)
-}
+				err := filesystem.Copy(srcPath, destPath, fs.ModePerm)
+				Expect(err).NotTo(HaveOccurred())
 
-func (s *FileSystemTestSuite) TestFileSystem_DeleteDir() {
+				// Check the file exists and is the same file
+				_, err = FS.Open(destPath)
+				Expect(err).NotTo(HaveOccurred())
+				// Cannot use Gomega's BeAnExistingFile() here
+				_, err = FS.Stat(destPath)
+				Expect(err).NotTo(HaveOccurred())
 
-	dirTree := []string{
-		"/documents",
-		"/documents/personal",
-		"/archives/documents/1",
-		"/archives/documents/2",
-	}
+				srcFile, err := FSUtil.ReadFile(srcPath)
+				Expect(err).NotTo(HaveOccurred())
+				destFile, err := FSUtil.ReadFile(destPath)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(srcFile).To(Equal(destFile))
 
-	for _, dirPath := range dirTree {
-		dir := filepath.Join(s.testDir, dirPath)
-		err := os.MkdirAll(dir, os.ModePerm)
-		assert.NoError(s.T(), err)
-	}
+				// Clean up dir
+				err = FS.Remove(destPath)
+				Expect(err).NotTo(HaveOccurred())
+			})
+		})
+		Context("when calling CopyDir()", func() {
+			testDir := "/home/testuser/testdata/copydir/test"
+			FS.MkdirAll(testDir, 0755)
+			file1, file2, file3 := "file1.md", "file2.md", "file3.md"
+			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
+			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
+			FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
+			It("Should copy the contents of a directory", func() {
+				srcPath := testDir
+				destPath := filepath.Join(testDir, "..", "result")
 
-	err := s.f.EmptyDir(s.testDir)
-	assert.NoError(s.T(), err)
-}
+				err := filesystem.CopyDir(srcPath, destPath)
+				Expect(err).NotTo(HaveOccurred())
 
-func (s *FileSystemTestSuite) TestFileSystem_Rename() {
+				srcFiles := make([]string, 0)
+				_ = filepath.WalkDir(testDir, func(path string, d fs.DirEntry, err error) error {
+					srcFiles = append(srcFiles, path)
+					return nil
+				})
 
-	var err error
+				destFiles := make([]string, 0)
+				_ = filepath.WalkDir(destPath, func(path string, d fs.DirEntry, err error) error {
+					destFiles = append(destFiles, strings.ReplaceAll(path, "result", "test"))
+					return nil
+				})
 
-	old := filepath.Join(s.testDir, "old")
-	newDir := filepath.Join(s.testDir, "new")
-
-	err = os.MkdirAll(old, os.ModePerm)
-	assert.NoError(s.T(), err)
-
-	err = s.f.Rename(old, newDir)
-	assert.NoError(s.T(), err)
-
-	info, err := os.Stat(newDir)
-	assert.NoError(s.T(), err)
-	assert.True(s.T(), info.IsDir())
-
-}
-
-func (s *FileSystemTestSuite) TestFileSystem_Copy() {
-	srcPath := filepath.Join(s.testDir, "testfile1.md")
-	destPath := filepath.Join(s.testDir, "..", "testfile.md")
-
-	err := s.f.Copy(srcPath, destPath, fs.ModePerm)
-	assert.NoError(s.T(), err, err)
-
-	// Check the file exists and is the same file
-	_, err = os.Open(destPath)
-	assert.True(s.T(), !os.IsNotExist(err), "the file should exist")
-
-	srcFile, err := ioutil.ReadFile(srcPath)
-	assert.NoError(s.T(), err, err)
-	destFile, err := ioutil.ReadFile(destPath)
-	assert.NoError(s.T(), err, err)
-	assert.True(s.T(), bytes.Equal(srcFile, destFile))
-
-	// Clean up dir
-	err = os.Remove(destPath)
-	assert.NoError(s.T(), err, err)
-}
-
-func (s *FileSystemTestSuite) TestFileSystem_CopyDir() {
-	srcPath := s.testDir
-	destPath := filepath.Join(s.testDir, "..", "result")
-
-	err := s.f.CopyDir(srcPath, destPath)
-	assert.NoError(s.T(), err, err)
-
-	srcFiles := make([]string, 0)
-	_ = filepath.WalkDir(s.testDir, func(path string, d fs.DirEntry, err error) error {
-		srcFiles = append(srcFiles, path)
-		return nil
+				Expect(srcFiles).To(Equal(destFiles))
+				_ = FS.RemoveAll(destPath)
+			})
+		})
 	})
+	Describe("Rename functionality", func() {
+		Context("When calling Rename()", func() {
+			testDir := "/home/testuser/testdata/rename/test"
+			It("Should rename a folder correctly", func() {
+				old := filepath.Join(testDir, "old")
+				newDir := filepath.Join(testDir, "new")
 
-	destFiles := make([]string, 0)
-	_ = filepath.WalkDir(destPath, func(path string, d fs.DirEntry, err error) error {
-		destFiles = append(destFiles, strings.ReplaceAll(path, "result", "testdir"))
-		return nil
+				err := FS.MkdirAll(old, os.ModePerm)
+				Expect(err).NotTo(HaveOccurred())
+
+				err = filesystem.Rename(old, newDir)
+				Expect(err).NotTo(HaveOccurred())
+
+				info, err := FS.Stat(newDir)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(info.IsDir()).To(BeTrue())
+			})
+		})
 	})
+	Describe("Delete functionality", func() {
+		Context("When calling EmptyDir", func() {
+			testDir := "/home/testuser/testdata/delete/test"
+			It("Should delete everything in a folder, leaving an empty directory", func() {
+				dirTree := []string{
+					"/documents",
+					"/documents/personal",
+					"/archives/documents/1",
+					"/archives/documents/2",
+				}
 
-	assert.EqualValues(s.T(), srcFiles, destFiles, "the folder structure should be the same")
-	_ = os.RemoveAll(destPath)
-}
+				for _, dirPath := range dirTree {
+					dir := filepath.Join(testDir, dirPath)
+					err := FS.MkdirAll(dir, os.ModePerm)
+					Expect(err).NotTo(HaveOccurred())
+				}
+
+				err := filesystem.EmptyDir(testDir)
+				Expect(err).NotTo(HaveOccurred())
+				parentDir, err := FS.Open(testDir)
+				Expect(err).NotTo(HaveOccurred())
+				defer parentDir.Close()
+				dirNames, err := parentDir.Readdirnames(-1)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(dirNames).To(BeEmpty())
+			})
+		})
+	})
+})
