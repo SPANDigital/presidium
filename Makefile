@@ -1,10 +1,11 @@
 FILENAME=main
-
+TESTDIRS=`go list ./... |grep -v "vendor/" |grep -v "swagger/"`
 .DEFAULT_GOAL=build
 .PHONY: dist clean
 
 test:
-	go test ./...
+	@mkdir -p reports
+	go test -p 1 -v $(TESTDIRS) -coverprofile=reports/tests-cov.out
 
 pack:
 	go get -u github.com/gobuffalo/packr/v2/packr2

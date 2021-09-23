@@ -2,8 +2,8 @@ package markdown
 
 import (
 	"fmt"
+	. "github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"io"
-	"io/ioutil"
 	"os"
 )
 
@@ -21,7 +21,7 @@ type WriteContentFunc func(content []byte, w io.Writer) error
 
 func IsRecognizableMarkdown(path string) bool {
 	fmt.Println("Validating", path)
-	b, err := ioutil.ReadFile(path) // just pass the file name
+	b, err := FSUtil.ReadFile(path) // just pass the file name
 	if err != nil {
 		return false
 	}
@@ -31,9 +31,9 @@ func IsRecognizableMarkdown(path string) bool {
 
 // Checks if a markdown file exists, if it doesn't create an empty one
 func touch(path string) error {
-	_, err := os.Stat(path)
+	_, err := FSUtil.Stat(path)
 	if os.IsNotExist(err) {
-		f, err := os.Create(path)
+		f, err := FSUtil.Create(path)
 		if err == nil {
 			_, err = f.WriteString("---\n---\n")
 			if err == nil {
@@ -45,7 +45,7 @@ func touch(path string) error {
 	return nil
 }
 
-// Manipulate a markdown file with 2 optional callbacks
+// ManipulateMarkdown Manipulate a markdown file with 2 optional callbacks
 // matterFunc - callback to manipulate front matter
 // contentFunc - callback to manipulate content
 // if the file doesn't exist, it will create
@@ -57,7 +57,7 @@ func ManipulateMarkdown(path string, matterFunc WriteFrontMatterFunc, contentFun
 		return err
 	}
 
-	b, err := ioutil.ReadFile(path) // just pass the file name
+	b, err := FSUtil.ReadFile(path) // just pass the file name
 	if err != nil {
 		return err
 	}
@@ -73,7 +73,7 @@ func ManipulateMarkdown(path string, matterFunc WriteFrontMatterFunc, contentFun
 			b,
 		}
 	}
-	f, err := os.Create(path)
+	f, err := FS.Create(path)
 	if err != nil {
 		return err
 	}

@@ -11,7 +11,7 @@ var ImgWithBaseUrlRe = regexp.MustCompile(`\(\{\{\s?site.baseurl\s?\}\}/(.*\.(pn
 var ImgWithAttributesRe = regexp.MustCompile(`!\[(.*)\]\((.*\.(png|jpg|jpeg|gif|svg))\)\{: (.*)\}`)
 var AttributesRe = regexp.MustCompile(`(\w+)="([^\"]+)"`)
 var CalloutRe = regexp.MustCompile(`<div class="presidium-([\w\-]+)">\s*(<span>(.*)<\/span>)?\s*(.*)\s*<\/div>`)
-var TooltipRe = regexp.MustCompile(`\[([^(.]*)]\((#|({{% baseurl %}}(\W.+)?))\s*'presidium-tooltip'\)`)
+var TooltipRe = regexp.MustCompile(`(?m)\[([^(.]*)]\(#\s*'presidium-tooltip'\)`)
 var FrontmatterRe = regexp.MustCompile(`([^:.]*)\s*:\s*(.*)\n?`)
 var IfVariablesRe = regexp.MustCompile(`(?msU){% if ([^}]*?) %}(.+)({% elsif ([^}]*?) %}(.+))?({% else %}(.+))?{% endif %}`)
 var IfConditionRe = regexp.MustCompile(`(?ms)(and|or)?\s??site.(\w+) ([!=]=) "(\w+)"`)
