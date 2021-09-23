@@ -1,7 +1,8 @@
 .idea/
 .vscode/
 public/
-
+node_modules/
+main
 presidium-hugo
 presidium
 dist/
