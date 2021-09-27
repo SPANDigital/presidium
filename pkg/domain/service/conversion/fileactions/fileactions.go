@@ -2,15 +2,16 @@ package fileactions
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
-	"github.com/spf13/viper"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
+	"github.com/spf13/viper"
 )
 
 var idxRenameList []string
@@ -114,6 +115,8 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 	weight, err := strconv.ParseInt(strings.ReplaceAll(matches[2], ".", ""), 10, 64)
 	if err != nil {
 		weight = -1
+	} else {
+		weight = weight + 1
 	}
 	var slug = matches[3]
 	var url string
