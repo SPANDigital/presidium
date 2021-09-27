@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/searchmap"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/searchmapvalidation"
 	"github.com/spf13/cobra"
 	"log"
 	"os"
@@ -34,21 +34,19 @@ var (
 				log.Fatal(err)
 			}
 
-			validation, err := searchmap.New(projectDir)
+			s := searchmapvalidation.New()
+
+			undeclaredFiles, err := s.FindUndeclaredFiles(projectDir)
+
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			err = validation.Run()
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			if validation.Failed() {
+			if undeclaredFiles.Found {
 				println("[ERROR]")
 				println("The following markdown files are not included in the searchmap.json file:")
 				println("-------------------------------------------------------------------------")
-				for _, missingMarkdownFile := range validation.MissingMarkdownFiles {
+				for _, missingMarkdownFile := range undeclaredFiles.Files {
 					println(missingMarkdownFile)
 				}
 				if doNotExitWithError {
