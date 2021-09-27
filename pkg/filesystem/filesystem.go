@@ -4,12 +4,22 @@ import (
 	"errors"
 	"fmt"
 	"github.com/otiai10/copy"
+	"github.com/spf13/afero"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
 )
+
+var (
+	FS afero.Fs
+	FSUtil *afero.Afero
+)
+
+func init() {
+	FS = afero.NewOsFs()
+	FSUtil = &afero.Afero{Fs: FS}
+}
 
 type FileSystem interface {
 	Copy(src, dest string, mode fs.FileMode) error
@@ -57,11 +67,11 @@ func (f fileSystem) RequireRegularFile(path string) error {
 }
 
 func (f fileSystem) DeleteDir(dir string) error {
-	return os.RemoveAll(dir)
+	return FS.RemoveAll(dir)
 }
 
 func (f fileSystem) DirExists(dir string) bool {
-	info, err := os.Stat(dir)
+	info, err := FS.Stat(dir)
 	if err == nil {
 		return info.IsDir()
 	}
@@ -86,17 +96,17 @@ func (f fileSystem) AbsolutePath(path string) (string, error) {
 }
 
 func (f fileSystem) MakeDirs(path string) error {
-	return os.MkdirAll(path, os.ModePerm)
+	return FS.MkdirAll(path, os.ModePerm)
 }
 
 func (f fileSystem) Rename(old string, new string) error {
-	return os.Rename(old, new)
+	return FS.Rename(old, new)
 }
 
 // EmptyDir removes all content leaving an empty directory
 func (f fileSystem) EmptyDir(dir string) error {
 
-	info, err := os.Stat(dir)
+	info, err := FS.Stat(dir)
 	if err != nil {
 		return err
 	}
@@ -105,7 +115,7 @@ func (f fileSystem) EmptyDir(dir string) error {
 		return errors.New(fmt.Sprintf("path is not a directory: %s", dir))
 	}
 
-	parentDirs, err := os.Open(dir)
+	parentDirs, err := FS.Open(dir)
 	if err != nil {
 		return err
 	}
@@ -117,7 +127,7 @@ func (f fileSystem) EmptyDir(dir string) error {
 	}
 
 	for _, name := range dirNames {
-		if err = os.RemoveAll(filepath.Join(dir, name)); err != nil {
+		if err = FS.RemoveAll(filepath.Join(dir, name)); err != nil {
 			return err
 		}
 	}
@@ -130,21 +140,24 @@ func New() FileSystem {
 }
 
 func (f fileSystem) Copy(src, dest string, mode fs.FileMode) error {
-	input, err := ioutil.ReadFile(src)
+	input, err := FSUtil.ReadFile(src)
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(dest, input, mode)
+	return FSUtil.WriteFile(dest, input, mode)
 }
 
 func (f fileSystem) CopyDir(src, dest string) error {
 	// Create dest directory
-	err := os.MkdirAll(dest, fs.ModePerm)
+	err := FS.MkdirAll(dest, fs.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	return filepath.WalkDir(src, func(path string, d fs.DirEntry, err error) error {
+	return FSUtil.Walk(src, func(path string, info fs.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 		relPath := strings.TrimPrefix(path, src)
 		relPath = strings.TrimPrefix(relPath, "/")
 		relPath = filepath.Join(dest, relPath)
@@ -152,8 +165,8 @@ func (f fileSystem) CopyDir(src, dest string) error {
 			return nil
 		}
 
-		if d.IsDir() {
-			err := os.MkdirAll(relPath, fs.ModePerm)
+		if info.IsDir() {
+			err := FS.MkdirAll(relPath, fs.ModePerm)
 			if err != nil {
 				return err
 			}

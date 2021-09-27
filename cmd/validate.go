@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/validation"
+	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/validate"
 	"github.com/spf13/cobra"
 )
 
@@ -10,9 +11,10 @@ var (
 	validateCommand = &cobra.Command{
 		Use:   "validate",
 		Short: "Validates page links in a Presidium site",
+		Args: cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			path := args[0]
-			report, err := validation.New(path).Validate()
+			report, err := validate.New(path).Validate()
 			if err != nil {
 				fmt.Printf("error validating : %s\n", path)
 				fmt.Printf("%v\n", err.Error())
@@ -29,14 +31,14 @@ var (
 			fmt.Printf("     warnings: %v\n", report.Warning)
 			fmt.Printf("\n")
 
-			printLinks(report, validation.Broken)
-			printLinks(report, validation.Warning)
-			printLinks(report, validation.External)
+			printLinks(report, model.Broken)
+			printLinks(report, model.Warning)
+			printLinks(report, model.External)
 		},
 	}
 )
 
-func printLinks(report validation.Report, status validation.Status) {
+func printLinks(report model.Report, status model.Status) {
 
 	links, found := report.Data[status]
 

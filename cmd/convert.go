@@ -17,7 +17,6 @@ import (
 var convertCmd = &cobra.Command{
 	Use:   "convert",
 	Short: "Convert Jekyll to Hugo content",
-	Long:  `Convert Jekyll to Hugo content`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		c := conversion.New()
@@ -78,7 +77,10 @@ func init() {
 	pflags.BoolVarP(&config.Flags.ReplaceComments, "replaceComments", "", conversion.Defaults.ReplaceComments, "Replace {% comment %}...{% endcomment %} with HTML comments")
 	pflags.BoolVarP(&config.Flags.CopyMediaToStatic, "copyMediaToStatic", "C", conversion.Defaults.CopyMediaToStatic, "Copy Jekyll media to Hugo static folder")
 	pflags.BoolVarP(&config.Flags.ConvertConfigYml, "convertConfigYml", "y", conversion.Defaults.ConvertJekyllConfig, "Convert jekyll _config.yml to hugo config.yml")
-	viper.BindPFlags(pflags)
+	err = viper.BindPFlags(pflags)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	colors.Setup()
 	markdown.SetupExcludes()
