@@ -116,7 +116,7 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 	if err != nil {
 		weight = -1
 	} else {
-		weight = weight + 1
+		weight += 1
 	}
 	var slug = matches[3]
 	var url string
