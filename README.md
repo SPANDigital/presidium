@@ -2,8 +2,6 @@
 
 ## Quickstart
 
-###$ installation of hugo
-
 ### Prerequisites
 Install [homebrew](https://brew.sh/) if you don't have it already.
 
