@@ -309,7 +309,7 @@ func (c *Converter) performFileActions() {
 	}
 
 	c.messageUser(infoMessage("unslugify remaining directories and articles"))
-	if err := fileactions.UnslugifyContent(c.stagingContentDir); err != nil {
+	if err := fileactions.RemoveWeightIndicatorsFromFilePaths(c.stagingContentDir); err != nil {
 		log.Fatal(err)
 	}
 

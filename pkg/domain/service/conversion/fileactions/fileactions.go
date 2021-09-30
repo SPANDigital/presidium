@@ -14,6 +14,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var reNamedWeight = regexp.MustCompile(`^[\d\-.]+`)
+
 func fileExists(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return false
@@ -196,24 +198,58 @@ func addIndex(stagingDir, path string) error {
 	return nil
 }
 
-func UnslugifyContent(stagingContentDir string) error {
-	//
-	//var lastUnslugfiedPath string
-	//var re = regexp.MustCompile(`\d*\.*\d*-*`)
-	//
-	//
-	//filepath.WalkDir(stagingContentDir, func(path string, d fs.DirEntry, err error) error {
-	//
-	//
-	//
-	//
-	//})
+func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
+	return removeWeightIndicatorsFromFilePaths(stagingContentDir, "/")
+}
 
+func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 
+	parentDir, name := filepath.Split(dir)
+
+	if strings.HasPrefix(name, ".") {
+		return nil
+	}
+
+	nameIsWeighted := dir != "/" && reNamedWeight.FindStringSubmatch(name) != nil
+
+	if nameIsWeighted {
+		newName := reNamedWeight.ReplaceAllStringFunc(name, func(s string) string { return "" })
+		newPath := filepath.Join(contentDir, parentDir, newName)
+		oldPath := filepath.Join(contentDir, dir)
+		if err := os.Rename(oldPath, newPath); err != nil {
+			return err
+		}
+		fmt.Println("Removed weight from ", colors.Labels.Unwanted(name), " -> ", colors.Labels.Wanted(filepath.Join(dir, newName)))
+		dir = filepath.Join(parentDir, newName)
+	}
+
+	path := filepath.Join(contentDir, dir)
+	info, err := os.Stat(path)
+
+	if err != nil {
+		return err
+	}
+
+	if !info.IsDir() {
+		return nil
+	}
+
+	entries, _ := os.ReadDir(path)
+
+	if entries == nil || len(entries) == 0 {
+		return nil
+	}
+
+	for _, entry := range entries {
+		local := filepath.Join(dir, entry.Name())
+		err := removeWeightIndicatorsFromFilePaths(contentDir, local)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
-
 
 // unSlugify turns "something-like_this" into "Something Like This"
 func unSlugify(name string) string {
