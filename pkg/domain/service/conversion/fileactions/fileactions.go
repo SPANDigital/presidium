@@ -131,11 +131,9 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 			url = slug
 		}
 		replaceRoot := viper.GetString("replaceRoot")
-		if strings.HasPrefix(replaceRoot, replaceRoot) {
-			url = strings.TrimPrefix(url, replaceRoot)
-			if url == "" {
-				url = "/"
-			}
+		url = strings.TrimPrefix(url, replaceRoot)
+		if url == "" {
+			url = "/"
 		}
 	}
 
