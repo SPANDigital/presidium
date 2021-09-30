@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	FS afero.Fs
+	FS     afero.Fs
 	FSUtil *afero.Afero
 )
 

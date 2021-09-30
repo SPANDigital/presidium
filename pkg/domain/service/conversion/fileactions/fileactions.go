@@ -14,8 +14,6 @@ import (
 	"github.com/spf13/viper"
 )
 
-var idxRenameList []string
-
 func fileExists(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		return false
@@ -43,6 +41,9 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 }
 
 func CheckForDirIndex(stagingDir, path string) error {
+
+	var idxRenameList = make([]string, 0)
+
 	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if info.IsDir() {
@@ -194,6 +195,25 @@ func addIndex(stagingDir, path string) error {
 	}
 	return nil
 }
+
+func UnslugifyContent(stagingContentDir string) error {
+	//
+	//var lastUnslugfiedPath string
+	//var re = regexp.MustCompile(`\d*\.*\d*-*`)
+	//
+	//
+	//filepath.WalkDir(stagingContentDir, func(path string, d fs.DirEntry, err error) error {
+	//
+	//
+	//
+	//
+	//})
+
+
+
+	return nil
+}
+
 
 // unSlugify turns "something-like_this" into "Something Like This"
 func unSlugify(name string) string {

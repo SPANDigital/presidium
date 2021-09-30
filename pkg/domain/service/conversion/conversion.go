@@ -308,6 +308,11 @@ func (c *Converter) performFileActions() {
 		log.Fatal(err)
 	}
 
+	c.messageUser(infoMessage("unslugify remaining directories and articles"))
+	if err := fileactions.UnslugifyContent(c.stagingContentDir); err != nil {
+		log.Fatal(err)
+	}
+
 	c.messageUser(infoMessage("preparing to copy content over"))
 	if err := c.fs.MakeDirs(c.destinationContentDir); err != nil {
 		log.Fatal(err)
