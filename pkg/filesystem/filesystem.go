@@ -32,9 +32,38 @@ type FileSystem interface {
 	GetWorkingDir() (string, error)
 	DirExists(dir string) bool
 	DeleteDir(dir string) error
+	RequireRegularFile(path string) error // TODO: need to add unit test for this
+	RequireDir(dir string) error          // TODO: need to add unit test for this
 }
 
-type fileSystem struct {
+type fileSystem struct{}
+
+func (f fileSystem) RequireDir(dir string) error {
+
+	info, err := os.Stat(dir)
+	if err != nil {
+		return err
+	}
+
+	if !info.Mode().IsDir() {
+		return fmt.Errorf("expected directory here: %s", dir)
+	}
+
+	return nil
+}
+
+func (f fileSystem) RequireRegularFile(path string) error {
+
+	info, err := os.Stat(path)
+	if err != nil {
+		return err
+	}
+
+	if !info.Mode().IsRegular() {
+		return fmt.Errorf("expected regular file here: %s", path)
+	}
+
+	return nil
 }
 
 func (f fileSystem) DeleteDir(dir string) error {
