@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	FS afero.Fs
+	FS     afero.Fs
 	FSUtil *afero.Afero
 )
 
@@ -28,7 +28,7 @@ type FileSystem interface {
 	EmptyDir(path string) error
 	Rename(old string, new string) error
 	MakeDirs(path string) error
-	AbsolutePath(path string) (string, error) // TODO: Need to add unit test for this
+	AbsolutePath(path string) (string, error)
 	GetWorkingDir() (string, error)
 	DirExists(dir string) bool
 	DeleteDir(dir string) error
