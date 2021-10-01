@@ -14,7 +14,7 @@ import (
 	"github.com/spf13/viper"
 )
 
-var idxRenameList []string
+var reNamedWeight = regexp.MustCompile(`^[\d\-.]+`)
 
 func fileExists(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -43,6 +43,9 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 }
 
 func CheckForDirIndex(stagingDir, path string) error {
+
+	var idxRenameList = make([]string, 0)
+
 	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if info.IsDir() {
@@ -190,6 +193,59 @@ func addIndex(stagingDir, path string) error {
 
 		return markdown.AddFrontMatter(filepath.Join(path, "_index.md"), m)
 	}
+	return nil
+}
+
+func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
+	return removeWeightIndicatorsFromFilePaths(stagingContentDir, "/")
+}
+
+func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
+
+	parentDir, name := filepath.Split(dir)
+
+	if strings.HasPrefix(name, ".") {
+		return nil
+	}
+
+	nameIsWeighted := dir != "/" && reNamedWeight.FindStringSubmatch(name) != nil
+
+	if nameIsWeighted {
+		newName := reNamedWeight.ReplaceAllStringFunc(name, func(s string) string { return "" })
+		newPath := filepath.Join(contentDir, parentDir, newName)
+		oldPath := filepath.Join(contentDir, dir)
+		if err := os.Rename(oldPath, newPath); err != nil {
+			return err
+		}
+		fmt.Println("Removed weight from ", colors.Labels.Unwanted(name), " -> ", colors.Labels.Wanted(filepath.Join(dir, newName)))
+		dir = filepath.Join(parentDir, newName)
+	}
+
+	path := filepath.Join(contentDir, dir)
+	info, err := os.Stat(path)
+
+	if err != nil {
+		return err
+	}
+
+	if !info.IsDir() {
+		return nil
+	}
+
+	entries, _ := os.ReadDir(path)
+
+	if entries == nil || len(entries) == 0 {
+		return nil
+	}
+
+	for _, entry := range entries {
+		local := filepath.Join(dir, entry.Name())
+		err := removeWeightIndicatorsFromFilePaths(contentDir, local)
+		if err != nil {
+			return err
+		}
+	}
+
 	return nil
 }
 
