@@ -24,6 +24,7 @@ type flags struct {
 	ConvertConfigYml           bool
 	ReplaceBaseUrlWithSpaces   bool
 	ReplaceComments            bool
+	LogoPrefix				   string
 }
 
 var Flags flags
