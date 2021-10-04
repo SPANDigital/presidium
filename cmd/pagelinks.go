@@ -8,10 +8,10 @@ import (
 )
 
 var (
-	validateCommand = &cobra.Command{
-		Use:   "validate",
+	pageLinksCommand = &cobra.Command{
+		Use:   "pagelinks",
 		Short: "Validates page links in a Presidium site",
-		Args: cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			path := args[0]
 			report, err := validate.New(path).Validate()
@@ -56,8 +56,4 @@ func printLinks(report model.Report, status model.Status) {
 		}
 		fmt.Printf("%s: %s [%s]%s\n", status, link.Uri, link.Label, message)
 	}
-}
-
-func init() {
-	rootCmd.AddCommand(validateCommand)
 }
