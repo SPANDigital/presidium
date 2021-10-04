@@ -12,4 +12,5 @@ var (
 func init() {
 	rootCmd.AddCommand(reportCommand)
 	reportCommand.AddCommand(pageLinksCommand)
+	reportCommand.AddCommand(searchMapCommand)
 }

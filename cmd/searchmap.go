@@ -16,11 +16,11 @@ const (
 )
 
 var (
-	failureExitCode          = 3
-	doNotExitWithError       = false
-	validateSearchMapCommand = &cobra.Command{
-		Use:   "validate-searchmap",
-		Short: "Validates the searchmap.json file in presidium site.",
+	failureExitCode    = 3
+	doNotExitWithError = false
+	searchMapCommand   = &cobra.Command{
+		Use:   "searchmap",
+		Short: "Validates the searchmap.json file in a presidium site.",
 		Long:  "Ensures the `searchmap.json` file references all valid pages.",
 		Run: func(cmd *cobra.Command, args []string) {
 
@@ -61,7 +61,6 @@ var (
 )
 
 func init() {
-	validateSearchMapCommand.Flags().IntVar(&failureExitCode, flagFailureExitCode, failureExitCode, usageFailureExitCode)
-	validateSearchMapCommand.Flags().BoolVar(&doNotExitWithError, flagDoNotExitWithErrorCode, doNotExitWithError, usageDoNotExitErrorWithCode)
-	rootCmd.AddCommand(validateSearchMapCommand)
+	searchMapCommand.Flags().IntVar(&failureExitCode, flagFailureExitCode, failureExitCode, usageFailureExitCode)
+	searchMapCommand.Flags().BoolVar(&doNotExitWithError, flagDoNotExitWithErrorCode, doNotExitWithError, usageDoNotExitErrorWithCode)
 }
