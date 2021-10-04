@@ -5,7 +5,6 @@ import "regexp"
 // This regex with capture groups can break a markdown file into it's
 // front matter and content sections
 var MarkdownRe = regexp.MustCompile(`^(?s:(---\n)(.*)(---\n)(.*))$`)
-
 // These regexes with capture groups are to assist in manipulating markdown content
 var ImgWithBaseUrlRe = regexp.MustCompile(`\(\{\{\s?site.baseurl\s?\}\}/(.*\.(png|jpg|jpeg|gif|svg))\)`)
 var ImgWithAttributesRe = regexp.MustCompile(`!\[(.*)\]\((.*\.(png|jpg|jpeg|gif|svg))\)\{: (.*)\}`)

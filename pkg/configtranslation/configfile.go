@@ -1,8 +1,11 @@
 package configtranslation
 
 import (
+	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
+	"regexp"
 )
 
 type JekyllShow struct {
@@ -116,7 +119,22 @@ func WriteHugoConfig(path string, config *HugoConfig) error {
 	return ioutil.WriteFile(path, b, 0755)
 }
 
-func ConvertConfig(config *JekyllConfig, additionalParams map[string]interface{}) *HugoConfig {
+// LogoImgRe This regex for grabbing the logo file name from the config file
+var LogoImgRe = regexp.MustCompile(`(?m).*\/(.*\.(?:png|jpg|jpeg|gif|svg))$`)
+
+func convertLogoPath(logoPrefix string, logoPath string) string {
+	strings := LogoImgRe.FindStringSubmatch(logoPath)
+	if strings == nil || len(strings) != 2 {
+		fmt.Println("Searching", colors.Labels.Warning(logoPath), "for", colors.Labels.Wanted("Logo"), colors.Labels.Warning("unsuccessful"))
+		return ""
+	}
+	logo := strings[1]
+	fmt.Println("Found logo", colors.Labels.Normal(logo), "in", colors.Labels.Info(logoPath))
+	// Don't want to hardcode the file prefix, but don't know where to put it
+	return fmt.Sprintf("%s%s", logoPrefix, logo)
+}
+
+func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map[string]interface{}) *HugoConfig {
 
 	mainMenu := []HugoMenuItem{}
 	for idx, item := range config.Sections {
@@ -174,7 +192,7 @@ func ConvertConfig(config *JekyllConfig, additionalParams map[string]interface{}
 	hugoConfig.Params["audience"] = config.Audience
 	hugoConfig.Params["scope"] = config.Scope
 	hugoConfig.Params["appleScope"] = config.AppleScope
-	hugoConfig.Params["logo"] = config.Logo
+	hugoConfig.Params["logo"] = convertLogoPath(logoPrefix, config.Logo)
 	hugoConfig.Copyright = config.Footer
 	hugoConfig.Params["show"] = config.Show
 	hugoConfig.Params["roles"] = config.Roles

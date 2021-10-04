@@ -71,6 +71,7 @@ func init() {
 	pflags.BoolVarP(&config.Flags.EraseMarkdownWithNoContent, "eraseMarkdownWithNoContent", "e", conversion.Defaults.EraseMarkdownWithNoContent, "Erase markdown files with no content")
 	pflags.BoolVarP(&config.Flags.RemoveRawTags, "removeRawTags", "R", conversion.Defaults.RemoveRawTags, "Remove {% raw %} tags")
 	pflags.StringVarP(&config.Flags.ReplaceRoot, "replaceRoot", "p", conversion.Defaults.ReplaceRootWith, "Replace this path with root")
+	pflags.StringVarP(&config.Flags.LogoPrefix, "logoPrefix", "l", conversion.Defaults.LogoPrefix, "Use this as the prefix to locate logo")
 	pflags.BoolVarP(&config.Flags.ReplaceCallOuts, "replaceCallOuts", "o", conversion.Defaults.ReplaceCallOuts, "Replace callout HTML with callout shortcodes")
 	pflags.BoolVarP(&config.Flags.ReplaceTooltips, "replaceTooltips", "T", conversion.Defaults.ReplaceToolTips, "Replace tooltip HTML with callout shortcodes")
 	pflags.BoolVarP(&config.Flags.ReplaceIfVariables, "replaceIfVariables", "V", conversion.Defaults.ReplaceIfVariables, "Replace {% if site.variable =} with with-param shortcodes")

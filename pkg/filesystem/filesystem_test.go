@@ -2,18 +2,19 @@ package filesystem
 
 import (
 	"fmt"
-	. "github.com/onsi/ginkgo"
-	. "github.com/onsi/gomega"
-	"github.com/spf13/afero"
 	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
+
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
+	"github.com/spf13/afero"
 )
 
 func init() {
 	FS = afero.NewMemMapFs()
-	FSUtil = &afero.Afero{Fs:FS}
+	FSUtil = &afero.Afero{Fs: FS}
 }
 
 var (
@@ -147,4 +148,29 @@ var _ = Describe("Filesystem", func() {
 			})
 		})
 	})
+	Describe("Resolving absolute path", func() {
+		Context("Wen calling AbsolutePath()", func() {
+			It("should remove all relative path place holders and replace it with the actual path", func() {
+				relativePath := "./jellyBabyOhBaby"
+				absolutePath, err := filesystem.AbsolutePath(relativePath)
+				Expect(err).NotTo(HaveOccurred())
+				Expect(absolutePath).NotTo(ContainSubstring("."))
+			})
+		})
+	})
+	Describe("Working with current working dir", func() {
+		var workingDir string
+		BeforeEach(func() {
+			var err error
+			workingDir, err = os.Getwd()
+			Expect(err).ShouldNot(HaveOccurred())
+		})
+		It("GetWorkingDir() should return the correct working dir", func() {
+			actualWorkingDir, err := filesystem.GetWorkingDir()
+			Expect(err).ShouldNot(HaveOccurred())
+			Expect(actualWorkingDir).Should(Equal(workingDir))
+		})
+	})
 })
+
+

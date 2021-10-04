@@ -20,6 +20,11 @@ type Report struct {
 	TotalLinks int // The total number of links processed
 }
 
+type FilesReport struct {
+	Files []string // A list files found during validation
+	Found bool     // Check to see if we found any files to report
+}
+
 type Status string
 
 const (

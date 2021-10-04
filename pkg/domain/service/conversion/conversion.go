@@ -34,6 +34,8 @@ type Converter struct {
 	EraseMarkdownWithNoContent       bool
 	FixImages                        bool
 	FixImageAttributesWithShortCodes bool
+	// logo prefix different from other paths
+	LogoPrefix                       string
 	RemoveRawTags                    bool
 	RemoveTargetBlank                bool
 	ReplaceBaseUrl                   bool
@@ -238,6 +240,7 @@ func New() *Converter {
 		EraseMarkdownWithNoContent:       true,
 		FixImages:                        true,
 		FixImageAttributesWithShortCodes: true,
+		LogoPrefix:                       "/images/",
 		RemoveRawTags:                    true,
 		RemoveTargetBlank:                true,
 		ReplaceBaseUrl:                   true,
@@ -308,6 +311,11 @@ func (c *Converter) performFileActions() {
 		log.Fatal(err)
 	}
 
+	c.messageUser(infoMessage("unslugify remaining directories and articles"))
+	if err := fileactions.RemoveWeightIndicatorsFromFilePaths(c.stagingContentDir); err != nil {
+		log.Fatal(err)
+	}
+
 	c.messageUser(infoMessage("preparing to copy content over"))
 	if err := c.fs.MakeDirs(c.destinationContentDir); err != nil {
 		log.Fatal(err)
@@ -341,7 +349,7 @@ func (c *Converter) convertConfig() {
 	}
 
 	jekylConfig, _ := configtranslation.ReadJekyllConfig(c.sourceRepoConfigYmlFile)
-	hugoConfig := configtranslation.ConvertConfig(jekylConfig, map[string]interface{}{})
+	hugoConfig := configtranslation.ConvertConfig(jekylConfig, viper.GetString("logoPrefix"), map[string]interface{}{})
 	err := configtranslation.WriteHugoConfig(c.destinationConfigYmlFile, hugoConfig)
 	if err != nil {
 		log.Fatal(err)
