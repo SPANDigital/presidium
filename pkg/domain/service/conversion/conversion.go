@@ -34,7 +34,6 @@ type Converter struct {
 	EraseMarkdownWithNoContent       bool
 	FixImages                        bool
 	FixImageAttributesWithShortCodes bool
-	// logo prefix different from other paths
 	LogoPrefix                       string
 	RemoveRawTags                    bool
 	RemoveTargetBlank                bool

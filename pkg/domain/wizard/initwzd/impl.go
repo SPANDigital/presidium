@@ -2,7 +2,6 @@ package initwzd
 
 import (
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/wizard"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
@@ -46,12 +45,13 @@ func (i initWizard) Run() {
 		log.Error(err)
 		return
 	}
-	g := generator.New()
+	/*g := generator.New()
 	err = g.Generate()
 	if err != nil {
 		log.Error(err)
 		return
-	}
+	}*/
+
 }
 
 func getTitle() error {
