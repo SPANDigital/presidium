@@ -8,7 +8,7 @@ import (
 
 func TestGenerator(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Generator Test Suite")
+	RunSpecs(t, "SiteGenerator Test Suite")
 }
 
 var _ = Describe("Site generation", func() {

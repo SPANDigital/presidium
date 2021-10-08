@@ -16,7 +16,7 @@ type gen struct {
 }
 
 func (g *gen) Run(target model.InitialSiteTarget) error {
-	if err := g.prepare(target); err != nil {
+	if err := g.prepareSiteTarget(target); err != nil {
 		return err
 	}
 	return g.processTemplates(target)
@@ -34,14 +34,14 @@ func (g *gen) processTemplates(target model.InitialSiteTarget) error {
 
 	return g.ProcessDirTemplates(target.Template.Code(), target.SiteTargetDirectory, model.TemplateParameters{
 		Title:       or(target.SiteTitle, target.SiteName),
-		ProjectName: target.SiteName,
+		ProjectName: target.SiteTargetDirectory,
 		Theme:       target.Theme.ModulePath(),
 		Template:    target.Template.Code(),
 		Brand:       target.BrandingModelUrl,
 	})
 }
 
-func (g gen) prepare(target model.InitialSiteTarget) error {
+func (g gen) prepareSiteTarget(target model.InitialSiteTarget) error {
 
 	dirExists := g.DirExists(target.SiteTargetDirectory)
 
@@ -60,14 +60,15 @@ func (g gen) prepare(target model.InitialSiteTarget) error {
 		}
 	}
 
-	if err := g.MakeDirs(filepath.Join("static")); err != nil {
+	staticAssetsFolder := filepath.Join(target.SiteTargetDirectory, "static")
+	if err := g.MakeDirs(staticAssetsFolder); err != nil {
 		return err
 	}
 
 	return nil
 }
 
-func New() generator.Generator {
+func New() generator.SiteGenerator {
 	return &gen{
 		FileSystem: filesystem.New(),
 		Service:    template.New(),

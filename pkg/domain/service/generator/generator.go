@@ -4,6 +4,7 @@ import (
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 )
 
-type Generator interface {
+// SiteGenerator generates presidium site based on a specific initial site model
+type SiteGenerator interface {
 	Run(target model.InitialSiteTarget) error
 }

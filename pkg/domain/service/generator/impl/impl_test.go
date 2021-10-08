@@ -2,6 +2,7 @@ package impl
 
 import (
 	"fmt"
+	"fs"
 	"github.com/Masterminds/goutils"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/generator"
@@ -17,7 +18,7 @@ import (
 
 func TestGeneratorImpl(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Default Site Generator Suite")
+	RunSpecs(t, "Default Site SiteGenerator Suite")
 }
 
 var (
@@ -28,7 +29,7 @@ var _ = Describe("Site Generation:", func() {
 
 	var workDir string
 	var target model.InitialSiteTarget
-	var g generator.Generator
+	var g generator.SiteGenerator
 
 	BeforeSuite(func() {
 		if tempDir, err := ioutil.TempDir("", "presidium-site-generator-test-*"); err != nil {
@@ -103,10 +104,20 @@ var _ = Describe("Site Generation:", func() {
 		})
 
 		It("template should have been applied to the site", func() {
+
 		})
 	})
 
 })
+
+func listSiteGenerated(target model.InitialSiteTarget) []string {
+	listing := make([]string, 0)
+	err := filepath.WalkDir(target.SiteTargetDirectory, func(path string, d fs.DirEntry, err error) error {
+		return nil
+	})
+	Expect(err).ShouldNot(HaveOccurred())
+	return listing
+}
 
 func findExisting(tree []string, parent string) []string {
 	found := make([]string, 0)
@@ -146,8 +157,7 @@ func makeFile(path string) string {
 	makeDir(dir)
 	file, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0755)
 	Expect(err).ShouldNot(HaveOccurred())
-	_, err = file.WriteString("dummy text!")
-	file.Close()
-	Expect(err).ShouldNot(HaveOccurred())
+	_, _ = file.WriteString("dummy text!")
+	_ = file.Close()
 	return path
 }

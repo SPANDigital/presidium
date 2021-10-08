@@ -48,6 +48,7 @@ type InitialSiteTarget struct {
 	WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
 }
 
+// TemplateParameters are fields which gets injected into the template to generate the final skeleton site
 type TemplateParameters struct {
 	Title       string `json:"title"`
 	ProjectName string `json:"project_name"`
