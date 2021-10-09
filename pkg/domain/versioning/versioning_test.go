@@ -1,67 +1,113 @@
 package versioning
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/suite"
+	. "github.com/onsi/ginkgo"
+	. "github.com/onsi/gomega"
 	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
-type VersioningTestSuite struct {
-	suite.Suite
-	versioning  Versioning
-	projectPath string
-	fs          filesystem.FileSystem
+func TestVersioning(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Versioning")
 }
 
-func TestRunVersioningTestSuite(t *testing.T) {
-	suite.Run(t, new(VersioningTestSuite))
+var _ = Describe("project", func() {
+
+	var project string
+
+	BeforeSuite(func() {
+		var localSite = []string{
+			"about.md",
+			"best-practice/article.md",
+		}
+		project = mustMakeWorkDir()
+		mustMakeTree(project,
+			localSite)
+		listContent(project)
+	})
+
+	AfterSuite(func() { _ = os.RemoveAll(project) })
+
+	Describe("after enabling versioning", func() {
+
+		var v Versioning
+
+		BeforeEach(func() {
+			v = New(project)
+			v.SetEnabled(true)
+			Expect(v.IsEnabled()).Should(BeTrue())
+		})
+
+		When("calling NextVersion()", func() {
+			It("should increase the version number by one", func() {
+				versionBefore := v.GetLatestVersionNo()
+				v.NextVersion()
+				versionAfter := v.GetLatestVersionNo()
+				Expect(versionAfter).Should(Equal(versionBefore + 1))
+			})
+		})
+	})
+
+})
+
+func mustMakeWorkDir() string {
+	workDir, err := ioutil.TempDir("", "versioning-test-dir-*")
+	Expect(err).ShouldNot(HaveOccurred())
+	return workDir
 }
 
-func (s *VersioningTestSuite) SetupSuite() {
-
-	s.projectPath = filepath.Join(os.TempDir(), "versioning_test")
-
-	fileSystem := filesystem.New()
-	_ = fileSystem.MakeDirs(filepath.Join(s.projectPath, "content"))
-
-	s.fs = fileSystem
-	s.createContent("about.md", "# About")
-	s.createContent("article.md", "# Best Practices")
-	s.versioning = New(s.projectPath)
-
-	_ = filepath.Walk(s.projectPath, func(path string, info fs.FileInfo, err error) error {
+func listContent(path string) {
+	println("Project")
+	println("-------")
+	listContentErr := filepath.WalkDir(path, func(path string, e fs.DirEntry, err error) error {
 		println(path)
 		return nil
 	})
+	Expect(listContentErr).ShouldNot(HaveOccurred())
 }
 
-func (s *VersioningTestSuite) TearDownSuite() {
-	_ = filesystem.New().EmptyDir(s.projectPath)
+func mustMakeTree(workDir string, template []string) []string {
+	tree := make([]string, 0)
+	for _, local := range template {
+		path := filepath.Join(workDir, local)
+		if strings.HasSuffix(local, "/") {
+			mustHaveDir(path)
+		} else {
+			mustMakeFile(path)
+		}
+		tree = append(tree, path)
+	}
+	return tree
 }
 
-func (s *VersioningTestSuite) createContent(file string, content string) {
-
-	fileName := filepath.Join(s.projectPath, "content", file)
-	_ = ioutil.WriteFile(fileName, []byte(content), 0777)
+func mustHaveDir(path string) {
+	dirInfo, dirInfoErr := os.Stat(path)
+	if dirInfoErr != nil {
+		if os.IsNotExist(dirInfoErr) {
+			makeDirErr := os.MkdirAll(path, os.ModePerm)
+			Expect(makeDirErr).ShouldNot(HaveOccurred())
+		} else {
+			Expect(dirInfoErr).ShouldNot(HaveOccurred())
+		}
+	} else {
+		Expect(dirInfo.IsDir()).Should(BeTrue())
+	}
 }
 
-func (s *VersioningTestSuite) TestVersioning_IsEnabled() {
-	assert.True(s.T(), s.versioning.IsEnabled())
+func mustHaveParentDir(filePath string) {
+	dir, _ := filepath.Split(filePath)
+	mustHaveDir(dir)
 }
 
-func (s *VersioningTestSuite) TestVersioning_NextVersion() {
-	assert.False(s.T(), s.versioning.IsActivated())
-	assert.Equal(s.T(), 0, s.versioning.GetLatestVersionNo())
-	s.versioning.NextVersion()
-	assert.True(s.T(), s.versioning.IsActivated())
-	assert.Equal(s.T(), 1, s.versioning.GetLatestVersionNo())
-
-	s.versioning.NextVersion()
-	assert.Equal(s.T(), 2, s.versioning.GetLatestVersionNo())
-
+func mustMakeFile(path string) {
+	mustHaveParentDir(path)
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	_, _ = file.WriteString("The resurrection of respecting creators is popular.")
+	file.Close()
+	Expect(err).ShouldNot(HaveOccurred())
 }
