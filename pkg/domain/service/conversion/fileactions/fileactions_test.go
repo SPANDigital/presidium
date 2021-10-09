@@ -1,7 +1,6 @@
 package fileactions
 
 import (
-	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -19,58 +18,8 @@ func TestFileActions(t *testing.T) {
 	RunSpecs(t, "FileActions Suite")
 }
 
-var _ = Describe("File actions", func() {
+var _ = Describe("Fileactions", func() {
 	colors.Setup()
-
-	Describe("generating titles from Jekyll slugged file names", func() {
-		It("should remove all under scores digits etc and produce final name in title case", func() {
-			expectations := []struct {
-				given  string
-				wanted string
-			}{
-				{
-					given:  "0.1.1-sales-exercises",
-					wanted: "Sales Exercises",
-				},
-				{
-					given:  "financial--activities",
-					wanted: "Financial Activities",
-				},
-			}
-
-			failures := make([]struct {
-				given  string
-				wanted string
-				actual string
-			}, 0)
-
-			for _, x := range expectations {
-				actual := unSlugify(x.given)
-				failed := actual != x.wanted
-
-				var status = "ok"
-				if failed {
-					status = "X"
-				}
-
-				fmt.Printf("given: %s | wanted: %s | failed: %v | actual: %s\n",
-					x.given,
-					x.wanted,
-					status,
-					actual)
-
-				if failed {
-					failures = append(failures, struct {
-						given  string
-						wanted string
-						actual string
-					}{given: x.given, wanted: x.wanted, actual: actual})
-				}
-			}
-			Expect(failures).Should(BeEmpty())
-		})
-	})
-
 	Describe("removing Jekyll weight indicators from file paths", func() {
 		var stagingContentDir string
 		var stagedContentFiles = []string{

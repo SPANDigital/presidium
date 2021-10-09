@@ -252,8 +252,8 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 // unSlugify turns "something-like_this" into "Something Like This"
 func unSlugify(name string) string {
 	re := regexp.MustCompile(`(([\d\.]+)\s)?(.+)?`)
-	reDividers := regexp.MustCompile(`[\-_]+`)
-	name = reDividers.ReplaceAllStringFunc(name, func(s string) string { return " " })
+	name = strings.Replace(name, "-", " ", -1)
+	name = strings.Replace(name, "_", " ", -1)
 	name = strings.Title(name)
 	matches := re.FindStringSubmatch(name)
 	if matches != nil {

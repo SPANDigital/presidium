@@ -3,7 +3,6 @@
 ## Quickstart
 
 ### Prerequisites
-
 Install [homebrew](https://brew.sh/) if you don't have it already.
 
 ### Issue appropriate command
@@ -34,16 +33,13 @@ export GOPRIVATE=github.com/SPANDigital
 ### Install / upgrade binary
 
 To install first time
-
-  ```shell
-  go install github.com/SPANDigital/presidium-hugo
-  ```
-
+```
+go install github.com/SPANDigital/presidium-hugo
+```
 To upgrade to latest version
-
-  ```shell
-  go get -u github.com/SPANDigital/presidium-hugo
-  ```
+```
+go get -u github.com/SPANDigital/presidium-hugo
+```
 
 ### Converting a Jekyll content directory
 
@@ -104,7 +100,7 @@ zip -r documentation.zip content static config.yml _vendor
 
 #### Convert usage
 
-```text
+```Convert Jekyll to Hugo content
 
    Usage:
      presidium-hugo convert [flags]
@@ -139,7 +135,6 @@ zip -r documentation.zip content static config.yml _vendor
 ### How to make changes to the templates (styling and html)
 
 After vendoring the site
-
 ```
 hugo mod vendor
 ```
