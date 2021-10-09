@@ -1,8 +1,8 @@
 package generator
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/wizard"
 	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
+	"path/filepath"
 )
 
 type (
@@ -27,25 +27,61 @@ const (
 )
 
 var (
-	SupportedTemplates = []wizard.Template{
-		wizard.SpanTemplate,
-		wizard.OnBoardingTemplate,
-		wizard.DesignTemplate,
+	SupportedTemplates = []Template{
+		SpanTemplate,
+		OnBoardingTemplate,
+		DesignTemplate,
 	}
-	SupportedThemes = []wizard.Theme{
-		wizard.PresidiumTheme,
+	SupportedThemes = []Theme{
+		PresidiumTheme,
 	}
 )
 
-// InitialSiteTarget models the requirement for an initial Presidium site
-type InitialSiteTarget struct {
-	SiteTargetDirectory string               // Where the site must be generator to
-	SiteName            string               // The name of the site
-	SiteTitle           string               // The title for the site
-	BrandingModelUrl    string               // The Hugo model used for branding
-	Theme               Theme                // Theme to use
-	Template            Template             // Template to use
-	WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
+type (
+	ItemSelection struct {
+		Name        string `json:"name"`
+		Description string `json:"description"`
+	}
+
+	// InitialSiteTarget models the requirement for an initial Presidium site
+	InitialSiteTarget struct {
+		SiteTargetDirectory string               // Where the site must be generator to
+		SiteName            string               // The name of the site
+		SiteTitle           string               // The title for the site
+		BrandingModelUrl    string               // The Hugo model used for branding
+		Theme               Theme                // Theme to use
+		Template            Template             // Template to use
+		WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
+	}
+)
+
+func (t *InitialSiteTarget) AssetsDir() string {
+	return filepath.Join(t.SiteTargetDirectory, "static")
+}
+
+func (t *InitialSiteTarget) ContentDir() string {
+	return filepath.Join(t.SiteTargetDirectory, "content")
+}
+
+func (t *InitialSiteTarget) GetTemplateParameters() TemplateParameters {
+
+	or := func(s1, s2 string) string {
+		if len(s1) > 0 {
+			return s1
+		} else {
+			return s2
+		}
+	}
+
+	_, projectName := filepath.Split(t.SiteTargetDirectory)
+
+	return TemplateParameters{
+		Title:       or(t.SiteTitle, t.SiteName),
+		ProjectName: projectName,
+		Theme:       t.Theme.ModulePath(),
+		Template:    t.Template.Code(),
+		Brand:       t.BrandingModelUrl,
+	}
 }
 
 // TemplateParameters are fields which gets injected into the template to generate the final skeleton site
@@ -105,8 +141,8 @@ func (t Theme) ModulePath() string {
 	}[t]
 }
 
-func GetTemplate(name string) (Template, error) {
-	switch name {
+func GetTemplate(code string) (Template, error) {
+	switch code {
 	case SpanTemplate.Code():
 		return SpanTemplate, nil
 	case OnBoardingTemplate.Code():
@@ -118,8 +154,8 @@ func GetTemplate(name string) (Template, error) {
 	}
 }
 
-func GetTheme(name string) (Theme, error) {
-	switch name {
+func GetTheme(code string) (Theme, error) {
+	switch code {
 	case PresidiumTheme.Code():
 		return PresidiumTheme, nil
 	default:

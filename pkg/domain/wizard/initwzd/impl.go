@@ -2,6 +2,8 @@ package initwzd
 
 import (
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	. "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/wizard"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
@@ -11,50 +13,82 @@ import (
 	"strings"
 )
 
-var (
-	supportedTemplates = []wizard.Template{
-		wizard.SpanTemplate,
-		wizard.OnBoardingTemplate,
-		wizard.DesignTemplate,
-	}
-	supportedThemes = []wizard.Theme{
-		wizard.PresidiumTheme,
-	}
+type (
+	initWizard struct{}
 )
-
-type initWizard struct {
-}
 
 func New() wizard.Wizard {
 	return &initWizard{}
 }
 
 func (i initWizard) Run() {
-	err := getProjectName()
+
+	err := askProjectName()
 	if err != nil {
 		return
 	}
-	err = getTitle()
+
+	err = askTitle()
 	if err != nil {
 		return
 	}
+
 	promptSupportedTemplates()
+
 	promptSupportedThemes()
-	err = getBrandRepo()
+
+	err = askBrandRepo()
 	if err != nil {
 		log.Error(err)
 		return
 	}
-	/*g := generator.New()
-	err = g.Generate()
+
+	g := generator.New()
+
+	siteModel := generateSiteModel()
+	err = g.Run(siteModel)
 	if err != nil {
 		log.Error(err)
-		return
-	}*/
+	}
 
 }
 
-func getTitle() error {
+func generateSiteModel() InitialSiteTarget {
+
+	mustHaveTheme := func() Theme {
+		themeName := viper.GetString(config.ThemeKey)
+		theme, err := GetTheme(themeName)
+		if err != nil {
+			log.FatalWithFields(err, log.Fields{
+				"theme_name": themeName,
+			})
+		}
+		return theme
+	}
+
+	mustHaveTemplate := func() Template {
+		templateName := viper.GetString(config.TemplateNameKey)
+		template, err := GetTemplate(templateName)
+		if err != nil {
+			log.FatalWithFields(err, log.Fields{
+				"template_name": templateName,
+			})
+		}
+		return template
+	}
+
+	return InitialSiteTarget{
+		SiteTargetDirectory: viper.GetString(config.ProjectNameKey),
+		SiteName:            viper.GetString(config.ProjectNameKey),
+		SiteTitle:           viper.GetString(config.TitleKey),
+		BrandingModelUrl:    viper.GetString(config.BrandKey),
+		Theme:               mustHaveTheme(),
+		Template:            mustHaveTemplate(),
+		WhenSiteExists:      AbortWhenTargetSiteExists,
+	}
+}
+
+func askTitle() error {
 	validate := func(input string) error {
 		if len(input) <= 0 {
 			return presidiumerr.GenericError{Code: presidiumerr.InvalidTitle}
@@ -69,7 +103,7 @@ func getTitle() error {
 	return nil
 }
 
-func getProjectName() error {
+func askProjectName() error {
 	validate := func(input string) error {
 		if len(input) <= 0 || strings.Contains(input, " ") {
 			return presidiumerr.GenericError{Code: presidiumerr.InvalidProjectName}
@@ -84,7 +118,7 @@ func getProjectName() error {
 	return nil
 }
 
-func getBrandRepo() error {
+func askBrandRepo() error {
 
 	isBrand, err := wizard.GetConfirmationFromUser("Do you want to add a brand?", false)
 	if err != nil {
@@ -106,9 +140,9 @@ func getBrandRepo() error {
 }
 
 func promptSupportedTemplates() {
-	items := make([]wizard.Item, 0)
-	for _, item := range supportedTemplates {
-		items = append(items, wizard.Item{
+	items := make([]ItemSelection, 0)
+	for _, item := range SupportedTemplates {
+		items = append(items, ItemSelection{
 			Name:        item.Name(),
 			Description: item.Description(),
 		})
@@ -123,14 +157,14 @@ func promptSupportedTemplates() {
 	if err != nil {
 		log.FatalWithFields("error selecting template", log.Fields{"error": err})
 	}
-	selected := supportedTemplates[idx]
+	selected := SupportedTemplates[idx]
 	viper.Set(config.TemplateNameKey, selected.Code())
 }
 
 func promptSupportedThemes() {
-	items := make([]wizard.Item, 0)
-	for _, item := range supportedThemes {
-		items = append(items, wizard.Item{
+	items := make([]ItemSelection, 0)
+	for _, item := range SupportedThemes {
+		items = append(items, ItemSelection{
 			Name:        item.Name(),
 			Description: item.Description(),
 		})
@@ -145,6 +179,6 @@ func promptSupportedThemes() {
 	if err != nil {
 		log.FatalWithFields("error selecting theme", log.Fields{"error": err})
 	}
-	selected := supportedThemes[idx]
+	selected := SupportedThemes[idx]
 	viper.Set(config.ThemeKey, selected.Code())
 }
