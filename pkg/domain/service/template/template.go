@@ -3,10 +3,9 @@ package template
 import (
 	"bytes"
 	"github.com/Masterminds/sprig"
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/gobuffalo/packd"
 	"github.com/gobuffalo/packr/v2"
-	"github.com/spf13/viper"
 	"os"
 	"path"
 	"path/filepath"
@@ -25,18 +24,27 @@ func New() Service {
 	}
 }
 
-func (s Service) ProcessDirTemplates(dir string, obj interface{}) error {
-	err := s.templates.WalkPrefix(dir, func(templateName string, file packd.File) error {
-		relativePath := strings.TrimPrefix(filepath.Dir(templateName), dir)
-		outputPath := path.Join(viper.GetString(config.ProjectNameKey), relativePath)
-		return s.ProcessTemplate(outputPath, templateName, obj)
+// GetListing returns a list of files by a given template
+func (s Service) GetListing(templateDir string) ([]string, error) {
+	listing := make([]string, 0)
+	return listing, s.templates.WalkPrefix(templateDir, func(templateName string, file packd.File) error {
+		listing = append(listing, templateName)
+		return nil
+	})
+}
+
+func (s Service) ProcessDirTemplates(templateDir string, outputDir string, model generator.TemplateParameters) error {
+	err := s.templates.WalkPrefix(templateDir, func(templateName string, file packd.File) error {
+		relativePath := strings.TrimPrefix(filepath.Dir(templateName), templateDir)
+		outputPath := path.Join(outputDir, relativePath)
+		return s.ProcessTemplate(outputPath, templateName, model)
 	})
 	return err
 }
 
-func (s Service) ProcessTemplate(dir, tpl string, obj interface{}) error {
-	filename := filepath.Base(tpl)
-	tplStr, err := s.templates.FindString(tpl)
+func (s Service) ProcessTemplate(dir, theTemplate string, model generator.TemplateParameters) error {
+	filename := filepath.Base(theTemplate)
+	templateString, err := s.templates.FindString(theTemplate)
 	if err != nil {
 		return err
 	}
@@ -50,8 +58,8 @@ func (s Service) ProcessTemplate(dir, tpl string, obj interface{}) error {
 		return err
 	}
 	var b bytes.Buffer
-	t := template.Must(template.New(filepath.Base(tpl)).Funcs(sprig.HermeticTxtFuncMap()).Parse(tplStr))
-	err = t.Execute(&b, obj)
+	t := template.Must(template.New(filepath.Base(theTemplate)).Funcs(sprig.HermeticTxtFuncMap()).Parse(templateString))
+	err = t.Execute(&b, model)
 	if err != nil {
 		return err
 	}

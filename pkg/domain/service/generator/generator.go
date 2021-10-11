@@ -1,56 +1,67 @@
 package generator
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"errors"
+	"fmt"
+	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/template"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/wizard"
-	"github.com/spf13/viper"
-	"io/fs"
-	"os"
-	"path"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 )
 
-type Generator struct {
+// SiteGenerator generates presidium site based on a specific initial site model
+type SiteGenerator interface {
+	Run(target model.InitialSiteTarget) error
 }
 
-func New() Generator {
-	return Generator{}
+func New() SiteGenerator {
+	return &gen{
+		FileSystem: filesystem.New(),
+		Service:    template.New(),
+	}
 }
 
-// GenerateWithConfig generates a presidium site with the config given as parameter
-func (g Generator) GenerateWithConfig(c Config) error {
-	theTemplate, err := wizard.GetTemplate(c.Template)
-	if err != nil {
+type gen struct {
+	filesystem.FileSystem
+	template.Service
+}
+
+func (g *gen) Run(target model.InitialSiteTarget) error {
+	if err := g.prepareSiteTarget(target); err != nil {
 		return err
 	}
-	tplSvc := template.New()
-	err = tplSvc.ProcessDirTemplates(theTemplate.Code(), c)
-	if err != nil {
+	return g.processTemplates(target)
+}
+
+func (g *gen) processTemplates(target model.InitialSiteTarget) error {
+	return g.ProcessDirTemplates(
+		target.Template.Code(),
+		target.SiteTargetDirectory,
+		target.GetTemplateParameters(),
+	)
+}
+
+func (g gen) prepareSiteTarget(t model.InitialSiteTarget) error {
+
+	dirExists := g.DirExists(t.SiteTargetDirectory)
+
+	if !dirExists {
+		if err := g.MakeDirs(t.SiteTargetDirectory); err != nil {
+			return err
+		}
+	} else {
+		switch t.WhenSiteExists {
+		case model.AbortWhenTargetSiteExists:
+			return errors.New(fmt.Sprintf("site already exists here: %s", t.SiteTargetDirectory))
+		case model.ReplaceTargetSiteIfExists:
+			if err := g.EmptyDir(t.SiteTargetDirectory); err != nil {
+				return err
+			}
+		}
+	}
+
+	if err := g.MakeDirs(t.AssetsDir()); err != nil {
 		return err
 	}
 
-	err = os.Mkdir(path.Join(c.ProjectName, "static"), fs.ModePerm)
-	if err != nil {
-		return err
-	}
 	return nil
-}
-
-// Generate uses viper to populate the default config and execute GenerateWithConfig
-func (g Generator) Generate() error {
-
-	themeKey := viper.GetString(config.ThemeKey)
-	theme, err := wizard.GetTheme(themeKey)
-	if err != nil {
-		return err
-	}
-	c := Config{
-		Title:       viper.GetString(config.TitleKey),
-		ProjectName: viper.GetString(config.ProjectNameKey),
-		Theme:       theme.ModulePath(),
-		Template:    viper.GetString(config.TemplateNameKey),
-		Brand:       viper.GetString(config.BrandKey),
-	}
-
-	return g.GenerateWithConfig(c)
 }
