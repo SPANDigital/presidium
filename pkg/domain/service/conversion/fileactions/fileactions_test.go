@@ -1,6 +1,7 @@
 package fileactions
 
 import (
+	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
@@ -18,9 +19,9 @@ func TestFileActions(t *testing.T) {
 	RunSpecs(t, "FileActions Suite")
 }
 
-var _ = Describe("Fileactions", func() {
+var _ = Describe("Performing file actions", func() {
 	colors.Setup()
-	Describe("removing Jekyll weight indicators from file paths", func() {
+	When("removing Jekyll weight indicators", func() {
 		var stagingContentDir string
 		var stagedContentFiles = []string{
 			"introduction/",
@@ -57,7 +58,7 @@ var _ = Describe("Fileactions", func() {
 			}
 		})
 		AfterEach(func() { _ = os.RemoveAll(stagingContentDir) })
-		It("Should produce a clean tree of file paths with no with weight indicators", func() {
+		It("should produce a clean tree of file paths with no with weight indicators", func() {
 			regexNameStarsWithWeighIndicators := regexp.MustCompile(`^[\d+\-.]+`)
 			err := RemoveWeightIndicatorsFromFilePaths(stagingContentDir)
 			Expect(err).ShouldNot(HaveOccurred())
@@ -73,5 +74,22 @@ var _ = Describe("Fileactions", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(pathsWithWeightIndicators).Should(BeEmpty())
 		})
+	})
+	When("deriving article title", func() {
+		// Just add more expectations here to have them tested
+		givenExpectations := map[string]string{
+			"0.1.1-sales-exercises": "Sales Exercises",
+			"financial--activities": "Financial Activities",
+			"1.1.1-the-happyð-path": "The Happyð Path",
+		}
+		for given, expecting := range givenExpectations {
+			should := fmt.Sprintf("title of \"%s\" should be: \"%s\"", given, expecting)
+			name := given       // make copy of given & expectation as the
+			wanted := expecting // underlying function changes the actual string.
+			It(should, func() {
+				actual := unSlugify(name)
+				Expect(actual).Should(Equal(wanted))
+			})
+		}
 	})
 })
