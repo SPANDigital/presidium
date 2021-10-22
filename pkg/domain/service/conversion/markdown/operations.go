@@ -137,7 +137,7 @@ func removeTargetBlank(path string) error {
 	return simpleReplaceContentInMarkdown(path, []string{`{: target="_blank"}`, `{:target="_blank"}`}, ``)
 }
 
-// Perform find and replace operations on markdown content
+// Perform find and replace operations on markdown contentOf
 func simpleReplaceContentInMarkdown(path string, finds []string, replace string) error {
 	for _, find := range finds {
 		err := ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
@@ -272,7 +272,7 @@ func parseIfStatements(strContent string) string {
 		innerContent := ""
 		containsShortCode := ContainsShortcodeRe.MatchString(matches[0])
 
-		// This appears to be more compatible than `wrapSymbols` when dealing with mixed content
+		// This appears to be more compatible than `wrapSymbols` when dealing with mixed contentOf
 		openSymbol, closeSymbol := "%", "%"
 
 		if containsShortCode {

@@ -5,9 +5,15 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"testing"
 )
 
-var _ = Describe("Configtranslation", func() {
+func TestConfigTranslation(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Configuration Translation Suite")
+}
+
+var _ = Describe("ConfigTranslation", func() {
 	BeforeSuite(func() {
 		colors.Setup()
 	})

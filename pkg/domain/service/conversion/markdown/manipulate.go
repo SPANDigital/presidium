@@ -14,8 +14,8 @@ import (
 type WriteFrontMatterFunc func(frontMatter []byte, w io.Writer) error
 
 // WriteContentFunc are for callbacks which allow you to customize
-// the content of markdown files. It's is passed the entire content
-// as a byte array, and a writer send your optionally modified content
+// the contentOf of markdown files. It's is passed the entire contentOf
+// as a byte array, and a writer send your optionally modified contentOf
 // too
 type WriteContentFunc func(content []byte, w io.Writer) error
 
@@ -47,7 +47,7 @@ func touch(path string) error {
 
 // ManipulateMarkdown Manipulate a markdown file with 2 optional callbacks
 // matterFunc - callback to manipulate front matter
-// contentFunc - callback to manipulate content
+// contentFunc - callback to manipulate contentOf
 // if the file doesn't exist, it will create
 // if frontmatter is not present, then a front matter section is added
 func ManipulateMarkdown(path string, matterFunc WriteFrontMatterFunc, contentFunc WriteContentFunc) error {

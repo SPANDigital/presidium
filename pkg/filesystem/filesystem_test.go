@@ -6,11 +6,17 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"testing"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
 )
+
+func TestFilesystem(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Filesystem Suite")
+}
 
 func init() {
 	FS = afero.NewMemMapFs()
@@ -172,5 +178,3 @@ var _ = Describe("Filesystem", func() {
 		})
 	})
 })
-
-

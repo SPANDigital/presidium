@@ -3,9 +3,10 @@ package markdown
 import "regexp"
 
 // This regex with capture groups can break a markdown file into it's
-// front matter and content sections
+// front matter and contentOf sections
 var MarkdownRe = regexp.MustCompile(`^(?s:(---\n)(.*)(---\n)(.*))$`)
-// These regexes with capture groups are to assist in manipulating markdown content
+
+// These regexes with capture groups are to assist in manipulating markdown contentOf
 var ImgWithBaseUrlRe = regexp.MustCompile(`\(\{\{\s?site.baseurl\s?\}\}/(.*\.(png|jpg|jpeg|gif|svg))\)`)
 var ImgWithAttributesRe = regexp.MustCompile(`!\[(.*)\]\((.*\.(png|jpg|jpeg|gif|svg))\)\{: (.*)\}`)
 var AttributesRe = regexp.MustCompile(`(\w+)="([^\"]+)"`)

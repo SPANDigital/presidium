@@ -2,52 +2,83 @@ package markdown
 
 import (
 	"fmt"
+	"github.com/Masterminds/goutils"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
-	. "github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/spf13/afero"
+	"io/ioutil"
+	"os"
+	"path/filepath"
+	"testing"
 )
 
-func init() {
-	FS = afero.NewMemMapFs()
-	FSUtil = &afero.Afero{Fs:FS}
+func TestMarkdown(t *testing.T) {
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Markdown Suite")
 }
 
-var _ = BeforeSuite(func() {
-	colors.Setup()
-})
+var _ = Describe("Processing markdown content", func() {
 
-var (
-	input = `
- As mentioned in the [Handbook Introduction]({{% baseurl %}}/#contribution), the Handbook is a [Knowledge Management](# 'presidium-tooltip') resource that is continually updated. This requires the active participation of both the consumers and creators of this information. This section outlines the [contribution process]({{% baseurl %}}/handbook-contribution/contribution-process/) which defines how feedback and content changes are controlled. It also covers the basics of the [content development]({{% baseurl %}}/handbook-contribution/content-development/) procedure to help employees get started contributing to the Handbook. In addition, several Handbook specific content [style guides]({{% baseurl %}}/handbook-contribution/style-guides/) are included to improve consistency throughout the document. 
-`
-	expected = ` ---
----
+	var workDir string
 
- As mentioned in the [Handbook Introduction]({{% baseurl %}}/#contribution), the Handbook is a {{< tooltip "Knowledge Management" >}} resource that is continually updated. This requires the active participation of both the consumers and creators of this information. This section outlines the [contribution process]({{% baseurl %}}/handbook-contribution/contribution-process/) which defines how feedback and content changes are controlled. It also covers the basics of the [content development]({{% baseurl %}}/handbook-contribution/content-development/) procedure to help employees get started contributing to the Handbook. In addition, several Handbook specific content [style guides]({{% baseurl %}}/handbook-contribution/style-guides/) are included to improve consistency throughout the document. 
- `
-)
-var _ = Describe("Markdown", func() {
-	Describe("manipulate", func() {
-		Context("ManipulateMarkdown", func() {
-			path := "/home/testuser/testdata"
-			filepath := fmt.Sprintf("%s/file.md", path)
-			BeforeEach(func() {
-				FS.MkdirAll(path, 0755)
-				FSUtil.WriteFile(filepath, []byte(input), 0644)
-			})
-			AfterEach(func() {
-				// no need to clean up - memory mapped filesystem will just go away
-			})
-			It("Should correctly translate tooltips", func() {
-				replaceTooltips(filepath)
-				content, err := FSUtil.ReadFile(filepath)
-				if err != nil {
-					Fail("Expected file to exist")
-				}
-				Expect(content, []byte(expected))
-			})
+	BeforeSuite(func() {
+		colors.Setup()
+		var workDirErr error
+		workDir, workDirErr = ioutil.TempDir("", "markdown-processing-test")
+		Expect(workDirErr).ShouldNot(HaveOccurred())
+	})
+
+	AfterSuite(func() { _ = os.RemoveAll(workDir) })
+
+	When("Replacing tooltips", func() {
+
+		var markdownText = "As mentioned in the [Handbook Introduction]({{% baseurl %}}/#contribution), the Handbook " +
+			"is a [Knowledge Management](# 'presidium-tooltip') resource that is continually updated. This requires " +
+			"the active participation of both the consumers and creators of this information. This section outlines " +
+			"the [contribution process]({{% baseurl %}}/handbook-contribution/contribution-process/) " +
+			"which defines how feedback and content changes are controlled. It also covers the basics " +
+			"of the [content development]({{% baseurl %}}/handbook-contribution/content-development/) " +
+			"procedure to help employees get started contributing to the Handbook. " +
+			"In addition, several Handbook specific content " +
+			"[style guides]({{% baseurl %}}/handbook-contribution/style-guides/) " +
+			"are included to improve consistency throughout the document."
+
+		It("Should replace it as expected", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := replaceTooltips(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring("{{< tooltip \"Knowledge Management\" >}}"))
 		})
 	})
 })
+
+func mustHaveDir(path string) {
+	pathInfo, pathErr := os.Stat(path)
+	if pathErr == nil {
+		Expect(pathInfo.IsDir()).Should(BeTrue())
+	} else if os.IsNotExist(pathErr) {
+		pathErr = os.MkdirAll(path, os.ModePerm)
+	}
+	Expect(pathErr).ShouldNot(HaveOccurred())
+}
+
+func mustHaveMarkdownInputFile(dir string, content string) string {
+	fileId, fileIdErr := goutils.RandomAlphaNumeric(4)
+	Expect(fileIdErr).ShouldNot(HaveOccurred())
+	mustHaveDir(dir)
+	name := fmt.Sprintf("contentOf-%s.md", fileId)
+	path := filepath.Join(dir, name)
+	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	Expect(err).ShouldNot(HaveOccurred())
+	_, err = file.WriteString(content)
+	file.Close()
+	Expect(err).ShouldNot(HaveOccurred())
+	return path
+}
+
+func contentOf(path string) string {
+	bytes, err := os.ReadFile(path)
+	Expect(err).ShouldNot(HaveOccurred())
+	return string(bytes)
+}
