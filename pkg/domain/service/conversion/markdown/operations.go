@@ -41,6 +41,7 @@ var markdownFileOperations = []operationInstruction{
 	{Key: "replaceTooltips", Func: replaceTooltips},
 	{Key: "replaceIfVariables", Func: replaceIfVariables},
 	{Key: "replaceComments", Func: replaceComments},
+	{Key: "addTableHeaders", Func: addTableHeaders},
 }
 
 // Run each operation on a path, making sure to check with viper to see if we must
@@ -118,6 +119,42 @@ func fixImagesWithAttributes(path string) error {
 			fmt.Println("Replacing", colors.Labels.Unwanted(replacement.Find), "with", colors.Labels.Wanted(replacement.Replace), "in", colors.Labels.Info(path))
 			strContent = strings.ReplaceAll(strContent, replacement.Find, replacement.Replace)
 		}
+		_, err := io.WriteString(w, strContent)
+		return err
+	})
+}
+
+// Adds empty table headers for all tables without headers
+func addTableHeaders(path string) error {
+	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
+		var replacements []replacement
+
+		tables := TableBody.FindAllString(string(content), -1)
+		for _, table := range tables {
+			pipeSelector := regexp.MustCompile(`\|`)
+			if !TableHeader.Match([]byte(table)) {
+
+				// find the row with the most columns
+				var cols []string
+				for _, line := range strings.Split(table, "\n") {
+					lineCols := pipeSelector.FindAllString(line, -1)
+					if len(lineCols) > len(cols) {
+						cols = lineCols
+					}
+				}
+				
+				header := strings.Join(cols, " ")
+				divider := strings.Join(cols, "-")
+				headerTable := fmt.Sprintf("%s\n%s\n%s", header, divider, table)
+				replacements = append(replacements, replacement{Find: table, Replace: headerTable})
+			}
+		}
+
+		strContent := string(content)
+		for _, replacement := range replacements {
+			strContent = strings.ReplaceAll(strContent, replacement.Find, replacement.Replace)
+		}
+
 		_, err := io.WriteString(w, strContent)
 		return err
 	})

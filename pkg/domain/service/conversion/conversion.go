@@ -49,6 +49,7 @@ type Converter struct {
 	WeightBasedOnFileName            bool
 	CommonMarkdownAttributes         bool
 	CopyMediaToStatic                bool
+	FixTables                        bool
 
 	// --- private state follows from here on: --
 	stagingDir        string
@@ -254,6 +255,7 @@ func New() *Converter {
 		WeightBasedOnFileName:            true,
 		CommonMarkdownAttributes:         false,
 		CopyMediaToStatic:                true,
+		FixTables:                        true,
 		fs:                               filesystem.New(),
 	}
 }

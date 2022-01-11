@@ -78,6 +78,7 @@ func init() {
 	pflags.BoolVarP(&config.Flags.ReplaceComments, "replaceComments", "", conversion.Defaults.ReplaceComments, "Replace {% comment %}...{% endcomment %} with HTML comments")
 	pflags.BoolVarP(&config.Flags.CopyMediaToStatic, "copyMediaToStatic", "C", conversion.Defaults.CopyMediaToStatic, "Copy Jekyll media to Hugo static folder")
 	pflags.BoolVarP(&config.Flags.ConvertConfigYml, "convertConfigYml", "y", conversion.Defaults.ConvertJekyllConfig, "Convert jekyll _config.yml to hugo config.yml")
+	pflags.BoolVarP(&config.Flags.FixTables, "addTableHeaders", "F", conversion.Defaults.FixTables, "Add empty table headers to tables without headers")
 	err = viper.BindPFlags(pflags)
 	if err != nil {
 		log.Fatal(err)
