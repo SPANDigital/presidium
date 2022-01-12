@@ -84,7 +84,7 @@ func fixImages(path string) error {
 		var replacements []replacement
 		for _, matches := range ImageWithoutAttributes.FindAllStringSubmatch(string(content), -1) {
 			if !paths.IsAbsURL(matches[2]) {
-				img := fmt.Sprintf("![%s]({{%%path%%}}/%s)", matches[1], matches[3])
+				img := fmt.Sprintf("![%s]({{%%path%%}}/%s)\n", matches[1], matches[3])
 				replacements = append(replacements, replacement{Find: matches[0], Replace: img})
 			}
 		}
