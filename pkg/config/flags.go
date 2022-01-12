@@ -25,6 +25,7 @@ type flags struct {
 	ReplaceBaseUrlWithSpaces   bool
 	ReplaceComments            bool
 	LogoPrefix				   string
+	FixTables                  bool
 }
 
 var Flags flags
