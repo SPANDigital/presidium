@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
+	"github.com/gohugoio/hugo/common/paths"
 	"github.com/spf13/viper"
 	"io"
 	"os"
@@ -31,9 +32,9 @@ type replacement struct {
 var markdownFileOperations = []operationInstruction{
 	{Key: "eraseMarkdownWithNoContent", Func: eraseMarkdownWithNoContent},
 	{Key: "commonmarkAttributes", Func: replaceCommonmarkAttributes},
-	{Key: "fixImages", Func: fixImages},
 	{Key: "replaceBaseUrl", Func: replaceBaseUrl},
 	{Key: "replaceBaseUrlWithSpaces", Func: replaceBaseUrlWithSpaces},
+	{Key: "fixImages", Func: fixImages},
 	{Key: "removeTargetBlank", Func: removeTargetBlank},
 	{Key: "fixImagesWithAttributes", Func: fixImagesWithAttributes},
 	{Key: "removeRawTags", Func: removeRawTags},
@@ -77,14 +78,14 @@ func imgIsInSameDir(path string, img string) bool {
 	return !info.IsDir()
 }
 
-// Fixes image urls of the form:
-// {{ site.baseurl }}/pathtoimage.ext
+// Make all image paths absolute by adding the {{%path%}} shortcode
 func fixImages(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 		var replacements []replacement
-		for _, matches := range ImgWithBaseUrlRe.FindAllStringSubmatch(string(content), -1) {
-			if imgIsInSameDir(path, matches[1]) {
-				replacements = append(replacements, replacement{Find: matches[0], Replace: "(" + matches[1] + ")"})
+		for _, matches := range ImageWithoutAttributes.FindAllStringSubmatch(string(content), -1) {
+			if !paths.IsAbsURL(matches[2]) {
+				img := fmt.Sprintf("![%s]({{%%path%%}}/%s)\n", matches[1], matches[3])
+				replacements = append(replacements, replacement{Find: matches[0], Replace: img})
 			}
 		}
 
@@ -103,7 +104,11 @@ func fixImagesWithAttributes(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 		var replacements []replacement
 		for _, matches := range ImgWithAttributesRe.FindAllStringSubmatch(string(content), -1) {
-			var alt, src, attributes = matches[1], matches[2], matches[4]
+			var alt, src, attributes = matches[1], matches[3], matches[5]
+			if paths.IsAbsURL(matches[2]) {
+				src = matches[2] + src
+			}
+
 			var replacementShortcode = fmt.Sprintf(`{{< img src="%s" alt="%s"`, src, alt)
 			for _, attrMatches := range AttributesRe.FindAllStringSubmatch(attributes, -1) {
 				var key, value = attrMatches[1], attrMatches[2]
