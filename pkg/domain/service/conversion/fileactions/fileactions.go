@@ -113,7 +113,7 @@ func CheckIndexForTitles(path string) error {
 
 // unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
 func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
-	re := regexp.MustCompile(`(([\d\.]+)\-)?([a-zA-Z-]+)(\.[^\..]*)?`)
+	re := regexp.MustCompile(`(([\d\.]+)\-)?([^..]+)(\.[^\..]*)?`)
 	fileName := spaces.ReplaceAllLiteralString(filepath.Base(path), "-")
 	matches := re.FindStringSubmatch(fileName)
 	weight, err := strconv.ParseInt(strings.ReplaceAll(matches[2], ".", ""), 10, 64)
