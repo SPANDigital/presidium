@@ -3,6 +3,7 @@ package configtranslation
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"regexp"
@@ -31,10 +32,91 @@ type JekyllConfig struct {
 	Audience   string              `yaml:"audience"`
 	Scope      string              `yaml:"scope"`
 	AppleScope string              `yaml:"apple_scope"`
-	Show       JekyllShow          `yaml:"show"`
+	Show       interface{}         `yaml:"show"`
 	External   JekyllExternal      `yaml:"external"`
 	Sections   []JekyllSectionItem `yaml:"sections"`
 	Roles      Roles               `yaml:"roles"`
+}
+
+func (j *JekyllConfig) reparsedShowOptionsAsSequenceDictionaries() bool {
+
+	if seqOpts, ok := j.Show.([]interface{}); ok {
+		parsed := JekyllShow{
+			Status: false,
+			Author: false,
+			Roles:  false,
+		}
+		for _, opt := range seqOpts {
+			if values, ok := opt.(map[interface{}]interface{}); ok {
+				var name string
+				var flagged bool
+				for k, v := range values {
+					if name, ok = k.(string); ok {
+						if flagged, ok = v.(bool); ok {
+							if name == "roles" {
+								parsed.Roles = flagged
+							} else if name == "author" {
+								parsed.Author = flagged
+							} else if name == "status" {
+								parsed.Status = flagged
+							} else {
+								log.Debug(fmt.Sprintf("unsupported shop option: [%s:%v]", name, flagged))
+							}
+						}
+					}
+				}
+			}
+		}
+		j.Show = parsed
+		return true
+	}
+
+	return false
+}
+func (j *JekyllConfig) reparsedShowOptionsAsDictionary() bool {
+
+	if dictOpts, ok := j.Show.(map[interface{}]interface{}); ok {
+		parsed := JekyllShow{
+			Status: false,
+			Author: false,
+			Roles:  false,
+		}
+		for k, v := range dictOpts {
+			var option string
+			var flagged bool
+			if option, ok = k.(string); ok {
+				if flagged, ok = v.(bool); ok {
+					if option == "author" {
+						parsed.Author = flagged
+					} else if option == "roles" {
+						parsed.Roles = flagged
+					} else if option == "status" {
+						parsed.Status = flagged
+					} else {
+						log.Debug(fmt.Sprintf("unsupported: [%s:%v]", option, flagged))
+					}
+				}
+			}
+		}
+		j.Show = parsed
+		return true
+	}
+
+	return false
+}
+
+func (j *JekyllConfig) reparseShowOptions() {
+
+	if j.reparsedShowOptionsAsSequenceDictionaries() {
+		return
+	}
+
+	if j.reparsedShowOptionsAsDictionary() {
+		return
+	}
+
+	panic(fmt.Errorf("unsupported show options stylo : %v", j.Show))
+
 }
 
 type HugoRenderer struct {
@@ -108,6 +190,7 @@ func ReadJekyllConfig(path string) (*JekyllConfig, error) {
 	if err != nil {
 		return nil, err
 	}
+	config.reparseShowOptions()
 	return config, nil
 }
 
