@@ -33,7 +33,6 @@ type Converter struct {
 	EnableColorOutput                bool
 	EraseMarkdownWithNoContent       bool
 	FixImages                        bool
-	FixImageAttributesWithShortCodes bool
 	LogoPrefix                       string
 	RemoveRawTags                    bool
 	RemoveTargetBlank                bool
@@ -239,7 +238,6 @@ func New() *Converter {
 		EnableColorOutput:                true,
 		EraseMarkdownWithNoContent:       true,
 		FixImages:                        true,
-		FixImageAttributesWithShortCodes: true,
 		LogoPrefix:                       "/images/",
 		RemoveRawTags:                    true,
 		RemoveTargetBlank:                true,

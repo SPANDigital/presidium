@@ -67,7 +67,6 @@ func init() {
 	pflags.BoolVarP(&config.Flags.ReplaceBaseUrlWithSpaces, "replaceBaseUrlWithSpaces", "j", conversion.Defaults.ReplaceBaseUrlWithSpaces, "Replace {{ site.baseurl }} with {{site.BaseURL}}")
 	pflags.BoolVarP(&config.Flags.RemoveTargetBlank, "removeTargetBlank", "t", conversion.Defaults.RemoveTargetBlank, `Remove target="blank" variants`)
 	pflags.BoolVarP(&config.Flags.FixImages, "fixImages", "i", conversion.Defaults.FixImages, "Fix images in same path")
-	pflags.BoolVarP(&config.Flags.FixImagesWithAttributes, "fixImagesWithAttributes", "a", conversion.Defaults.FixImageAttributesWithShortCodes, "Replace images with attributes with shortcodes")
 	pflags.BoolVarP(&config.Flags.EraseMarkdownWithNoContent, "eraseMarkdownWithNoContent", "e", conversion.Defaults.EraseMarkdownWithNoContent, "Erase markdown files with no content")
 	pflags.BoolVarP(&config.Flags.RemoveRawTags, "removeRawTags", "R", conversion.Defaults.RemoveRawTags, "Remove {% raw %} tags")
 	pflags.StringVarP(&config.Flags.ReplaceRoot, "replaceRoot", "p", conversion.Defaults.ReplaceRootWith, "Replace this path with root")

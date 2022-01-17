@@ -32,11 +32,10 @@ type replacement struct {
 var markdownFileOperations = []operationInstruction{
 	{Key: "eraseMarkdownWithNoContent", Func: eraseMarkdownWithNoContent},
 	{Key: "commonmarkAttributes", Func: replaceCommonmarkAttributes},
+	{Key: "fixImages", Func: fixImages},
 	{Key: "replaceBaseUrl", Func: replaceBaseUrl},
 	{Key: "replaceBaseUrlWithSpaces", Func: replaceBaseUrlWithSpaces},
-	{Key: "fixImages", Func: fixImages},
 	{Key: "removeTargetBlank", Func: removeTargetBlank},
-	{Key: "fixImagesWithAttributes", Func: fixImagesWithAttributes},
 	{Key: "removeRawTags", Func: removeRawTags},
 	{Key: "replaceCallOuts", Func: replaceCallOuts},
 	{Key: "replaceTooltips", Func: replaceTooltips},
@@ -79,14 +78,17 @@ func imgIsInSameDir(path string, img string) bool {
 	return !info.IsDir()
 }
 
-// Make all image paths absolute by adding the {{%path%}} shortcode
 func fixImages(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
+		images := ImageSelector.FindAllStringSubmatch(string(content), -1)
 		var replacements []replacement
-		for _, matches := range ImageWithoutAttributes.FindAllStringSubmatch(string(content), -1) {
-			if !paths.IsAbsURL(matches[2]) {
-				img := fmt.Sprintf("![%s]({{%%path%%}}/%s)\n", matches[1], matches[3])
-				replacements = append(replacements, replacement{Find: matches[0], Replace: img})
+		for _, image := range images {
+			src := parseSource(path, image)
+			hasTags := len(image[6]) > 0
+			if hasTags {
+				replacements = append(replacements, parseImageWithTags(src, image))
+			} else {
+				replacements = append(replacements,  parseImageWithoutTags(src, image))
 			}
 		}
 
@@ -100,36 +102,35 @@ func fixImages(path string) error {
 	})
 }
 
-// Changes images with attributes to use a shortcode
-func fixImagesWithAttributes(path string) error {
-	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
-		var replacements []replacement
-		for _, matches := range ImgWithAttributesRe.FindAllStringSubmatch(string(content), -1) {
-			var alt, src, attributes = matches[1], matches[3], matches[5]
-			if paths.IsAbsURL(matches[2]) {
-				src = matches[2] + src
-			}
-
-			var replacementShortcode = fmt.Sprintf(`{{< img src="%s" alt="%s"`, src, alt)
-			for _, attrMatches := range AttributesRe.FindAllStringSubmatch(attributes, -1) {
-				var key, value = attrMatches[1], attrMatches[2]
-				replacementShortcode = replacementShortcode + fmt.Sprintf(` %s="%s"`, key, value)
-			}
-			replacementShortcode = replacementShortcode + " >}}"
-			replacements = append(replacements, replacement{Find: matches[0], Replace: replacementShortcode})
-		}
-
-		strContent := string(content)
-		for _, replacement := range replacements {
-			fmt.Println("Replacing", colors.Labels.Unwanted(replacement.Find), "with", colors.Labels.Wanted(replacement.Replace), "in", colors.Labels.Info(path))
-			strContent = strings.ReplaceAll(strContent, replacement.Find, replacement.Replace)
-		}
-		_, err := io.WriteString(w, strContent)
-		return err
-	})
+func parseSource(path string, image []string) string {
+	src := image[3] + image[4]
+	if paths.IsAbsURL(src) {
+		return src
+	}
+	if imgIsInSameDir(path, image[4]) {
+		return fmt.Sprintf("{{%%path%%}}/%s", image[4])
+	}
+	base := strings.Replace(image[3], "/media", "", 1)
+	return filepath.Clean(fmt.Sprintf("{{%% baseurl %%}}/%s/%s", base, image[4]))
 }
 
-// Adds empty table headers for all tables without headers
+func parseImageWithoutTags(src string, image []string) replacement {
+	img := fmt.Sprintf("![%s](%s)", image[1], src)
+	return replacement{Find: image[0], Replace: img}
+}
+
+func parseImageWithTags(src string, image []string) replacement {
+	var alt, attributes = image[1], image[5]
+	var imgShortcode = fmt.Sprintf(`{{< img src="%s" alt="%s"`, src, alt)
+	for _, attrMatches := range AttributesRe.FindAllStringSubmatch(attributes, -1) {
+		var key, value = attrMatches[1], attrMatches[2]
+		imgShortcode = imgShortcode + fmt.Sprintf(` %s="%s"`, key, value)
+	}
+	imgShortcode = imgShortcode + " >}}"
+	return replacement{Find: image[0], Replace: imgShortcode}
+}
+
+//// Adds empty table headers for all tables without headers
 func addTableHeaders(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 		var replacements []replacement

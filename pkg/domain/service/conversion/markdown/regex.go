@@ -7,8 +7,7 @@ import "regexp"
 var MarkdownRe = regexp.MustCompile(`^(?s:(---\n)(.*)(---\n)(.*))$`)
 
 // These regexes with capture groups are to assist in manipulating markdown contentOf
-var ImgWithAttributesRe = regexp.MustCompile(`(?mi)!\[(.*)\]\((.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)\{: (.*)\}`)
-var ImageWithoutAttributes = regexp.MustCompile(`(?mi)!\[(.*)\]\((.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)\n\r?`)
+var ImageSelector = regexp.MustCompile(`(?mi)!\[(.*)\]\(({{.+}})?(.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)(\{: (.*)\})?`)
 var AttributesRe = regexp.MustCompile(`(\w+)="([^\"]+)"`)
 var CalloutRe = regexp.MustCompile(`<div class="presidium-([\w\-]+)">\s*(<span>(.*)<\/span>)?\s*(.*)\s*<\/div>`)
 var TooltipRe = regexp.MustCompile(`(?m)\[([^(.]*)]\(#\s*'presidium-tooltip'\)`)
