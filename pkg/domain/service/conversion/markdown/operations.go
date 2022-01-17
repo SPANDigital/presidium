@@ -83,8 +83,8 @@ func fixImages(path string) error {
 		images := ImageSelector.FindAllStringSubmatch(string(content), -1)
 		var replacements []replacement
 		for _, image := range images {
-			src := parseSource(path, image)
 			hasTags := len(image[6]) > 0
+			src := parseSource(path, image, hasTags)
 			if hasTags {
 				replacements = append(replacements, parseImageWithTags(src, image))
 			} else {
@@ -102,16 +102,25 @@ func fixImages(path string) error {
 	})
 }
 
-func parseSource(path string, image []string) string {
+// shortcodes in strings are not supported atm
+// https://github.com/gohugoio/hugo/issues/6703
+func parseSource(path string, image []string, rawSource bool) string {
 	src := image[3] + image[4]
 	if paths.IsAbsURL(src) {
 		return src
 	}
 	if imgIsInSameDir(path, image[4]) {
+		if rawSource {
+			return image[4]
+		}
 		return fmt.Sprintf("{{%%path%%}}/%s", image[4])
 	}
-	base := strings.Replace(image[3], "/media", "", 1)
-	return filepath.Clean(fmt.Sprintf("{{%% baseurl %%}}/%s/%s", base, image[4]))
+
+	src = strings.TrimPrefix(src, "/media")
+	if rawSource {
+		return src
+	}
+	return filepath.Clean(fmt.Sprintf("{{%% baseurl %%}}/%s", src))
 }
 
 func parseImageWithoutTags(src string, image []string) replacement {
