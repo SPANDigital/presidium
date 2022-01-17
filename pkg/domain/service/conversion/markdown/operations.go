@@ -129,7 +129,7 @@ func parseImageWithoutTags(src string, image []string) replacement {
 }
 
 func parseImageWithTags(src string, image []string) replacement {
-	var alt, attributes = image[1], image[5]
+	var alt, attributes = image[1], image[7]
 	var imgShortcode = fmt.Sprintf(`{{< img src="%s" alt="%s"`, src, alt)
 	for _, attrMatches := range AttributesRe.FindAllStringSubmatch(attributes, -1) {
 		var key, value = attrMatches[1], attrMatches[2]
@@ -139,7 +139,7 @@ func parseImageWithTags(src string, image []string) replacement {
 	return replacement{Find: image[0], Replace: imgShortcode}
 }
 
-//// Adds empty table headers for all tables without headers
+// Adds empty table headers for all tables without headers
 func addTableHeaders(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 		var replacements []replacement
