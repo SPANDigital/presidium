@@ -4,11 +4,12 @@ import "regexp"
 
 // This regex with capture groups can break a markdown file into it's
 // front matter and contentOf sections
-var MarkdownRe = regexp.MustCompile(`^(?s:(---\n)(.*)(---\n)(.*))$`)
+var MarkdownRe = regexp.MustCompile(`(?m)^(?s:(^---\n)(.*)(^---\n)(.*))$`)
 
 // These regexes with capture groups are to assist in manipulating markdown contentOf
-var ImgWithAttributesRe = regexp.MustCompile(`(?mi)!\[(.*)\]\((.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)\{: (.*)\}`)
-var ImageWithoutAttributes = regexp.MustCompile(`(?mi)!\[(.*)\]\((.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)\n\r?`)
+var ImageRe = regexp.MustCompile(`(?mi)!\[(.*)\]\(({{.+}})?(.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)(\{: (.*)\})?`)
+var HtmlImageRe = regexp.MustCompile(`<img([^>]+)/>`)
+var SourceRe = regexp.MustCompile(`(src)="({{.+}})?(.*\/)*(.*\.(png|jpg|jpeg|gif|svg))"`)
 var AttributesRe = regexp.MustCompile(`(\w+)="([^\"]+)"`)
 var CalloutRe = regexp.MustCompile(`<div class="presidium-([\w\-]+)">\s*(<span>(.*)<\/span>)?\s*(.*)\s*<\/div>`)
 var TooltipRe = regexp.MustCompile(`(?m)\[([^(.]*)]\(#\s*'presidium-tooltip'\)`)

@@ -29,27 +29,27 @@ var (
 )
 
 type Converter struct {
-	ConvertJekyllConfig              bool
-	EnableColorOutput                bool
-	EraseMarkdownWithNoContent       bool
-	FixImages                        bool
-	FixImageAttributesWithShortCodes bool
-	LogoPrefix                       string
-	RemoveRawTags                    bool
-	RemoveTargetBlank                bool
-	ReplaceBaseUrl                   bool
-	ReplaceBaseUrlWithSpaces         bool
-	ReplaceCallOuts                  bool
-	ReplaceIfVariables               bool
-	ReplaceComments                  bool
-	ReplaceRootWith                  string
-	ReplaceToolTips                  bool
-	SlugBasedOnFileName              bool
-	SilenceUserMessages              bool
-	WeightBasedOnFileName            bool
-	CommonMarkdownAttributes         bool
-	CopyMediaToStatic                bool
-	FixTables                        bool
+	ConvertJekyllConfig        bool
+	EnableColorOutput          bool
+	EraseMarkdownWithNoContent bool
+	FixImages                  bool
+	FixHtmlImages              bool
+	LogoPrefix                 string
+	RemoveRawTags              bool
+	RemoveTargetBlank          bool
+	ReplaceBaseUrl             bool
+	ReplaceBaseUrlWithSpaces   bool
+	ReplaceCallOuts            bool
+	ReplaceIfVariables         bool
+	ReplaceComments            bool
+	ReplaceRootWith            string
+	ReplaceToolTips            bool
+	SlugBasedOnFileName        bool
+	SilenceUserMessages        bool
+	WeightBasedOnFileName      bool
+	CommonMarkdownAttributes   bool
+	CopyMediaToStatic          bool
+	FixTables                  bool
 
 	// --- private state follows from here on: --
 	stagingDir        string
@@ -235,28 +235,28 @@ func (c *Converter) initStaging() error {
 // New returns an uninitialized Converter configured with default values.
 func New() *Converter {
 	return &Converter{
-		ConvertJekyllConfig:              true,
-		EnableColorOutput:                true,
-		EraseMarkdownWithNoContent:       true,
-		FixImages:                        true,
-		FixImageAttributesWithShortCodes: true,
-		LogoPrefix:                       "/images/",
-		RemoveRawTags:                    true,
-		RemoveTargetBlank:                true,
-		ReplaceBaseUrl:                   true,
-		ReplaceBaseUrlWithSpaces:         true,
-		ReplaceCallOuts:                  true,
-		ReplaceComments:                  true,
-		ReplaceIfVariables:               true,
-		ReplaceRootWith:                  "",
-		ReplaceToolTips:                  true,
-		SlugBasedOnFileName:              true,
-		SilenceUserMessages:              false,
-		WeightBasedOnFileName:            true,
-		CommonMarkdownAttributes:         false,
-		CopyMediaToStatic:                true,
-		FixTables:                        true,
-		fs:                               filesystem.New(),
+		ConvertJekyllConfig:        true,
+		EnableColorOutput:          true,
+		EraseMarkdownWithNoContent: true,
+		FixImages:                  true,
+		FixHtmlImages:              true,
+		LogoPrefix:                 "/images/",
+		RemoveRawTags:              true,
+		RemoveTargetBlank:          true,
+		ReplaceBaseUrl:             true,
+		ReplaceBaseUrlWithSpaces:   true,
+		ReplaceCallOuts:            true,
+		ReplaceComments:            true,
+		ReplaceIfVariables:         true,
+		ReplaceRootWith:            "",
+		ReplaceToolTips:            true,
+		SlugBasedOnFileName:        true,
+		SilenceUserMessages:        false,
+		WeightBasedOnFileName:      true,
+		CommonMarkdownAttributes:   false,
+		CopyMediaToStatic:          true,
+		FixTables:                  true,
+		fs:                         filesystem.New(),
 	}
 }
 

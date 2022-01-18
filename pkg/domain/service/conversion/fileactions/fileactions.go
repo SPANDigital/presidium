@@ -134,7 +134,7 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 			url = slug
 		}
 		replaceRoot := viper.GetString("replaceRoot")
-		url = strings.TrimPrefix(url, replaceRoot)
+		url = strings.TrimPrefix(url, strings.ToLower(replaceRoot))
 		if url == "" {
 			url = "/"
 		}
@@ -182,7 +182,6 @@ func addIndex(stagingDir, path string) error {
 	fmt.Println("Adding an", colors.Labels.Unwanted("_index.md"), "file to ", colors.Labels.Wanted(path))
 
 	if url != "" {
-
 		m := make(map[string]interface{})
 		m["title"] = title
 		m["slug"] = slug
