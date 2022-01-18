@@ -12,7 +12,7 @@ type flags struct {
 	ReplaceBaseUrl             bool
 	RemoveTargetBlank          bool
 	FixImages                  bool
-	FixImagesWithAttributes    bool
+	FixHtmlImages              bool
 	EraseMarkdownWithNoContent bool
 	RemoveRawTags              bool
 	ReplaceRoot                string

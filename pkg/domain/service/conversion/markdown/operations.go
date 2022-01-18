@@ -33,6 +33,7 @@ var markdownFileOperations = []operationInstruction{
 	{Key: "eraseMarkdownWithNoContent", Func: eraseMarkdownWithNoContent},
 	{Key: "commonmarkAttributes", Func: replaceCommonmarkAttributes},
 	{Key: "fixImages", Func: fixImages},
+	{Key: "fixHtmlImages", Func: fixHtmlImages},
 	{Key: "replaceBaseUrl", Func: replaceBaseUrl},
 	{Key: "replaceBaseUrlWithSpaces", Func: replaceBaseUrlWithSpaces},
 	{Key: "removeTargetBlank", Func: removeTargetBlank},
@@ -78,13 +79,35 @@ func imgIsInSameDir(path string, img string) bool {
 	return !info.IsDir()
 }
 
+func fixHtmlImages(path string) error {
+	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
+		var replacements []replacement
+		images := HtmlImageRe.FindAllStringSubmatch(string(content), -1)
+		for _, image := range images {
+			srcAttr := SourceRe.FindStringSubmatch(image[1])
+			src := parseSource(path, srcAttr[3], srcAttr[4], false)
+			findSource := fmt.Sprintf("src=\"%s\"", src)
+			replacement := replacement{Find: srcAttr[0], Replace: findSource}
+			replacements = append(replacements, replacement)
+		}
+
+		strContent := string(content)
+		for _, replacement := range replacements {
+			fmt.Println("Replacing", colors.Labels.Unwanted(replacement.Find), "with", colors.Labels.Wanted(replacement.Replace), "in", colors.Labels.Info(path))
+			strContent = strings.ReplaceAll(strContent, replacement.Find, replacement.Replace)
+		}
+		_, err := io.WriteString(w, strContent)
+		return err
+	})
+}
+
 func fixImages(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
-		images := ImageSelector.FindAllStringSubmatch(string(content), -1)
+		images := ImageRe.FindAllStringSubmatch(string(content), -1)
 		var replacements []replacement
 		for _, image := range images {
 			hasTags := len(image[6]) > 0
-			src := parseSource(path, image, hasTags)
+			src := parseSource(path, image[3], image[4], hasTags)
 			if hasTags {
 				replacements = append(replacements, parseImageWithTags(src, image))
 			} else {
@@ -104,19 +127,22 @@ func fixImages(path string) error {
 
 // shortcodes in strings are not supported atm
 // https://github.com/gohugoio/hugo/issues/6703
-func parseSource(path string, image []string, rawSource bool) string {
-	src := image[3] + image[4]
+func parseSource(path string, dir string, filename string, rawSource bool) string {
+	src := dir + filename
 	if paths.IsAbsURL(src) {
 		return src
 	}
-	if imgIsInSameDir(path, image[4]) {
+	if imgIsInSameDir(path, filename) {
 		if rawSource {
-			return image[4]
+			return filename
 		}
-		return fmt.Sprintf("{{%%path%%}}/%s", image[4])
+		return fmt.Sprintf("{{%%path%%}}/%s", filename)
 	}
 
-	src = strings.TrimPrefix(src, "/media")
+	idx := strings.LastIndex(src, "/images/")
+	if idx > -1 {
+		src = src[idx:]
+	}
 	if rawSource {
 		return src
 	}
