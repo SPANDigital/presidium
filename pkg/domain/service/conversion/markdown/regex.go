@@ -4,7 +4,7 @@ import "regexp"
 
 // This regex with capture groups can break a markdown file into it's
 // front matter and contentOf sections
-var MarkdownRe = regexp.MustCompile(`^(?s:(---\n)(.*)(---\n)(.*))$`)
+var MarkdownRe = regexp.MustCompile(`(?m)^(?s:(^---\n)(.*)(^---\n)(.*))$`)
 
 // These regexes with capture groups are to assist in manipulating markdown contentOf
 var ImageRe = regexp.MustCompile(`(?mi)!\[(.*)\]\(({{.+}})?(.*\/)*(.*\.(png|jpg|jpeg|gif|svg))\)(\{: (.*)\})?`)
