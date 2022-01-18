@@ -15,6 +15,7 @@ import (
 )
 
 var reNamedWeight = regexp.MustCompile(`^[\d\-.]+`)
+var spaces = regexp.MustCompile(`\s+`)
 
 func fileExists(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -113,14 +114,15 @@ func CheckIndexForTitles(path string) error {
 // unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
 func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 	re := regexp.MustCompile(`(([\d\.]+)\-)?([^..]+)(\.[^\..]*)?`)
-	base := filepath.Base(path)
-	matches := re.FindStringSubmatch(base)
+	fileName := spaces.ReplaceAllLiteralString(filepath.Base(path), "-")
+	matches := re.FindStringSubmatch(fileName)
 	weight, err := strconv.ParseInt(strings.ReplaceAll(matches[2], ".", ""), 10, 64)
 	if err != nil {
 		weight = -1
 	} else {
 		weight += 1
 	}
+
 	var slug = matches[3]
 	var url string
 	var contentDir = filepath.Join(stagingDir, "content")
