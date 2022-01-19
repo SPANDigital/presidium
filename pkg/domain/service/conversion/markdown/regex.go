@@ -19,5 +19,5 @@ var IfConditionRe = regexp.MustCompile(`(?ms)(and|or)?\s??site.(\w+) ([!=]=) "(\
 var IfConditionShortcodeRe = regexp.MustCompile(`(?ms)site.(\w+) == "(\w+)"`)
 var ContainsShortcodeRe = regexp.MustCompile(`(?ms){{[%<].*?[%>]}}`)
 var CommentRe = regexp.MustCompile(`(?ms){% comment %}(.*?){% endcomment %}`)
-var TableBody = regexp.MustCompile(`(?:\|[^\n]+\|?\r?\n?){2,}`)
-var TableHeader = regexp.MustCompile(`(\|[^\n]+\|?\r?\n)((?:\|:?[-]+:?)+\|?)`)
+var TableBodyRe = regexp.MustCompile(`(?:\|[^\n]+\|?\r?\n?){2,}`)
+var TableHeaderRe = regexp.MustCompile(`(\|[^\n]+\|?\r?\n)?((?:\|:?\s*[-]+:?\s*)+\|?)`)
