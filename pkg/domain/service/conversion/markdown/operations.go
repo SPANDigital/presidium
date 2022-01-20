@@ -165,28 +165,16 @@ func parseImageWithTags(src string, image []string) replacement {
 	return replacement{Find: image[0], Replace: imgShortcode}
 }
 
-// Adds empty table headers for all tables without headers
+// Adds empty table headers for all tables with partial or no headers
 func addTableHeaders(path string) error {
 	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 		var replacements []replacement
 
-		tables := TableBody.FindAllString(string(content), -1)
+		tables := TableBodyRe.FindAllString(string(content), -1)
 		for _, table := range tables {
-			pipeSelector := regexp.MustCompile(`\|`)
-			if !TableHeader.Match([]byte(table)) {
-
-				// find the row with the most columns
-				var cols []string
-				for _, line := range strings.Split(table, "\n") {
-					lineCols := pipeSelector.FindAllString(line, -1)
-					if len(lineCols) > len(cols) {
-						cols = lineCols
-					}
-				}
-				
-				header := strings.Join(cols, " ")
-				divider := strings.Join(cols, "-")
-				headerTable := fmt.Sprintf("%s\n%s\n%s", header, divider, table)
+			header := TableHeaderRe.FindStringSubmatch(table)
+			if header == nil || len(header[1]) == 0 {
+				headerTable := appendHeader(table, header != nil)
 				replacements = append(replacements, replacement{Find: table, Replace: headerTable})
 			}
 		}
@@ -199,6 +187,24 @@ func addTableHeaders(path string) error {
 		_, err := io.WriteString(w, strContent)
 		return err
 	})
+}
+
+func appendHeader(table string, partialHeader bool) string {
+	pipeSelector := regexp.MustCompile(`\|`)
+	var mostCols []string
+	for _, line := range strings.Split(table, "\n") {
+		lineCols := pipeSelector.FindAllString(line, -1)
+		if len(lineCols) > len(mostCols) {
+			mostCols = lineCols
+		}
+	}
+
+	header := strings.Join(mostCols, " ")
+	divider := strings.Join(mostCols, "-")
+	if partialHeader {
+		return fmt.Sprintf("%s\n%s", header, table)
+	}
+	return fmt.Sprintf("%s\n%s\n%s", header, divider, table)
 }
 
 // Replaces references to site.baseurl with a shortcode
