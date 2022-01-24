@@ -2,10 +2,12 @@ package fileactions
 
 import (
 	"fmt"
+	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
 	"regexp"
+	"sort"
 	"strconv"
 	"strings"
 
@@ -43,11 +45,40 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 	return nil
 }
 
+func listMarkDownFiles(stagingDir string) ([]string, error) {
+
+	markdownFiles := make([]string, 0)
+
+	err := filepath.WalkDir(stagingDir, func(path string, d fs.DirEntry, err error) error {
+		if d.IsDir() || strings.ToLower(filepath.Ext(path)) != ".md" {
+			return nil
+		}
+		markdownFiles = append(markdownFiles, path)
+		return nil
+
+	})
+
+	if err != nil {
+		return markdownFiles, err
+	}
+
+	sort.Strings(markdownFiles)
+
+	return markdownFiles, nil
+}
+
 func CheckForDirIndex(stagingDir, path string) error {
 
 	var idxRenameList = make([]string, 0)
+	var markdownFiles, err = listMarkDownFiles(path)
 
-	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+	if err != nil {
+		panic(err)
+	}
+
+	println(len(markdownFiles))
+
+	err = filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if info.IsDir() {
 			fmt.Println(fmt.Sprintf("Checking %s for _index.md...\n", colors.Labels.Wanted(path)))
@@ -62,11 +93,11 @@ func CheckForDirIndex(stagingDir, path string) error {
 				idxRenameList = append(idxRenameList, path)
 				return nil
 			}
-			_ = addIndex(stagingDir, path)
+			_ = addIndex(stagingDir, path, &markdownFiles)
 		} else { // is a file
 			if strings.HasSuffix(path, ".md") {
 				if info.Name() != "_index.md" && info.Name() != "index.md" {
-					err := injectSlugWeightAndURL(stagingDir, path)
+					err := injectSlugWeightAndURL(stagingDir, path, &markdownFiles)
 					if err != nil {
 						return err
 					}
@@ -85,7 +116,7 @@ func CheckForDirIndex(stagingDir, path string) error {
 	for _, path := range idxRenameList {
 		fmt.Println("Renaming", colors.Labels.Unwanted(fmt.Sprintf("%v/index.md", path)), "to", colors.Labels.Wanted("_index.md"))
 		os.Rename(path+"/index.md", path+"/_index.md")
-		err := injectSlugWeightAndURLForIndex(stagingDir, path+"/_index.md")
+		err := injectSlugWeightAndURLForIndex(stagingDir, path+"/_index.md", &markdownFiles)
 		if err != nil {
 			return err
 		}
@@ -112,8 +143,16 @@ func CheckIndexForTitles(path string) error {
 }
 
 // unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
-func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
-	re := regexp.MustCompile(`(([\d\.]+)\-)?([^..]+)(\.[^\..]*)?`)
+func deduceWeightAndSlug(stagingDir, path string, markdownFiles *[]string) (int64, string, string) {
+
+	if strings.Contains(path, "2b-improve-data-completeness.md") {
+		println("wha!")
+	}
+
+	//re := regexp.MustCompile(`(([\d\.]+)\-)?([^..]+)(\.[^\..]*)?`)
+
+	re := regexp.MustCompile(`((([\d\.]+)([a-z]{0,1}))\-)?([^..]+)(\.[^\..]*)?`)
+
 	fileName := spaces.ReplaceAllLiteralString(filepath.Base(path), "-")
 	matches := re.FindStringSubmatch(fileName)
 	weight, err := strconv.ParseInt(strings.ReplaceAll(matches[2], ".", ""), 10, 64)
@@ -129,7 +168,7 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 	if path == contentDir {
 		url = ""
 	} else {
-		_, _, parentUrl := deduceWeightAndSlug(stagingDir, filepath.Dir(path))
+		_, _, parentUrl := deduceWeightAndSlug(stagingDir, filepath.Dir(path), markdownFiles)
 		if parentUrl != "" {
 			url = parentUrl + "/" + slug
 		} else {
@@ -145,10 +184,10 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 	return weight, slug, url
 }
 
-func injectSlugWeightAndURL(stagingDir, path string) error {
+func injectSlugWeightAndURL(stagingDir, path string, markdownFiles *[]string) error {
 	if markdown.IsRecognizableMarkdown(path) {
 		fmt.Println("Checking weight of ", colors.Labels.Info(path))
-		weight, slug, url := deduceWeightAndSlug(stagingDir, path)
+		weight, slug, url := deduceWeightAndSlug(stagingDir, path, markdownFiles)
 
 		m := make(map[string]interface{})
 		m["slug"] = slug
@@ -163,9 +202,9 @@ func injectSlugWeightAndURL(stagingDir, path string) error {
 	return nil
 }
 
-func injectSlugWeightAndURLForIndex(stagingDir, indexFile string) error {
+func injectSlugWeightAndURLForIndex(stagingDir, indexFile string, markdowFiles *[]string) error {
 	dir := filepath.Dir(indexFile)
-	weight, slug, url := deduceWeightAndSlug(stagingDir, dir)
+	weight, slug, url := deduceWeightAndSlug(stagingDir, dir, markdowFiles)
 	m := make(map[string]interface{})
 	m["slug"] = slug
 	m["url"] = url
@@ -176,10 +215,10 @@ func injectSlugWeightAndURLForIndex(stagingDir, indexFile string) error {
 }
 
 // addIndex adds a directory index file to override the title of the folder, "unslugified"
-func addIndex(stagingDir, path string) error {
+func addIndex(stagingDir, path string, markdownFiles *[]string) error {
 	base := filepath.Base(path)
 	title := unSlugify(base)
-	weight, slug, url := deduceWeightAndSlug(stagingDir, path)
+	weight, slug, url := deduceWeightAndSlug(stagingDir, path, markdownFiles)
 
 	fmt.Println("Adding an", colors.Labels.Unwanted("_index.md"), "file to ", colors.Labels.Wanted(path))
 
