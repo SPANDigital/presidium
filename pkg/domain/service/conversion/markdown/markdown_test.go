@@ -33,7 +33,7 @@ var _ = Describe("Processing markdown content", func() {
 	When("Replacing tooltips", func() {
 
 		var markdownText = "As mentioned in the [Handbook Introduction]({{% baseurl %}}/#contribution), the Handbook " +
-			"is a [Knowledge Management](# 'presidium-tooltip') resource that is continually updated. This requires " +
+			"is a [Knowledge Management](#top-context-menu 'presidium-tooltip') resource that is continually updated. This requires " +
 			"the active participation of both the consumers and creators of this information. This section outlines " +
 			"the [contribution process]({{% baseurl %}}/handbook-contribution/contribution-process/) " +
 			"which defines how feedback and content changes are controlled. It also covers the basics " +
@@ -48,7 +48,7 @@ var _ = Describe("Processing markdown content", func() {
 			err := replaceTooltips(markdownFile)
 			Expect(err).ShouldNot(HaveOccurred())
 			actual := contentOf(markdownFile)
-			Expect(actual).Should(ContainSubstring("{{< tooltip \"Knowledge Management\" >}}"))
+			Expect(actual).Should(ContainSubstring("{{< tooltip \"Knowledge Management\" \"top-context-menu\" >}}"))
 		})
 	})
 })
