@@ -113,7 +113,7 @@ func CheckIndexForTitles(path string) error {
 
 // unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
 func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
-	re := regexp.MustCompile(`(([\d\.]+)\-)?([^..]+)(\.[^\..]*)?`)
+	re := regexp.MustCompile(`(?m)((\d+.?)-)?(.+?)(\.[^.\s]+)?$`)
 	fileName := spaces.ReplaceAllLiteralString(filepath.Base(path), "-")
 	matches := re.FindStringSubmatch(fileName)
 	weight, err := strconv.ParseInt(strings.ReplaceAll(matches[2], ".", ""), 10, 64)
@@ -123,7 +123,7 @@ func deduceWeightAndSlug(stagingDir, path string) (int64, string, string) {
 		weight += 1
 	}
 
-	var slug = matches[3]
+	var slug = slugify(matches[3])
 	var url string
 	var contentDir = filepath.Join(stagingDir, "content")
 	if path == contentDir {
@@ -261,4 +261,11 @@ func unSlugify(name string) string {
 		return matches[3]
 	}
 	return name
+}
+
+// slugify replaces all non word chars with a "-"
+// turns "v0 .18.6" into "v0-18-6"
+func slugify(name string) string {
+	var re = regexp.MustCompile(`(?m)\W+`)
+	return re.ReplaceAllString(name, "-")
 }
