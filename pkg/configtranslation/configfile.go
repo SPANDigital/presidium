@@ -147,6 +147,7 @@ type HugoConfig struct {
 	LanguageCode           string                      `yaml:"languageCode"`
 	Title                  string                      `yaml:"title"`
 	Copyright              string                      `yaml:"copyright"`
+	AssetDir               string                      `yaml:"assetDir"`
 	PluralizeListTitles    bool                        `yaml:"pluralizelisttitles"`
 	Markup                 HugoMarkup                  `yaml:"markup"`
 	Params                 map[string]interface{}      `yaml:"params"`
@@ -279,6 +280,7 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 	hugoConfig.Copyright = config.Footer
 	hugoConfig.Params["show"] = config.Show
 	hugoConfig.Params["roles"] = config.Roles
+	hugoConfig.AssetDir = "static"
 
 	hugoConfig.EnableInlineShortcodes = true
 
