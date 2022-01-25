@@ -111,7 +111,7 @@ func fixImages(path string) error {
 			if hasTags {
 				replacements = append(replacements, parseImageWithTags(src, image))
 			} else {
-				replacements = append(replacements,  parseImageWithoutTags(src, image))
+				replacements = append(replacements, parseImageWithoutTags(src, image))
 			}
 		}
 
@@ -318,10 +318,13 @@ func replaceTooltips(path string) error {
 		if allMatches != nil {
 			fmt.Println("Found", colors.Labels.Unwanted(len(allMatches)), "tooltips in", colors.Labels.Info(path))
 		}
+
 		for _, matches := range allMatches {
 			fmt.Println("Creating tooltip for ", colors.Labels.Info(matches[1]))
 			fmt.Println("matches[0]: ", matches[0])
-			replacements = append(replacements, replacement{Find: matches[0], Replace: "{{< tooltip \"" + matches[1] + "\" >}}"})
+			ref := strings.Replace(matches[3], "#", "", 1)
+			tooltip := fmt.Sprintf("{{< tooltip \"%s\" \"%s\" >}}", matches[1], ref)
+			replacements = append(replacements, replacement{Find: matches[0], Replace: tooltip})
 		}
 		for _, rep := range replacements {
 			strContent = strings.ReplaceAll(strContent, rep.Find, rep.Replace)

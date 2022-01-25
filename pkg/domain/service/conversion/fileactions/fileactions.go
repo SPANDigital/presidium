@@ -224,7 +224,7 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 		weightTracker.update(tracked, weight)
 	}
 
-	var slug = matches[5]
+	var slug = slugify(matches[5])
 	var url string
 	var contentDir = filepath.Join(stagingDir, "content")
 	if path == contentDir {
@@ -363,4 +363,11 @@ func unSlugify(name string) string {
 		return matches[3]
 	}
 	return name
+}
+
+// slugify replaces all non word chars with a "-"
+// turns "v0 .18.6" into "v0-18-6"
+func slugify(name string) string {
+	var re = regexp.MustCompile(`(?m)\W+`)
+	return re.ReplaceAllString(name, "-")
 }
