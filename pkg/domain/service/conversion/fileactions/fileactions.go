@@ -188,7 +188,7 @@ func CheckIndexForTitles(path string) error {
 	return nil
 }
 
-var weightAndSlugRegex = regexp.MustCompile(`((([\d.]+)([a-z]?))-)?([^..]+)(\.[^.]*)?`)
+var weightAndSlugRegex = regexp.MustCompile(`((([\d.]+)([a-z]?))-)?(.+?)(\.[^.\s]+)?$`)
 
 // unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
 func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTracker) (int64, string, string) {
