@@ -243,6 +243,8 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 		}
 	}
 
+	url = strings.TrimLeft(url, "_")
+
 	return weight, slug, url
 }
 
@@ -254,6 +256,7 @@ func injectSlugWeightAndURL(stagingDir, path string, weightTracker *contentWeigh
 		m := make(map[string]interface{})
 		m["slug"] = slug
 		m["url"] = url
+		m["id"] = getContentPath(path)
 		if weight >= 0 {
 			m["weight"] = fmt.Sprintf("%d", weight)
 		}
@@ -350,6 +353,18 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 	}
 
 	return nil
+}
+
+// getContentPath returns the sub path after the content dir
+// turns "a/b/c/content/d/e.md" into "d/e.md"
+func getContentPath(path string) string {
+	contentDir := "content/"
+	idx := strings.LastIndex(path, contentDir)
+	end := idx + len(contentDir)
+	if idx < 0 || end > len(path) {
+		return path
+	}
+	return path[end:]
 }
 
 // unSlugify turns "something-like_this" into "Something Like This"
