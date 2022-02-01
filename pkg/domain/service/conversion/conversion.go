@@ -297,13 +297,13 @@ func (c *Converter) gatherResources() {
 
 func (c *Converter) performFileActions() {
 
-	c.messageUser(infoMessage("check directories for rename"))
-	if err := fileactions.RemoveUnderscoreDirPrefix(c.stagingContentDir); err != nil {
+	c.messageUser(infoMessage("check directories for indexes"))
+	if err := fileactions.CheckForDirIndex(c.stagingDir, c.stagingContentDir); err != nil {
 		log.Fatal(err)
 	}
 
-	c.messageUser(infoMessage("check directories for indexes"))
-	if err := fileactions.CheckForDirIndex(c.stagingDir, c.stagingContentDir); err != nil {
+	c.messageUser(infoMessage("check directories for rename"))
+	if err := fileactions.RemoveUnderscoreDirPrefix(c.stagingContentDir); err != nil {
 		log.Fatal(err)
 	}
 
