@@ -244,6 +244,7 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 	}
 
 	url = strings.TrimLeft(url, "_")
+	slug = strings.TrimLeft(slug, "_")
 
 	return weight, slug, url
 }
