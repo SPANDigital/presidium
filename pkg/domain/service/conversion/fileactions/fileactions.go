@@ -242,10 +242,6 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 			url = "/"
 		}
 	}
-
-	url = strings.TrimLeft(url, "_")
-	slug = strings.TrimLeft(slug, "_")
-
 	return weight, slug, url
 }
 
@@ -257,7 +253,6 @@ func injectSlugWeightAndURL(stagingDir, path string, weightTracker *contentWeigh
 		m := make(map[string]interface{})
 		m["slug"] = slug
 		m["url"] = url
-		m["id"] = getContentPath(path)
 		if weight >= 0 {
 			m["weight"] = fmt.Sprintf("%d", weight)
 		}

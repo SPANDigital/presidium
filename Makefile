@@ -20,6 +20,9 @@ build:
 clean:
 	rm -fr "dist"
 
+coverage_report:
+	@go tool cover -html=reports/tests-cov.out
+
 dist:
 	[ -d "dist" ] || mkdir "dist"
 	go build -o "dist/presidium" --tags extended
