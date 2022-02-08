@@ -16,4 +16,4 @@
 
 * [ ] Is this code covered by tests?
 * [ ] Is the documentation updated for this change?
-* [ ] Did you test your changes?
+* [ ] Did you test your changes locally?
