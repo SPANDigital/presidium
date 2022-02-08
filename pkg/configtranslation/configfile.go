@@ -262,10 +262,10 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 					Path:     "github.com/spandigital/presidium-theme-website",
 					Disabled: false,
 				},
-				{
-					Path:     "github.com/spandigital/presidium-theme-pdf",
-					Disabled: true,
-				},
+				//{ This theme doesn't work atm
+				//	Path:     "github.com/spandigital/presidium-theme-pdf",
+				//	Disabled: true,
+				//},
 			},
 		},
 	}
