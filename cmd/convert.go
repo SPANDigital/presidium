@@ -23,6 +23,9 @@ var convertCmd = &cobra.Command{
 
 		source := viper.GetString("sourceRepoDir")
 		destination := viper.GetString("destDir")
+		moduleName := viper.GetString("hugoModuleName")
+
+		c.SiteModuleName = moduleName
 
 		err := c.Execute(source, destination)
 		if err != nil {
@@ -67,7 +70,7 @@ func init() {
 	pflags.BoolVarP(&config.Flags.ReplaceBaseUrlWithSpaces, "replaceBaseUrlWithSpaces", "j", conversion.Defaults.ReplaceBaseUrlWithSpaces, "Replace {{ site.baseurl }} with {{site.BaseURL}}")
 	pflags.BoolVarP(&config.Flags.RemoveTargetBlank, "removeTargetBlank", "t", conversion.Defaults.RemoveTargetBlank, `Remove target="blank" variants`)
 	pflags.BoolVarP(&config.Flags.FixImages, "fixImages", "i", conversion.Defaults.FixImages, "Fix images in same path")
-	pflags.BoolVar(&config.Flags.FixHtmlImages, "fixHtmlImages",  conversion.Defaults.FixHtmlImages, "Fix the source of html images")
+	pflags.BoolVar(&config.Flags.FixHtmlImages, "fixHtmlImages", conversion.Defaults.FixHtmlImages, "Fix the source of html images")
 	pflags.BoolVarP(&config.Flags.EraseMarkdownWithNoContent, "eraseMarkdownWithNoContent", "e", conversion.Defaults.EraseMarkdownWithNoContent, "Erase markdown files with no content")
 	pflags.BoolVarP(&config.Flags.RemoveRawTags, "removeRawTags", "R", conversion.Defaults.RemoveRawTags, "Remove {% raw %} tags")
 	pflags.StringVarP(&config.Flags.ReplaceRoot, "replaceRoot", "p", conversion.Defaults.ReplaceRootWith, "Replace this path with root")
@@ -79,6 +82,9 @@ func init() {
 	pflags.BoolVarP(&config.Flags.CopyMediaToStatic, "copyMediaToStatic", "C", conversion.Defaults.CopyMediaToStatic, "Copy Jekyll media to Hugo static folder")
 	pflags.BoolVarP(&config.Flags.ConvertConfigYml, "convertConfigYml", "y", conversion.Defaults.ConvertJekyllConfig, "Convert jekyll _config.yml to hugo config.yml")
 	pflags.BoolVarP(&config.Flags.FixTables, "addTableHeaders", "F", conversion.Defaults.FixTables, "Add empty table headers to tables without headers")
+	pflags.BoolVarP(&config.Flags.GenerateHugoModule, "generateHugoModule", "M", conversion.Defaults.GenerateHugoModule, "Generate Hugo (Go) module")
+	pflags.StringVarP(&config.Flags.HugoModuleName, "hugoModuleName", "N", "", "Use a specific hugo module name (instead of one derived from the site title)")
+
 	err = viper.BindPFlags(pflags)
 	if err != nil {
 		log.Fatal(err)

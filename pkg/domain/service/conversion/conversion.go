@@ -6,12 +6,15 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/fileactions"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/resources"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
 	"github.com/spf13/viper"
 	"io"
+	"io/fs"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
+	"regexp"
 	"strings"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
@@ -50,6 +53,8 @@ type Converter struct {
 	CommonMarkdownAttributes   bool
 	CopyMediaToStatic          bool
 	FixTables                  bool
+	GenerateHugoModule         bool
+	SiteModuleName             string
 
 	// --- private state follows from here on: --
 	stagingDir        string
@@ -69,6 +74,7 @@ type Converter struct {
 	destinationStaticDir     string
 	destinationMediaDir      string
 	destinationConfigYmlFile string
+	hugoConfig               configtranslation.HugoConfig
 }
 
 func (c *Converter) IsRunning() bool {
@@ -209,6 +215,7 @@ func (c *Converter) Execute(sourceDir string, destDir string) error {
 	c.performFileActions()
 	c.processStaticMedia()
 	c.convertConfig()
+	c.generateHugoModule()
 	c.finalize()
 
 	return nil
@@ -257,6 +264,7 @@ func New() *Converter {
 		CopyMediaToStatic:          true,
 		FixTables:                  true,
 		fs:                         filesystem.New(),
+		GenerateHugoModule:         true,
 	}
 }
 
@@ -355,11 +363,10 @@ func (c *Converter) convertConfig() {
 		log.Fatal(err)
 	}
 
+	c.hugoConfig = *hugoConfig
 }
 
 func (c *Converter) finalize() {
-
-	c.messageUser(infoMessage(fmt.Sprintf("Removing %s", c.stagingDir)))
 
 	_ = c.fs.DeleteDir(c.stagingDir)
 
@@ -368,6 +375,36 @@ func (c *Converter) finalize() {
 	copyOver("package-lock.json", c.destinationRepoDir)
 
 	c.messageUser(infoMessage("Completed").withContentStyle(colors.Labels.Wanted))
+}
+
+func (c *Converter) generateHugoModule() {
+
+	if !c.GenerateHugoModule {
+		return
+	}
+
+	c.messageUser(infoMessage("Adding Hugo GO module to site").withContentStyle(colors.Labels.Wanted))
+	hugo.New().Execute("--source", c.stagingDir, "mod", "init", c.moduleName())
+	srcModFile := filepath.Join(c.stagingDir, "go.mod")
+	dstModFile := filepath.Join(c.destinationRepoDir, "go.mod")
+	_ = c.fs.Copy(srcModFile, dstModFile, fs.ModePerm)
+	c.messageUser(infoMessage("Copied over hugo mod file"))
+
+}
+
+var nonlettrsRe = regexp.MustCompile(`\W+`)
+
+func (c *Converter) moduleName() string {
+
+	siteModuleName := c.SiteModuleName
+
+	if len(siteModuleName) == 0 {
+		siteModuleName = c.hugoConfig.Title
+		siteModuleName = nonlettrsRe.ReplaceAllString(siteModuleName, "_")
+		siteModuleName = strings.ToLower(siteModuleName)
+	}
+
+	return siteModuleName
 }
 
 // copyOver ensures that these files exists on at the destinationDir.

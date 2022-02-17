@@ -24,8 +24,10 @@ type flags struct {
 	ConvertConfigYml           bool
 	ReplaceBaseUrlWithSpaces   bool
 	ReplaceComments            bool
-	LogoPrefix				   string
+	LogoPrefix                 string
 	FixTables                  bool
+	GenerateHugoModule         bool
+	HugoModuleName             string
 }
 
 var Flags flags
