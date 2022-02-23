@@ -123,7 +123,7 @@ zip -r documentation.zip content static config.yml _vendor
      -V, --replaceIfVariables           Replace {% if site.variable =} with with-param shortcodes (default true)
      -p, --replaceRoot string           Replace this path with root
      -T, --replaceTooltips              Replace tooltip HTML with callout shortcodes (default true)
-     -g, --slugBasedOnFileName          Base front matter slug on filename (default true)
+     -g, --slugBasedOnFileName          Base front matter slug on filename (default false)
      -s, --sourceRepoDir string         Source directory
      -u, --urlBasedOnFilename           Base front matter url on filename (default true)
      -w, --weightBasedOnFilename        Base front matter weight on filename (default true)

@@ -245,13 +245,35 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 	return weight, slug, url
 }
 
+// Gets the title from the Front Matter and uses it to create a slug
+func slugByPriority(path string, slug *string, indexMarkdown *markdown.Markdown) bool {
+	if _, ok := indexMarkdown.FrontMatter["slug"]; ok {
+		return false
+	} else if from_file := viper.GetBool("slugBasedOnFilename"); from_file {
+		return true
+	} else if value, ok := indexMarkdown.FrontMatter["title"]; ok {
+		title := fmt.Sprintf("%v", value)
+		*slug = titleToSlug(title)
+	}
+
+	return true
+}
+
 func injectSlugWeightAndURL(stagingDir, path string, weightTracker *contentWeightTracker) error {
 	if markdown.IsRecognizableMarkdown(path) {
 		fmt.Println("Checking weight of ", colors.Labels.Info(path))
 		weight, slug, url := deduceWeightAndSlug(stagingDir, path, weightTracker)
 
+		indexMarkdown, err := markdown.Parse(path)
+		if err != nil {
+			return err
+		}
+		new_slug := slugByPriority(path, &slug, indexMarkdown)
+
 		m := make(map[string]interface{})
-		m["slug"] = slug
+		if new_slug {
+			m["slug"] = slug
+		}
 		m["url"] = url
 		if weight >= 0 {
 			m["weight"] = fmt.Sprintf("%d", weight)
@@ -381,4 +403,12 @@ func unSlugify(name string) string {
 func slugify(name string) string {
 	var re = regexp.MustCompile(`(?m)\W+`)
 	return re.ReplaceAllString(name, "-")
+}
+
+// Take a capitalized title and turn it into a slug
+func titleToSlug(title string) string {
+	title = strings.ToLower(title)
+	title = strings.Replace(title, "&", "and", -1)
+	title = slugify(title)
+	return title
 }
