@@ -3,16 +3,17 @@ package conversion
 import (
 	"errors"
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/fileactions"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/resources"
-	"github.com/spf13/viper"
 	"io"
 	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/fileactions"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/resources"
+	"github.com/spf13/viper"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
@@ -250,7 +251,7 @@ func New() *Converter {
 		ReplaceIfVariables:         true,
 		ReplaceRootWith:            "",
 		ReplaceToolTips:            true,
-		SlugBasedOnFileName:        true,
+		SlugBasedOnFileName:        false,
 		SilenceUserMessages:        false,
 		WeightBasedOnFileName:      true,
 		CommonMarkdownAttributes:   false,
