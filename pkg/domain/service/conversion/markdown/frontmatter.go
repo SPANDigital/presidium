@@ -2,9 +2,10 @@ package markdown
 
 import (
 	"fmt"
+	"io"
+
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/spf13/viper"
-	"io"
 )
 
 var excludes map[string]bool
@@ -14,7 +15,6 @@ func SetupExcludes() {
 	excludes = make(map[string]bool)
 	excludes["url"] = !viper.GetBool("urlBasedOnFilename")
 	excludes["weight"] = !viper.GetBool("weightBasedOnFilename")
-	excludes["slug"] = !viper.GetBool("slugBasedOnFilename")
 }
 
 // Add front matter keys and values to an existing markdown file
