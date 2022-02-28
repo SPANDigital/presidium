@@ -149,6 +149,7 @@ type HugoConfig struct {
 	Copyright              string                      `yaml:"copyright"`
 	AssetDir               string                      `yaml:"assetDir"`
 	PluralizeListTitles    bool                        `yaml:"pluralizelisttitles"`
+	EnableGitInfo          bool                        `yaml:"enableGitInfo"`
 	Markup                 HugoMarkup                  `yaml:"markup"`
 	Params                 map[string]interface{}      `yaml:"params"`
 	SectionPagesMenu       string                      `yaml:"sectionPagesMenu"`
@@ -231,8 +232,9 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 	}
 
 	hugoConfig := &HugoConfig{
-		LanguageCode: "en-us",
-		Title:        config.Name,
+		LanguageCode:  "en-us",
+		Title:         config.Name,
+		EnableGitInfo: true,
 		Markup: HugoMarkup{
 			Goldmark: HugoGoldmark{
 				Renderer: HugoRenderer{
