@@ -30,6 +30,29 @@ var _ = Describe("Processing markdown content", func() {
 
 	AfterSuite(func() { _ = os.RemoveAll(workDir) })
 
+	When("Replacing callouts", func() {
+		var markdownText = `<div class="presidium-warning">
+    		<span>Do Not Copy Working Documents from Other Projects</span>
+    		<p>Working Documents are continually being improved, so it is critical that each new project uses the latest versions.</p>
+
+      		Working Document Templates are stored in the following Google Drive directories:
+  			<ul style="list-style: none; margin-left: -20px;">
+    			<li><a href="https://drive.google.com/drive/folders/0B2ynAoQvesi5Zk9ZRFhnYWRrLU0" target="_blank">&#x2605; SPAN Services Templates</a></li>
+    			<li><a href="https://drive.google.com/drive/folders/0B32NHmira-_eWnNGQWFKUHh5Mlk" target="_blank">&#x2605; SPAN Templates</a></li>
+  			</ul>
+			</div>
+		`
+
+		It("Should replace it as expected", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := replaceCallOuts(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring(`{{< callout level="warning" title="Do Not Copy Working Documents from Other Projects">}}`))
+			Expect(actual).Should(Not(MatchRegexp(EmptyLineRe.String())))
+		})
+	})
+
 	When("Replacing tooltips", func() {
 
 		var markdownText = "As mentioned in the [Handbook Introduction]({{% baseurl %}}/#contribution), the Handbook " +

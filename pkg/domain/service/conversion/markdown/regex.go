@@ -20,8 +20,8 @@ var SourceRe = regexp.MustCompile(`(src)="({{.+}})?([^"\s]*\/)*([^"]*\.(png|jpg|
 // AttributesRe matches html attributes, see https://regex101.com/r/FgkHDJ/1
 var AttributesRe = regexp.MustCompile(`(\w+)="([^\"]+)"`)
 
-// CalloutRe matches callouts https://regex101.com/r/UHmoHk/1
-var CalloutRe = regexp.MustCompile(`<div class="presidium-([\w\-]+)">\s*(<span>(.*)<\/span>)?\s*(.*)\s*<\/div>`)
+// CalloutRe matches callouts https://regex101.com/r/8CnxPG/1
+var CalloutRe = regexp.MustCompile(`(?ms)<div class="presidium-([\w\-]+)">\s*(<span>(.*?)</span>)?(.*?)</div>`)
 
 // TooltipRe matches tooltips, see https://regex101.com/r/McE770/1
 var TooltipRe = regexp.MustCompile(`(?m)\[([^(.]*)]\(({{.+}})?([^)\s]*?)\s*'presidium-tooltip'\)`)
@@ -46,3 +46,6 @@ var ContainsShortcodeRe = regexp.MustCompile(`(?ms){{[%<].*?[%>]}}`)
 
 // CommentRe matches comments, see https://regex101.com/r/31XAPX/1
 var CommentRe = regexp.MustCompile(`(?ms){% comment %}(.*?){% endcomment %}`)
+
+// EmptyLineRe matches empty lines, see https://regex101.com/r/rNxkKo/3
+var EmptyLineRe = regexp.MustCompile(`(?m)^(?:[\t ]*(?:\r?\n|\r))+`)

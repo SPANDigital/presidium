@@ -298,9 +298,10 @@ func replaceCallOuts(path string) error {
 		for _, matches := range allMatches {
 			fmt.Println("Replacing callout ", colors.Labels.Unwanted(matches[2]), "and level", colors.Labels.Unwanted(matches[1]), " with shortcode in ", colors.Labels.Info(path))
 			title := matches[3]
-			innerContent := matches[4]
+			innerContent := EmptyLineRe.ReplaceAllString(matches[4], "")
+			innerContent = strings.TrimSpace(innerContent)
 			openSymbol, closeSymbol := wrapSymbols(innerContent)
-			replacements = append(replacements, replacement{Find: matches[0], Replace: fmt.Sprintf("{{%s callout level=\"%s\" title=\"%s\"%s}}\n  %s\n{{%s /callout %s}}", openSymbol, matches[1], title, closeSymbol, innerContent, openSymbol, closeSymbol)})
+			replacements = append(replacements, replacement{Find: matches[0], Replace: fmt.Sprintf("{{%s callout level=\"%s\" title=\"%s\"%s}}\n%s\n{{%s /callout %s}}", openSymbol, matches[1], title, closeSymbol, innerContent, openSymbol, closeSymbol)})
 		}
 		for _, rep := range replacements {
 			strContent = strings.ReplaceAll(strContent, rep.Find, rep.Replace)
