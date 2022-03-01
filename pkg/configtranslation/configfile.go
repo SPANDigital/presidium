@@ -2,11 +2,12 @@ package configtranslation
 
 import (
 	"fmt"
+	"io/ioutil"
+	"regexp"
+
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
-	"regexp"
 )
 
 type JekyllShow struct {
@@ -25,17 +26,18 @@ type JekyllSectionItem struct {
 }
 
 type JekyllConfig struct {
-	Name       string              `yaml:"name"`
-	Baseurl    string              `yaml:"baseurl"`
-	Footer     string              `yaml:"footer"`
-	Logo       string              `yaml:"logo"`
-	Audience   string              `yaml:"audience"`
-	Scope      string              `yaml:"scope"`
-	AppleScope string              `yaml:"apple_scope"`
-	Show       interface{}         `yaml:"show"`
-	External   JekyllExternal      `yaml:"external"`
-	Sections   []JekyllSectionItem `yaml:"sections"`
-	Roles      Roles               `yaml:"roles"`
+	Name        string              `yaml:"name"`
+	Description string              `yaml:"description"`
+	Baseurl     string              `yaml:"baseurl"`
+	Footer      string              `yaml:"footer"`
+	Logo        string              `yaml:"logo"`
+	Audience    string              `yaml:"audience"`
+	Scope       string              `yaml:"scope"`
+	AppleScope  string              `yaml:"apple_scope"`
+	Show        interface{}         `yaml:"show"`
+	External    JekyllExternal      `yaml:"external"`
+	Sections    []JekyllSectionItem `yaml:"sections"`
+	Roles       Roles               `yaml:"roles"`
 }
 
 func (j *JekyllConfig) reparsedShowOptionsAsSequenceDictionaries() bool {
@@ -278,6 +280,7 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 	hugoConfig.Params["audience"] = config.Audience
 	hugoConfig.Params["scope"] = config.Scope
 	hugoConfig.Params["appleScope"] = config.AppleScope
+	hugoConfig.Params["description"] = config.Description
 	hugoConfig.Params["logo"] = convertLogoPath(logoPrefix, config.Logo)
 	hugoConfig.Copyright = config.Footer
 	hugoConfig.Params["show"] = config.Show
