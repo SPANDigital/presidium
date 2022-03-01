@@ -234,7 +234,7 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 	hugoConfig := &HugoConfig{
 		LanguageCode:  "en-us",
 		Title:         config.Name,
-		EnableGitInfo: true,
+		EnableGitInfo: false,
 		Markup: HugoMarkup{
 			Goldmark: HugoGoldmark{
 				Renderer: HugoRenderer{
