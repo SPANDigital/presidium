@@ -42,9 +42,9 @@ func (j *JekyllConfig) reparsedShowOptionsAsSequenceDictionaries() bool {
 
 	if seqOpts, ok := j.Show.([]interface{}); ok {
 		parsed := JekyllShow{
-			Status: false,
-			Author: false,
-			Roles:  false,
+			Status: true,
+			Author: true,
+			Roles:  true,
 		}
 		for _, opt := range seqOpts {
 			if values, ok := opt.(map[interface{}]interface{}); ok {
@@ -77,9 +77,9 @@ func (j *JekyllConfig) reparsedShowOptionsAsDictionary() bool {
 
 	if dictOpts, ok := j.Show.(map[interface{}]interface{}); ok {
 		parsed := JekyllShow{
-			Status: false,
-			Author: false,
-			Roles:  false,
+			Status: true,
+			Author: true,
+			Roles:  true,
 		}
 		for k, v := range dictOpts {
 			var option string
