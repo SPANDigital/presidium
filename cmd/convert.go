@@ -61,6 +61,7 @@ func init() {
 	pflags := convertCmd.PersistentFlags()
 	pflags.BoolVarP(&config.Flags.EnableColor, "enableColor", "c", conversion.Defaults.EnableColorOutput, "Enable colorful output")
 	pflags.StringVarP(&config.Flags.SourceRepoDir, "sourceRepoDir", "s", "", "Source directory")
+	pflags.StringVar(&config.Flags.BrandTheme, "brand", "", "path to brand theme")
 	pflags.StringVarP(&config.Flags.DestinationRepoDir, "destDir", "d", cwd, "Destination directory")
 	pflags.BoolVarP(&config.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", conversion.Defaults.WeightBasedOnFileName, "Base front matter weight on filename")
 	pflags.BoolVarP(&config.Flags.SlugBasedOnFileName, "slugBasedOnFileName", "g", conversion.Defaults.SlugBasedOnFileName, "Base front matter slug on filename")
