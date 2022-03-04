@@ -2,6 +2,7 @@ package configtranslation
 
 import (
 	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"io/ioutil"
 	"regexp"
 
@@ -164,8 +165,14 @@ type HugoConfig struct {
 }
 
 type HugoImport struct {
-	Path     string `yaml:"path"`
-	Disabled bool   `yaml:"disabled"`
+	Path     string  `yaml:"path"`
+	Disabled bool    `yaml:"disabled"`
+	Mounts   []Mount `yaml:"mounts,omitempty"`
+}
+
+type Mount struct {
+	Source string `yaml:"source"`
+	Target string `yaml:"target"`
 }
 
 type HugoModule struct {
@@ -221,10 +228,10 @@ func convertLogoPath(logoPrefix string, logoPath string) string {
 	return fmt.Sprintf("%s%s", logoPrefix, logo)
 }
 
-func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map[string]interface{}) *HugoConfig {
+func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalParams map[string]interface{}) *HugoConfig {
 
 	mainMenu := []HugoMenuItem{}
-	for idx, item := range config.Sections {
+	for idx, item := range jekyllConfig.Sections {
 		mainMenu = append(mainMenu, HugoMenuItem{
 			Identifier: item.Title,
 			Name:       item.Title,
@@ -235,7 +242,7 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 
 	hugoConfig := &HugoConfig{
 		LanguageCode:  "en-us",
-		Title:         config.Name,
+		Title:         jekyllConfig.Name,
 		EnableGitInfo: false,
 		Markup: HugoMarkup{
 			Goldmark: HugoGoldmark{
@@ -274,17 +281,22 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 		},
 	}
 
+	if len(config.Flags.BrandTheme) > 0 {
+		mod := getImportModule(config.Flags.BrandTheme)
+		hugoConfig.Module.Imports = append([]HugoImport{mod}, hugoConfig.Module.Imports...)
+	}
+
 	if additionalParams != nil {
 		hugoConfig.Params = additionalParams
 	}
-	hugoConfig.Params["audience"] = config.Audience
-	hugoConfig.Params["scope"] = config.Scope
-	hugoConfig.Params["appleScope"] = config.AppleScope
-	hugoConfig.Params["description"] = config.Description
-	hugoConfig.Params["logo"] = convertLogoPath(logoPrefix, config.Logo)
-	hugoConfig.Copyright = config.Footer
-	hugoConfig.Params["show"] = config.Show
-	hugoConfig.Params["roles"] = config.Roles
+	hugoConfig.Params["audience"] = jekyllConfig.Audience
+	hugoConfig.Params["scope"] = jekyllConfig.Scope
+	hugoConfig.Params["appleScope"] = jekyllConfig.AppleScope
+	hugoConfig.Params["description"] = jekyllConfig.Description
+	hugoConfig.Params["logo"] = convertLogoPath(logoPrefix, jekyllConfig.Logo)
+	hugoConfig.Copyright = jekyllConfig.Footer
+	hugoConfig.Params["show"] = jekyllConfig.Show
+	hugoConfig.Params["roles"] = jekyllConfig.Roles
 	hugoConfig.AssetDir = "static"
 
 	hugoConfig.EnableInlineShortcodes = true
@@ -292,4 +304,21 @@ func ConvertConfig(config *JekyllConfig, logoPrefix string, additionalParams map
 	hugoConfig.Frontmatter.Lastmod = []string{"lastmod", ":fileModTime", ":default"}
 
 	return hugoConfig
+}
+
+func getImportModule(path string) HugoImport {
+	return HugoImport{
+		Path:     path,
+		Disabled: false,
+		Mounts: []Mount{
+			{
+				Source: "assets",
+				Target: "assets",
+			},
+			{
+				Source: "static",
+				Target: "static",
+			},
+		},
+	}
 }
