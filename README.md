@@ -127,7 +127,9 @@ zip -r documentation.zip content static config.yml _vendor
      -s, --sourceRepoDir string         Source directory
      -u, --urlBasedOnFilename           Base front matter url on filename (default true)
      -w, --weightBasedOnFilename        Base front matter weight on filename (default true)
-
+     -w, --weightBasedOnFilename        Base front matter weight on filename (default true)
+         --brand string                 path to brand theme
+         
    Global Flags:
          --config string   config file (default is $HOME/.presidium-hugo.yaml)
   ```
