@@ -216,8 +216,7 @@ func injectFrontMatter(path string, fm markdown.FrontMatter) error {
 	}
 
 	if newSlug := slugByPriority(indexMarkdown.FrontMatter); newSlug != nil {
-		dir, _ := filepath.Split(fm.URL)
-		if len(dir) > 0 {
+		if dir, _ := filepath.Split(fm.URL); len(dir) > 0 {
 			fm.URL = dir + *newSlug
 		} else {
 			fm.URL = *newSlug
@@ -266,7 +265,7 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 	}
 
 	if weight >= 0 {
-		fm.Weight = fmt.Sprintf("%v", weight)
+		fm.Weight = fmt.Sprintf("%d", weight)
 	}
 
 	contentDir := filepath.Join(stagingDir, "content")

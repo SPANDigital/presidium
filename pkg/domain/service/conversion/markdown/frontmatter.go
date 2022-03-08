@@ -15,7 +15,11 @@ type FrontMatter struct {
 	Title  string `yaml:"title,omitempty"`
 	Slug   string `yaml:"slug,omitempty"`
 	URL    string `yaml:"url,omitempty"`
-	Weight string  `yaml:"weight,omitempty"`
+	Weight string `yaml:"weight,omitempty"`
+	Author string `yaml:"author,omitempty"`
+	Github string `yaml:"github,omitempty"`
+	Status string `yaml:"status,omitempty"`
+	Roles string `yaml:"roles,omitempty"`
 }
 
 // initialize excludes from Viper

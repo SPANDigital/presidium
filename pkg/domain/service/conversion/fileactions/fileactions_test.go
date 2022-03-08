@@ -37,6 +37,7 @@ var _ = Describe("Performing file actions", func() {
 			"introduction/1.2-staff-facilities/2.2-kitchen.md",
 			"introduction/1.2-staff-facilities/3-toilets-and-the-rest.md",
 		}
+
 		BeforeEach(func() {
 			tempDir, err := ioutil.TempDir("", "stagedContentDir-*")
 			Expect(err).ShouldNot(HaveOccurred())
@@ -57,7 +58,9 @@ var _ = Describe("Performing file actions", func() {
 				}
 			}
 		})
+
 		AfterEach(func() { _ = os.RemoveAll(stagingContentDir) })
+
 		It("should produce a clean tree of file paths with no with weight indicators", func() {
 			regexNameStarsWithWeighIndicators := regexp.MustCompile(`^[\d+\-.]+`)
 			err := RemoveWeightIndicatorsFromFilePaths(stagingContentDir)
@@ -75,6 +78,7 @@ var _ = Describe("Performing file actions", func() {
 			Expect(pathsWithWeightIndicators).Should(BeEmpty())
 		})
 	})
+
 	When("deriving article title", func() {
 		// Just add more expectations here to have them tested
 		givenExpectations := map[string]string{

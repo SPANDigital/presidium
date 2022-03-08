@@ -1,8 +1,8 @@
 package markdown
 
 import (
+	"github.com/spf13/afero"
 	"gopkg.in/yaml.v2"
-	"io/ioutil"
 )
 
 type Markdown struct {
@@ -10,11 +10,14 @@ type Markdown struct {
 	Content     string
 }
 
+var af = afero.NewOsFs()
+
 func Parse(path string) (*Markdown, error) {
-	b, err := ioutil.ReadFile(path) // just pass the file name
+	b, err := afero.ReadFile(af, path)
 	if err != nil {
 		return nil, err
 	}
+
 	matches := MarkdownRe.FindSubmatch(b)
 	if matches != nil {
 		var fm FrontMatter
