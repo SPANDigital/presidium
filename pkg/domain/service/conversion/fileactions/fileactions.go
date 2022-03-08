@@ -16,8 +16,44 @@ import (
 	"github.com/spf13/viper"
 )
 
-var reNamedWeight = regexp.MustCompile(`^[\d\-.]+`)
-var spaces = regexp.MustCompile(`\s+`)
+type contentWeightTracker struct {
+	paths   []string
+	indices map[string]int
+	weights map[int]int64
+	current int
+}
+
+func (t *contentWeightTracker) tracking(path string) int {
+	if v, found := t.indices[path]; found {
+		t.current = v
+	} else {
+		t.current = -1
+	}
+	return t.current
+}
+
+func (t *contentWeightTracker) update(tracked int, weight int64) {
+	if tracked != -1 {
+		t.weights[tracked] = weight
+	}
+}
+
+func (t *contentWeightTracker) lookupSiblingWeight(tracked int) int64 {
+	if tracked == -1 || tracked == 0 || tracked >= len(t.paths) || len(t.paths) == -1 {
+		return 0
+	}
+
+	prev := tracked - 1
+	prevParent, _ := filepath.Split(t.paths[prev])
+	thisParent, _ := filepath.Split(t.paths[tracked])
+
+	if thisParent != prevParent {
+		return 0
+	}
+
+	w := t.weights[prev]
+	return w
+}
 
 func fileExists(path string) bool {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
@@ -45,48 +81,7 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 	return nil
 }
 
-type contentWeightTracker struct {
-	paths   []string
-	indices map[string]int
-	weights map[int]int64
-	current int
-}
-
-func (t *contentWeightTracker) tracking(path string) int {
-	if v, found := t.indices[path]; found {
-		t.current = v
-	} else {
-		t.current = -1
-	}
-	return t.current
-}
-
-func (t *contentWeightTracker) update(tracked int, weight int64) {
-	if tracked != -1 {
-		t.weights[tracked] = weight
-	}
-}
-
-func (t *contentWeightTracker) lookupSiblingWeight(tracked int) int64 {
-
-	if tracked == -1 || tracked == 0 || tracked >= len(t.paths) || len(t.paths) == -1 {
-		return 0
-	}
-
-	prev := tracked - 1
-	prevParent, _ := filepath.Split(t.paths[prev])
-	thisParent, _ := filepath.Split(t.paths[tracked])
-
-	if thisParent != prevParent {
-		return 0
-	}
-
-	w := t.weights[prev]
-	return w
-}
-
 func newContentWeighTracker(root string) contentWeightTracker {
-
 	cwt := contentWeightTracker{
 		weights: make(map[int]int64),
 		indices: map[string]int{},
@@ -119,9 +114,7 @@ func newContentWeighTracker(root string) contentWeightTracker {
 }
 
 func CheckForDirIndex(stagingDir, path string) error {
-
 	var idxRenameList = make([]string, 0)
-
 	weighTracker := newContentWeighTracker(path)
 
 	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
@@ -143,7 +136,8 @@ func CheckForDirIndex(stagingDir, path string) error {
 		} else { // is a file
 			if strings.HasSuffix(path, ".md") {
 				if info.Name() != "_index.md" && info.Name() != "index.md" {
-					err := injectSlugWeightAndURL(stagingDir, path, &weighTracker)
+					fm := deduceWeightAndSlug(stagingDir, path,  &weighTracker)
+					err = injectFrontMatter(path, fm)
 					if err != nil {
 						return err
 					}
@@ -159,10 +153,18 @@ func CheckForDirIndex(stagingDir, path string) error {
 	if err != nil {
 		return err
 	}
-	for _, path := range idxRenameList {
-		fmt.Println("Renaming", colors.Labels.Unwanted(fmt.Sprintf("%v/index.md", path)), "to", colors.Labels.Wanted("_index.md"))
-		os.Rename(path+"/index.md", path+"/_index.md")
-		err := injectSlugWeightAndURLForIndex(stagingDir, path+"/_index.md", &weighTracker)
+	for _, idxPath := range idxRenameList {
+		oldPath := fmt.Sprintf("%s/%s", idxPath, "index.md")
+		newPath := fmt.Sprintf("%s/%s", idxPath, "_index.md")
+		fmt.Println("Renaming", colors.Labels.Unwanted(fmt.Sprintf("%v/index.md", idxPath)), "to", colors.Labels.Wanted("_index.md"))
+
+		err = os.Rename(oldPath, newPath)
+		if err != nil {
+			return err
+		}
+
+		fm := deduceWeightAndSlug(stagingDir, idxPath,  &weighTracker)
+		err = injectFrontMatter(newPath, fm)
 		if err != nil {
 			return err
 		}
@@ -177,10 +179,14 @@ func CheckIndexForTitles(path string) error {
 			if err != nil {
 				return err
 			}
-			if _, ok := indexMarkdown.FrontMatter["title"]; !ok {
+
+			if len(indexMarkdown.FrontMatter.Title) == 0 {
 				base := filepath.Base(filepath.Dir(path))
 				title := unSlugify(base)
-				markdown.AddFrontMatter(path, map[string]interface{}{"title": title})
+				err = markdown.AddFrontMatter(path, markdown.FrontMatter{Title: title})
+				if err != nil {
+					return err
+				}
 			}
 		}
 		return nil
@@ -188,14 +194,44 @@ func CheckIndexForTitles(path string) error {
 	return nil
 }
 
-var weightAndSlugRegex = regexp.MustCompile(`((([\d.]+)([a-z]?))-)?(.+?)(\.[^.\s]+)?$`)
+func replaceRoot(url string) string {
+	rootUrl := viper.GetString("replaceRoot")
+	url = strings.TrimPrefix(url, strings.ToLower(rootUrl))
+	if len(url) == 0 {
+		return "/"
+	}
+	return url
+}
 
-// unNumerify turns "02-employment-contracts" into "employment-contracts" and "bill-add-customer" into "bill-add-customer"
-func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTracker) (int64, string, string) {
+func injectFrontMatter(path string, fm markdown.FrontMatter) error {
+	if !markdown.IsRecognizableMarkdown(path) {
+		fmt.Println("Is not valid markdown", colors.Labels.Info(path))
+		return nil
+	}
 
+	fmt.Println("Checking weight of ", colors.Labels.Info(path))
+	indexMarkdown, err := markdown.Parse(path)
+	if err != nil {
+		return err
+	}
+
+	if newSlug := slugByPriority(indexMarkdown.FrontMatter); newSlug != nil {
+		dir, _ := filepath.Split(fm.URL)
+		if len(dir) > 0 {
+			fm.URL = dir + *newSlug
+		} else {
+			fm.URL = *newSlug
+		}
+		fm.Slug = *newSlug
+	}
+
+	return markdown.AddFrontMatter(path, fm)
+}
+
+func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTracker) markdown.FrontMatter {
 	tracked := weightTracker.tracking(path)
-	fileName := spaces.ReplaceAllLiteralString(filepath.Base(path), "-")
-	matches := weightAndSlugRegex.FindStringSubmatch(fileName)
+	fileName := markdown.SpaceRe.ReplaceAllLiteralString(filepath.Base(path), "-")
+	matches := markdown.WeightAndSlugRe.FindStringSubmatch(fileName)
 	weightStr := matches[2]
 	weightAdjustment := 0
 	adjusted := false
@@ -224,100 +260,55 @@ func deduceWeightAndSlug(stagingDir, path string, weightTracker *contentWeightTr
 		weightTracker.update(tracked, weight)
 	}
 
-	var slug = slugify(matches[5])
-	var url string
-	var contentDir = filepath.Join(stagingDir, "content")
-	if path == contentDir {
-		url = ""
-	} else {
-		_, _, parentUrl := deduceWeightAndSlug(stagingDir, filepath.Dir(path), weightTracker)
-		if parentUrl != "" {
-			url = parentUrl + "/" + slug
-		} else {
-			url = slug
-		}
-		replaceRoot := viper.GetString("replaceRoot")
-		url = strings.TrimPrefix(url, strings.ToLower(replaceRoot))
-		if url == "" {
-			url = "/"
-		}
+	slug := slugify(matches[5])
+	fm := markdown.FrontMatter{
+		Slug: slug,
 	}
-	return weight, slug, url
+
+	if weight >= 0 {
+		fm.Weight = fmt.Sprintf("%v", weight)
+	}
+
+	contentDir := filepath.Join(stagingDir, "content")
+	if path == contentDir {
+		return fm
+	}
+
+	fm.URL = slug
+	parentFm := deduceWeightAndSlug(stagingDir, filepath.Dir(path), weightTracker)
+	if len(parentFm.URL) > 0 {
+		fm.URL = parentFm.URL + "/" + slug
+	}
+
+	fm.URL = replaceRoot(fm.URL)
+	return fm
 }
 
 // Gets the title from the Front Matter and uses it to create a slug
-func slugByPriority(path string, slug *string, indexMarkdown *markdown.Markdown) bool {
-	if _, ok := indexMarkdown.FrontMatter["slug"]; ok {
-		return false
-	} else if from_file := viper.GetBool("slugBasedOnFilename"); from_file {
-		return true
-	} else if value, ok := indexMarkdown.FrontMatter["title"]; ok {
-		title := fmt.Sprintf("%v", value)
-		*slug = titleToSlug(title)
+func slugByPriority(fm markdown.FrontMatter) *string {
+	if len(fm.Slug) > 0 {
+		return nil
+	} else if fromFile := viper.GetBool("slugBasedOnFilename"); fromFile {
+		return nil
+	} else if title := fm.Title; len(title) > 0 {
+		titleSlug := titleToSlug(title)
+		return &titleSlug
 	}
-
-	return true
-}
-
-func injectSlugWeightAndURL(stagingDir, path string, weightTracker *contentWeightTracker) error {
-	if markdown.IsRecognizableMarkdown(path) {
-		fmt.Println("Checking weight of ", colors.Labels.Info(path))
-		weight, slug, url := deduceWeightAndSlug(stagingDir, path, weightTracker)
-
-		indexMarkdown, err := markdown.Parse(path)
-		if err != nil {
-			return err
-		}
-		new_slug := slugByPriority(path, &slug, indexMarkdown)
-
-		m := make(map[string]interface{})
-		if new_slug {
-			m["slug"] = slug
-		}
-		m["url"] = url
-		if weight >= 0 {
-			m["weight"] = fmt.Sprintf("%d", weight)
-		}
-
-		return markdown.AddFrontMatter(path, m)
-	}
-	fmt.Println("Is not valid markdown", colors.Labels.Info(path))
 	return nil
-}
-
-func injectSlugWeightAndURLForIndex(stagingDir, indexFile string, tracker *contentWeightTracker) error {
-	dir := filepath.Dir(indexFile)
-	weight, slug, url := deduceWeightAndSlug(stagingDir, dir, tracker)
-	m := make(map[string]interface{})
-	m["slug"] = slug
-	m["url"] = url
-	if weight > 0 {
-		m["weight"] = fmt.Sprintf("%d", weight)
-	}
-	return markdown.AddFrontMatter(indexFile, m)
 }
 
 // addIndex adds a directory index file to override the title of the folder, "unslugified"
 func addIndex(stagingDir, path string, weightTracker *contentWeightTracker) error {
-
 	base := filepath.Base(path)
-	title := unSlugify(base)
-	weight, slug, url := deduceWeightAndSlug(stagingDir, path, weightTracker)
+	fm := deduceWeightAndSlug(stagingDir, path, weightTracker)
+	fm.Title = unSlugify(base)
 
 	fmt.Println("Adding an", colors.Labels.Unwanted("_index.md"), "file to ", colors.Labels.Wanted(path))
-
-	if url != "" {
-		m := make(map[string]interface{})
-		m["title"] = title
-		m["slug"] = slug
-		m["url"] = url
-		if weight > 0 {
-			m["weight"] = fmt.Sprintf("%d", weight)
-		}
-
-		return markdown.AddFrontMatter(filepath.Join(path, "_index.md"), m)
+	if len(fm.URL) == 0 {
+		return nil
 	}
-	return nil
+
+	return markdown.AddFrontMatter(filepath.Join(path, "_index.md"), fm)
 }
 
 func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
@@ -325,17 +316,14 @@ func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
 }
 
 func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
-
 	parentDir, name := filepath.Split(dir)
-
 	if strings.HasPrefix(name, ".") {
 		return nil
 	}
 
-	nameIsWeighted := dir != "/" && reNamedWeight.FindStringSubmatch(name) != nil
-
+	nameIsWeighted := dir != "/" && markdown.WeightRe.FindStringSubmatch(name) != nil
 	if nameIsWeighted {
-		newName := reNamedWeight.ReplaceAllStringFunc(name, func(s string) string { return "" })
+		newName := markdown.WeightRe.ReplaceAllStringFunc(name, func(s string) string { return "" })
 		newPath := filepath.Join(contentDir, parentDir, newName)
 		oldPath := filepath.Join(contentDir, dir)
 		if err := os.Rename(oldPath, newPath); err != nil {
@@ -347,7 +335,6 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 
 	path := filepath.Join(contentDir, dir)
 	info, err := os.Stat(path)
-
 	if err != nil {
 		return err
 	}
@@ -356,7 +343,10 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 		return nil
 	}
 
-	entries, _ := os.ReadDir(path)
+	entries, err := os.ReadDir(path)
+	if err != nil {
+		return err
+	}
 
 	if entries == nil || len(entries) == 0 {
 		return nil
@@ -373,18 +363,6 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 	return nil
 }
 
-// getContentPath returns the sub path after the content dir
-// turns "a/b/c/content/d/e.md" into "d/e.md"
-func getContentPath(path string) string {
-	contentDir := "content/"
-	idx := strings.LastIndex(path, contentDir)
-	end := idx + len(contentDir)
-	if idx < 0 || end > len(path) {
-		return path
-	}
-	return path[end:]
-}
-
 // unSlugify turns "something-like_this" into "Something Like This"
 func unSlugify(name string) string {
 	re := regexp.MustCompile(`(([\d.]+)\s)?(.+)?`)
@@ -399,10 +377,11 @@ func unSlugify(name string) string {
 }
 
 // slugify replaces all non word chars with a "-"
-// turns "v0 .18.6" into "v0-18-6"
+// turns "v0 .18.6_8." into "v0-18-6-8"
 func slugify(name string) string {
-	var re = regexp.MustCompile(`(?m)\W+`)
-	return re.ReplaceAllString(name, "-")
+	var nonWordRe = regexp.MustCompile(`(?m)(\W|_)+`)
+	slug := nonWordRe.ReplaceAllString(name, "-")
+	return strings.Trim(slug, "-")
 }
 
 // Take a capitalized title and turn it into a slug
