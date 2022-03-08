@@ -23,6 +23,32 @@ type contentWeightTracker struct {
 	current int
 }
 
+func fileExists(path string) bool {
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		return false
+	}
+	return true
+}
+
+func RemoveUnderscoreDirPrefix(dirPath string) error {
+	files, err := ioutil.ReadDir(dirPath)
+	if err != nil {
+		return err
+	}
+	for _, file := range files {
+		if file.IsDir() && strings.HasPrefix(file.Name(), "_") {
+			oldPath := dirPath + "/" + file.Name()
+			newPath := dirPath + "/" + strings.TrimLeft(file.Name(), "_")
+			fmt.Println("Renaming", colors.Labels.Unwanted(oldPath), "to", colors.Labels.Wanted(newPath))
+			err := os.Rename(oldPath, newPath)
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
 func (t *contentWeightTracker) tracking(path string) int {
 	if v, found := t.indices[path]; found {
 		t.current = v
@@ -53,32 +79,6 @@ func (t *contentWeightTracker) lookupSiblingWeight(tracked int) int64 {
 
 	w := t.weights[prev]
 	return w
-}
-
-func fileExists(path string) bool {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
-		return false
-	}
-	return true
-}
-
-func RemoveUnderscoreDirPrefix(dirPath string) error {
-	files, err := ioutil.ReadDir(dirPath)
-	if err != nil {
-		return err
-	}
-	for _, file := range files {
-		if file.IsDir() && strings.HasPrefix(file.Name(), "_") {
-			oldPath := dirPath + "/" + file.Name()
-			newPath := dirPath + "/" + strings.TrimLeft(file.Name(), "_")
-			fmt.Println("Renaming", colors.Labels.Unwanted(oldPath), "to", colors.Labels.Wanted(newPath))
-			err := os.Rename(oldPath, newPath)
-			if err != nil {
-				return err
-			}
-		}
-	}
-	return nil
 }
 
 func newContentWeighTracker(root string) contentWeightTracker {
