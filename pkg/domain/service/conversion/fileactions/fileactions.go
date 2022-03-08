@@ -223,7 +223,6 @@ func injectFrontMatter(path string, fm markdown.FrontMatter) error {
 		}
 		fm.Slug = *newSlug
 	}
-
 	return markdown.AddFrontMatter(path, fm)
 }
 
