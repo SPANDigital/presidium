@@ -1,12 +1,9 @@
 package markdown
 
-import (
-	"gopkg.in/yaml.v2"
-	"io/ioutil"
-)
+import "io/ioutil"
 
 type Markdown struct {
-	FrontMatter FrontMatter
+	FrontMatter map[string]interface{}
 	Content     string
 }
 
@@ -17,12 +14,12 @@ func Parse(path string) (*Markdown, error) {
 	}
 	matches := MarkdownRe.FindSubmatch(b)
 	if matches != nil {
-		var fm FrontMatter
-		err = yaml.Unmarshal(matches[2], &fm)
-		if err != nil {
-			return nil, err
-		}
+		allFmMatches := FrontMatterRe.FindAllSubmatch(matches[2], -1)
+		fm := make(map[string]interface{}, len(allFmMatches))
+		for _, fmMatches := range allFmMatches {
+			fm[string(fmMatches[1])] = string(fmMatches[2])
 
+		}
 		return &Markdown{
 			FrontMatter: fm,
 			Content:     string(matches[4]),

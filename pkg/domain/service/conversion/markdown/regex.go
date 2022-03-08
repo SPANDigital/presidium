@@ -49,12 +49,3 @@ var CommentRe = regexp.MustCompile(`(?ms){% comment %}(.*?){% endcomment %}`)
 
 // EmptyLineRe matches empty lines, see https://regex101.com/r/rNxkKo/3
 var EmptyLineRe = regexp.MustCompile(`(?m)^(?:[\t ]*(?:\r?\n|\r))+`)
-
-// WeightAndSlugRe matches the weight and slug in a filename, see https://regex101.com/r/DZmKgp/2
-var WeightAndSlugRe = regexp.MustCompile(`((([\d.]+)([a-z]?))[-_])?(.+?)(\.[^.\s]+)?$`)
-
-// WeightRe matches the weight in a filename, see https://regex101.com/r/90itMQ/1
-var WeightRe = regexp.MustCompile(`^([\d.]+)([a-z]?)[-_]`)
-
-// SpaceRe matches one or more spaces, see https://regex101.com/r/rRXM3s/1
-var SpaceRe = regexp.MustCompile(`\s+`)
