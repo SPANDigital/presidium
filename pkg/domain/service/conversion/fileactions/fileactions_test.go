@@ -128,7 +128,7 @@ var _ = Describe("Performing file actions", func() {
 	})
 
 	When("slug is already set", func() {
-		It("should return the existing slug", func() {
+		It("should not override the slug", func() {
 			actual := slugByPriority(markdown.FrontMatter{
 				Slug: "demo",
 			})
