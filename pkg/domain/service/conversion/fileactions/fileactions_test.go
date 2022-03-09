@@ -99,7 +99,7 @@ var _ = Describe("Performing file actions", func() {
 
 	When("deriving article slug", func() {
 		givenExpectations := map[string]string{
-			"v0 .18.6_8.": "v0-18-6-8",
+			"v0 .18.6_8.":      "v0-18-6-8",
 			"update_terraform": "update-terraform",
 		}
 		for given, expecting := range givenExpectations {
@@ -113,10 +113,10 @@ var _ = Describe("Performing file actions", func() {
 
 	When("deriving slug from title", func() {
 		givenExpectations := map[string]string{
-			"Troubleshooting": "troubleshooting",
-			"Set up Development Environment": "set-up-development-environment",
+			"Troubleshooting":                    "troubleshooting",
+			"Set up Development Environment":     "set-up-development-environment",
 			"\"Set up Development Environment\"": "set-up-development-environment",
-			"Introduction & Overview": "introduction-and-overview",
+			"Introduction & Overview":            "introduction-and-overview",
 		}
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("title of \"%s\" should be: \"%s\"", given, expecting)
@@ -157,15 +157,15 @@ var _ = Describe("Performing file actions", func() {
 	When("deduceWeightAndSlug", func() {
 		givenExpectations := map[string]markdown.FrontMatter{
 			"content/_development/02_update_terraform.md": {
-				URL: "development/update-terraform",
+				URL:    "development/update-terraform",
 				Weight: "3", Slug: "update-terraform",
 			},
 			"content/products/presidium/differentiation.md": {
-				URL: "products/presidium/differentiation",
-				Weight: "1", Slug: "differentiation",
+				URL:    "products/presidium/differentiation",
+				Weight: "", Slug: "differentiation",
 			},
-			"content/_best-practices/02b-improve-data-completeness.md": {
-				URL: "best-practices/improve-data-completeness",
+			"content/_best-practices/02a-improve-data-completeness.md": {
+				URL:    "best-practices/improve-data-completeness",
 				Weight: "3", Slug: "improve-data-completeness",
 			},
 		}
