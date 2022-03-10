@@ -9,6 +9,12 @@ markup:
     parser:
       attribute:
         block: true
+  highlight:
+  {{ if .Markup -}}
+    style: {{ .Markup }}
+  {{ else}}
+    style: github
+  {{- end }}
 menu:
   main:
     - identifier: overview

@@ -8,3 +8,6 @@ presidium-hugo
 presidium
 dist/
 .DS_Store
+presidium-internal-docs/
+.hugo_build.lock
+docs/
