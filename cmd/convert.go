@@ -1,10 +1,6 @@
 package cmd
 
 import (
-	"io/ioutil"
-	"log"
-	"os"
-
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
@@ -12,6 +8,9 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+	"io/ioutil"
+	"log"
+	"os"
 )
 
 // convertCmd represents the convert command
@@ -63,7 +62,6 @@ func init() {
 	pflags.BoolVarP(&config.Flags.EnableColor, "enableColor", "c", conversion.Defaults.EnableColorOutput, "Enable colorful output")
 	pflags.StringVarP(&config.Flags.SourceRepoDir, "sourceRepoDir", "s", "", "Source directory")
 	pflags.StringVar(&config.Flags.BrandTheme, "brand", "", "path to brand theme")
-	pflags.StringVar(&config.Flags.Style, "markup", "github", "specify markup theme, other than the default github style")
 	pflags.StringVarP(&config.Flags.DestinationRepoDir, "destDir", "d", cwd, "Destination directory")
 	pflags.BoolVarP(&config.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", conversion.Defaults.WeightBasedOnFileName, "Base front matter weight on filename")
 	pflags.BoolVarP(&config.Flags.SlugBasedOnFileName, "slugBasedOnFileName", "g", conversion.Defaults.SlugBasedOnFileName, "Base front matter slug on filename")

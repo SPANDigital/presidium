@@ -9,8 +9,6 @@ markup:
     parser:
       attribute:
         block: true
-  highlight:
-    style: github
 menu:
   Main:
   - identifier: introduction
