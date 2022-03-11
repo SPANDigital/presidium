@@ -50,7 +50,7 @@ var _ = Describe("ConfigTranslation", func() {
 		Context("When markup url is set", func() {
 			It("should contain the markup style", func() {
 				jekyllConfig := JekyllConfig{}
-				config.Flags.MarkupStyle = "markup"
+				config.Flags.Style = "markup"
 				hugoConfig := ConvertConfig(&jekyllConfig, "", map[string]interface{}{})
 				Expect(hugoConfig.Module.Imports).To(ContainElement(getImportModule("markup")))
 			})
