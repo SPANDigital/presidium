@@ -2,9 +2,10 @@ package configtranslation
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"io/ioutil"
 	"regexp"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
@@ -130,8 +131,12 @@ type HugoGoldmark struct {
 	Renderer HugoRenderer `yaml:"renderer"`
 }
 
+type HugoMarkupStyle struct {
+	Style string `yaml:"style"`
+}
 type HugoMarkup struct {
-	Goldmark HugoGoldmark `yaml:"goldmark"`
+	Goldmark  HugoGoldmark    `yaml:"goldmark"`
+	Highlight HugoMarkupStyle `yaml:"highlight"`
 }
 
 type HugoMenuItem struct {
@@ -250,6 +255,9 @@ func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalPara
 					Unsafe: true,
 				},
 			},
+			Highlight: HugoMarkupStyle{
+				Style: config.Flags.Style,
+			},
 		},
 
 		Menu: map[string][]HugoMenuItem{
@@ -283,6 +291,11 @@ func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalPara
 
 	if len(config.Flags.BrandTheme) > 0 {
 		mod := getImportModule(config.Flags.BrandTheme)
+		hugoConfig.Module.Imports = append([]HugoImport{mod}, hugoConfig.Module.Imports...)
+	}
+
+	if len(config.Flags.Style) > 0 {
+		mod := getImportModule(config.Flags.Style)
 		hugoConfig.Module.Imports = append([]HugoImport{mod}, hugoConfig.Module.Imports...)
 	}
 

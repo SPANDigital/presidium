@@ -1,11 +1,12 @@
 package configtranslation
 
 import (
+	"testing"
+
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"testing"
 )
 
 func TestConfigTranslation(t *testing.T) {
@@ -44,6 +45,14 @@ var _ = Describe("ConfigTranslation", func() {
 				config.Flags.BrandTheme = "brand"
 				hugoConfig := ConvertConfig(&jekyllConfig, "", map[string]interface{}{})
 				Expect(hugoConfig.Module.Imports).To(ContainElement(getImportModule("brand")))
+			})
+		})
+		Context("When markup url is set", func() {
+			It("should contain the markup style", func() {
+				jekyllConfig := JekyllConfig{}
+				config.Flags.Style = "markup"
+				hugoConfig := ConvertConfig(&jekyllConfig, "", map[string]interface{}{})
+				Expect(hugoConfig.Module.Imports).To(ContainElement(getImportModule("markup")))
 			})
 		})
 	})

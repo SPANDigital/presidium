@@ -11,6 +11,7 @@ const (
 	ThemeKey        = "init.theme"
 	TitleKey        = "init.title"
 	BrandKey        = "init.brand"
+	MarkupKey       = "init.markup"
 )
 
 type InitConfig struct {
@@ -18,6 +19,7 @@ type InitConfig struct {
 	TemplateName string `json:"template_name"`
 	Theme        string `json:"theme"`
 	Brand        string `json:"brand"`
+	Markup       string `json:"markup"`
 }
 
 type GeneratorConfig struct {
@@ -26,4 +28,5 @@ type GeneratorConfig struct {
 	Theme       string `json:"theme"`        // theme module code
 	Template    string `json:"template"`     // template code
 	Brand       string `json:"brand"`        // the url of the repo to the brand module
+	Markup      string `json:"markup"`       // the markup style selector
 }
