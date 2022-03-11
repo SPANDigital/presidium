@@ -10,11 +10,7 @@ markup:
       attribute:
         block: true
   highlight:
-  {{ if .Markup -}}
-    style: {{ .Markup }}
-  {{ else}}
     style: github
-  {{- end }}
 menu:
   Main:
   - identifier: introduction
