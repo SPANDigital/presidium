@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/Masterminds/goutils"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/spf13/afero"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -18,8 +20,9 @@ func TestMarkdown(t *testing.T) {
 }
 
 var _ = Describe("Processing markdown content", func() {
-
 	var workDir string
+	filesystem.FS = afero.NewMemMapFs()
+	filesystem.FSUtil = &afero.Afero{Fs: filesystem.FS}
 
 	BeforeSuite(func() {
 		colors.Setup()
@@ -92,7 +95,7 @@ func mustHaveMarkdownInputFile(dir string, content string) string {
 	mustHaveDir(dir)
 	name := fmt.Sprintf("contentOf-%s.md", fileId)
 	path := filepath.Join(dir, name)
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	file, err := filesystem.FS.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	Expect(err).ShouldNot(HaveOccurred())
 	_, err = file.WriteString(content)
 	file.Close()
@@ -101,7 +104,7 @@ func mustHaveMarkdownInputFile(dir string, content string) string {
 }
 
 func contentOf(path string) string {
-	bytes, err := os.ReadFile(path)
+	bytes, err := filesystem.FSUtil.ReadFile(path)
 	Expect(err).ShouldNot(HaveOccurred())
 	return string(bytes)
 }
