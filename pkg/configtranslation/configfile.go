@@ -294,11 +294,6 @@ func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalPara
 		hugoConfig.Module.Imports = append([]HugoImport{mod}, hugoConfig.Module.Imports...)
 	}
 
-	if len(config.Flags.Style) > 0 {
-		mod := getImportModule(config.Flags.Style)
-		hugoConfig.Module.Imports = append([]HugoImport{mod}, hugoConfig.Module.Imports...)
-	}
-
 	if additionalParams != nil {
 		hugoConfig.Params = additionalParams
 	}
