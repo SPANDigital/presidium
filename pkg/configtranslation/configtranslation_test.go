@@ -47,12 +47,12 @@ var _ = Describe("ConfigTranslation", func() {
 				Expect(hugoConfig.Module.Imports).To(ContainElement(getImportModule("brand")))
 			})
 		})
-		Context("When markup url is set", func() {
+		Context("When markup style is set", func() {
 			It("should contain the markup style", func() {
 				jekyllConfig := JekyllConfig{}
-				config.Flags.Style = "markup"
+				config.Flags.Style = "test"
 				hugoConfig := ConvertConfig(&jekyllConfig, "", map[string]interface{}{})
-				Expect(hugoConfig.Module.Imports).To(ContainElement(getImportModule("markup")))
+				Expect(hugoConfig.Markup.Highlight.Style).To(Equal("test"))
 			})
 		})
 	})
