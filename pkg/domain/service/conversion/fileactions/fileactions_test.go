@@ -86,13 +86,14 @@ var _ = Describe("Performing file actions", func() {
 		givenExpectations := map[string]string{
 			"0.1.1-sales-exercises": "Sales Exercises",
 			"financial--activities": "Financial Activities",
-			"1.1.1-the-happyð-path": "The Happyð Path",
+			"1.1.1-the-happy-path":  "The Happy Path",
 		}
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("title of \"%s\" should be: \"%s\"", given, expecting)
+			a, b := given, expecting
 			It(should, func() {
-				actual := unSlugify(given)
-				Expect(actual).Should(Equal(expecting))
+				actual := unSlugify(a)
+				Expect(actual).Should(Equal(b))
 			})
 		}
 	})
@@ -104,9 +105,10 @@ var _ = Describe("Performing file actions", func() {
 		}
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("slug of \"%s\" should be: \"%s\"", given, expecting)
+			a, b := given, expecting
 			It(should, func() {
-				actual := slugify(given)
-				Expect(actual).Should(Equal(expecting))
+				actual := slugify(a)
+				Expect(actual).Should(Equal(b))
 			})
 		}
 	})
@@ -118,11 +120,13 @@ var _ = Describe("Performing file actions", func() {
 			"\"Set up Development Environment\"": "set-up-development-environment",
 			"Introduction & Overview":            "introduction-and-overview",
 		}
+
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("title of \"%s\" should be: \"%s\"", given, expecting)
+			a, b := given, expecting
 			It(should, func() {
-				actual := titleToSlug(given)
-				Expect(actual).Should(Equal(expecting))
+				actual := titleToSlug(a)
+				Expect(actual).Should(Equal(b))
 			})
 		}
 	})
@@ -173,9 +177,10 @@ var _ = Describe("Performing file actions", func() {
 		w := &contentWeightTracker{}
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("path of \"%s\" should be: \"%s\"", given, expecting.Slug)
+			a, b := given, expecting
 			It(should, func() {
-				actual := deduceWeightAndSlug("", given, w)
-				Expect(actual).Should(Equal(expecting))
+				actual := deduceWeightAndSlug("", a, w)
+				Expect(actual).Should(Equal(b))
 			})
 		}
 	})
@@ -183,16 +188,17 @@ var _ = Describe("Performing file actions", func() {
 	When("title should be derived from the path", func() {
 		givenExpectations := map[string]string{
 			"content/onboard/developer-authorization/create-private-key.md": "Create Private Key",
-			"content/onboard/enrolling-as-an-apple-developer/enroll.md": "Enroll",
+			"content/onboard/enrolling-as-an-apple-developer/enroll.md":     "Enroll",
 			"sample docs.md": "Sample Docs",
-			"overview": "Ovewview",
+			"_overview":      "Overview",
 		}
 
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("title of path \"%s\" should be: \"%s\"", given, expecting)
+			a, b := given, expecting
 			It(should, func() {
-				actual := titleFromPath(given)
-				Expect(actual).Should(Equal(expecting))
+				actual := titleFromPath(a)
+				Expect(actual).Should(Equal(b))
 			})
 		}
 	})
