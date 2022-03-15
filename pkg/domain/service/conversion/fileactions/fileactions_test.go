@@ -179,4 +179,21 @@ var _ = Describe("Performing file actions", func() {
 			})
 		}
 	})
+
+	When("title should be derived from the path", func() {
+		givenExpectations := map[string]string{
+			"content/onboard/developer-authorization/create-private-key.md": "Create Private Key",
+			"content/onboard/enrolling-as-an-apple-developer/enroll.md": "Enroll",
+			"sample docs.md": "Sample Docs",
+			"overview": "Ovewview",
+		}
+
+		for given, expecting := range givenExpectations {
+			should := fmt.Sprintf("title of path \"%s\" should be: \"%s\"", given, expecting)
+			It(should, func() {
+				actual := titleFromPath(given)
+				Expect(actual).Should(Equal(expecting))
+			})
+		}
+	})
 })

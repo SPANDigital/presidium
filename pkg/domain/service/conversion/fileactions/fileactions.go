@@ -209,6 +209,10 @@ func injectFrontMatter(path string, fm markdown.FrontMatter) error {
 		return nil
 	}
 
+	if len(fm.Title) == 0 {
+		fm.Title = titleFromPath(path)
+	}
+
 	fmt.Println("Checking weight of ", colors.Labels.Info(path))
 	indexMarkdown, err := markdown.Parse(path)
 	if err != nil {
@@ -388,4 +392,10 @@ func titleToSlug(title string) string {
 	title = strings.Replace(title, "&", "and", -1)
 	title = slugify(title)
 	return title
+}
+
+func titleFromPath(path string) string {
+	base := filepath.Base(path)
+	fileName :=  strings.TrimSuffix(base, filepath.Ext(base))
+	return unSlugify(fileName)
 }
