@@ -1,25 +1,31 @@
 package markdown
 
-import "io/ioutil"
+import (
+	"github.com/spf13/afero"
+	"gopkg.in/yaml.v2"
+)
 
 type Markdown struct {
-	FrontMatter map[string]interface{}
+	FrontMatter FrontMatter
 	Content     string
 }
 
+var af = afero.NewOsFs()
+
 func Parse(path string) (*Markdown, error) {
-	b, err := ioutil.ReadFile(path) // just pass the file name
+	b, err := afero.ReadFile(af, path)
 	if err != nil {
 		return nil, err
 	}
+
 	matches := MarkdownRe.FindSubmatch(b)
 	if matches != nil {
-		allFmMatches := FrontMatterRe.FindAllSubmatch(matches[2], -1)
-		fm := make(map[string]interface{}, len(allFmMatches))
-		for _, fmMatches := range allFmMatches {
-			fm[string(fmMatches[1])] = string(fmMatches[2])
-
+		var fm FrontMatter
+		err = yaml.Unmarshal(matches[2], &fm)
+		if err != nil {
+			return nil, err
 		}
+
 		return &Markdown{
 			FrontMatter: fm,
 			Content:     string(matches[4]),

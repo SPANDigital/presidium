@@ -2,10 +2,9 @@ package configtranslation
 
 import (
 	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"io/ioutil"
 	"regexp"
-
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
@@ -131,12 +130,8 @@ type HugoGoldmark struct {
 	Renderer HugoRenderer `yaml:"renderer"`
 }
 
-type HugoMarkupStyle struct {
-	Style string `yaml:"style"`
-}
 type HugoMarkup struct {
-	Goldmark  HugoGoldmark    `yaml:"goldmark"`
-	Highlight HugoMarkupStyle `yaml:"highlight"`
+	Goldmark HugoGoldmark `yaml:"goldmark"`
 }
 
 type HugoMenuItem struct {
@@ -254,9 +249,6 @@ func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalPara
 				Renderer: HugoRenderer{
 					Unsafe: true,
 				},
-			},
-			Highlight: HugoMarkupStyle{
-				Style: config.Flags.Style,
 			},
 		},
 
