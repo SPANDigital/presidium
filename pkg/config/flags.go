@@ -4,6 +4,7 @@ type flags struct {
 	EnableColor                bool
 	SourceRepoDir              string
 	BrandTheme                 string
+	SyntaxStyle                string
 	DestinationRepoDir         string
 	StagingDir                 string
 	WeightBasedOnFilename      bool

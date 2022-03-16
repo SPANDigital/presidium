@@ -130,10 +130,13 @@ type HugoGoldmark struct {
 	Renderer HugoRenderer `yaml:"renderer"`
 }
 
-type HugoMarkup struct {
-	Goldmark HugoGoldmark `yaml:"goldmark"`
+type HugoMarkupStyle struct {
+	Style string `yaml:"style"`
 }
-
+type HugoMarkup struct {
+	Goldmark  HugoGoldmark    `yaml:"goldmark"`
+	Highlight HugoMarkupStyle `yaml:"highlight"`
+}
 type HugoMenuItem struct {
 	Identifier string `yaml:"identifier"`
 	Name       string `yaml:"name"`
@@ -249,6 +252,9 @@ func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalPara
 				Renderer: HugoRenderer{
 					Unsafe: true,
 				},
+			},
+			Highlight: HugoMarkupStyle{
+				Style: config.Flags.SyntaxStyle,
 			},
 		},
 

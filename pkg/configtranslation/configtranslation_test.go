@@ -49,7 +49,7 @@ var _ = Describe("ConfigTranslation", func() {
 		Context("When markup style is set", func() {
 			It("should contain the markup style", func() {
 				jekyllConfig := JekyllConfig{}
-				config.Flags.Style = "test"
+				config.Flags.SyntaxStyle = "test"
 				hugoConfig := ConvertConfig(&jekyllConfig, "", map[string]interface{}{})
 				Expect(hugoConfig.Markup.Highlight.Style).To(Equal("test"))
 			})
