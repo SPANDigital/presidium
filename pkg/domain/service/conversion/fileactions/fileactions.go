@@ -175,6 +175,10 @@ func CheckForDirIndex(stagingDir, path string) error {
 
 func CheckForTitles(path string) error {
 	return filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+		if info.IsDir() {
+			return nil
+		}
+
 		md, err := markdown.Parse(path)
 		if err != nil {
 			return err
