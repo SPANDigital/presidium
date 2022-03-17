@@ -316,7 +316,7 @@ func (c *Converter) performFileActions() {
 	}
 
 	c.messageUser(infoMessage("check directories for titles"))
-	if err := fileactions.CheckIndexForTitles(c.stagingContentDir); err != nil {
+	if err := fileactions.CheckForTitles(c.stagingContentDir); err != nil {
 		log.Fatal(err)
 	}
 

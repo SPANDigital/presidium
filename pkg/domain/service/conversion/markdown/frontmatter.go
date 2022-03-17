@@ -22,22 +22,17 @@ type FrontMatter struct {
 	Roles string `yaml:"roles,omitempty"`
 }
 
-// initialize excludes from Viper
+// SetupExcludes initialize excludes from Viper
 func SetupExcludes() {
 	excludes = make(map[string]bool)
 	excludes["url"] = !viper.GetBool("urlBasedOnFilename")
 	excludes["weight"] = !viper.GetBool("weightBasedOnFilename")
 }
 
-// Add front matter keys and values to an existing markdown file
+// AddFrontMatter Add front matter keys and values to an existing markdown file
 func AddFrontMatter(path string, fm FrontMatter) error {
 	fmt.Println("Adding front matter", colors.Labels.Wanted(fm), "to", colors.Labels.Info(path))
 	return ManipulateMarkdown(path, func(frontMatter []byte, w io.Writer) error {
-		_, err := w.Write(frontMatter)
-		if err != nil {
-			return err
-		}
-
 		out, err := yaml.Marshal(fm)
 		if err != nil {
 			return err

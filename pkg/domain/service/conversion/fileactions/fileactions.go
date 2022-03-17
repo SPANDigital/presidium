@@ -136,7 +136,7 @@ func CheckForDirIndex(stagingDir, path string) error {
 		} else { // is a file
 			if strings.HasSuffix(path, ".md") {
 				if info.Name() != "_index.md" && info.Name() != "index.md" {
-					fm := deduceWeightAndSlug(stagingDir, path,  &weighTracker)
+					fm := deduceWeightAndSlug(stagingDir, path, &weighTracker)
 					err = injectFrontMatter(path, fm)
 					if err != nil {
 						return err
@@ -153,6 +153,7 @@ func CheckForDirIndex(stagingDir, path string) error {
 	if err != nil {
 		return err
 	}
+
 	for _, idxPath := range idxRenameList {
 		oldPath := fmt.Sprintf("%s/%s", idxPath, "index.md")
 		newPath := fmt.Sprintf("%s/%s", idxPath, "_index.md")
@@ -163,7 +164,7 @@ func CheckForDirIndex(stagingDir, path string) error {
 			return err
 		}
 
-		fm := deduceWeightAndSlug(stagingDir, idxPath,  &weighTracker)
+		fm := deduceWeightAndSlug(stagingDir, idxPath, &weighTracker)
 		err = injectFrontMatter(newPath, fm)
 		if err != nil {
 			return err
@@ -172,26 +173,33 @@ func CheckForDirIndex(stagingDir, path string) error {
 	return nil
 }
 
-func CheckIndexForTitles(path string) error {
-	filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+func CheckForTitles(path string) error {
+	return filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+		if info.IsDir() || !strings.HasSuffix(path, ".md") {
+			return nil
+		}
+
+		md, err := markdown.Parse(path)
+		if err != nil {
+			return err
+		}
+
+		if len(md.FrontMatter.Title) > 0 {
+			return nil
+		}
+
 		if strings.HasSuffix(path, "_index.md") {
-			indexMarkdown, err := markdown.Parse(path)
+			base := filepath.Base(filepath.Dir(path))
+			md.FrontMatter.Title = unSlugify(base)
 			if err != nil {
 				return err
 			}
-
-			if len(indexMarkdown.FrontMatter.Title) == 0 {
-				base := filepath.Base(filepath.Dir(path))
-				title := unSlugify(base)
-				err = markdown.AddFrontMatter(path, markdown.FrontMatter{Title: title})
-				if err != nil {
-					return err
-				}
-			}
+		} else {
+			md.FrontMatter.Title = titleFromPath(path)
 		}
-		return nil
+
+		return markdown.AddFrontMatter(path, md.FrontMatter)
 	})
-	return nil
 }
 
 func replaceRoot(url string) string {
@@ -365,13 +373,13 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 func unSlugify(name string) string {
 	re := regexp.MustCompile(`(([\d.]+)\s)?(.+)?`)
 	reDividers := regexp.MustCompile(`[\-_]+`)
-	name = reDividers.ReplaceAllStringFunc(name, func(s string) string { return " " })
+	name = reDividers.ReplaceAllString(name, " ")
 	name = strings.Title(name)
 	matches := re.FindStringSubmatch(name)
 	if matches != nil {
-		return matches[3]
+		return strings.TrimSpace(matches[3])
 	}
-	return name
+	return strings.TrimSpace(name)
 }
 
 // slugify replaces all non word chars with a "-"
@@ -388,4 +396,10 @@ func titleToSlug(title string) string {
 	title = strings.Replace(title, "&", "and", -1)
 	title = slugify(title)
 	return title
+}
+
+func titleFromPath(path string) string {
+	base := filepath.Base(path)
+	fileName := strings.TrimSuffix(base, filepath.Ext(base))
+	return unSlugify(fileName)
 }
