@@ -31,5 +31,5 @@ func Parse(path string) (*Markdown, error) {
 			Content:     string(matches[4]),
 		}, nil
 	}
-	return nil, nil
+	return &Markdown{}, nil
 }
