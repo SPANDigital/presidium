@@ -320,6 +320,11 @@ func (c *Converter) performFileActions() {
 		log.Fatal(err)
 	}
 
+	c.messageUser(infoMessage("add front matter"))
+	if err := fileactions.AddFrontMatter(c.stagingDir, c.stagingContentDir); err != nil {
+		log.Fatal(err)
+	}
+
 	c.messageUser(infoMessage("unslugify remaining directories and articles"))
 	if err := fileactions.RemoveWeightIndicatorsFromFilePaths(c.stagingContentDir); err != nil {
 		log.Fatal(err)

@@ -6,7 +6,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"github.com/spf13/viper"
 	"io/fs"
 	"io/ioutil"
 	"os"
@@ -81,95 +80,26 @@ var _ = Describe("Performing file actions", func() {
 		})
 	})
 
-	When("deriving article title", func() {
-		// Just add more expectations here to have them tested
-		givenExpectations := map[string]string{
-			"0.1.1-sales-exercises": "Sales Exercises",
-			"financial--activities": "Financial Activities",
-			"1.1.1-the-happy-path":  "The Happy Path",
-		}
-		for given, expecting := range givenExpectations {
-			should := fmt.Sprintf("title of \"%s\" should be: \"%s\"", given, expecting)
-			a, b := given, expecting
-			It(should, func() {
-				actual := unSlugify(a)
-				Expect(actual).Should(Equal(b))
-			})
-		}
-	})
-
-	When("deriving article slug", func() {
-		givenExpectations := map[string]string{
-			"v0 .18.6_8.":      "v0-18-6-8",
-			"update_terraform": "update-terraform",
-		}
-		for given, expecting := range givenExpectations {
-			should := fmt.Sprintf("slug of \"%s\" should be: \"%s\"", given, expecting)
-			a, b := given, expecting
-			It(should, func() {
-				actual := slugify(a)
-				Expect(actual).Should(Equal(b))
-			})
-		}
-	})
-
-	When("deriving slug from title", func() {
-		givenExpectations := map[string]string{
-			"Troubleshooting":                    "troubleshooting",
-			"Set up Development Environment":     "set-up-development-environment",
-			"\"Set up Development Environment\"": "set-up-development-environment",
-			"Introduction & Overview":            "introduction-and-overview",
-		}
-
-		for given, expecting := range givenExpectations {
-			should := fmt.Sprintf("title of \"%s\" should be: \"%s\"", given, expecting)
-			a, b := given, expecting
-			It(should, func() {
-				actual := titleToSlug(a)
-				Expect(actual).Should(Equal(b))
-			})
-		}
-	})
-
-	When("slug is already set", func() {
-		It("should not override the slug", func() {
-			actual := slugByPriority(markdown.FrontMatter{
-				Slug: "demo",
-			})
-			Expect(actual).Should(BeNil())
-		})
-	})
-
-	When("slugBasedOnFilename is false", func() {
-		It("should be nil", func() {
-			viper.Set("slugBasedOnFilename", true)
-			actual := slugByPriority(markdown.FrontMatter{})
-			Expect(actual).Should(BeNil())
-		})
-	})
-
-	When("slugBasedOnFilename is false", func() {
-		It("should be derived from the title", func() {
-			viper.Set("slugBasedOnFilename", false)
-			actual := slugByPriority(markdown.FrontMatter{
-				Title: "Sample title",
-			})
-			Expect(*actual).Should(Equal("sample-title"))
-		})
-	})
-
 	When("deduceWeightAndSlug", func() {
+		dirUrls = map[string]string{
+			"content/_development":       "development-lead",
+			"content/products/presidium": "presidium",
+			"content/_best-practices":    "best-practices-online",
+		}
 		givenExpectations := map[string]markdown.FrontMatter{
 			"content/_development/02_update_terraform.md": {
-				URL:    "development/update-terraform",
-				Weight: "3", Slug: "update-terraform",
+				Title:  "Terraform Deployment",
+				URL:    "development-lead/terraform-deployment",
+				Weight: "3", Slug: "terraform-deployment",
 			},
 			"content/products/presidium/differentiation.md": {
-				URL:    "products/presidium/differentiation",
+				Title:  "Differentiation",
+				URL:    "presidium/differentiation",
 				Weight: "", Slug: "differentiation",
 			},
 			"content/_best-practices/02a-improve-data-completeness.md": {
-				URL:    "best-practices/improve-data-completeness",
+				Title:  "Improve data completeness",
+				URL:    "best-practices-online/improve-data-completeness",
 				Weight: "3", Slug: "improve-data-completeness",
 			},
 		}
@@ -179,7 +109,7 @@ var _ = Describe("Performing file actions", func() {
 			should := fmt.Sprintf("path of \"%s\" should be: \"%s\"", given, expecting.Slug)
 			a, b := given, expecting
 			It(should, func() {
-				actual := deduceWeightAndSlug("", a, w)
+				actual := deduceWeightAndSlug("", b, a, w)
 				Expect(actual).Should(Equal(b))
 			})
 		}

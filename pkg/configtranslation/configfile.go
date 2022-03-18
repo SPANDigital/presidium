@@ -22,8 +22,9 @@ type JekyllExternal struct {
 }
 
 type JekyllSectionItem struct {
-	Title string `yaml:"title""`
-	Url   string `yaml:"url""`
+	Title      string `yaml:"title""`
+	Url        string `yaml:"url""`
+	Collection string `yaml:"collection""`
 }
 
 type JekyllConfig struct {
@@ -232,11 +233,10 @@ func convertLogoPath(logoPrefix string, logoPath string) string {
 }
 
 func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalParams map[string]interface{}) *HugoConfig {
-
-	mainMenu := []HugoMenuItem{}
+	var mainMenu []HugoMenuItem
 	for idx, item := range jekyllConfig.Sections {
 		mainMenu = append(mainMenu, HugoMenuItem{
-			Identifier: item.Title,
+			Identifier: item.Collection,
 			Name:       item.Title,
 			Url:        item.Url,
 			Weight:     idx + 1,
