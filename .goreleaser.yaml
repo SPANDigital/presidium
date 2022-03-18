@@ -37,3 +37,4 @@ brews:
     tap:
       owner: spandigital
       name: homebrew-tap
+    folder: Formula
