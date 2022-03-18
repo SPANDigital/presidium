@@ -35,5 +35,5 @@ brews:
     homepage: "https://github.com/spandigital/presidium"
     description: "Presidium is a software documentation management system for agile teams"
     tap:
-      owner: spandigtal
+      owner: spandigital
       name: homebrew-tap
