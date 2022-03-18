@@ -38,3 +38,5 @@ brews:
       owner: spandigital
       name: homebrew-tap
     folder: Formula
+    download_strategy: GitHubPrivateRepositoryReleaseDownloadStrategy
+    custom_require: "lib/private"
