@@ -118,7 +118,7 @@ var _ = Describe("Performing file actions", func() {
 	When("title should be derived from the path", func() {
 		givenExpectations := map[string]string{
 			"content/onboard/developer-authorization/create-private-key.md": "Create Private Key",
-			"content/onboard/enrolling-as-an-apple-developer/enroll.md":     "Enroll",
+			"content/onboard/enrolling-as-an-developer/enroll.md":     "Enroll",
 			"sample docs.md": "Sample Docs",
 			"_overview":      "Overview",
 		}

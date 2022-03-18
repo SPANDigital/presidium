@@ -35,7 +35,6 @@ type JekyllConfig struct {
 	Logo        string              `yaml:"logo"`
 	Audience    string              `yaml:"audience"`
 	Scope       string              `yaml:"scope"`
-	AppleScope  string              `yaml:"apple_scope"`
 	Show        interface{}         `yaml:"show"`
 	External    JekyllExternal      `yaml:"external"`
 	Sections    []JekyllSectionItem `yaml:"sections"`
@@ -297,7 +296,6 @@ func ConvertConfig(jekyllConfig *JekyllConfig, logoPrefix string, additionalPara
 	}
 	hugoConfig.Params["audience"] = jekyllConfig.Audience
 	hugoConfig.Params["scope"] = jekyllConfig.Scope
-	hugoConfig.Params["appleScope"] = jekyllConfig.AppleScope
 	hugoConfig.Params["description"] = jekyllConfig.Description
 	hugoConfig.Params["logo"] = convertLogoPath(logoPrefix, jekyllConfig.Logo)
 	hugoConfig.Copyright = jekyllConfig.Footer

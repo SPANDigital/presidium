@@ -8,3 +8,5 @@ presidium-hugo
 presidium
 dist/
 .DS_Store
+
+dist/
