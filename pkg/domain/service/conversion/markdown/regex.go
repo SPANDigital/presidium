@@ -27,10 +27,10 @@ var CalloutRe = regexp.MustCompile(`(?ms)<div class="presidium-([\w\-]+)">\s*(<s
 var TooltipRe = regexp.MustCompile(`(?m)\[([^(.]*)]\(({{.+}})?([^)\s]*?)\s*'presidium-tooltip'\)`)
 
 // TableBodyRe matches tables, see https://regex101.com/r/K9xbsc/1
-var TableBodyRe = regexp.MustCompile(`(?:\|[^\n]+\|?\r?\n?){2,}`)
+var TableBodyRe = regexp.MustCompile(`(?:\|[^\n]+\|?\r?\n?\s*){2,}`)
 
 // TableHeaderRe matches the header section of a table, see https://regex101.com/r/zeaXvT/1
-var TableHeaderRe = regexp.MustCompile(`(\|[^\n]+\|?\r?\n)?((?:\|:?\s*[-]+:?\s*)+\|?)`)
+var TableHeaderRe = regexp.MustCompile(`(\|[^\n]+\|?\r?\n)?(\s*(?:\|:?\s*[-]+:?\s*)+\|?)`)
 
 // IfVariablesRe matches jekyll conditional logic https://regex101.com/r/n1vbLY/1
 var IfVariablesRe = regexp.MustCompile(`(?msU){% if ([^}]*?) %}(.+)({% elsif ([^}]*?) %}(.+))?({% else %}(.+))?{% endif %}`)

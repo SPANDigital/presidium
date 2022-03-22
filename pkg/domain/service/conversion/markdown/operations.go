@@ -2,15 +2,16 @@ package markdown
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
-	"github.com/gohugoio/hugo/common/paths"
-	"github.com/spf13/viper"
 	"io"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
+	"github.com/gohugoio/hugo/common/paths"
+	"github.com/spf13/viper"
 )
 
 // markdownFileOperationFunc represents an operation on a markdown file
