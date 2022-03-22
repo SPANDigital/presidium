@@ -19,6 +19,7 @@ require (
 	github.com/onsi/ginkgo v1.16.4
 	github.com/onsi/gomega v1.10.1
 	github.com/otiai10/copy v1.2.0
+	github.com/pkg/errors v0.9.1
 	github.com/rogpeppe/go-internal v1.8.1 // indirect
 	github.com/scylladb/go-set v1.0.2
 	github.com/sergi/go-diff v1.1.0 // indirect

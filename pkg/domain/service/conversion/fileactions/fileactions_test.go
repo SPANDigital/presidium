@@ -6,6 +6,7 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/spf13/afero"
 	"io/fs"
 	"io/ioutil"
 	"os"
@@ -80,7 +81,7 @@ var _ = Describe("Performing file actions", func() {
 		})
 	})
 
-	When("deduceWeightAndSlug", func() {
+	When("getSlugAndUrl", func() {
 		dirUrls = map[string]string{
 			"content/_development":       "development-lead",
 			"content/products/presidium": "presidium",
@@ -104,13 +105,13 @@ var _ = Describe("Performing file actions", func() {
 			},
 		}
 
-		w := &contentWeightTracker{}
 		for given, expecting := range givenExpectations {
 			should := fmt.Sprintf("path of \"%s\" should be: \"%s\"", given, expecting.Slug)
 			a, b := given, expecting
 			It(should, func() {
-				actual := deduceWeightAndSlug("", b, a, w)
-				Expect(actual).Should(Equal(b))
+				slug, url := getSlugAndUrl("", b.Title, a)
+				Expect(slug).Should(Equal(b.Slug))
+				Expect(url).Should(Equal(b.URL))
 			})
 		}
 	})
@@ -132,4 +133,109 @@ var _ = Describe("Performing file actions", func() {
 			})
 		}
 	})
+
+	When("calculating path weight", func() {
+		dm := directoryMap{
+			"_getting_started": []string{
+				"_getting_started/01_before_install",
+				"_getting_started/02_installation",
+				"_getting_started/03_shield_networking",
+			},
+			"_getting_started/01_before_install": []string{
+				"_getting_started/01_before_install/00_introduction.md",
+				"_getting_started/01_before_install/01_configure_aws.md",
+			},
+			"_getting_started/03_shield_networking": []string{
+				"_getting_started/02_installation/01_create_s3_bucket_for_terraform.md",
+				"_getting_started/02_installation/02_bootstrap_tf_env.md",
+			},
+		}
+
+		givenExpectations := map[string]string{
+			"_getting_started/03_shield_networking":                 "3",
+			"_getting_started/01_before_install/00_introduction.md": "1",
+			"_getting_started/01_before_install/_index.md":          "1",
+			"_getting_started/03_shield_networking/_index.md":       "3",
+			"_getting_started/notfound/_index.md":                   "",
+		}
+
+		for given, expecting := range givenExpectations {
+			should := fmt.Sprintf("weight of path \"%s\" should be: \"%s\"", given, expecting)
+			a, b := given, expecting
+			It(should, func() {
+				actual := getPathWeight(dm, a)
+				Expect(actual).Should(Equal(b))
+			})
+		}
+	})
+
+	When("building a weight map", func() {
+		afFs = afero.NewMemMapFs()
+		mockFile("test/_index.md")
+		mockFile("test/00_a.md")
+		mockFile("test/network/01_a.md")
+		mockFile("test/network/0_a.jpg")
+		mockFile("test/store/3a_a.md")
+		mockFile("test/store/2a_c.md")
+
+		It("should build a valid weight map", func() {
+			dm, err := buildWeightMap(".")
+			Expect(err).Should(BeNil())
+			Expect(dm).Should(Equal(directoryMap{
+				"test":[]string{"test/00_a.md"},
+				"test/network":[]string{"test/network/01_a.md"},
+				"test/store":[]string{"test/store/2a_c.md", "test/store/3a_a.md"},
+			}))
+		})
+	})
+
+	When("checking if a file is an index", func() {
+		givenExpectations := map[string]bool{
+			"_getting_started/03_shield_networking": false,
+			"_getting_started/index.md":             false,
+			"_getting_started/_index.md":            true,
+			"index.md":                              false,
+			"_index.md":                             true,
+			"":                                      false,
+			"index":                                 false,
+		}
+
+		for given, expecting := range givenExpectations {
+			should := fmt.Sprintf("path \"%s\" should be: \"%v\"", given, expecting)
+			a, b := given, expecting
+			It(should, func() {
+				actual := isIndex(a)
+				Expect(actual).Should(Equal(b))
+			})
+		}
+	})
+
+	When("checking if a file is markdown", func() {
+		givenExpectations := map[string]bool{
+			"_getting_started/03_shield_networking.md": true,
+			"_getting_started/index":                   false,
+			"_getting_started/_index.md":               true,
+			"":                                         false,
+		}
+
+		for given, expecting := range givenExpectations {
+			should := fmt.Sprintf("path \"%s\" should be: \"%v\"", given, expecting)
+			a, b := given, expecting
+			It(should, func() {
+				actual := isMdFile(a)
+				Expect(actual).Should(Equal(b))
+			})
+		}
+	})
 })
+
+func mockFile(p string) {
+	if err := afFs.MkdirAll(filepath.Dir(p), 0770); err != nil {
+		Fail("failed to create test dir")
+	}
+
+	_, err := afFs.Create(p)
+	if err != nil {
+		Fail("failed to create test dir")
+	}
+}

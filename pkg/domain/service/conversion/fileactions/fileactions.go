@@ -3,11 +3,12 @@ package fileactions
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
+	"github.com/pkg/errors"
+	"github.com/spf13/afero"
 	"io/fs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
-	"sort"
 	"strconv"
 	"strings"
 
@@ -16,14 +17,9 @@ import (
 	"github.com/spf13/viper"
 )
 
-type contentWeightTracker struct {
-	paths   []string
-	indices map[string]int
-	weights map[int]int64
-	current int
-}
-
+type directoryMap map[string][]string
 var dirUrls map[string]string
+var afFs = afero.NewOsFs()
 
 func RemoveUnderscoreDirPrefix(dirPath string) error {
 	files, err := ioutil.ReadDir(dirPath)
@@ -42,70 +38,6 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 		}
 	}
 	return nil
-}
-
-func (t *contentWeightTracker) tracking(path string) int {
-	if v, found := t.indices[path]; found {
-		t.current = v
-	} else {
-		t.current = -1
-	}
-	return t.current
-}
-
-func (t *contentWeightTracker) update(tracked int, weight int64) {
-	if tracked != -1 {
-		t.weights[tracked] = weight
-	}
-}
-
-func (t *contentWeightTracker) lookupSiblingWeight(tracked int) int64 {
-	if tracked == -1 || tracked == 0 || tracked >= len(t.paths) || len(t.paths) == -1 {
-		return 0
-	}
-
-	prev := tracked - 1
-	prevParent, _ := filepath.Split(t.paths[prev])
-	thisParent, _ := filepath.Split(t.paths[tracked])
-
-	if thisParent != prevParent {
-		return 0
-	}
-
-	w := t.weights[prev]
-	return w
-}
-
-func newContentWeighTracker(root string) contentWeightTracker {
-	cwt := contentWeightTracker{
-		weights: make(map[int]int64),
-		indices: map[string]int{},
-		paths:   make([]string, 0),
-		current: -1,
-	}
-
-	_ = filepath.WalkDir(root, func(path string, d fs.DirEntry, err error) error {
-
-		if d.IsDir() {
-			return nil
-		}
-
-		if _, name := filepath.Split(path); strings.ToLower(filepath.Ext(name)) != ".md" {
-			return nil
-		}
-
-		cwt.paths = append(cwt.paths, path)
-
-		return nil
-	})
-
-	sort.Strings(cwt.paths)
-
-	for i := 0; i < len(cwt.paths); i++ {
-		cwt.indices[cwt.paths[i]] = i
-	}
-
-	return cwt
 }
 
 func CheckForDirIndex(stagingDir, path string) error {
@@ -139,10 +71,14 @@ func CheckForDirIndex(stagingDir, path string) error {
 }
 
 func AddFrontMatter(stagingDir, path string) error {
-	weighTracker := newContentWeighTracker(path)
+	pm, err := buildWeightMap(path)
+	if err != nil {
+		return errors.Wrap(err, "path map")
+	}
+
 	dirUrls = map[string]string{}
 	return filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
-		if strings.HasSuffix(path, "_index.md") || isContentPath(path, stagingDir) {
+		if isIndex(path) || isContentPath(path, stagingDir) {
 			return nil
 		}
 
@@ -150,7 +86,7 @@ func AddFrontMatter(stagingDir, path string) error {
 			path = filepath.Join(path, "_index.md")
 		}
 
-		if !strings.HasSuffix(path, ".md") {
+		if !isMdFile(path) {
 			return nil
 		}
 
@@ -159,7 +95,9 @@ func AddFrontMatter(stagingDir, path string) error {
 			return nil
 		}
 
-		fm := deduceWeightAndSlug(stagingDir, md.FrontMatter, path, &weighTracker)
+		fm := md.FrontMatter
+		fm.Weight = getPathWeight(pm, path)
+		fm.Slug, fm.URL = getSlugAndUrl(stagingDir, md.FrontMatter.Title, path)
 		err = markdown.AddFrontMatter(path, fm)
 		if err != nil {
 			return err
@@ -171,7 +109,7 @@ func AddFrontMatter(stagingDir, path string) error {
 
 func CheckForTitles(path string) error {
 	return filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
-		if info.IsDir() || !strings.HasSuffix(path, ".md") {
+		if info.IsDir() || !isMdFile(path) {
 			return nil
 		}
 
@@ -180,12 +118,11 @@ func CheckForTitles(path string) error {
 			return err
 		}
 
-		fmt.Println(path)
 		if len(md.FrontMatter.Title) > 0 {
 			return nil
 		}
 
-		if strings.HasSuffix(path, "_index.md") {
+		if isIndex(path) {
 			base := filepath.Base(filepath.Dir(path))
 			md.FrontMatter.Title = utils.UnSlugify(base)
 			if err != nil {
@@ -199,60 +136,68 @@ func CheckForTitles(path string) error {
 	})
 }
 
-func deduceWeightAndSlug(stagingDir string, fm markdown.FrontMatter, path string, weightTracker *contentWeightTracker) markdown.FrontMatter {
-	tracked := weightTracker.tracking(path)
-	fileName := markdown.SpaceRe.ReplaceAllLiteralString(filepath.Base(path), "-")
-	matches := markdown.WeightAndSlugRe.FindStringSubmatch(fileName)
-	weightStr := matches[2]
-	var weightAdjustment int64
-	adjusted := false
+func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
+	return removeWeightIndicatorsFromFilePaths(stagingContentDir, "/")
+}
 
-	if len(matches[4]) == 1 {
-		ac := matches[4][0]
-		if ac >= 'a' && ac <= 'z' {
-			weightAdjustment = int64(int(ac) - int('a'))
-			if weightAdjustment > 0 {
-				weightAdjustment += weightAdjustment + weightTracker.lookupSiblingWeight(tracked)
-			}
-			adjusted = true
-			weightStr = matches[3]
-		}
-	}
-
-	weight, err := strconv.ParseInt(strings.ReplaceAll(weightStr, ".", ""), 10, 64)
-	if err != nil {
-		weight = -1
-	} else {
-		weight += 1
-		weight += weightAdjustment
-	}
-
-	if adjusted {
-		weightTracker.update(tracked, weight)
-	}
-
-	if weight >= 0 {
-		fm.Weight = fmt.Sprintf("%d", weight)
-	}
-
-	fm.Slug = utils.TitleToSlug(fm.Title)
-	fm.URL = fm.Slug
+func getSlugAndUrl(stagingDir string, title string, path string) (slug string, url string) {
+	slug = utils.TitleToSlug(title)
+	url = slug
 	base := filepath.Dir(path)
 	if parent, ok := dirUrls[base]; ok {
-		fm.URL = filepath.Join(parent, fm.Slug)
+		url = filepath.Join(parent, slug)
 	}
-	fm.URL = replaceRoot(fm.URL)
+	url = replaceRoot(url)
 
-	if strings.HasSuffix(path, "_index.md") {
+	if isIndex(path) {
 		root := filepath.Dir(base)
 		if !isContentPath(path, stagingDir) {
 			if parent, ok := dirUrls[root]; ok {
-				fm.URL = filepath.Join(parent, fm.URL)
+				url = filepath.Join(parent, url)
 			}
 		}
-		dirUrls[base] = replaceRoot(fm.URL)
+		dirUrls[base] = replaceRoot(url)
 	}
-	return fm
+	return slug, url
+}
+
+func buildWeightMap(path string) (directoryMap, error) {
+	dirMap := directoryMap{}
+	err := afero.Walk(afFs, path, func(path string, info fs.FileInfo, err error) error {
+		if !info.IsDir() && !isMdFile(path) {
+			return nil
+		}
+
+		fileName := filepath.Base(path)
+		if !markdown.WeightRe.MatchString(fileName) {
+			return nil
+		}
+
+		dir := filepath.Dir(path)
+		if _, ok := dirMap[dir]; ok {
+			dirMap[dir] = append(dirMap[dir], path)
+		} else {
+			dirMap[dir] = []string{path}
+		}
+		return nil
+	})
+	return dirMap, err
+}
+
+func getPathWeight(dm directoryMap, path string) string {
+	if isIndex(path) {
+		path = filepath.Dir(path)
+	}
+
+	dir := filepath.Dir(path)
+	if paths, ok := dm[dir]; ok {
+		for i, p := range paths {
+			if p == path {
+				return strconv.Itoa(i + 1)
+			}
+		}
+	}
+	return ""
 }
 
 func markdownForPath(path string) (*markdown.Markdown, error) {
@@ -268,10 +213,6 @@ func isContentPath(path, stagingDir string) bool {
 	return path == contentDir
 }
 
-func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
-	return removeWeightIndicatorsFromFilePaths(stagingContentDir, "/")
-}
-
 func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 	parentDir, name := filepath.Split(dir)
 	if strings.HasPrefix(name, ".") {
@@ -280,7 +221,7 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 
 	nameIsWeighted := dir != "/" && markdown.WeightRe.FindStringSubmatch(name) != nil
 	if nameIsWeighted {
-		newName := markdown.WeightRe.ReplaceAllStringFunc(name, func(s string) string { return "" })
+		newName := markdown.WeightRe.ReplaceAllString(name, "")
 		newPath := filepath.Join(contentDir, parentDir, newName)
 		oldPath := filepath.Join(contentDir, dir)
 		if err := os.Rename(oldPath, newPath); err != nil {
@@ -311,13 +252,23 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 
 	for _, entry := range entries {
 		local := filepath.Join(dir, entry.Name())
-		err := removeWeightIndicatorsFromFilePaths(contentDir, local)
+		err = removeWeightIndicatorsFromFilePaths(contentDir, local)
 		if err != nil {
 			return err
 		}
 	}
 
 	return nil
+}
+
+// isIndex checks if the file is a hugo md index
+func isIndex(path string) bool {
+	return strings.HasSuffix(path, "_index.md")
+}
+
+// isMdFile checks if a file has the markdown ext
+func isMdFile(path string) bool {
+	return strings.HasSuffix(path, ".md")
 }
 
 // titleFromPath generates an article title based on the filename
@@ -327,6 +278,7 @@ func titleFromPath(path string) string {
 	return utils.UnSlugify(fileName)
 }
 
+// replaceRoot removes the root prefix from an url
 func replaceRoot(url string) string {
 	rootUrl := viper.GetString("replaceRoot")
 	url = strings.TrimPrefix(url, strings.ToLower(rootUrl))
