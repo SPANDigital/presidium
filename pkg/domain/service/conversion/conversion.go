@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
+	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"io"
 	"io/fs"
 	"io/ioutil"
@@ -274,8 +275,10 @@ var Defaults = New()
 func (c *Converter) prepareStaging() {
 	if config.Flags.CleanTarget {
 		c.messageUser(infoMessage("cleaning destination directory"))
-		if err := c.fs.EmptyDir(c.destinationRepoDir); err != nil {
-			log.Fatalf("unable to clean out staging [%s]: %s", c.stagingDir, err.Error())
+		if utils.FileExists(c.destinationRepoDir) {
+			if err := c.fs.EmptyDir(c.destinationRepoDir); err != nil {
+				log.Fatalf("unable to clean out destination [%s]: %s", c.stagingDir, err.Error())
+			}
 		}
 	}
 
