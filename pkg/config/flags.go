@@ -14,6 +14,8 @@ type flags struct {
 	ReplaceBaseUrl             bool
 	RemoveTargetBlank          bool
 	FixImages                  bool
+	AddSlugAndUrl              bool
+	CleanTarget                bool
 	FixHtmlImages              bool
 	EraseMarkdownWithNoContent bool
 	RemoveRawTags              bool

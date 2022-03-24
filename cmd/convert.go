@@ -35,9 +35,7 @@ var convertCmd = &cobra.Command{
 }
 
 func init() {
-
 	rootCmd.AddCommand(convertCmd)
-
 	fs := filesystem.New()
 
 	cwd, err := fs.GetWorkingDir()
@@ -64,6 +62,8 @@ func init() {
 	pflags.StringVar(&config.Flags.BrandTheme, "brand", "", "path to brand theme")
 	pflags.StringVar(&config.Flags.SyntaxStyle, "markup", "github", "specify markup theme, other than the default github style")
 	pflags.StringVarP(&config.Flags.DestinationRepoDir, "destDir", "d", cwd, "Destination directory")
+	pflags.BoolVar(&config.Flags.AddSlugAndUrl, "slugIt", false, "Add slug and url in the front matter")
+	pflags.BoolVar(&config.Flags.CleanTarget, "clean", true, "Clean the target directory")
 	pflags.BoolVarP(&config.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", conversion.Defaults.WeightBasedOnFileName, "Base front matter weight on filename")
 	pflags.BoolVarP(&config.Flags.SlugBasedOnFileName, "slugBasedOnFileName", "g", conversion.Defaults.SlugBasedOnFileName, "Base front matter slug on filename")
 	pflags.BoolVarP(&config.Flags.UrlBasedOnFilename, "urlBasedOnFilename", "u", conversion.Defaults.ReplaceBaseUrl, "Base front matter url on filename")

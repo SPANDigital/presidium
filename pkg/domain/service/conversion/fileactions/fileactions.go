@@ -2,6 +2,7 @@ package fileactions
 
 import (
 	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"github.com/pkg/errors"
 	"github.com/spf13/afero"
@@ -18,6 +19,7 @@ import (
 )
 
 type directoryMap map[string][]string
+
 var dirUrls map[string]string
 var afFs = afero.NewOsFs()
 
@@ -97,7 +99,9 @@ func AddFrontMatter(stagingDir, path string) error {
 
 		fm := md.FrontMatter
 		fm.Weight = getPathWeight(pm, path)
-		fm.Slug, fm.URL = getSlugAndUrl(stagingDir, md.FrontMatter.Title, path)
+		if config.Flags.AddSlugAndUrl {
+			fm.Slug, fm.URL = getSlugAndUrl(stagingDir, md.FrontMatter.Title, path)
+		}
 		err = markdown.AddFrontMatter(path, fm)
 		if err != nil {
 			return err
@@ -133,6 +137,30 @@ func CheckForTitles(path string) error {
 		}
 
 		return markdown.AddFrontMatter(path, md.FrontMatter)
+	})
+}
+
+func RenameDirectories(path, base string) error {
+	return utils.WalkRename(path, func(path string, info os.FileInfo) (*string, error) {
+		if !info.IsDir() || isContentPath(path, base) {
+			return nil, nil
+		}
+
+		// skip root sections
+		if isContentPath(filepath.Dir(path), base) {
+			return nil, nil
+		}
+
+		slug, err := getDirectorySlug(path)
+		if err != nil {
+			return nil, err
+		}
+
+		if slug != filepath.Base(path) {
+			newPath := filepath.Join(filepath.Dir(path), slug)
+			return &newPath, nil
+		}
+		return nil, nil
 	})
 }
 
@@ -208,8 +236,8 @@ func markdownForPath(path string) (*markdown.Markdown, error) {
 	return markdown.Parse(path)
 }
 
-func isContentPath(path, stagingDir string) bool {
-	contentDir := filepath.Join(stagingDir, "content")
+func isContentPath(path, root string) bool {
+	contentDir := filepath.Join(root, "content")
 	return path == contentDir
 }
 
@@ -259,6 +287,24 @@ func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
 	}
 
 	return nil
+}
+
+func getDirectorySlug(path string) (string, error) {
+	indexPath := filepath.Join(path, "_index.md")
+	if !utils.FileExists(indexPath) {
+		return "", errors.New("Index file not found")
+	}
+
+	md, err := markdownForPath(indexPath)
+	if err != nil {
+		return "", err
+	}
+
+	if len(md.FrontMatter.Title) == 0 {
+		return "", errors.Errorf("path has no title: %s", path)
+	}
+
+	return utils.TitleToSlug(md.FrontMatter.Title), nil
 }
 
 // isIndex checks if the file is a hugo md index

@@ -39,6 +39,11 @@ func DebugWithFields(l interface{}, f Fields) {
 	}
 }
 
+// Infof logs a message at level Info on the standard logger.
+func Infof(format string, args ...interface{}) {
+	logger.Infof(format, args...)
+}
+
 // Info logs a message at level Info on the standard logger.
 func Info(args ...interface{}) {
 	if logger.Level >= logrus.InfoLevel {

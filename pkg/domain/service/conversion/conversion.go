@@ -3,6 +3,7 @@ package conversion
 import (
 	"errors"
 	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
 	"io"
 	"io/fs"
@@ -271,6 +272,12 @@ func New() *Converter {
 var Defaults = New()
 
 func (c *Converter) prepareStaging() {
+	if config.Flags.CleanTarget {
+		c.messageUser(infoMessage("cleaning destination directory"))
+		if err := c.fs.EmptyDir(c.destinationRepoDir); err != nil {
+			log.Fatalf("unable to clean out staging [%s]: %s", c.stagingDir, err.Error())
+		}
+	}
 
 	if err := c.fs.EmptyDir(c.stagingDir); err != nil {
 		log.Fatalf("unable to clean out staging [%s]: %s", c.stagingDir, err.Error())
@@ -336,6 +343,11 @@ func (c *Converter) performFileActions() {
 
 	c.messageUser(infoMessage(fmt.Sprintf("copying: %s -> %s", c.stagingDir, c.destinationContentDir)))
 	if err := copy.Copy(c.stagingContentDir, c.destinationContentDir); err != nil {
+		log.Fatal(err)
+	}
+
+	c.messageUser(infoMessage("renaming directories"))
+	if err := fileactions.RenameDirectories(c.destinationContentDir, c.destinationRepoDir); err != nil {
 		log.Fatal(err)
 	}
 }
