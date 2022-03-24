@@ -10,7 +10,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strings"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
@@ -398,18 +397,11 @@ func (c *Converter) generateHugoModule() {
 
 }
 
-var nonlettrsRe = regexp.MustCompile(`\W+`)
-
 func (c *Converter) moduleName() string {
-
 	siteModuleName := c.SiteModuleName
-
 	if len(siteModuleName) == 0 {
-		siteModuleName = c.hugoConfig.Title
-		siteModuleName = nonlettrsRe.ReplaceAllString(siteModuleName, "_")
-		siteModuleName = strings.ToLower(siteModuleName)
+		siteModuleName = filepath.Base(c.sourceDir)
 	}
-
 	return siteModuleName
 }
 
