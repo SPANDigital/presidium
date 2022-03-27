@@ -42,8 +42,8 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 	return nil
 }
 
-func CheckForDirIndex(stagingDir, path string) error {
-	return filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+func CheckForDirIndex(stagingDir, contentPath string) error {
+	return filepath.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if isContentPath(path, stagingDir) {
 			return nil
@@ -72,14 +72,14 @@ func CheckForDirIndex(stagingDir, path string) error {
 	})
 }
 
-func AddFrontMatter(stagingDir, path string) error {
-	pm, err := buildWeightMap(path)
+func AddFrontMatter(stagingDir, contentPath string) error {
+	pm, err := buildWeightMap(contentPath)
 	if err != nil {
 		return errors.Wrap(err, "path map")
 	}
 
 	dirUrls = map[string]string{}
-	return filepath.Walk(path, func(path string, info fs.FileInfo, err error) error {
+	return filepath.Walk(contentPath, func(path string, info fs.FileInfo, err error) error {
 		if isIndex(path) || isContentPath(path, stagingDir) {
 			return nil
 		}
@@ -111,8 +111,8 @@ func AddFrontMatter(stagingDir, path string) error {
 	})
 }
 
-func CheckForTitles(path string) error {
-	return filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+func CheckForTitles(contentPath string) error {
+	return filepath.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() || !isMdFile(path) {
 			return nil
 		}
@@ -127,21 +127,21 @@ func CheckForTitles(path string) error {
 		}
 
 		if isIndex(path) {
-			base := filepath.Base(filepath.Dir(path))
-			md.FrontMatter.Title = utils.UnSlugify(base)
+			dir := filepath.Dir(path)
+			md.FrontMatter.Title = titleFromPath(dir)
 			if err != nil {
 				return err
 			}
 		} else {
-			md.FrontMatter.Title = utils.TitleToSlug(path)
+			md.FrontMatter.Title = titleFromPath(path)
 		}
 
 		return markdown.AddFrontMatter(path, md.FrontMatter)
 	})
 }
 
-func RenameDirectories(path, base string) error {
-	return utils.WalkRename(path, func(path string, info os.FileInfo) (*string, error) {
+func RenameDirectories(contentPath, base string) error {
+	return utils.WalkRename(contentPath, func(path string, info os.FileInfo) (*string, error) {
 		if !info.IsDir() || isContentPath(path, base) {
 			return nil, nil
 		}
@@ -189,9 +189,9 @@ func getSlugAndUrl(stagingDir string, title string, path string) (slug string, u
 	return slug, url
 }
 
-func buildWeightMap(path string) (directoryMap, error) {
+func buildWeightMap(contentPath string) (directoryMap, error) {
 	dirMap := directoryMap{}
-	err := afero.Walk(afFs, path, func(path string, info fs.FileInfo, err error) error {
+	err := afero.Walk(afFs, contentPath, func(path string, info fs.FileInfo, err error) error {
 		if !info.IsDir() && !isMdFile(path) {
 			return nil
 		}
