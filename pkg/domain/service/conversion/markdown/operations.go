@@ -219,7 +219,11 @@ func replaceBaseUrlWithSpaces(path string) error {
 
 // Removes target="_blank" (this is automatically for external links)
 func removeTargetBlank(path string) error {
-	return simpleReplaceContentInMarkdown(path, []string{`{: target="_blank"}`, `{:target="_blank"}`}, ``)
+	return simpleReplaceContentInMarkdown(path, []string{
+		`{: target="_blank"}`,
+		`{:target="_blank"}`,
+		`{:target="\_blank"}`,
+		`{: target="\_blank"}`}, ``)
 }
 
 // Perform find and replace operations on markdown contentOf
