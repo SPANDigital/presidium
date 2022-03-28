@@ -3,6 +3,7 @@ package fileactions
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"github.com/pkg/errors"
 	"github.com/spf13/afero"
@@ -165,7 +166,7 @@ func RenameDirectories(contentPath, base string) error {
 }
 
 func RemoveWeightIndicatorsFromFilePaths(stagingContentDir string) error {
-	return removeWeightIndicatorsFromFilePaths(stagingContentDir, "/")
+	return removeWeightFromFilePath(stagingContentDir)
 }
 
 func getSlugAndUrl(stagingDir string, title string, path string) (slug string, url string) {
@@ -241,52 +242,26 @@ func isContentPath(path, root string) bool {
 	return path == contentDir
 }
 
-func removeWeightIndicatorsFromFilePaths(contentDir string, dir string) error {
-	parentDir, name := filepath.Split(dir)
-	if strings.HasPrefix(name, ".") {
-		return nil
-	}
+func removeWeightFromFilePath(content string) error {
+	previous := map[string]bool{}
+	return utils.WalkRename(content, func(path string, info os.FileInfo) (*string, error) {
+		parentDir, name := filepath.Split(path)
+		if !markdown.WeightRe.MatchString(name) {
+			return nil, nil
+		}
 
-	nameIsWeighted := dir != "/" && markdown.WeightRe.FindStringSubmatch(name) != nil
-	if nameIsWeighted {
 		newName := markdown.WeightRe.ReplaceAllString(name, "")
-		newPath := filepath.Join(contentDir, parentDir, newName)
-		oldPath := filepath.Join(contentDir, dir)
-		if err := os.Rename(oldPath, newPath); err != nil {
-			return err
+		newPath := filepath.Join(parentDir, newName)
+		defer func() {
+			previous[newPath] = true
+		}()
+
+		if _, exist := previous[newPath]; exist {
+			log.Infof("duplicate filename: %s", newPath)
+			return nil, nil
 		}
-		fmt.Println("Removed weight from ", colors.Labels.Unwanted(name), " -> ", colors.Labels.Wanted(filepath.Join(dir, newName)))
-		dir = filepath.Join(parentDir, newName)
-	}
-
-	path := filepath.Join(contentDir, dir)
-	info, err := os.Stat(path)
-	if err != nil {
-		return err
-	}
-
-	if !info.IsDir() {
-		return nil
-	}
-
-	entries, err := os.ReadDir(path)
-	if err != nil {
-		return err
-	}
-
-	if entries == nil || len(entries) == 0 {
-		return nil
-	}
-
-	for _, entry := range entries {
-		local := filepath.Join(dir, entry.Name())
-		err = removeWeightIndicatorsFromFilePaths(contentDir, local)
-		if err != nil {
-			return err
-		}
-	}
-
-	return nil
+		return &newPath, nil
+	})
 }
 
 func getDirectorySlug(path string) (string, error) {
