@@ -35,6 +35,7 @@ var markdownFileOperations = []operationInstruction{
 	{Key: "eraseMarkdownWithNoContent", Func: eraseMarkdownWithNoContent},
 	{Key: "commonmarkAttributes", Func: replaceCommonmarkAttributes},
 	{Key: "fixImages", Func: fixImages},
+	{Key: "fixFigureCaptions", Func: fixFigureCaptions},
 	{Key: "fixHtmlImages", Func: fixHtmlImages},
 	{Key: "replaceBaseUrl", Func: replaceBaseUrl},
 	{Key: "replaceBaseUrlWithSpaces", Func: replaceBaseUrlWithSpaces},
@@ -115,6 +116,30 @@ func fixImages(path string) error {
 			} else {
 				replacements = append(replacements, parseImageWithoutTags(src, image))
 			}
+		}
+
+		strContent := string(content)
+		for _, replacement := range replacements {
+			fmt.Println("Replacing", colors.Labels.Unwanted(replacement.Find), "with", colors.Labels.Wanted(replacement.Replace), "in", colors.Labels.Info(path))
+			strContent = strings.ReplaceAll(strContent, replacement.Find, replacement.Replace)
+		}
+		_, err := io.WriteString(w, strContent)
+		return err
+	})
+}
+
+// fixFigureCaptions removes the blank line between figure captions and images
+func fixFigureCaptions(path string) error {
+	return ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
+		figures := FigureRe.FindAllStringSubmatch(string(content), -1)
+		var replacements []replacement
+		for _, figure := range figures {
+			nlRe := regexp.MustCompile("\n+")
+			caption := nlRe.ReplaceAllString(figure[0], "\n")
+			replacements = append(replacements, replacement{
+				Find:    figure[0],
+				Replace: caption,
+			})
 		}
 
 		strContent := string(content)

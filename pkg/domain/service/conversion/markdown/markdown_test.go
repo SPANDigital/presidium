@@ -75,6 +75,18 @@ var _ = Describe("Processing markdown content", func() {
 			Expect(actual).Should(ContainSubstring("{{< tooltip \"Knowledge Management\" \"top-context-menu\" >}}"))
 		})
 	})
+
+	When("Fixing figure captions", func() {
+		var markdownText = "![YodaTrain diagram]({{% baseurl %}}/images/yoda-train-diagram.png)\n\n\n*Figure. Yoda Train diagram*"
+
+		It("Should replace it as expected", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := fixFigureCaptions(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring("![YodaTrain diagram]({{% baseurl %}}/images/yoda-train-diagram.png)\n*Figure. Yoda Train diagram*"))
+		})
+	})
 })
 
 func mustHaveDir(path string) {

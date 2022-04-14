@@ -85,6 +85,7 @@ func init() {
 	pflags.BoolVarP(&config.Flags.FixTables, "addTableHeaders", "F", conversion.Defaults.FixTables, "Add empty table headers to tables without headers")
 	pflags.BoolVarP(&config.Flags.GenerateHugoModule, "generateHugoModule", "M", conversion.Defaults.GenerateHugoModule, "Generate Hugo (Go) module")
 	pflags.StringVarP(&config.Flags.HugoModuleName, "hugoModuleName", "N", "", "Use a specific hugo module name (instead of one derived from the site title)")
+	pflags.BoolVar(&config.Flags.FixFigureCaptions, "fixFigureCaptions", conversion.Defaults.FixTables, "Remove the blank line between figure captions and images")
 
 	err = viper.BindPFlags(pflags)
 	if err != nil {
