@@ -8,7 +8,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"io"
 	"io/fs"
-	"io/ioutil"
 	"log"
 	"os"
 	"path/filepath"
@@ -62,7 +61,7 @@ type Converter struct {
 	stagingDir        string
 	stagingContentDir string
 	running           bool
-	fs                filesystem.FileSystem
+	fs                filesystem.FsUtil
 
 	// --- source directory structure (Jekyll)
 	sourceDir               string
@@ -92,8 +91,7 @@ func (c *Converter) GetDestDir() string {
 }
 
 func (c *Converter) initSourceDir(sourceDir string) error {
-
-	if info, err := os.Stat(sourceDir); err != nil {
+	if info, err := filesystem.AFS.Stat(sourceDir); err != nil {
 		return ErrSourceDirectoryDoesNotExist
 	} else if !info.IsDir() {
 		return ErrSourceIsNotDirectory
@@ -113,7 +111,6 @@ func (c *Converter) initSourceDir(sourceDir string) error {
 }
 
 func (c *Converter) initDestinationDir(destinationDir string) error {
-
 	if destinationDir == "" {
 		destinationDir = "."
 	}
@@ -123,8 +120,8 @@ func (c *Converter) initDestinationDir(destinationDir string) error {
 		return err
 	}
 
-	if _, err := os.Stat(destinationDir); err == nil {
-		if err = os.MkdirAll(destinationDir, 0666); err != nil {
+	if _, err := filesystem.AFS.Stat(destinationDir); err == nil {
+		if err = filesystem.AFS.MkdirAll(destinationDir, 0666); err != nil {
 			return ErrUnableToCreateDestDirectory
 		}
 	}
@@ -225,7 +222,7 @@ func (c *Converter) Execute(sourceDir string, destDir string) error {
 
 func (c *Converter) initStaging() error {
 
-	workDir, err := ioutil.TempDir(os.TempDir(), "staging")
+	workDir, err := filesystem.AFS.TempDir(os.TempDir(), "staging")
 	if err != nil {
 		log.Fatalf("could not create staging directrory [%s]: %s", workDir, err.Error())
 		return err
@@ -424,13 +421,13 @@ func (c *Converter) moduleName() string {
 //
 // This function will create such a file it does not exist.
 func copyOver(file string, destinationDir string) {
-	from, err := os.Open(file)
+	from, err := filesystem.AFS.Open(file)
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer from.Close()
 
-	to, err := os.OpenFile(filepath.Join(destinationDir, file), os.O_RDWR|os.O_CREATE, 0666)
+	to, err := filesystem.AFS.OpenFile(filepath.Join(destinationDir, file), os.O_RDWR|os.O_CREATE, 0666)
 
 	if err != nil {
 		log.Fatal(err)

@@ -3,8 +3,10 @@ package configtranslation
 import (
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/spf13/afero"
 	"testing"
 )
 
@@ -14,6 +16,7 @@ func TestConfigTranslation(t *testing.T) {
 }
 
 var _ = Describe("ConfigTranslation", func() {
+	filesystem.SetFileSystem(afero.NewMemMapFs())
 	BeforeSuite(func() {
 		colors.Setup()
 	})

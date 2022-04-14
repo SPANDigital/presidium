@@ -1,13 +1,13 @@
 package utils
 
 import (
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"os"
-	"path/filepath"
 )
 
 func FileExists(path string) bool {
-	if _, err := os.Stat(path); os.IsNotExist(err) {
+	if _, err := filesystem.AFS.Stat(path); os.IsNotExist(err) {
 		return false
 	}
 	return true
@@ -21,7 +21,7 @@ func WalkRename(path string, rename func(path string, info os.FileInfo) (*string
 	}
 
 	var renames []Rename
-	err := filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+	err := filesystem.AFS.Walk(path, func(path string, info os.FileInfo, err error) error {
 		newPath, err := rename(path, info)
 		if err != nil {
 			return err
@@ -39,10 +39,10 @@ func WalkRename(path string, rename func(path string, info os.FileInfo) (*string
 	for i := len(renames) - 1; i >= 0; i-- {
 		to := renames[i]
 		log.Infof("renaming directory %s to %s", to.from, to.to)
-		if err = os.Rename(to.from, to.to); err != nil {
+		if err = filesystem.AFS.Rename(to.from, to.to); err != nil {
 			return err
 		}
 	}
 
-	return nil
+	return err
 }

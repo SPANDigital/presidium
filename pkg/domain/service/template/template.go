@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"github.com/Masterminds/sprig"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/gobuffalo/packd"
 	"github.com/gobuffalo/packr/v2"
 	"os"
@@ -49,11 +50,11 @@ func (s Service) ProcessTemplate(dir, theTemplate string, model generator.Templa
 		return err
 	}
 	finalPath := path.Join(dir, filename)
-	err = os.MkdirAll(dir, os.ModePerm)
+	err = filesystem.AFS.MkdirAll(dir, os.ModePerm)
 	if err != nil {
 		return err
 	}
-	f, err := os.Create(finalPath)
+	f, err := filesystem.AFS.Create(finalPath)
 	if err != nil {
 		return err
 	}

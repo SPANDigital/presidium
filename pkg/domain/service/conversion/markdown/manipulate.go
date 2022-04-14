@@ -21,7 +21,7 @@ type WriteContentFunc func(content []byte, w io.Writer) error
 
 func IsRecognizableMarkdown(path string) bool {
 	fmt.Println("Validating", path)
-	b, err := FSUtil.ReadFile(path) // just pass the file name
+	b, err := AFS.ReadFile(path) // just pass the file name
 	if err != nil {
 		return false
 	}
@@ -31,9 +31,9 @@ func IsRecognizableMarkdown(path string) bool {
 
 // Checks if a markdown file exists, if it doesn't create an empty one
 func touch(path string) error {
-	_, err := FSUtil.Stat(path)
+	_, err := AFS.Stat(path)
 	if os.IsNotExist(err) {
-		f, err := FSUtil.Create(path)
+		f, err := AFS.Create(path)
 		if err == nil {
 			_, err = f.WriteString("---\n---\n")
 			if err == nil {
@@ -57,7 +57,7 @@ func ManipulateMarkdown(path string, matterFunc WriteFrontMatterFunc, contentFun
 		return err
 	}
 
-	b, err := FSUtil.ReadFile(path) // just pass the file name
+	b, err := AFS.ReadFile(path) // just pass the file name
 	if err != nil {
 		return err
 	}

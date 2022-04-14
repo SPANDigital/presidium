@@ -11,17 +11,7 @@ import (
 	"strings"
 )
 
-var (
-	FS     afero.Fs
-	FSUtil *afero.Afero
-)
-
-func init() {
-	FS = afero.NewOsFs()
-	FSUtil = &afero.Afero{Fs: FS}
-}
-
-type FileSystem interface {
+type FsUtil interface {
 	Copy(src, dest string, mode fs.FileMode) error
 	CopyWithOptions(src, dest string, options copy.Options) error
 	CopyDir(src, dest string) error
@@ -36,11 +26,19 @@ type FileSystem interface {
 	RequireDir(dir string) error          // TODO: need to add unit test for this
 }
 
-type fileSystem struct{}
+func SetFileSystem(fs afero.Fs) {
+	AFS = &afero.Afero{Fs: fs}
+	FS = fs
+}
 
-func (f fileSystem) RequireDir(dir string) error {
+type fsUtil struct{}
 
-	info, err := os.Stat(dir)
+func New() FsUtil {
+	return &fsUtil{}
+}
+
+func (f fsUtil) RequireDir(dir string) error {
+	info, err := AFS.Stat(dir)
 	if err != nil {
 		return err
 	}
@@ -52,9 +50,8 @@ func (f fileSystem) RequireDir(dir string) error {
 	return nil
 }
 
-func (f fileSystem) RequireRegularFile(path string) error {
-
-	info, err := os.Stat(path)
+func (f fsUtil) RequireRegularFile(path string) error {
+	info, err := AFS.Stat(path)
 	if err != nil {
 		return err
 	}
@@ -66,11 +63,11 @@ func (f fileSystem) RequireRegularFile(path string) error {
 	return nil
 }
 
-func (f fileSystem) DeleteDir(dir string) error {
+func (f fsUtil) DeleteDir(dir string) error {
 	return FS.RemoveAll(dir)
 }
 
-func (f fileSystem) DirExists(dir string) bool {
+func (f fsUtil) DirExists(dir string) bool {
 	info, err := FS.Stat(dir)
 	if err == nil {
 		return info.IsDir()
@@ -78,16 +75,15 @@ func (f fileSystem) DirExists(dir string) bool {
 	return false
 }
 
-func (f fileSystem) GetWorkingDir() (string, error) {
+func (f fsUtil) GetWorkingDir() (string, error) {
 	return os.Getwd()
 }
 
-func (f fileSystem) CopyWithOptions(src, dest string, options copy.Options) error {
+func (f fsUtil) CopyWithOptions(src, dest string, options copy.Options) error {
 	return copy.Copy(src, dest, options)
 }
 
-func (f fileSystem) AbsolutePath(path string) (string, error) {
-
+func (f fsUtil) AbsolutePath(path string) (string, error) {
 	if filepath.IsAbs(path) {
 		return path, nil
 	}
@@ -95,17 +91,16 @@ func (f fileSystem) AbsolutePath(path string) (string, error) {
 	return filepath.Abs(path)
 }
 
-func (f fileSystem) MakeDirs(path string) error {
+func (f fsUtil) MakeDirs(path string) error {
 	return FS.MkdirAll(path, os.ModePerm)
 }
 
-func (f fileSystem) Rename(old string, new string) error {
+func (f fsUtil) Rename(old string, new string) error {
 	return FS.Rename(old, new)
 }
 
 // EmptyDir removes all content leaving an empty directory
-func (f fileSystem) EmptyDir(dir string) error {
-
+func (f fsUtil) EmptyDir(dir string) error {
 	info, err := FS.Stat(dir)
 	if err != nil {
 		return err
@@ -135,26 +130,22 @@ func (f fileSystem) EmptyDir(dir string) error {
 	return nil
 }
 
-func New() FileSystem {
-	return &fileSystem{}
-}
-
-func (f fileSystem) Copy(src, dest string, mode fs.FileMode) error {
-	input, err := FSUtil.ReadFile(src)
+func (f fsUtil) Copy(src, dest string, mode fs.FileMode) error {
+	input, err := AFS.ReadFile(src)
 	if err != nil {
 		return err
 	}
-	return FSUtil.WriteFile(dest, input, mode)
+	return AFS.WriteFile(dest, input, mode)
 }
 
-func (f fileSystem) CopyDir(src, dest string) error {
+func (f fsUtil) CopyDir(src, dest string) error {
 	// Create dest directory
 	err := FS.MkdirAll(dest, fs.ModePerm)
 	if err != nil {
 		return err
 	}
 
-	return FSUtil.Walk(src, func(path string, info fs.FileInfo, err error) error {
+	return AFS.Walk(src, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			return err
 		}

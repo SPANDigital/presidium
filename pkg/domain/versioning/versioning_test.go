@@ -1,10 +1,11 @@
 package versioning
 
 import (
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
+	"github.com/spf13/afero"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strings"
@@ -17,6 +18,7 @@ func TestVersioning(t *testing.T) {
 }
 
 var _ = Describe("project", func() {
+	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	var project string
 
@@ -31,7 +33,7 @@ var _ = Describe("project", func() {
 		listContent(project)
 	})
 
-	AfterSuite(func() { _ = os.RemoveAll(project) })
+	AfterSuite(func() { _ = filesystem.AFS.RemoveAll(project) })
 
 	Describe("after enabling versioning", func() {
 
@@ -56,7 +58,7 @@ var _ = Describe("project", func() {
 })
 
 func mustMakeWorkDir() string {
-	workDir, err := ioutil.TempDir("", "versioning-test-dir-*")
+	workDir, err := filesystem.AFS.TempDir("", "versioning-test-dir-*")
 	Expect(err).ShouldNot(HaveOccurred())
 	return workDir
 }
@@ -64,7 +66,7 @@ func mustMakeWorkDir() string {
 func listContent(path string) {
 	println("Project")
 	println("-------")
-	listContentErr := filepath.WalkDir(path, func(path string, e fs.DirEntry, err error) error {
+	listContentErr := filesystem.AFS.Walk(path, func(path string, info fs.FileInfo, err error) error {
 		println(path)
 		return nil
 	})
@@ -86,10 +88,10 @@ func mustMakeTree(workDir string, template []string) []string {
 }
 
 func mustHaveDir(path string) {
-	dirInfo, dirInfoErr := os.Stat(path)
+	dirInfo, dirInfoErr := filesystem.AFS.Stat(path)
 	if dirInfoErr != nil {
 		if os.IsNotExist(dirInfoErr) {
-			makeDirErr := os.MkdirAll(path, os.ModePerm)
+			makeDirErr := filesystem.AFS.MkdirAll(path, os.ModePerm)
 			Expect(makeDirErr).ShouldNot(HaveOccurred())
 		} else {
 			Expect(dirInfoErr).ShouldNot(HaveOccurred())
@@ -106,7 +108,7 @@ func mustHaveParentDir(filePath string) {
 
 func mustMakeFile(path string) {
 	mustHaveParentDir(path)
-	file, err := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
+	file, err := filesystem.AFS.OpenFile(path, os.O_CREATE|os.O_WRONLY, os.ModePerm)
 	_, _ = file.WriteString("The resurrection of respecting creators is popular.")
 	file.Close()
 	Expect(err).ShouldNot(HaveOccurred())

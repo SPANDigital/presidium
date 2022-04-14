@@ -4,12 +4,11 @@ import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
 	"io/fs"
-	"io/ioutil"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
@@ -22,55 +21,29 @@ func TestFileActions(t *testing.T) {
 }
 
 var _ = Describe("Performing file actions", func() {
+	filesystem.SetFileSystem(afero.NewMemMapFs())
+
 	colors.Setup()
 	When("removing Jekyll weight indicators", func() {
-		var stagingContentDir string
-		var stagedContentFiles = []string{
-			"introduction/",
-			"introduction/1.1-work-culture/",
-			"introduction/1.1-work-culture/_index.md",
-			"introduction/1.1-work-culture/01-dos.md",
-			"introduction/1.1-work-culture/02-donts.md",
-			"introduction/1.1-work-culture/03-fun.md",
-			"introduction/1.2-staff-facilities/",
-			"introduction/1.2-staff-facilities/_index.md",
-			"introduction/1.2-staff-facilities/1.1-meeting-room.md",
-			"introduction/1.2-staff-facilities/2.1-conferences.md",
-			"introduction/1.2-staff-facilities/2.2-kitchen.md",
-			"introduction/1.2-staff-facilities/3-toilets-and-the-rest.md",
-		}
-
-		BeforeEach(func() {
-			tempDir, err := ioutil.TempDir("", "stagedContentDir-*")
-			Expect(err).ShouldNot(HaveOccurred())
-			stagingContentDir = tempDir
-			// Make staged content files and directories for to test on:
-			for _, local := range stagedContentFiles {
-				wantDir := strings.HasSuffix(local, "/")
-				path := filepath.Join(stagingContentDir, local)
-				if wantDir {
-					err = os.MkdirAll(path, 0775)
-					Expect(err).ShouldNot(HaveOccurred())
-				} else /* WANT A FILE INSTEAD */ {
-					f, e := os.OpenFile(path, os.O_CREATE|os.O_WRONLY, 0755)
-					Expect(e).ShouldNot(HaveOccurred())
-					_, err := f.WriteString("dummy text")
-					f.Close()
-					Expect(err).ShouldNot(HaveOccurred())
-				}
-			}
-		})
-
-		AfterEach(func() { _ = os.RemoveAll(stagingContentDir) })
+		stageDir := "/tester"
+		mockFile(stageDir, "introduction/1.1-work-culture/01-dos.md")
+		mockFile(stageDir, "introduction/1.1-work-culture/03-fun.md")
+		mockFile(stageDir, "introduction/1.2-staff-facilities/_index.md")
+		mockFile(stageDir, "introduction/1.2-staff-facilities/2.1-conferences.md")
+		mockFile(stageDir, "introduction/1.2-staff-facilities/3-toilets-and-the-rest.md")
 
 		It("should produce a clean tree of file paths with no with weight indicators", func() {
 			regexNameStarsWithWeighIndicators := regexp.MustCompile(`^[\d+\-.]+`)
-			err := RemoveWeightIndicatorsFromFilePaths(stagingContentDir)
+			err := RemoveWeightIndicatorsFromFilePaths(stageDir)
 			Expect(err).ShouldNot(HaveOccurred())
 			pathsWithWeightIndicators := make([]string, 0)
-			err = filepath.WalkDir(stagingContentDir, func(path string, d fs.DirEntry, err error) error {
-				local := strings.TrimPrefix(path, stagingContentDir)
-				nameIsWeighted := regexNameStarsWithWeighIndicators.FindStringSubmatch(d.Name()) != nil
+			err = filesystem.AFS.Walk(stageDir, func(path string, info fs.FileInfo, err error) error {
+				if info == nil {
+					return nil
+				}
+
+				local := strings.TrimPrefix(path, stageDir)
+				nameIsWeighted := regexNameStarsWithWeighIndicators.FindStringSubmatch(info.Name()) != nil
 				if nameIsWeighted {
 					pathsWithWeightIndicators = append(pathsWithWeightIndicators, local)
 				}
@@ -119,7 +92,7 @@ var _ = Describe("Performing file actions", func() {
 	When("title should be derived from the path", func() {
 		givenExpectations := map[string]string{
 			"content/onboard/developer-authorization/create-private-key.md": "Create Private Key",
-			"content/onboard/enrolling-as-an-developer/enroll.md":     "Enroll",
+			"content/onboard/enrolling-as-an-developer/enroll.md":           "Enroll",
 			"sample docs.md": "Sample Docs",
 			"_overview":      "Overview",
 		}
@@ -170,22 +143,26 @@ var _ = Describe("Performing file actions", func() {
 	})
 
 	When("building a weight map", func() {
-		afFs = afero.NewMemMapFs()
-		mockFile("test/_index.md")
-		mockFile("test/00_a.md")
-		mockFile("test/network/01_a.md")
-		mockFile("test/network/0_a.jpg")
-		mockFile("test/store/3a_a.md")
-		mockFile("test/store/2a_c.md")
+		stageDir := "/wm"
+		mockFile(stageDir, "test/_index.md")
+		mockFile(stageDir, "test/00_a.md")
+		mockFile(stageDir, "test/network/01_a.md")
+		mockFile(stageDir, "test/network/0_a.jpg")
+		mockFile(stageDir, "test/store/3a_a.md")
+		mockFile(stageDir, "test/store/2a_c.md")
 
 		It("should build a valid weight map", func() {
-			dm, err := buildWeightMap(".")
+			expected := directoryMap{
+				"/wm/test":         []string{"/wm/test/00_a.md"},
+				"/wm/test/network": []string{"/wm/test/network/01_a.md"},
+				"/wm/test/store":   []string{"/wm/test/store/2a_c.md", "/wm/test/store/3a_a.md"},
+			}
+
+			dm, err := buildWeightMap(stageDir)
 			Expect(err).Should(BeNil())
-			Expect(dm).Should(Equal(directoryMap{
-				"test":[]string{"test/00_a.md"},
-				"test/network":[]string{"test/network/01_a.md"},
-				"test/store":[]string{"test/store/2a_c.md", "test/store/3a_a.md"},
-			}))
+			for path, dirs := range expected {
+				Expect(dm[path]).Should(Equal(dirs))
+			}
 		})
 	})
 
@@ -229,12 +206,13 @@ var _ = Describe("Performing file actions", func() {
 	})
 })
 
-func mockFile(p string) {
-	if err := afFs.MkdirAll(filepath.Dir(p), 0770); err != nil {
+func mockFile(stagingContentDir, p string) {
+	path := filepath.Join(stagingContentDir, p)
+	if err := filesystem.AFS.MkdirAll(filepath.Dir(path), 0770); err != nil {
 		Fail("failed to create test dir")
 	}
 
-	_, err := afFs.Create(p)
+	_, err := filesystem.AFS.Create(path)
 	if err != nil {
 		Fail("failed to create test dir")
 	}

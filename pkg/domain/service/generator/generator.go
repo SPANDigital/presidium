@@ -15,13 +15,13 @@ type SiteGenerator interface {
 
 func New() SiteGenerator {
 	return &gen{
-		FileSystem: filesystem.New(),
-		Service:    template.New(),
+		FsUtil:  filesystem.New(),
+		Service: template.New(),
 	}
 }
 
 type gen struct {
-	filesystem.FileSystem
+	filesystem.FsUtil
 	template.Service
 }
 

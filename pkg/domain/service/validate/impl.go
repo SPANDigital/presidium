@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/scylladb/go-set/strset"
 	"io/fs"
 	"net/url"
 	"os"
-	"path/filepath"
 	"strings"
 )
 
@@ -57,7 +57,7 @@ func (validation validation) Validate() (model.Report, error) {
 
 	validation.seen.Clear()
 
-	err := filepath.Walk(validation.path, func(path string, info fs.FileInfo, err error) error {
+	err := filesystem.AFS.Walk(validation.path, func(path string, info fs.FileInfo, err error) error {
 
 		if err != nil {
 			log.ErrorWithFields(err, log.Fields{"validation_path": path})
@@ -170,7 +170,7 @@ func (validation validation) process(path string) error {
 			continue
 		}
 
-		info, err := os.Stat(link.Uri)
+		info, err := filesystem.AFS.Stat(link.Uri)
 
 		if err != nil {
 			link.Message = err.Error()
@@ -179,7 +179,7 @@ func (validation validation) process(path string) error {
 
 		if info.IsDir() {
 			file := fmt.Sprintf("%s/index.html", link.Uri)
-			info, err = os.Stat(file)
+			info, err = filesystem.AFS.Stat(file)
 			if err == nil {
 				continue
 			}
@@ -190,7 +190,7 @@ func (validation validation) process(path string) error {
 			link.Uri = file
 		}
 
-		file, err := os.OpenFile(link.Uri, os.O_RDONLY, 0666)
+		file, err := filesystem.AFS.OpenFile(link.Uri, os.O_RDONLY, 0666)
 
 		if err != nil {
 			validation.reportLink(link, model.Broken, fmt.Sprintf("Unable to open file %s: %s", link.Uri, err.Error()))
@@ -248,7 +248,7 @@ func (validation validation) process(path string) error {
 
 func fileOnPath(path string, name string) (string, error) {
 	file := fmt.Sprintf("%s/%s", path, name)
-	info, err := os.Stat(file)
+	info, err := filesystem.AFS.Stat(file)
 	if err != nil {
 		return file, err
 	}

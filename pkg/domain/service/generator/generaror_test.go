@@ -7,7 +7,8 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
-	"io/ioutil"
+	"github.com/spf13/afero"
+	"io/fs"
 	"os"
 	"path/filepath"
 	"strings"
@@ -20,24 +21,25 @@ func TestGeneratorImpl(t *testing.T) {
 }
 
 var (
-	fs = filesystem.New()
+	f = filesystem.New()
 )
 
 var _ = Describe("Site generation behaviour:", func() {
+	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	var workDir string
 	var t model.InitialSiteTarget
 	var g SiteGenerator
 
 	BeforeSuite(func() {
-		if tempDir, err := ioutil.TempDir("", "presidium-site-generator-test-*"); err != nil {
+		if tempDir, err := filesystem.AFS.TempDir("", "presidium-site-generator-test-*"); err != nil {
 			panic(err) // make sure it fails!
 		} else {
 			workDir = tempDir
 		}
 	})
 
-	AfterSuite(func() { _ = os.RemoveAll(workDir) })
+	AfterSuite(func() { _ = filesystem.AFS.RemoveAll(workDir) })
 
 	BeforeEach(func() {
 		g = New()
@@ -53,8 +55,8 @@ var _ = Describe("Site generation behaviour:", func() {
 	})
 
 	AfterEach(func() {
-		if fs.DirExists(t.SiteTargetDirectory) {
-			_ = fs.DeleteDir(t.SiteTargetDirectory)
+		if f.DirExists(t.SiteTargetDirectory) {
+			_ = f.DeleteDir(t.SiteTargetDirectory)
 		}
 	})
 
@@ -80,7 +82,6 @@ var _ = Describe("Site generation behaviour:", func() {
 	})
 
 	Context("after running the generator, the target site", func() {
-
 		BeforeEach(func() {
 			siteGenerationErr := g.Run(t)
 			Expect(siteGenerationErr).ShouldNot(HaveOccurred())
@@ -89,7 +90,7 @@ var _ = Describe("Site generation behaviour:", func() {
 		})
 
 		AfterEach(func() {
-			errAfterSiteRemoved := fs.EmptyDir(t.SiteTargetDirectory)
+			errAfterSiteRemoved := f.EmptyDir(t.SiteTargetDirectory)
 			Expect(errAfterSiteRemoved).ShouldNot(HaveOccurred())
 		})
 
@@ -111,8 +112,8 @@ var _ = Describe("Site generation behaviour:", func() {
 func listSiteContent(t model.InitialSiteTarget) []string {
 	content := make([]string, 0)
 	contentDir := mustHaveDir(t.ContentDir())
-	contentListingErr := filepath.WalkDir(contentDir, func(path string, d os.DirEntry, err error) error {
-		if !d.IsDir() {
+	contentListingErr := filesystem.AFS.Walk(contentDir, func(path string, info fs.FileInfo, err error) error {
+		if !info.IsDir() {
 			local := strings.TrimPrefix(contentDir, path)
 			content = append(content, local)
 		}
@@ -123,7 +124,7 @@ func listSiteContent(t model.InitialSiteTarget) []string {
 }
 
 func mustHaveDir(path string) string {
-	pathInfo, pathErr := os.Stat(path)
+	pathInfo, pathErr := filesystem.AFS.Stat(path)
 	Expect(pathErr).ShouldNot(HaveOccurred())
 	Expect(pathInfo.IsDir()).Should(BeTrue())
 	return path
@@ -132,7 +133,7 @@ func mustHaveDir(path string) string {
 func remainingOf(tree []string, parent string) []string {
 	found := make([]string, 0)
 	for _, path := range tree {
-		if _, err := os.Stat(filepath.Join(parent, path)); err == nil {
+		if _, err := filesystem.AFS.Stat(filepath.Join(parent, path)); err == nil {
 			found = append(found, path)
 		}
 	}
@@ -140,10 +141,10 @@ func remainingOf(tree []string, parent string) []string {
 }
 
 func mustMakeDir(path string) {
-	if fs.DirExists(path) {
+	if f.DirExists(path) {
 		return
 	} else {
-		err := os.MkdirAll(path, 0755)
+		err := filesystem.AFS.MkdirAll(path, 0755)
 		Expect(err).ShouldNot(HaveOccurred())
 	}
 }
@@ -165,7 +166,7 @@ func mustMakeTree(purpose string, tree []string, parent string) []string {
 func mustMakeFile(path string) string {
 	dir, _ := filepath.Split(path)
 	mustMakeDir(dir)
-	file, err := os.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0755)
+	file, err := filesystem.AFS.OpenFile(path, os.O_WRONLY|os.O_CREATE, 0755)
 	Expect(err).ShouldNot(HaveOccurred())
 	_, _ = file.WriteString("dummy text!")
 	_ = file.Close()

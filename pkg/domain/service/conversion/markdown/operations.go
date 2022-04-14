@@ -2,6 +2,7 @@ package markdown
 
 import (
 	"fmt"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"io"
 	"os"
 	"path/filepath"
@@ -49,7 +50,7 @@ var markdownFileOperations = []operationInstruction{
 // Run each operation on a path, making sure to check with viper to see if we must
 func Operate(path string) error {
 	for _, operation := range markdownFileOperations {
-		_, err := os.Stat(path)
+		_, err := filesystem.AFS.Stat(path)
 		if !os.IsNotExist(err) {
 			if viper.GetBool(operation.Key) {
 				err := operation.Func(path)
@@ -73,7 +74,7 @@ func eraseMarkdownWithNoContent(path string) error {
 // Tells us if an image is in same directory as markdown path
 func imgIsInSameDir(path string, img string) bool {
 	dir := filepath.Dir(path)
-	info, err := os.Stat(filepath.Join(dir, img))
+	info, err := filesystem.AFS.Stat(filepath.Join(dir, img))
 	if os.IsNotExist(err) {
 		return false
 	}

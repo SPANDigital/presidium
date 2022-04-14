@@ -7,10 +7,8 @@ import (
 	"github.com/spf13/afero"
 )
 
-
 var _ = Describe("AddFrontMatter", func() {
-	filesystem.FS = afero.NewMemMapFs()
-	filesystem.FSUtil = &afero.Afero{Fs:  filesystem.FS}
+	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	BeforeEach(func() {
 		filesystem.FS.Remove("test.md")
@@ -19,13 +17,13 @@ var _ = Describe("AddFrontMatter", func() {
 	When("adding front matter", func() {
 		It("should contain front matter", func() {
 			err := AddFrontMatter("test.md", FrontMatter{
-				Title: "test",
+				Title:  "test",
 				Author: "steve",
 				Status: "draft",
-				Slug: "test",
-				URL:"/test",
+				Slug:   "test",
+				URL:    "/test",
 				Github: "@test",
-				Roles: "Developer",
+				Roles:  "Developer",
 				Weight: "1",
 			})
 			Expect(err).Should(BeNil())

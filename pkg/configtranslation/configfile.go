@@ -3,7 +3,7 @@ package configtranslation
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"io/ioutil"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"regexp"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
@@ -12,8 +12,8 @@ import (
 )
 
 type JekyllShow struct {
-	Status bool `yaml:"status""`
-	Author bool `yaml:"author""`
+	Status bool `yaml:"status"`
+	Author bool `yaml:"author"`
 	Roles  bool `yaml:"role"`
 }
 
@@ -22,9 +22,9 @@ type JekyllExternal struct {
 }
 
 type JekyllSectionItem struct {
-	Title      string `yaml:"title""`
-	Url        string `yaml:"url""`
-	Collection string `yaml:"collection""`
+	Title      string `yaml:"title"`
+	Url        string `yaml:"url"`
+	Collection string `yaml:"collection"`
 }
 
 type JekyllConfig struct {
@@ -194,7 +194,7 @@ type Roles struct {
 
 func ReadJekyllConfig(path string) (*JekyllConfig, error) {
 
-	b, err := ioutil.ReadFile(path)
+	b, err := filesystem.AFS.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}
@@ -213,7 +213,7 @@ func WriteHugoConfig(path string, config *HugoConfig) error {
 	if err != nil {
 		return err
 	}
-	return ioutil.WriteFile(path, b, 0755)
+	return filesystem.AFS.WriteFile(path, b, 0755)
 }
 
 // LogoImgRe This regex for grabbing the logo file name from the config file

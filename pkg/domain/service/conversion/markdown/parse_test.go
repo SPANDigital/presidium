@@ -1,6 +1,7 @@
 package markdown
 
 import (
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
@@ -26,10 +27,10 @@ var testMarkdown = `
 * Test 2`
 
 var _ = Describe("Parse", func() {
-	af = afero.NewMemMapFs()
+	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	BeforeEach(func() {
-		af.Remove("test.md")
+		filesystem.AFS.Remove("test.md")
 	})
 
 	When("parsing markdown file", func() {
@@ -50,7 +51,7 @@ var _ = Describe("Parse", func() {
 		})
 
 		It("should parse the content", func() {
-			mockFile("test.md", []byte(testFrontMatter + testMarkdown))
+			mockFile("test.md", []byte(testFrontMatter+testMarkdown))
 			md, err := Parse("test.md")
 			Expect(err).Should(BeNil())
 			Expect(md.Content).Should(Equal(testMarkdown))
@@ -59,7 +60,7 @@ var _ = Describe("Parse", func() {
 })
 
 func mockFile(name string, data []byte) {
-	err := afero.WriteFile(af, name, data, fs.ModePerm)
+	err := filesystem.AFS.WriteFile(name, data, fs.ModePerm)
 	if err != nil {
 		Fail("failed to create test file")
 	}

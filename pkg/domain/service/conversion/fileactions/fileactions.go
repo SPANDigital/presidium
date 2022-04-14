@@ -3,29 +3,26 @@ package fileactions
 import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"github.com/pkg/errors"
-	"github.com/spf13/afero"
+	"github.com/spf13/viper"
 	"io/fs"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/markdown"
-	"github.com/spf13/viper"
 )
 
 type directoryMap map[string][]string
 
 var dirUrls map[string]string
-var afFs = afero.NewOsFs()
 
 func RemoveUnderscoreDirPrefix(dirPath string) error {
-	files, err := ioutil.ReadDir(dirPath)
+	files, err := filesystem.AFS.ReadDir(dirPath)
 	if err != nil {
 		return err
 	}
@@ -34,7 +31,7 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 			oldPath := dirPath + "/" + file.Name()
 			newPath := dirPath + "/" + strings.TrimLeft(file.Name(), "_")
 			fmt.Println("Renaming", colors.Labels.Unwanted(oldPath), "to", colors.Labels.Wanted(newPath))
-			err := os.Rename(oldPath, newPath)
+			err = filesystem.AFS.Rename(oldPath, newPath)
 			if err != nil {
 				return err
 			}
@@ -44,7 +41,7 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 }
 
 func CheckForDirIndex(stagingDir, contentPath string) error {
-	return filepath.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
+	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if isContentPath(path, stagingDir) {
 			return nil
@@ -52,7 +49,7 @@ func CheckForDirIndex(stagingDir, contentPath string) error {
 
 		if filepath.Base(path) == "index.md" {
 			newPath := filepath.Join(filepath.Dir(path), "_index.md")
-			err = os.Rename(path, newPath)
+			err = filesystem.AFS.Rename(path, newPath)
 			if err != nil {
 				return err
 			}
@@ -80,7 +77,7 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 	}
 
 	dirUrls = map[string]string{}
-	return filepath.Walk(contentPath, func(path string, info fs.FileInfo, err error) error {
+	return filesystem.AFS.Walk(contentPath, func(path string, info fs.FileInfo, err error) error {
 		if isIndex(path) || isContentPath(path, stagingDir) {
 			return nil
 		}
@@ -113,7 +110,7 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 }
 
 func CheckForTitles(contentPath string) error {
-	return filepath.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
+	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() || !isMdFile(path) {
 			return nil
 		}
@@ -192,7 +189,7 @@ func getSlugAndUrl(stagingDir string, title string, path string) (slug string, u
 
 func buildWeightMap(contentPath string) (directoryMap, error) {
 	dirMap := directoryMap{}
-	err := afero.Walk(afFs, contentPath, func(path string, info fs.FileInfo, err error) error {
+	err := filesystem.AFS.Walk(contentPath, func(path string, info fs.FileInfo, err error) error {
 		if !info.IsDir() && !isMdFile(path) {
 			return nil
 		}

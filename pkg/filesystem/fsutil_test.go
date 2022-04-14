@@ -19,12 +19,11 @@ func TestFilesystem(t *testing.T) {
 }
 
 func init() {
-	FS = afero.NewMemMapFs()
-	FSUtil = &afero.Afero{Fs: FS}
+	SetFileSystem(afero.NewMemMapFs())
 }
 
 var (
-	filesystem = New()
+	fsutil = New()
 )
 
 var _ = Describe("Filesystem", func() {
@@ -35,7 +34,7 @@ var _ = Describe("Filesystem", func() {
 			testDir := "/home/testuser/testdata/copy/test"
 			BeforeEach(func() {
 				FS.MkdirAll(testDir, 0755)
-				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
+				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
 			})
 			AfterEach(func() {
 				// no need to clean up - memory mapped filesystem will just go away
@@ -44,7 +43,7 @@ var _ = Describe("Filesystem", func() {
 				srcPath := filepath.Join(testDir, srcFileName)
 				destPath := filepath.Join(testDir, "..", dstFileName)
 
-				err := filesystem.Copy(srcPath, destPath, fs.ModePerm)
+				err := fsutil.Copy(srcPath, destPath, fs.ModePerm)
 				Expect(err).NotTo(HaveOccurred())
 
 				// Check the file exists and is the same file
@@ -54,9 +53,9 @@ var _ = Describe("Filesystem", func() {
 				_, err = FS.Stat(destPath)
 				Expect(err).NotTo(HaveOccurred())
 
-				srcFile, err := FSUtil.ReadFile(srcPath)
+				srcFile, err := AFS.ReadFile(srcPath)
 				Expect(err).NotTo(HaveOccurred())
-				destFile, err := FSUtil.ReadFile(destPath)
+				destFile, err := AFS.ReadFile(destPath)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(srcFile).To(Equal(destFile))
 
@@ -70,9 +69,9 @@ var _ = Describe("Filesystem", func() {
 			file1, file2, file3 := "file1.md", "file2.md", "file3.md"
 			BeforeEach(func() {
 				FS.MkdirAll(testDir, 0755)
-				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
-				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
-				FSUtil.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
+				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
+				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
+				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
 			})
 			AfterEach(func() {
 				// no need to clean up - memory mapped filesystem will just go away
@@ -81,17 +80,17 @@ var _ = Describe("Filesystem", func() {
 				srcPath := testDir
 				destPath := filepath.Join(testDir, "..", "result")
 
-				err := filesystem.CopyDir(srcPath, destPath)
+				err := fsutil.CopyDir(srcPath, destPath)
 				Expect(err).NotTo(HaveOccurred())
 
 				srcFiles := make([]string, 0)
-				_ = filepath.WalkDir(testDir, func(path string, d fs.DirEntry, err error) error {
+				_ = AFS.Walk(testDir, func(path string, info fs.FileInfo, err error) error {
 					srcFiles = append(srcFiles, path)
 					return nil
 				})
 
 				destFiles := make([]string, 0)
-				_ = filepath.WalkDir(destPath, func(path string, d fs.DirEntry, err error) error {
+				_ = AFS.Walk(destPath, func(path string, info fs.FileInfo, err error) error {
 					destFiles = append(destFiles, strings.ReplaceAll(path, "result", "test"))
 					return nil
 				})
@@ -114,7 +113,7 @@ var _ = Describe("Filesystem", func() {
 				err := FS.MkdirAll(old, os.ModePerm)
 				Expect(err).NotTo(HaveOccurred())
 
-				err = filesystem.Rename(old, newDir)
+				err = AFS.Rename(old, newDir)
 				Expect(err).NotTo(HaveOccurred())
 
 				info, err := FS.Stat(newDir)
@@ -143,7 +142,7 @@ var _ = Describe("Filesystem", func() {
 					Expect(err).NotTo(HaveOccurred())
 				}
 
-				err := filesystem.EmptyDir(testDir)
+				err := fsutil.EmptyDir(testDir)
 				Expect(err).NotTo(HaveOccurred())
 				parentDir, err := FS.Open(testDir)
 				Expect(err).NotTo(HaveOccurred())
@@ -158,7 +157,7 @@ var _ = Describe("Filesystem", func() {
 		Context("Wen calling AbsolutePath()", func() {
 			It("should remove all relative path place holders and replace it with the actual path", func() {
 				relativePath := "./jellyBabyOhBaby"
-				absolutePath, err := filesystem.AbsolutePath(relativePath)
+				absolutePath, err := fsutil.AbsolutePath(relativePath)
 				Expect(err).NotTo(HaveOccurred())
 				Expect(absolutePath).NotTo(ContainSubstring("."))
 			})
@@ -172,7 +171,7 @@ var _ = Describe("Filesystem", func() {
 			Expect(err).ShouldNot(HaveOccurred())
 		})
 		It("GetWorkingDir() should return the correct working dir", func() {
-			actualWorkingDir, err := filesystem.GetWorkingDir()
+			actualWorkingDir, err := fsutil.GetWorkingDir()
 			Expect(err).ShouldNot(HaveOccurred())
 			Expect(actualWorkingDir).Should(Equal(workingDir))
 		})

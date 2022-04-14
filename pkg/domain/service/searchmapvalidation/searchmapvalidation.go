@@ -5,7 +5,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"io/fs"
-	"os"
 	"path/filepath"
 	"strings"
 )
@@ -29,11 +28,10 @@ func New() SearchMapValidation {
 }
 
 type validation struct {
-	fs filesystem.FileSystem
+	fs filesystem.FsUtil
 }
 
 func (v validation) FindUndeclaredFiles(projectDir string) (*validate.FilesReport, error) {
-
 	projectDir, err := filepath.Abs(projectDir)
 	if err != nil {
 		return nil, err
@@ -72,8 +70,7 @@ func (v validation) FindUndeclaredFiles(projectDir string) (*validate.FilesRepor
 }
 
 func (v *validation) readSearchMapFile(filePath string) (map[string]entry, error) {
-
-	file, err := os.Open(filePath)
+	file, err := filesystem.AFS.Open(filePath)
 	if err != nil {
 		return nil, err
 	}
@@ -97,7 +94,7 @@ func (v *validation) readSearchMapFile(filePath string) (map[string]entry, error
 
 func (v validation) findMissingFiles(contentDir string, searchMapEntries map[string]entry) ([]string, error) {
 	missing := make([]string, 0)
-	err := filepath.Walk(contentDir, func(path string, info fs.FileInfo, err error) error {
+	err := filesystem.AFS.Walk(contentDir, func(path string, info fs.FileInfo, err error) error {
 		if info.Mode().IsRegular() {
 			ext := filepath.Ext(info.Name())
 			ext = strings.ToLower(ext)

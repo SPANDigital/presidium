@@ -39,15 +39,15 @@ type Versioning interface {
 }
 
 type versioning struct {
-	fileSystem       filesystem.FileSystem // Local file system for copy actions.
-	projectRoot      string                // The root the project
-	siteContent      string                // path to the site convent
-	versionsRootPath string                // path where all versions live. this is "versions/"
-	enabled          bool                  // If this feature has been enabled ot not.
-	versionNo        int                   // version number from 1 to 5
-	versionLocalPath string                // location of this version, for example "versions/3"
-	activated        bool                  // flag to version set has been activated
-	statusFile       string                // keep track of the status
+	fileSystem       filesystem.FsUtil // Local file system for copy actions.
+	projectRoot      string            // The root the project
+	siteContent      string            // path to the site convent
+	versionsRootPath string            // path where all versions live. this is "versions/"
+	enabled          bool              // If this feature has been enabled ot not.
+	versionNo        int               // version number from 1 to 5
+	versionLocalPath string            // location of this version, for example "versions/3"
+	activated        bool              // flag to version set has been activated
+	statusFile       string            // keep track of the status
 }
 
 func (v *versioning) GetLatestVersionNo() int {
@@ -72,7 +72,7 @@ func (v *versioning) activateLatest() {
 
 	for i := maxVersionsToKeep; i > 0; i-- {
 		pathToVersion := filepath.Join(v.versionsRootPath, fmt.Sprintf("%d", i))
-		if _, err := os.Stat(pathToVersion); !os.IsNotExist(err) {
+		if _, err := filesystem.AFS.Stat(pathToVersion); !os.IsNotExist(err) {
 			v.activated = true
 			v.versionLocalPath = pathToVersion
 			v.versionNo = i
@@ -116,14 +116,13 @@ func (v versioning) SetEnabled(enabled bool) bool {
 }
 
 func (v *versioning) persist() {
-
-	if _, err := os.Stat(v.versionsRootPath); os.IsNotExist(err) {
-		if err = os.MkdirAll(v.versionsRootPath, os.ModePerm); err != nil {
+	if _, err := filesystem.AFS.Stat(v.versionsRootPath); os.IsNotExist(err) {
+		if err = filesystem.AFS.MkdirAll(v.versionsRootPath, os.ModePerm); err != nil {
 			panic(err)
 		}
 	}
 
-	file, err := os.Create(v.statusFile)
+	file, err := filesystem.AFS.Create(v.statusFile)
 	if err != nil {
 		panic(err)
 	}
@@ -135,7 +134,7 @@ func (v *versioning) persist() {
 
 func (v *versioning) load() {
 
-	file, err := os.OpenFile(v.statusFile, os.O_RDONLY, 0666)
+	file, err := filesystem.AFS.OpenFile(v.statusFile, os.O_RDONLY, 0666)
 
 	if err != nil {
 		if os.IsNotExist(err) {

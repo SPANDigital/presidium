@@ -8,7 +8,6 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -21,17 +20,16 @@ func TestMarkdown(t *testing.T) {
 
 var _ = Describe("Processing markdown content", func() {
 	var workDir string
-	filesystem.FS = afero.NewMemMapFs()
-	filesystem.FSUtil = &afero.Afero{Fs: filesystem.FS}
+	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	BeforeSuite(func() {
 		colors.Setup()
 		var workDirErr error
-		workDir, workDirErr = ioutil.TempDir("", "markdown-processing-test")
+		workDir, workDirErr = filesystem.AFS.TempDir("", "markdown-processing-test")
 		Expect(workDirErr).ShouldNot(HaveOccurred())
 	})
 
-	AfterSuite(func() { _ = os.RemoveAll(workDir) })
+	AfterSuite(func() { _ = filesystem.AFS.RemoveAll(workDir) })
 
 	When("Replacing callouts", func() {
 		var markdownText = `<div class="presidium-warning">
@@ -80,11 +78,11 @@ var _ = Describe("Processing markdown content", func() {
 })
 
 func mustHaveDir(path string) {
-	pathInfo, pathErr := os.Stat(path)
+	pathInfo, pathErr := filesystem.AFS.Stat(path)
 	if pathErr == nil {
 		Expect(pathInfo.IsDir()).Should(BeTrue())
 	} else if os.IsNotExist(pathErr) {
-		pathErr = os.MkdirAll(path, os.ModePerm)
+		pathErr = filesystem.AFS.MkdirAll(path, os.ModePerm)
 	}
 	Expect(pathErr).ShouldNot(HaveOccurred())
 }
@@ -104,7 +102,7 @@ func mustHaveMarkdownInputFile(dir string, content string) string {
 }
 
 func contentOf(path string) string {
-	bytes, err := filesystem.FSUtil.ReadFile(path)
+	bytes, err := filesystem.AFS.ReadFile(path)
 	Expect(err).ShouldNot(HaveOccurred())
 	return string(bytes)
 }

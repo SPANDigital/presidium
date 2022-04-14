@@ -8,7 +8,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"io/ioutil"
 	"log"
 	"os"
 )
@@ -50,7 +49,7 @@ func init() {
 		}
 	}
 
-	stagingDir, err := ioutil.TempDir(os.TempDir(), "staging")
+	stagingDir, err := filesystem.AFS.TempDir(os.TempDir(), "staging")
 	if err != nil {
 		log.Fatal("Could not create staging directory", err)
 	}

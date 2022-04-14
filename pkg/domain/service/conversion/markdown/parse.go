@@ -1,7 +1,7 @@
 package markdown
 
 import (
-	"github.com/spf13/afero"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"gopkg.in/yaml.v2"
 )
 
@@ -10,10 +10,8 @@ type Markdown struct {
 	Content     string
 }
 
-var af = afero.NewOsFs()
-
 func Parse(path string) (*Markdown, error) {
-	b, err := afero.ReadFile(af, path)
+	b, err := filesystem.AFS.ReadFile(path)
 	if err != nil {
 		return nil, err
 	}

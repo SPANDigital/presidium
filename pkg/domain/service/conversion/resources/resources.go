@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -14,7 +15,7 @@ var numberedPathRe = regexp.MustCompile(`(\d+\-)(.*)`)
 var resourceList []string
 
 func GatherResources(path string) error {
-	return filepath.Walk(path, func(path string, info os.FileInfo, err error) error {
+	return filesystem.AFS.Walk(path, func(path string, info os.FileInfo, err error) error {
 		if !info.IsDir() && !strings.HasSuffix(path, ".md") {
 			var resource = finalResourcePath(path)
 			fmt.Println("Found resource", colors.Labels.Info(resource))
