@@ -32,6 +32,7 @@ type flags struct {
 	FixTables                  bool
 	GenerateHugoModule         bool
 	HugoModuleName             string
+	FixFigureCaptions          bool
 }
 
 var Flags flags

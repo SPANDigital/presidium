@@ -54,6 +54,7 @@ type Converter struct {
 	CommonMarkdownAttributes   bool
 	CopyMediaToStatic          bool
 	FixTables                  bool
+	FixFigureCaptions          bool
 	GenerateHugoModule         bool
 	SiteModuleName             string
 
@@ -262,6 +263,7 @@ func New() *Converter {
 		CommonMarkdownAttributes:   false,
 		CopyMediaToStatic:          true,
 		FixTables:                  true,
+		FixFigureCaptions:          true,
 		fs:                         filesystem.New(),
 		GenerateHugoModule:         true,
 	}

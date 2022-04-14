@@ -14,6 +14,9 @@ var ImageRe = regexp.MustCompile(`(?mi)!\[(.*)\]\(({{.+}})?([^)\s]*\/)*([^)]*\.(
 // HtmlImageRe matches html images, see https://regex101.com/r/Vepscq/1
 var HtmlImageRe = regexp.MustCompile(`<img([^>]+)/>`)
 
+// FigureRe matches a figure caption that is preceded by a blank line https://regex101.com/r/fWZxR0/1
+var FigureRe = regexp.MustCompile(`(\n)(\n)(\*Figure([^\*]+)\*)`)
+
 // SourceRe matches the src attribute of images, see https://regex101.com/r/UfNttw/1
 var SourceRe = regexp.MustCompile(`(src)="({{.+}})?([^"\s]*\/)*([^"]*\.(png|jpg|jpeg|gif|svg))"`)
 
