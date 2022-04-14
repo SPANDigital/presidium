@@ -134,7 +134,8 @@ func fixFigureCaptions(path string) error {
 		figures := FigureRe.FindAllStringSubmatch(string(content), -1)
 		var replacements []replacement
 		for _, figure := range figures {
-			caption := strings.TrimPrefix(figure[0], "\n")
+			nlRe := regexp.MustCompile("\n+")
+			caption := nlRe.ReplaceAllString(figure[0], "\n")
 			replacements = append(replacements, replacement{
 				Find:    figure[0],
 				Replace: caption,
