@@ -2,18 +2,25 @@
 title: "Scopes"
 ---
 
-Articles and sections can be marked as `internal` and/or `external` via the use of the `scope` tag in article `front matter` or the `site config`.
+Articles and sections can be marked as `internal` and/or `external` via the use of the `scope` tag in article `front matter` or the `config.yaml`.
 
 
-Different versions of the site may then be built using:
+To enable it, use the following settings:
+
 ```
-presidium build -s [internal|external]
+params:
+  scopesEnabled: true
 ```
 
 The `front matter` looks like this:
 ```
 ---
-scope: internal
+title: Welcome to SPAN!
+weight: 2
+slug: welcome
+url: onboarding/welcome
+id: _onboarding/01-welcome.md
+scope: [internal]
 ---
 ```
 
@@ -21,30 +28,26 @@ Multiple scopes are used like this:
 
 ```
 ---
+title: Welcome to SPAN!
+weight: 2
+slug: welcome
+url: onboarding/welcome
+id: _onboarding/01-welcome.md
 scope: [internal, external]
 ---
 ```
 
-Sections can be assigned scope in the `site config` like so:
+Sections can be assigned scope in the `config.yaml` like so:
 
 ```
-sections:
-  - title: Internal API
-    url: /internal-api/
-    collection: internal-api
-    scope: internal
-    
-  - title: Public Section
-    url: /contact-info/
-    collection: contact-info
-    scope: [internal, external]
-```
-
-To show or hide scopes on articles in your generated site, use the following setting in the `site config`:
-
-```
-show:
-    scope: true|false
+menu:
+  Main:
+  - identifier: Introduction
+    name: Introduction
+    url: /
+    weight: 1
+    params:
+      scope: [internal]
 ```
 
 Articles without scope will inherit from their section scope, while articles with scope will be unaffected.

@@ -3,7 +3,7 @@ title:  The Big Picture
 ---
 
 
-Presidium is an open-source, static website generator built on Jekyll for creating and maintaining software documentation for Agile teams and their users. Being static simplifies publication - you don't need to provision a server and can host your documentation in a matter of seconds on Github Pages or Bitbucket. You can easily include documentation publication in your continuous integration pipeline.
+Presidium is an open-source, static website generator built on Hugo for creating and maintaining software documentation for Agile teams and their users. Being static simplifies publication - you don't need to provision a server and can host your documentation in a matter of seconds on Github Pages or Bitbucket. You can easily include documentation publication in your continuous integration pipeline.
 
 Presidium gives Agile teams a way to evangelize, explain, and support solutions to their peers so they can be correctly used and successfully adopted. Wikis can be unstructured and lose their value, tribal knowledge and content stored on Slack channels or emails can go into a black hole. Engineers are experts at writing code, not documentation. *Software documentation that doesn't suck* is not just a tagline.
 

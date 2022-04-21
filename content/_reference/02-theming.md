@@ -3,7 +3,7 @@ title: Themes
 ---
 
 Presidium uses [http://bootswatch.com/](http://bootswatch.com/) to manage themes. To change the
-theme, navigate to `/media/css/_sass` and edit the `_variables.scss` file:
+theme, navigate to `/static/_sass` and edit the `_variables.scss` file:
 
 ```scss
 // Override any bootstrap or bootswatch variables as you need:
@@ -19,14 +19,14 @@ $navbar-default-link-hover-bg: white;
 //@import 'themes/united';
 ```
 Presidium includes the themes listed above. Uncomment the theme that you want and comment the selected one.
-When you call Presidium with `npm start`, it will pick up the change and (the hotloader) will update the 
+When you call Presidium with `hugo serve`, it will pick up the change and (the hotloader) will update the 
 styles, allowing you view the new theme after refreshing the browser window.
 
 Note that if you want a pure `spacelab` theme for example, you must remove the overrides as shown above (`$brand-info` ... etc).
 
 ## Logo
 
-The default logo image is placed and loaded from `/media/images/logo.png`.  To update it, replace
+The default logo image is placed and loaded from `/static/images/logo.png`.  To update it, replace
 the existing file in the folder. Use the following size ratio:
 
 `260px × 124px`
@@ -35,7 +35,7 @@ Additional styling can be added to the `_custom.scss` file to change the positio
 
 ## Favicon
 
-A default icon does not exist, but can be added to `/media/images/favicon.ico`. Different favicon sizes are not supported yet.
+A default icon does not exist, but can be added to `/static/images/favicon.ico`. Different favicon sizes are not supported yet.
 
 ## Title tag
 

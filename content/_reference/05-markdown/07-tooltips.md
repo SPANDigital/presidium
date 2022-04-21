@@ -10,10 +10,10 @@ Tooltips display a short definition of an item. There are two ways to create too
 
 Automatic tooltips reference Glossary entries. If a Glossary article by the name of "Tooltips" exists, a tooltip will be available for the following item:
 
-[Tooltips](# 'presidium-tooltip')
+Tooltips:
 
 ```md
-[Tooltips](# 'presidium-tooltip')
+{{< tooltip "Policy" >}} 
 ```
 
 # Link Override
@@ -22,6 +22,6 @@ You can use an internal article as the source of a tooltip. Presidium will use t
 
 {% raw %}
 ```md
-[this,]({{ site.baseurl }}/best-practices/#use-article-templates 'presidium-tooltip')
+{{< tooltip "Templates" "/best-practices/#templates” >}}
 ```
 {% endraw %}

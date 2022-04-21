@@ -16,8 +16,6 @@ Any text enclosed in angle brackets will be interpreted as a link. If you want t
 ```md
 Internal link: [Presidium Authors]({{site.baseurl}}/reference/front-matter/#authors)
 
-External link: <https://github.com/SPANDigital/presidium>
-
-Alternative: [Presidium on Github](https://github.com/SPANDigital/presidium)
+External link: [Presidium on Github] (https://github.com/SPANDigital/presidium)
 ```
 {% endraw %}

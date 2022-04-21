@@ -10,8 +10,8 @@ will work for certain cases when an importer is not yet available.
 
 To include documentation in an iframe:
 1. Generate the static site documentation for your component.
-1. Put the documentation in the `/media` folder so that it's statically served.
-The Presidium convention is to place it under `/media/import/{my-reference}`.
+1. Put the documentation in the `/static` folder so that it's statically served.
+The Presidium convention is to place it under `/static/import/{my-reference}`.
 1. Add a reference article to the Reference section:
 
 ```markdown
@@ -24,7 +24,7 @@ title: My Reference
 
 <div>
     <iframe
-            src='{{site.baseurl}}/media/import/{my-reference}/foo/bar/package-summary.html'
+            src='{{site.baseurl}}/static/import/{my-reference}/foo/bar/package-summary.html'
     </iframe>
 </div>
 ```

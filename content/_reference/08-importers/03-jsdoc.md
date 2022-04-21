@@ -32,6 +32,6 @@ The following options are available to `presidium-jsdoc`:
 |:---|:---
 | -d,--directory `path`                      | The path to the output directory in `./content` (for example, `./content/_reference/mydocs`).
 | -h,--help                                  | Displays this help.
-| -p,--path `path`                           | The path from which static files are served (for example, `./media/import/mydocs`). Default is `./media/jsdoc/<title>`.
+| -p,--path `path`                           | The path from which static files are served (for example, `./static/import/mydocs`). Default is `./static/jsdoc/<title>`.
 | -s,--sourcepath `path`                     | The path to the project's source.
 | -t,--title `string`                        | The title of the output folder. Default is the directory name supplied with -d if no package information is found.
