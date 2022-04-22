@@ -79,12 +79,24 @@ var _ = Describe("Processing markdown content", func() {
 	When("Fixing figure captions", func() {
 		var markdownText = "![YodaTrain diagram]({{% baseurl %}}/images/yoda-train-diagram.png)\n\n\n*Figure. Yoda Train diagram*"
 
-		It("Should replace it as expected", func() {
+		It("Should remove empty lines between image and caption", func() {
 			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
 			err := fixFigureCaptions(markdownFile)
 			Expect(err).ShouldNot(HaveOccurred())
 			actual := contentOf(markdownFile)
 			Expect(actual).Should(ContainSubstring("![YodaTrain diagram]({{% baseurl %}}/images/yoda-train-diagram.png)\n*Figure. Yoda Train diagram*"))
+		})
+	})
+
+	When("Converting image styles", func() {
+		var markdownText = "![ML Lifecycle Process Diagram]({{ site.baseurl }}/media/images/ml-lifecycle-process-flow.png){:width=\"75%\" height=\"70%\"}"
+
+		It("Should the image to an img shortcode", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := fixImages(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring("{{< img src=\"/images/ml-lifecycle-process-flow.png\" alt=\"ML Lifecycle Process Diagram\" style=\"width:75%;height:70%;\" >}}"))
 		})
 	})
 })
