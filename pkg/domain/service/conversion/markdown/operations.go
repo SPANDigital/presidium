@@ -184,12 +184,32 @@ func parseImageWithoutTags(src string, image []string) replacement {
 func parseImageWithTags(src string, image []string) replacement {
 	var alt, attributes = image[1], image[7]
 	var imgShortcode = fmt.Sprintf(`{{< img src="%s" alt="%s"`, src, alt)
+	var styleAttributes = []string{"width", "height"}
+	var styles string
 	for _, attrMatches := range AttributesRe.FindAllStringSubmatch(attributes, -1) {
 		var key, value = attrMatches[1], attrMatches[2]
-		imgShortcode = imgShortcode + fmt.Sprintf(` %s="%s"`, key, value)
+		if contains(styleAttributes, key) {
+			styles += fmt.Sprintf(`%s:%s;`, key, value)
+		} else {
+			imgShortcode = imgShortcode + fmt.Sprintf(` %s="%s"`, key, value)
+		}
 	}
+
+	if len(styles) > 0 {
+		imgShortcode = imgShortcode + fmt.Sprintf(` style="%s"`, styles)
+	}
+
 	imgShortcode = imgShortcode + " >}}"
 	return replacement{Find: image[0], Replace: imgShortcode}
+}
+
+func contains(arr []string, str string) bool {
+	for _, a := range arr {
+		if a == str {
+			return true
+		}
+	}
+	return false
 }
 
 // Adds empty table headers for all tables with partial or no headers
