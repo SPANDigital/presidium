@@ -178,12 +178,16 @@ func parseSource(path string, dir string, filename string, rawSource bool) strin
 
 func parseImageWithoutTags(src string, image []string) replacement {
 	img := fmt.Sprintf("![%s](%s)", image[1], src)
+	caption := image[10]
+	if len(caption) > 0 {
+		img += caption
+	}
 	return replacement{Find: image[0], Replace: img}
 }
 
 func parseImageWithTags(src string, image []string) replacement {
-	var alt, attributes = image[1], image[7]
-	var imgShortcode = fmt.Sprintf(`{{< img src="%s" alt="%s"`, src, alt)
+	var alt, attributes, caption = image[1], image[7], image[11]
+	var imgShortcode = fmt.Sprintf(`{{< img src="%s"`, src)
 	var styleAttributes = []string{"width", "height"}
 	var styles string
 	for _, attrMatches := range AttributesRe.FindAllStringSubmatch(attributes, -1) {
@@ -193,6 +197,14 @@ func parseImageWithTags(src string, image []string) replacement {
 		} else {
 			imgShortcode = imgShortcode + fmt.Sprintf(` %s="%s"`, key, value)
 		}
+	}
+
+	if alt != caption {
+		imgShortcode += fmt.Sprintf(` alt="%s"`, alt)
+	}
+
+	if len(caption) > 0 {
+		imgShortcode = imgShortcode + fmt.Sprintf(` caption="%s"`, caption)
 	}
 
 	if len(styles) > 0 {

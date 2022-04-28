@@ -91,12 +91,59 @@ var _ = Describe("Processing markdown content", func() {
 	When("Converting image styles", func() {
 		var markdownText = "![ML Lifecycle Process Diagram]({{ site.baseurl }}/media/images/ml-lifecycle-process-flow.png){:width=\"75%\" height=\"70%\"}"
 
-		It("Should the image to an img shortcode", func() {
+		It("Should convert the image to an img shortcode", func() {
 			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
 			err := fixImages(markdownFile)
 			Expect(err).ShouldNot(HaveOccurred())
 			actual := contentOf(markdownFile)
 			Expect(actual).Should(ContainSubstring("{{< img src=\"/images/ml-lifecycle-process-flow.png\" alt=\"ML Lifecycle Process Diagram\" style=\"width:75%;height:70%;\" >}}"))
+		})
+	})
+
+	When("Converting image with a figure caption", func() {
+		var markdownText = "![ML Lifecycle Process Diagram]({{ site.baseurl }}/media/images/ml-lifecycle-process-flow.png)" +
+			"{:width=\"75%\" height=\"70%\"}" +
+			"\n*Figure. Flowchart of the Happy & Unhappy paths of the Purchase Lifecycle in the Session Model*"
+
+		It("Should convert the figure to a caption", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := fixImages(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring("{{< img src=\"/images/ml-lifecycle-process-flow.png\" " +
+				"alt=\"ML Lifecycle Process Diagram\" " +
+				"caption=\"Figure. Flowchart of the Happy & Unhappy paths of the Purchase Lifecycle in the Session Model\" " +
+				"style=\"width:75%;height:70%;\" >}}"))
+		})
+	})
+
+	When("Converting image with a figure caption that matches alt", func() {
+		var markdownText = "![Figure. ML Lifecycle Process Diagram]({{ site.baseurl }}/media/images/ml-lifecycle-process-flow.png)" +
+			"{:width=\"75%\" height=\"70%\"}" +
+			"\n*Figure. ML Lifecycle Process Diagram*"
+
+		It("Should only set the caption and not the alt", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := fixImages(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring("{{< img src=\"/images/ml-lifecycle-process-flow.png\" " +
+				"caption=\"Figure. ML Lifecycle Process Diagram\" " +
+				"style=\"width:75%;height:70%;\" >}}"))
+		})
+	})
+
+	When("Converting image with a figure caption and no styles", func() {
+		var markdownText = "![ML Lifecycle Process Diagram]({{ site.baseurl }}/media/images/ml-lifecycle-process-flow.png)" +
+			"\n*ML Lifecycle Process Diagram*"
+
+		It("Should keep the image caption", func() {
+			markdownFile := mustHaveMarkdownInputFile(workDir, markdownText)
+			err := fixImages(markdownFile)
+			Expect(err).ShouldNot(HaveOccurred())
+			actual := contentOf(markdownFile)
+			Expect(actual).Should(ContainSubstring("{{% baseurl %}}/images/ml-lifecycle-process-flow.png)" +
+				"\n*ML Lifecycle Process Diagram*"))
 		})
 	})
 })

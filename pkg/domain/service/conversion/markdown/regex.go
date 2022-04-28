@@ -8,8 +8,8 @@ var MarkdownRe = regexp.MustCompile(`(?m)^(?s:(^---\n)(.*?)(^---(?:\n|$))(.*))$`
 // FrontMatterRe matches front matter, see https://regex101.com/r/bXta8n/1
 var FrontMatterRe = regexp.MustCompile(`([^:.]*)\s*:\s*(.*)\n?`)
 
-// ImageRe matches markdown images, see https://regex101.com/r/Xen6Cp/2
-var ImageRe = regexp.MustCompile(`(?mi)!\[(.*)\]\(({{.+}})?([^)\s]*\/)*([^)]*\.(png|jpg|jpeg|gif|svg))\)(\{:\s?(.*)\})?`)
+// ImageRe matches markdown images, see https://regex101.com/r/Xen6Cp/3
+var ImageRe = regexp.MustCompile(`!\[(.*)\]\(({{.+}})?([^)\s]*\/)*([^)]*\.(png|jpg|jpeg|gif|svg))\)(\{:\s?(.*)\})?(\{:\s?(.*)\})?(\n[\*_](Figure[^\*\n]+)[\*_])?`)
 
 // HtmlImageRe matches html images, see https://regex101.com/r/Vepscq/1
 var HtmlImageRe = regexp.MustCompile(`<img([^>]+)/>`)
