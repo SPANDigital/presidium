@@ -40,6 +40,26 @@ func RemoveUnderscoreDirPrefix(dirPath string) error {
 	return nil
 }
 
+func SetRootUrl(contentPath string) error {
+	rootSection := strings.ToLower(viper.GetString("replaceRoot"))
+	if len(rootSection) == 0 {
+		return nil
+	}
+
+	path := filepath.Join(contentPath, rootSection, "_index.md")
+	if _, err := filesystem.FS.Stat(path); os.IsNotExist(err) {
+		return nil
+	}
+
+	md, err := markdownForPath(path)
+	if err != nil {
+		return err
+	}
+
+	md.FrontMatter.URL = "/"
+	return markdown.AddFrontMatter(path, md.FrontMatter)
+}
+
 func CheckForDirIndex(stagingDir, contentPath string) error {
 	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
@@ -96,6 +116,7 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 		}
 
 		fm := md.FrontMatter
+
 		fm.Weight = getPathWeight(pm, path)
 		if config.Flags.AddSlugAndUrl {
 			fm.Slug, fm.URL = getSlugAndUrl(stagingDir, md.FrontMatter.Title, path)

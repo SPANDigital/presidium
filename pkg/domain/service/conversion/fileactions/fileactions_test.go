@@ -8,6 +8,7 @@ import (
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
+	"github.com/spf13/viper"
 	"io/fs"
 	"path/filepath"
 	"regexp"
@@ -204,7 +205,44 @@ var _ = Describe("Performing file actions", func() {
 			})
 		}
 	})
+
+	When("setting root url", func() {
+		It("should set the url to /", func() {
+			err := mockFrontMatter("overview/_index.md", markdown.FrontMatter{
+				Title: "Test",
+			})
+			Expect(err).To(BeNil())
+			viper.SetDefault("replaceRoot", "overview")
+			err = SetRootUrl(".")
+			Expect(err).To(BeNil())
+			md, err := markdown.Parse("overview/_index.md")
+			Expect(err).To(BeNil())
+			Expect(md.FrontMatter.URL).To(Equal("/"))
+		})
+
+		It("should set the url to nil", func() {
+			err := mockFrontMatter("overview/_index.md", markdown.FrontMatter{
+				Title: "Test",
+			})
+			Expect(err).To(BeNil())
+			viper.SetDefault("replaceRoot", nil)
+			Expect(err).To(BeNil())
+			md, err := markdown.Parse("overview/_index.md")
+			Expect(err).To(BeNil())
+			Expect(md.FrontMatter.URL).To(Equal(""))
+		})
+	})
 })
+
+func mockFrontMatter(path string, fm markdown.FrontMatter) error {
+	if err := filesystem.FS.MkdirAll(filepath.Dir(path), fs.ModePerm); err != nil {
+		Fail("")
+	}
+
+	filesystem.FS.Create(path)
+	markdown.AddFrontMatter(path, fm)
+	return nil
+}
 
 func mockFile(stagingContentDir, p string) {
 	path := filepath.Join(stagingContentDir, p)
