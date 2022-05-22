@@ -1,0 +1,85 @@
+name: Test and Tag Code
+on:
+  - push
+
+jobs:
+  gh-pages:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-20.04
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Inject Golang Git Config
+        run: git config --global url."https://${PRIVATE_GITHUB_TOKEN}:@github.com/".insteadOf "https://github.com/"
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: '0.87.0'
+          extended: true
+      - name: Build
+        working-directory: docs
+        run: hugo --minify --baseURL https://spandigital.github.io/presidium-hugo
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/public
+    env:
+      PRIVATE_GITHUB_TOKEN: ${{ secrets.PRIVATE_GITHUB_TOKEN }}
+      GOPRIVATE: github.com/spandigital
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set Up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - name: Run Tests
+        run: make test
+  version:
+    if: github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master'
+    name: Version Code
+    runs-on: ubuntu-latest
+    needs:
+      - test
+    outputs:
+      tag: ${{ steps.versioning.outputs.tag }}
+      upload_url: ${{ steps.versioning.outputs.upload_url }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Version Commit
+        id: versioning
+        uses: afdecastro879/automatic-github-versioning-action@v0.1.10
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  release:
+    name: Release Code
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    needs:
+      - version
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set Up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+      - name: Create Release
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      HOMEBREW_TAP_GITHUB_TOKEN: ${{ secrets.HOMEBREW_TAP_GITHUB_TOKEN }}
