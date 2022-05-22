@@ -1,7 +1,5 @@
 ---
 title: The Big Picture
-url: /the-big-picture
-slug: the-big-picture
 weight: 1
 ---
 

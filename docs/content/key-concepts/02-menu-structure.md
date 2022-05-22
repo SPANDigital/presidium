@@ -1,7 +1,5 @@
 ---
 title: Menu Structure & Behavior
-url: key-concepts/menu-structure
-slug: menu-structure
 weight: 2
 ---
 

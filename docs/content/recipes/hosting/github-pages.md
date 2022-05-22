@@ -1,7 +1,5 @@
 ---
 title: Github Pages
-slug: github-pages
-url: hosting/github-pages
 weight: 1
 ---
 

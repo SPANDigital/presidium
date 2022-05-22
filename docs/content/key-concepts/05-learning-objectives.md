@@ -1,7 +1,5 @@
 ---
 title: Learning Objectives
-url: key-concepts/learning-objectives
-slug: learning-objectives
 weight: 5
 ---
 

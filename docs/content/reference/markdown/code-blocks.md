@@ -1,6 +1,7 @@
 ---
 title: Code Blocks
 weight: "6"
+draft: true
 ---
 
 To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language directly after the first set of backticks.

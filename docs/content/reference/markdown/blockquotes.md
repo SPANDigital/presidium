@@ -1,6 +1,7 @@
 ---
 title: Blockquotes
 weight: "5"
+draft: true
 ---
 
 Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples, the [Bootstrap Glyphicons provided by Hugo](http://glyphicons.bootstrapcheatsheets.com/) have been used to embellish the text.

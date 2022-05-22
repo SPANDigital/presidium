@@ -1,7 +1,5 @@
 ---
 title: Authoring Workflow
-url: key-concepts/authoring-workflow
-slug: authoring-workflow
 weight: 4
 ---
 

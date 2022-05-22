@@ -1,6 +1,8 @@
 ---
 title: Statuses
-weight: "4"
+slug: statuses
+url: front-matter/statuses
+weight: 4
 ---
 
 Each article can be assigned a status to track its lifecycle:
@@ -10,18 +12,18 @@ Each article can be assigned a status to track its lifecycle:
 - published
 - retired
 
-Statuses can be set in the site's `front matter`:
+Statuses can be set in the site’s `front matter`:
+
 ```
 ---
-status: draft| | |
-|-|-|
-|review|published|retired
+status: draft|review|published|retired
 ---
 ```
 
 To show or hide statuses on your generated site, use the following setting in the `site config`:
 
 ```
-show:
+params:
+  show:
     status: true|false
 ```

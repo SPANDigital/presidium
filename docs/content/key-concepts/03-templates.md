@@ -1,7 +1,5 @@
 ---
 title: Templates
-url: key-concepts/templates
-slug: templates
 weight: 3
 ---
 

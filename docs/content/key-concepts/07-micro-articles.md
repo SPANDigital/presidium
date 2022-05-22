@@ -1,7 +1,5 @@
 ---
 title: Micro-articles
-url: key-concepts/micro-articles
-slug: micro-articles
 weight: 7
 ---
 

@@ -2,29 +2,25 @@
 title: Directory Structure
 weight: "1"
 ---
+When you create a Presidium site using the CLI `init` command, Presidium creates the directory structure for the 
+selected template.
 
-In Hugo, your content should be organized in a manner that reflects the rendered website.
+Sections and articles are arranged using the `weight` key in the `front matter` of each file, and to specify section
+level title and ordering you may use the `_index.md` file inside the directory containing a section.
 
-While Hugo supports content nested at any level, the top levels (i.e. content/<DIRECTORIES>) are special in Hugo and are considered the content type used to determine layouts etc.
-
-Without any additional configuration, the following will automatically work:
+The following is an example of how you can order and organize files and directories:
 
 ```
-   └── content
-    └── about
-    |   └── index.md  // <- https://example.com/about/
-    ├── posts
-    | |
-|-|
-|   ├── firstpost.md   // <- https://example.com/posts/firstpost/
-    |   ├── happy
-    |   |   └── ness.md  // <- https://example.com/posts/happy/ness/
-    |   └── secondpost.md  // <- https://example.com/posts/secondpost/
-    └── quote
-        ├── first.md       // <- https://example.com/quote/first/
-        └── second.md      // <- https://example.com/quote/second/
+    .
+    ├── article-1.md // Specify weight 1 here in front matter
+    ├── Directory-2
+    │   ├── article-2.1.md // Specify weight 1 here in front matter
+    │   ├── article-2.2.md // Specify weight 2 here in front matter
+    │   ├── _index.md // Specify weight 2 here in front matter, this will set `Directory-2` as the second item in the parent section
+    ├── article-3.md // Specify weight 3 here in front matter
+    ├── article-4.md // Specify weight 4 here in front matter
+    └── _index.md // Specify weight 1 here in front matter
 ```
 
-## Path Breakdown in Hugo 
-
-The following demonstrates the relationships between your content organization and the output URL structure for your Hugo website when it renders. These examples assume you are using pretty URLs, which is the default behavior for Hugo. The examples also assume a key-value of baseURL = "https://example.com" in your site’s configuration file.
+Please note that for `Directory-2/_index.md` file we specify `weight` as `2`, as in this case, this weight 
+determines the ordering for the entire section with respect of its siblings (`article-1.md`, `article-2.md`, `article-3.md`, `article-4.md`)

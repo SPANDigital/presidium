@@ -1,7 +1,5 @@
 ---
 title: Importing Reference Documents
-url: key-concepts/importing-reference-documents
-slug: importing-reference-documents
 weight: 8
 ---
 

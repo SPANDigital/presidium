@@ -1,7 +1,5 @@
 ---
 title: Markdown
-url: key-concepts/markdown
-slug: markdown
 weight: 6
 ---
 

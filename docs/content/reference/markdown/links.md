@@ -1,6 +1,7 @@
 ---
 title: Links
 weight: "3"
+draft: true
 ---
 
 You can link to internal articles in your repository, to external articles, or even to other semantically significant text.

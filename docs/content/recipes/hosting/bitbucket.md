@@ -1,6 +1,7 @@
 ---
 title: Bitbucket
 weight: "2"
+draft: true
 ---
 
 Bitbucket hosting is provided by setting up a separate repository to host your generated site. To serve your content on Bitbucket:

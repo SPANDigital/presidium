@@ -1,6 +1,7 @@
 ---
 title: Tables
 weight: "4"
+draft: true
 ---
 
 # In Markdown

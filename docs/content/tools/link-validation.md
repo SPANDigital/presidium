@@ -1,65 +1,39 @@
 ---
 title: Link Validation
-weight: "1"
+url: link-validation
+slug: link-validation
 ---
-The **link** **validation** tool enables you to validate all the links in your site.
-The tool indicates which links are valid, broken, and/or external, and provides a warning for potentially broken links.
+This tool reports links within a Presidium site. You can use this tool see which links are broken, points to non standard protocols.
 
-# Run Link Validator
+> The tool does not need a live Presidium site to work against, so the site does not need to be deployed.
 
-Basic usage:
+## How to use the tool
 
-```
-$ npm run validate
-```
+1. Generate a local public site by running presidium hugo:
 
-## Output
+   ```shell
+   presidium hugo
+   ```
 
-The link validation tool produces the following output for each unique link found in your site:
+2. Next run the tool pointing to the `public` site:
 
-### Valid Links
+   ```shell
+   presidium validate ./public
+   ```
 
-```
-VALID:          /recipes/structure/
-VALID:          /recipes/structure/#nested-articles
-```
+## Inspect the report
 
-### External Links
+For example:
 
-```
-EXTERNAL:       http://bootswatch.com/
-```
+```shell
+presidium validate ./public
+VALIDATION PATH: ./public
 
-### Broken Links
-
-```
-BROKEN:         /broken-link
-BROKEN:         /recipes/structure/#incorrect-anchor
+        total: 864
+  valid links: 864
+       broken: 0
+     external: 0
+     warnings: 0
 ```
 
-### Potentially Broken Links
-
-```
-WARNING:        /recipes/structure is missing a trailing '/'
-```
-
-# Configuration 
-
-The link validator supports multiple arguments: 
-
-| Argument         | Options                                        | Default value | Description                                                                                          | 
-| ---------------- |----------------------------------------------- | ------------- | -----------------------------------------------------------------------------------------------------| 
-| `fail_on_errors` | `true`, `false`                                | `true`        | Specify if the process should produce an error (and stop) when invalid links are detected.           |
-| `log`            | `all`, `valid`, `broken`, `warning`, `external`| `all`         | Limits the logging of console messages based on the parameter specified.                             |
-| `check`          | `author`                                       |  N/A          | Specifies which front-matter properties should be validated - only _author_ is currently supported.   |
-
-
-Full example: 
-
-```sh
-$ npm run validate -- --fail_on_errors=false --log=broken --check=author 
-```
-
-# Known Issues
-
-* The link validation tool currently marks any assets from `/media` as BROKEN.
+Broken links, external and dynamic (and/or non standard) links will be reported in detail.

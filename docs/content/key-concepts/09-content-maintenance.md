@@ -1,7 +1,5 @@
 ---
 title: Content Maintenance
-url: key-concepts/content-maintenance
-slug: content-maintenance
 weight: 9
 ---
 

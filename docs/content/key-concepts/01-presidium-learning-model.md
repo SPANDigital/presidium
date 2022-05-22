@@ -1,7 +1,5 @@
 ---
 title: Presidium's Learning Model
-url: key-concepts/presidium-learning-model
-slug: presidium-learning-model
 weight: 1
 ---
 
