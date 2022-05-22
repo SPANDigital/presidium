@@ -24,11 +24,11 @@ In addition to the template for software documentation, Presidium includes templ
 
 Presidium supports:
 
-- [Automatic Menus]({{< ref "key-concepts/02-menu-structure.md" >}}): The left navigation menu is dynamically created every time you publish your site.
+- [Automatic Menus]({{< ref "key-concepts/menu-structure.md" >}}): The left navigation menu is dynamically created every time you publish your site.
 - [Versioning: Support] for multiple documentation versions. You can easily switch between versions without losing context. // TODO insert correct link to versionin article
-- [Theming]({{< ref "reference/02-themes.md" >}}): Easily select supported themes
-- [Role Filtering]({{< ref "reference/front-matter/03-user-roles.md" >}}): Define user roles and filter site content by a specific selected role.
-- [Article Status Tracking]({{< ref "reference/front-matter/04-statuses.md" >}}): Track the status of an article and manage simple authoring workflows.
+- [Theming]({{< ref "reference/themes.md" >}}): Easily select supported themes
+- [Role Filtering]({{< ref "reference/front-matter/user-roles.md" >}}): Define user roles and filter site content by a specific selected role.
+- [Article Status Tracking]({{< ref "reference/front-matter/statuses.md" >}}): Track the status of an article and manage simple authoring workflows.
 - [Link Validation](): Make sure your links actually go somewhere! // TODO insert link for versioning
 
 Presidium was created by [SPAN Digital](http://www.spandigital.com/) and is licensed under Apache 2.0 // TODO insert right link for Licensing
