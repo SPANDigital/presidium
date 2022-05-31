@@ -1,13 +1,13 @@
 ---
-title: Code Blocks
-weight: "6"
-draft: true
+title: Codeblocks
+weight: 6
 ---
 
-To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language directly after the first set of backticks.
-Alternatively, you can indent your code / machine output to treat it as preformatted text. For single line inline code, use a single backtick.
+To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language 
+directly after the first set of backticks. Alternatively, you can indent your code / machine output to treat it as 
+preformatted text. For single line inline code, use a single backtick.
 
-# Javascript
+## Javascript
 
 ```js
 var N = 32;
@@ -19,7 +19,7 @@ var buffer = new ArrayBuffer(N);
     var buffer = new ArrayBuffer(N);
     ```
 
-# Python
+## Python
 
 ```py
 my_array = [i for i in range(0, N)]
@@ -29,7 +29,7 @@ my_array = [i for i in range(0, N)]
     my_array = [i for i in range(0, N)]
     ```
 
-# C
+## C
 
 ```c
 int * my_func(int * in) {
@@ -43,6 +43,28 @@ int * my_func(int * in) {
     }
     ```
 
-# Others
+## Go
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+    fmt.Println("hello world")
+}
+```
+
+    ```go
+    package main
+    
+    import "fmt"
+    
+    func main() {
+        fmt.Println("hello world")
+    }
+    ```
+
+## Others
 
 Github-flavoured Markdown supports many languages for code blocks. For a full list, go to [Github](https://github.com/github/linguist/blob/master/lib/linguist/languages.yml).

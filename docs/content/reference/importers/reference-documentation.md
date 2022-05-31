@@ -1,6 +1,6 @@
 ---
 title: Importing Documentation
-weight: "1"
+weight: 1
 ---
 
 The Reference section of Presidium should be reserved as a low-level reference for users.
@@ -11,8 +11,6 @@ The process of importing documentation involves parsing a reference source and g
 system being documented.
 
 Presidium supports the following documentation sources:
-- [javadoc comments](#javadoc)
-- [jsdoc comments](#jsdoc)
-- [swagger api](#swagger)
+- [OpenAPI3](#open-api3)
 
 For other sources that do not yet have an importer, documentation can be [embedded](#embed) into references.

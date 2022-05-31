@@ -1,12 +1,10 @@
 ---
 title: Themes
-slug: themes
-url: reference/themes
 weight: 2
 ---
 
 Presidium provides some themes when spinning up your Presidium Site through the command line. You will see something
-like this when running `presidium-hugo init`:
+like this when running `presidium init`:
 
 ```
 Select a theme

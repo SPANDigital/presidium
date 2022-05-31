@@ -1,44 +1,48 @@
 ---
 title: Blockquotes
-weight: "5"
-draft: true
+weight: 5
 ---
 
-Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples, the [Bootstrap Glyphicons provided by Hugo](http://glyphicons.bootstrapcheatsheets.com/) have been used to embellish the text.
+Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples, 
+the [Bootstrap Glyphicons](http://glyphicons.bootstrapcheatsheets.com/) have been used to embellish the text.
 
 > This is a blockquote
-  - List in blockquote
+> - List in blockquote
 
-> <span class="glyphicon glyphicon-pushpin"/> **Note**!
-  - List in blockquote
+>&nbsp;**Note**!
+> {.glyphicon .glyphicon-pushpin}
+> - List in blockquote
+
+## Other examples
+
+> &nbsp;**TODO**
+> {.glyphicon .glyphicon-list-alt}
+
+> &nbsp;<http://my/url/>
+> {.glyphicon .glyphicon-tags}
+
+> &nbsp;**Decision:**
+> {.glyphicon .glyphicon-knight}
+
+> &nbsp;**Example:**
+> {.glyphicon .glyphicon-flag}
+
+> &nbsp;**IMPORTANT**
+> {.glyphicon .glyphicon-exclamation-sign}
 
 ```md
-> This is a blockquote
-  - List in blockquote
+> **TODO**
+> {.glyphicon .glyphicon-list-alt}
 
-> <span class=”glyphicon glyphicon-pushpin”/> **Note**!
-  - List in blockquote
-```
+> <http://my/url/>
+> {.glyphicon .glyphicon-tags}
 
-# Other Examples
+> **Decision:**
+> {.glyphicon .glyphicon-knight}
 
-> <span class="glyphicon glyphicon-list-alt"/> **TODO**:
+> **Example:**
+> {.glyphicon .glyphicon-flag}
 
-> <span class="glyphicon glyphicon-tags"/> <http://my/url/>
-
-> <span class="glyphicon glyphicon-knight"/> **Decision Point**:
-
-> <span class="glyphicon glyphicon-flag"/> **Example**:
-
-> <span class="glyphicon glyphicon-exclamation-sign"/> **IMPORTANT**:
-
-# Glyphs List
-
-```html
-<span class="glyphicon glyphicon-pushpin"/>
-<span class="glyphicon glyphicon-list-alt"/>
-<span class="glyphicon glyphicon-tags"/>
-<span class="glyphicon glyphicon-knight"/>
-<span class="glyphicon glyphicon-flag"/>
-<span class="glyphicon glyphicon-exclamation-sign"/>
+> **IMPORTANT**
+> {.glyphicon .glyphicon-exclamation-sign}
 ```

@@ -1,7 +1,5 @@
 ---
 title: Design Documentation Structure
-slug: design-documentation-structure
-url: best-practices/design-documentation-structure
 weight: 2
 ---
 

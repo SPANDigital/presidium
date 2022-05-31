@@ -1,7 +1,6 @@
 ---
 title: Prerequisites
-slug: prerequisites
-url: /prerequisites
+
 ---
 
 The following tools are required to use Presidium:

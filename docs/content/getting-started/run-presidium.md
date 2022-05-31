@@ -1,14 +1,12 @@
 ---
 title: Run Presidium
-slug: run
-url: getting-started/run
 weight: 2
 ---
 
 Start the wizard to create a new Presidium Site:
 
 ```
-presidium-hugo init
+presidium init
 ```
 
 Follow the wizard instructions:
@@ -21,7 +19,7 @@ Follow the wizard instructions:
 Then, navigate to the newly created folder (with your project name) and start a local server:
 
 ```
-presidium-hugo hugo server
+presidium hugo serve
 ```
 
 

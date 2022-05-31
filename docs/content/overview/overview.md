@@ -24,11 +24,11 @@ In addition to the template for software documentation, Presidium includes templ
 
 Presidium supports:
 
-- [Automatic Menus]({{< ref "key-concepts/menu-structure.md" >}}): The left navigation menu is dynamically created every time you publish your site.
-- [Versioning: Support] for multiple documentation versions. You can easily switch between versions without losing context. // TODO insert correct link to versionin article
-- [Theming]({{< ref "reference/themes.md" >}}): Easily select supported themes
-- [Role Filtering]({{< ref "reference/front-matter/user-roles.md" >}}): Define user roles and filter site content by a specific selected role.
-- [Article Status Tracking]({{< ref "reference/front-matter/statuses.md" >}}): Track the status of an article and manage simple authoring workflows.
-- [Link Validation](): Make sure your links actually go somewhere! // TODO insert link for versioning
+- [Automatic Menus]({{< ref "key-concepts/#menu-structure" >}}): The left navigation menu is dynamically created every time you publish your site.
+- [Theming]({{< ref "reference/#themes" >}}): Easily select supported themes
+- [Role Filtering]({{< ref "reference/front-matter/#user-roles" >}}): Define user roles and filter site content by a specific selected role.
+- [Article Status Tracking]({{< ref "reference/front-matter/#statuses" >}}): Track the status of an article and manage simple authoring workflows.
+- [Link Validation]({{< ref "tools/#link-validation" >}}): Make sure your links actually go somewhere!
+<!-- - [Versioning: Support] for multiple documentation versions. You can easily switch between versions without losing context. // TODO insert correct link to versionin article -->
 
-Presidium was created by [SPAN Digital](http://www.spandigital.com/) and is licensed under Apache 2.0 // TODO insert right link for Licensing
+Presidium was created by [SPAN Digital](http://www.spandigital.com/) and is licensed under [Apache 2.0](https://github.com/SPANDigital/presidium/blob/develop/LICENSE)

@@ -15,7 +15,5 @@ Micro-articles break the documentation development and maintenance activities in
 prioritized based on need. In many cases, it’s possible to write and review an article in under 20 minutes. 
 Writing Effective Articles
    
-[TODO] // Please add a relative link to the article about writing effective articles
-
 This Presidium documentation site not only explains the Presidium software but also includes best practice guidelines 
 for writing your documentation.

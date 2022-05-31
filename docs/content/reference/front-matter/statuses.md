@@ -1,7 +1,5 @@
 ---
 title: Statuses
-slug: statuses
-url: front-matter/statuses
 weight: 4
 ---
 

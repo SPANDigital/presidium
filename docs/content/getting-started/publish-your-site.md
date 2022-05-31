@@ -1,8 +1,7 @@
 ---
 title: Publish Your Site
-slug: publish-your-site
-url: getting-started/publish-your-site
 weight: 4
+draft: true
 ---
 
 It is simple. Just call from your Presidium Site

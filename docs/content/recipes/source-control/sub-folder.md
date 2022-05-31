@@ -12,7 +12,7 @@ Presidium can exist within a sub-folder of an existing source code repository, f
 The easiest way to incorporate Presidium into your project is to run the wizard from your project root:
 
 ```shell
-presidium-hugo init
+presidium init
 ```
 
 And specify `Project Name` as `docs`, so that, Presidium creates and empty Presidium site under `docs/` folder.

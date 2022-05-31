@@ -1,6 +1,7 @@
 ---
 title: REPLACE WITH the latest semantic version number XX.YY.ZZ
 author: REPLACE WITH username
+draft: true
 ---
 
 # Summary

@@ -1,7 +1,5 @@
 ---
 title: Images
-slug: images
-url: reference/images
 weight: 4
 ---
 

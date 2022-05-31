@@ -1,7 +1,5 @@
 ---
 title: Authors
-slug: authors
-url: front-matter/authors
 weight: 2
 ---
 

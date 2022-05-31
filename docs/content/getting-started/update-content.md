@@ -1,7 +1,5 @@
 ---
 title: Update Content
-slug: update-content
-url: getting-started/update-content
 weight: 3
 ---
 

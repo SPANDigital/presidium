@@ -1,7 +1,5 @@
 ---
 title: Approaches
-slug: approaches
-url: source-control/approaches
 weight: 1
 ---
 

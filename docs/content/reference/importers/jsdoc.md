@@ -1,6 +1,7 @@
 ---
 title: Jsdoc
 weight: "4"
+draft: true
 ---
 
 Presidium includes a template-based tool, [presidium-jsdoc](https://www.npmjs.com/package/presidium-jsdoc), based off of [Jsdoc](http://usejsdoc.org/)) to import Javascript comments into your Presidium documentation.

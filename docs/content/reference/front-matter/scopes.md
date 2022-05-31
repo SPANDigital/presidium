@@ -1,7 +1,6 @@
 ---
 title: Scopes
-slug: scopes
-url: front-matter/scopes
+draft: true
 weight: 5
 ---
 
