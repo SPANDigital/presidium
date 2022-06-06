@@ -24,7 +24,7 @@ title: My Reference
 # foo.bar
 
 <div>
-    <iframe
+    <iframe>
             src='{{% baseurl %}}/static/import/{my-reference}/foo/bar/package-summary.html'
     </iframe>
 </div>

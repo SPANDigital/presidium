@@ -10,39 +10,39 @@ the [Bootstrap Glyphicons](http://glyphicons.bootstrapcheatsheets.com/) have bee
 > - List in blockquote
 
 >&nbsp;**Note**!
-> {.glyphicon .glyphicon-pushpin}
+> <span class="glyphicon glyphicon-pushpin"></span>
 > - List in blockquote
 
 ## Other examples
 
 > &nbsp;**TODO**
-> {.glyphicon .glyphicon-list-alt}
+> <span class="glyphicon glyphicon-list-alt"></span>
 
 > &nbsp;<http://my/url/>
-> {.glyphicon .glyphicon-tags}
+> <span class="glyphicon glyphicon-tags"></span>
 
 > &nbsp;**Decision:**
-> {.glyphicon .glyphicon-knight}
+> <span class="glyphicon glyphicon-knight"></span>
 
 > &nbsp;**Example:**
-> {.glyphicon .glyphicon-flag}
+> <span class="glyphicon glyphicon-flag"></span>
 
 > &nbsp;**IMPORTANT**
-> {.glyphicon .glyphicon-exclamation-sign}
+> <span class="glyphicon glyphicon-exclamation-sign"></span>
 
 ```md
 > **TODO**
-> {.glyphicon .glyphicon-list-alt}
+> <span class="glyphicon glyphicon-list-alt"></span>
 
 > <http://my/url/>
-> {.glyphicon .glyphicon-tags}
+> <span class="glyphicon glyphicon-tags"></span>
 
 > **Decision:**
-> {.glyphicon .glyphicon-knight}
+> <span class="glyphicon glyphicon-knight"></span>
 
 > **Example:**
-> {.glyphicon .glyphicon-flag}
+> <span class="glyphicon glyphicon-flag"></span>
 
 > **IMPORTANT**
-> {.glyphicon .glyphicon-exclamation-sign}
+> <span class="glyphicon glyphicon-exclamation-sign"></span>
 ```

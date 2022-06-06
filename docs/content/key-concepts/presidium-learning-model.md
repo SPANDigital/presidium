@@ -13,7 +13,7 @@ Presidium recommends creating small micro-articles that convey enough informatio
 Small articles are advantageous because they:
 
 - Usually only require a single author
-- Force the author to focus on effectively describe a single concept
+- Force the author to focus on effectively describing a single concept
 - Enable authors to quickly add documentation while also working on a product or service.
 
 Using this method, creating high quality content is part of the engineering process, not a deferred or protracted task.
