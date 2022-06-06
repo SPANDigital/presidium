@@ -5,7 +5,7 @@ title: License
 Presidium was created by [SPAN Digital](http://www.spandigital.com)
 
 ```
-Copyright {{ site.time | date: '%Y' }} SPAN Digital
+Copyright 2022 SPAN Digital
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

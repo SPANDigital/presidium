@@ -5,24 +5,20 @@ title: Prerequisites
 
 The following tools are required to use Presidium:
 
-1. Homebrew installed
+1. Install Homebrew
 
     ```
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
 
-1. Tell git to use your ssh credentials for SPANDigital's private repos
+1. Add the Presidium Tap
 
     ```
-    git config --global url.git@github.com:.insteadOf https://github.com/
-    export GOPRIVATE=github.com/SPANDigital
+    brew tap SPANDigital/homebrew-tap git@github.com:SPANDigital/homebrew-tap.git
     ```
 
-1. Github personal access token for private repos
-
-   To access private repos you will need to generate a [personal acess token](https://github.com/settings/tokens) with *repo* access. 
-   Then set this as an environment variable:
+1. Install Presidium
    
    ```
-   export HOMEBREW_GITHUB_API_TOKEN=xxxxxx
+   brew install presidium
    ```

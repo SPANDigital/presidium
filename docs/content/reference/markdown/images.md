@@ -14,6 +14,14 @@ Note the exclamation point. The image path may be fully resolved:
 ![Image Name](/images/logo.png)
 ```
 
+## Image with attributes
+
+{{< img src="/images/logo.png" caption="Sample image" style="width:25%;" >}}
+
+```md
+{{</* img src="/images/logo.png" caption="Sample image" style="width:25%;" */>}}
+```
+
 ### Captions
 
 To include a caption, add *Caption* after an image link. For example:

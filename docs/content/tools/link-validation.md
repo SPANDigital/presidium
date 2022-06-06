@@ -18,7 +18,7 @@ This tool reports links within a Presidium site. You can use this tool see which
 2. Next run the tool pointing to the `public` site:
 
    ```shell
-   presidium validate ./public
+   presidium report pagelinks ./public
    ```
 
 ## Inspect the report
