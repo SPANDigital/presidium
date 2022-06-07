@@ -3,13 +3,32 @@ title: Sub Module
 weight: "3"
 ---
 
-If you want to store your documentation in a separate repository but still use it within your project, you can use Git submodules:
+If you want to store your documentation in a separate repository or share documentation between projects you can use sub modules. Use the following steps to set up a submodule.
 
-```bash
+1. Create a new repository for you module. 
+2. Create a `config.yml` file and add the following
+   ```yaml
+   module:
+     mounts:
+       - source: content
+         target: content
+   ```
+3. Create a `content` directory and add your markdown files. E.g.
+   ```
+   ├── config.yml
+   └── content
+       └── glossary
+           ├── _index.md
+           └── link.md
 
-$ cd my-project
-$ git submodule add https://github.com/my-company/my-project-docs docs
-$ git submodule status
- 6a1ed31b9cb215657a1bd4b4de6737c07b41c896 docs (heads/master)
-```
+   ```
 
+4. To use your submodule, add it to the `imports` section of your project's `config.yml` file
+   ```yaml
+   module:
+     imports:
+     - path: <REPO_URL_OF_SUBMODULE>
+       mounts:
+       - source: content
+         target: content
+   ```
