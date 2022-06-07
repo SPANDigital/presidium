@@ -3,7 +3,7 @@ title: The Big Picture
 weight: 1
 ---
 
-Presidium is an open-source, static website generator built on Jekyll for creating and maintaining software 
+Presidium is an open-source, static website generator built on Hugo for creating and maintaining software 
 documentation for Agile teams and their users. Being static simplifies publication - you don’t need to provision 
 a server and can host your documentation in a matter of seconds on Github Pages.
 You can easily include documentation publication in your continuous integration pipeline.

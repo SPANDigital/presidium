@@ -4,9 +4,9 @@ weight: 4
 ---
 
  ## Images 
-Images used within the content should be placed in a static/media directory
+Images used within the content should be placed in a static/images directory
 ```
-/static/media/
+/static/images/
     -- static/doc-workflow.png
 ```
 
@@ -16,7 +16,7 @@ Images used within the content should be placed in a static/media directory
 
 The Logo of the site appears above the Menu Navigation. 
 
-Logos should be placed in the ```static/images directory ```
+Logos should be placed in the ```static/images``` directory.
 
 **Note**: If a brand module is used the instruction above does not apply.  Ensure the brand module includes the static/images directory with the logo inside.
 
@@ -34,7 +34,7 @@ logo: images/logo.svg
 ### Favicons
 The favicon is the symbol that appears on the tab of the site, next to the title. 
 
-Favicons should be placed in the ```static/images directory ```
+Favicons should be placed in the ```static/images``` directory.
 
 **Note**: If a brand module is used the instruction above does not apply. Ensure the brand module includes the static/images directory with the favicon inside.
 
