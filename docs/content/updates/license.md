@@ -1,5 +1,6 @@
 ---
 title: License
+weight: 101
 ---
 
 Presidium was created by [SPAN Digital](http://www.spandigital.com)
