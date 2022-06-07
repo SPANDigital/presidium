@@ -3,7 +3,7 @@ title: Sub Module
 weight: "3"
 ---
 
-If you want to store your documentation in a separate repository or share documentation between projects you can use sub modules. Use the following steps to set up a submodule.
+If you want to store your documentation in a separate repository or share documentation between projects you can use submodules. Use the following steps to set up a submodule.
 
 1. Create a new repository for you module. 
 2. Create a `config.yml` file and add the following
@@ -22,8 +22,8 @@ If you want to store your documentation in a separate repository or share docume
            └── link.md
 
    ```
-
-4. To use your submodule, add it to the `imports` section of your project's `config.yml` file
+4. Commit and push your changes
+5. To use your submodule, add it to the `imports` section of your project's `config.yml` file. E.g.
    ```yaml
    module:
      imports:
