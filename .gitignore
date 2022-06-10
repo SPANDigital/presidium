@@ -1,7 +1,0 @@
-node_modules
-dist
-npm-debug.log
-*.iml
-.idea/
-.jekyll
-.versions
