@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Getting Started on Presidium</title>
+    <link>/getting-started/</link>
+    <description>Recent content in Getting Started on Presidium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>SPAN Digital</copyright><atom:link href="/getting-started/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Install Presidium</title>
+      <link>/getting-started/install-presidium/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/getting-started/install-presidium/</guid>
+      <description>Tap SPAN&amp;rsquo;s repository
+brew tap SPANDigital/homebrew-tap git@github.com:SPANDigital/homebrew-tap.git Install using brew
+brew install presidium </description>
+    </item>
+    
+    <item>
+      <title>Run Presidium</title>
+      <link>/getting-started/run-presidium/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/getting-started/run-presidium/</guid>
+      <description>Start the wizard to create a new Presidium Site:
+presidium init Follow the wizard instructions:
+ Project Name: The name of the folder that contains your Presidium Site Title: The title for your Presidium Site Template: The template to use. Templates provide different starting sites based on your needs. Theme: The theme to use. Themes provide different look and feel for your Presidium Site  Then, navigate to the newly created folder (with your project name) and start a local server:</description>
+    </item>
+    
+    <item>
+      <title>Update Content</title>
+      <link>/getting-started/update-content/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/getting-started/update-content/</guid>
+      <description>You can make changes to the following files and folders:
+ content/ Content folder for all your articles config.yaml Site configuration properties static/ Static folder for all your resources (images, etc.)  All changes can be made without having to restart the local server</description>
+    </item>
+    
+  </channel>
+</rss>

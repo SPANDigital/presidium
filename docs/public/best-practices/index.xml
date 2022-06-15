@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Best Practices on Presidium</title>
+    <link>/best-practices/</link>
+    <description>Recent content in Best Practices on Presidium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>SPAN Digital</copyright><atom:link href="/best-practices/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Plan Content Development</title>
+      <link>/best-practices/plan-content-development/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/best-practices/plan-content-development/</guid>
+      <description>Before you write any content, spend some time anticipating what tasks you need to perform and make sure you have the time and resources to achieve your goals.
+The following steps work for both small and large projects:
+ Design the site structure Inventory existing content Plan the conversion of existing content into articles Map the planned articles to your structure Identify required new articles Repurpose existing content into articles Write new articles Proofread and edit Publish  Discussion The most important planning task is identifying the scope of your documentation efforts and understanding the needs of your audience.</description>
+    </item>
+    
+    <item>
+      <title>Design Documentation Structure</title>
+      <link>/best-practices/design-documentation-structure/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/best-practices/design-documentation-structure/</guid>
+      <description>Before starting to write content, you should define the documentation structure to answer questions such as:
+ How many sections do I need? What should each section cover? Do some sections need sub-sections?  Answering these and other questions will help you scope the project and define the content that needs to be found or written.
+Keep in mind that although you should decide on the structure of your site at the beginning, you might need to make changes as you gain a deeper understanding of the content.</description>
+    </item>
+    
+    <item>
+      <title>Design Learning Objectives</title>
+      <link>/best-practices/define-learning-objectives/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/best-practices/define-learning-objectives/</guid>
+      <description>When defining learning objectives, think carefully about what it means to use your solution effectively by doing the following:
+ Identify what your audience should know and be able to do after they have read the documentation. Use that information to create a list of learning objectives.  Just as stories are used to define software, learning objectives can be written using a standard template.
+As a [user] of the [solution] I [know a specific piece of information] or can [perform a specific task] Often, existing stories can be converted into learning objectives with little or no alteration:</description>
+    </item>
+    
+    <item>
+      <title>Inventory Existing Content</title>
+      <link>/best-practices/inventory-existing-content/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/best-practices/inventory-existing-content/</guid>
+      <description>When starting a new documentation project, you should first review and evaluate existing content. Content from multiple sources, such as those listed below, can be repurposed:
+ Existing software documentation Wikis and message boards Design documents Work tickets (epics and stories, bugs) API specifications README files Code comments and markup Help files Emails Meeting notes Project planning materials  Before starting:
+ Compile a list of existing content sources. Identify how each item could be decomposed or converted into an article.</description>
+    </item>
+    
+    <item>
+      <title>Use Article Templates</title>
+      <link>/best-practices/use-article-templates/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/best-practices/use-article-templates/</guid>
+      <description>Presidium includes article templates for each of the pre-defined sections. Templates are text documents that contain instructions and Markdown which can be modified to meet your needs.
+For example, here is the template for the Best Practices section:
+```# Template Instructions # --------------------- # 1) Replace any content placeholders with the appropriate content. Search for &amp;quot;REPLACE WITH&amp;quot;. # 2) Delete this line and all lines above so that the front matter below is at the top of the file.</description>
+    </item>
+    
+    <item>
+      <title>Writing Effective Articles</title>
+      <link>/best-practices/write-effective-articles/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/best-practices/write-effective-articles/</guid>
+      <description>Anyone can write great articles if they follow a few simple style guidelines:
+ Make sure the title explains what the article is about. The title will be used to construct the navigation menu and will often be separated from the article body along side other article titles. Make sure the title works on its own and describes the essence of the article. Keep titles simple and succinct without using humor or colloquialisms.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Overview on Presidium</title>
+    <link>/overview/</link>
+    <description>Recent content in Overview on Presidium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>SPAN Digital</copyright><atom:link href="/overview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Big Picture</title>
+      <link>/overview/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/overview/overview/</guid>
+      <description>Presidium is an open-source, static website generator built on Hugo for creating and maintaining software documentation for Agile teams and their users. Being static simplifies publication - you don’t need to provision a server and can host your documentation in a matter of seconds on Github Pages. You can easily include documentation publication in your continuous integration pipeline.
+Presidium gives Agile teams a way to evangelize, explain, and support solutions to their peers so they can be correctly used and successfully adopted.</description>
+    </item>
+    
+  </channel>
+</rss>

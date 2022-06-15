@@ -1,0 +1,6 @@
+4b8348f72307151b25e91f92f57d3515a08bc67a49ea2bfa515efa971ffa24a8  presidium_1.0.0-rfv.237_Windows_arm64.tar.gz
+59c811ce68e782dbf64d1afd70d56703cbb4b14c83afb647e2b71be8ea8f0db0  presidium_1.0.0-rfv.237_Darwin_arm64.tar.gz
+9aa8a338deaeb5567d98317de6aec39797cc9676d7084124ebc28d9e74294e66  presidium_1.0.0-rfv.237_Darwin_x86_64.tar.gz
+9f5b2fc20913fe6d87621c7fde045e6d9dff0ebde381e2e2266b869419da6706  presidium_1.0.0-rfv.237_Linux_x86_64.tar.gz
+a48c79653cbaed4c65ea1c9d4b4829fdd74629bc300b1945a111667ea0c89bcc  presidium_1.0.0-rfv.237_Windows_x86_64.tar.gz
+d9735ed4230e0d27b7c6ed5f4462a62ff934d2ac4de815f49ceee5d39d454e47  presidium_1.0.0-rfv.237_Linux_arm64.tar.gz

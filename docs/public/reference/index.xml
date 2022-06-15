@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reference on Presidium</title>
+    <link>/reference/</link>
+    <description>Recent content in Reference on Presidium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>SPAN Digital</copyright><atom:link href="/reference/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Configuration</title>
+      <link>/reference/configuration/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/configuration/</guid>
+      <description>This is a sample Presidium configuration file:
+languageCode:en-ustitle:&amp;#34;Sample Title&amp;#34;copyright:Template Footerpluralizelisttitles:falsemarkup:goldmark:renderer:Unsafe:trueparser:attribute:block:truehighlight:style:githubmenu:Main:- identifier:organization-overviewname:Organization Overviewurl:/weight:1- identifier:solution-overviewname:Solution Overviewurl:/solution-overview/weight:2- identifier:technology-stackname:Technology Stackurl:/technology-stack/weight:3- identifier:tool-chainname:Tool Chainurl:/tool-chain/weight:4- identifier:dev-environment-setupname:Dev Environment Setupurl:/dev-environment-setup/weight:5- identifier:getting-startedname:Getting Startedurl:/getting-started/weight:6- identifier:referencename:Referenceurl:/reference/weight:7- identifier:updatesname:Updatesurl:/updates/weight:8outputFormats:MenuIndex:baseName:menumediaType:application/jsonSearchMap:baseName:searchmapmediaType:application/jsonoutputs:home:- HTML- RSS- MenuIndex- SearchMapmodule:imports:- path:github.com/spandigital/presidium-theme-websiteenableInlineShortcodes:truefrontmatter:lastmod:- lastmod- :fileModTime- :default</description>
+    </item>
+    
+    <item>
+      <title>Themes</title>
+      <link>/reference/themes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/themes/</guid>
+      <description>Presidium provides some themes when spinning up your Presidium Site through the command line. You will see something like this when running presidium init:
+Select a theme ✔ Presidium Theme - (Presidium&#39;s default theme) If you already have a presidium site, you can enable your theme by adding a module in the configuration file:
+module: imports: - path: &amp;lt;Your theme&amp;gt; Logo The default Presidium logo image is placed and loaded from the pre-configured template.</description>
+    </item>
+    
+    <item>
+      <title>Directories</title>
+      <link>/reference/directories/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/directories/</guid>
+      <description>Articles are stored in the content directory. Associated resources, such as images, are stored in the media directory. The config.yaml file is used to configure the project.
+   Directory Description     ./config.yaml General options to configure the project   ./content Articles   ./static Various resources for the project (images, imported content, etc.)    All content changes are monitored; any change triggers a regeneration of the site.</description>
+    </item>
+    
+    <item>
+      <title>Images</title>
+      <link>/reference/images/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/images/</guid>
+      <description>Images Images used within the content should be placed in a static/images directory
+/static/images/ -- static/doc-workflow.png Logos and favicons Logos The Logo of the site appears above the Menu Navigation.
+Logos should be placed in the static/images directory.
+Note: If a brand module is used the instruction above does not apply. Ensure the brand module includes the static/images directory with the logo inside.
+The menu bar Logo can be configured in the config file, under params:</description>
+    </item>
+    
+  </channel>
+</rss>

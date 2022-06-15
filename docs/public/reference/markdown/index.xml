@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Markdown on Presidium</title>
+    <link>/reference/markdown/</link>
+    <description>Recent content in Markdown on Presidium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>SPAN Digital</copyright><atom:link href="/reference/markdown/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Headings &amp; Emphasis</title>
+      <link>/markdown/headings-and-emphasis/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/markdown/headings-and-emphasis/</guid>
+      <description>Heading are indicated with a hash.
+Heading 1 # Heading 1 Heading 2 ## Heading 2 Heading 3 ### Heading 3 Use either bold, italics, or monospaced font styling for emphasis:
+Italicized text
+*Italicized text* Bold text
+**Bold text** Identifiers and code
+`Identifiers and code` </description>
+    </item>
+    
+    <item>
+      <title>Bullets &amp; Numbering</title>
+      <link>/markdown/bullets-and-numbering/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/markdown/bullets-and-numbering/</guid>
+      <description>Markdown allows bullets and numbering to be nested.
+Use bullets to list unordered items.
+Bullets  Sentence 1. Sentence 2.  Nested sentence 1. Nested sentence 2.  Double nested sentence.      * Sentence 1. * Sentence 2. - Nested sentence 1. - Nested sentence 2. + Double nested sentence. Numbering Use a numbered list for steps that should be done in order. You can number the list yourself or have Presidium do the numbering automatically:</description>
+    </item>
+    
+    <item>
+      <title>Links</title>
+      <link>/reference/markdown/links/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/markdown/links/</guid>
+      <description>You can link to internal articles in your repository, to external articles, or even to other semantically significant text. Any text enclosed in angle brackets will be interpreted as a link. If you want to add a description, use square brackets for the description and parenthesis for the link.
+ Internal Page link: Presidium Authors Internal Anchor link: Presidium Authors External link: https://github.com/SPANDigital/presidium Alternative: Presidium on Github  - Internal Page link: [Presidium Authors]({{&amp;lt; ref &amp;#34;reference/front-matter/authors.</description>
+    </item>
+    
+    <item>
+      <title>Tables</title>
+      <link>/reference/markdown/tables/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/markdown/tables/</guid>
+      <description>Markdown provides a simple syntax for creating tables using hyphens and horizontal bars / pipes.
+   first heading second heading third heading     row 1 column 1 row 1 column 2 row 1 column 3   row 2 column 1 row 2 column 2 row 2 column 3   row 3 column 1 row 3 column 2 row 3 column 3   row 4 column 1 row 4 column 2 row 4 column 3    | first heading | second heading | third heading | |----------------|----------------|----------------| | row 1 column 1 | row 1 column 2 | row 1 column 3 | | row 2 column 1 | row 2 column 2 | row 2 column 3 | | row 3 column 1 | row 3 column 2 | row 3 column 3 | | row 4 column 1 | row 4 column 2 | row 4 column 3 | </description>
+    </item>
+    
+    <item>
+      <title>Blockquotes</title>
+      <link>/reference/markdown/blockquotes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/markdown/blockquotes/</guid>
+      <description>Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples, the Bootstrap Glyphicons have been used to embellish the text.
+ This is a blockquote
+ List in blockquote     Note! 
+ List in blockquote   Other examples   TODO 
+   http://my/url/ 
+   Decision: 
+   Example:</description>
+    </item>
+    
+    <item>
+      <title>Codeblocks</title>
+      <link>/reference/markdown/code-blocks/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/markdown/code-blocks/</guid>
+      <description>To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language directly after the first set of backticks. Alternatively, you can indent your code / machine output to treat it as preformatted text. For single line inline code, use a single backtick.
+Javascript var N = 32; var buffer = new ArrayBuffer(N); ```js var N = 32; var buffer = new ArrayBuffer(N); ```  Python my_array = [i for i in range(0, N)] ```py my_array = [i for i in range(0, N)] ```  C int * my_func(int * in) { return in; } ```c int * my_func(int * in) { return in; } ```  Go package main import &amp;#34;fmt&amp;#34; func main() { fmt.</description>
+    </item>
+    
+    <item>
+      <title>Images</title>
+      <link>/reference/markdown/images/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/markdown/images/</guid>
+      <description>Image Links Put any images you want to include in the /static/images directory and reference them in the text. Note the exclamation point. The image path may be fully resolved:
+![Image Name](/images/logo.png) Image with attributes  Sample image   {{&amp;lt; img src=&amp;#34;/images/logo.png&amp;#34; caption=&amp;#34;Sample image&amp;#34; style=&amp;#34;width:25%;&amp;#34; &amp;gt;}} Captions To include a caption, add Caption after an image link. For example:
+Sample Image With Caption
+![Sample Image With Caption](/images/logo.png) *Sample Image With Caption* </description>
+    </item>
+    
+    <item>
+      <title>Tooltips</title>
+      <link>/reference/markdown/tooltips/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/markdown/tooltips/</guid>
+      <description>Tooltips display a short definition of an item. There are two ways to create tooltips:
+ Automatic from the Glossary Via Link Override  Automatic Tooltips Automatic tooltips reference Glossary entries. If a Glossary article by the name of “Tooltips” exists, a tooltip will be available for the following item:
+TooltipsThis is an example of a Glossary entry linked to from here.   {{&amp;lt; tooltip &amp;#34;Tooltips&amp;#34; &amp;gt;}}` Link Override You can use an internal article as the source of a tooltip.</description>
+    </item>
+    
+  </channel>
+</rss>

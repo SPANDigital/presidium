@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Front matter on Presidium</title>
+    <link>/reference/front-matter/</link>
+    <description>Recent content in Front matter on Presidium</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>SPAN Digital</copyright><atom:link href="/reference/front-matter/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Overview</title>
+      <link>/reference/front-matter/overview/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/front-matter/overview/</guid>
+      <description>Front Matter serves two purposes:
+ Indicates that the file should be included as an article in the build process Allows you to set properties for your article  For example:
+--- title: Presidium slug: overview url: front-matter/overview weight: 1 authors: github-username roles: Developer status: Draft --- Presidium includes the following front matter variables:
+   Variable Description     title A string representing the article or subsection title or the title of the subsection.</description>
+    </item>
+    
+    <item>
+      <title>Authors</title>
+      <link>/reference/front-matter/authors/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/front-matter/authors/</guid>
+      <description>Every article can include an author in the front matter:
+--- author: {author name} --- Optional links to authors can be enabled by setting a base URL in the site config:
+params: author: external: url: https://github.com/ newTab: false To customize the label for authors, provide a new label in the site config:
+params: author: label: Custom Label To hide or show authors on your generated site, enable or disable the component in the site config:</description>
+    </item>
+    
+    <item>
+      <title>User Roles</title>
+      <link>/front-matter/user-roles/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/front-matter/user-roles/</guid>
+      <description>Various roles can be added to a site to allow readers to filter articles and menu items by a target audience.
+This optional feature can be enabled by defining user roles in the site config.
+params: roles: label: &amp;quot;Show documentation for&amp;quot; all: &amp;quot;All Roles&amp;quot; options: - &amp;quot;Business Analyst&amp;quot; - &amp;quot;Developers&amp;quot; - &amp;quot;Testers&amp;quot; If a role is not specified, articles default to roles.all
+Articles can have one or more roles defined in front-matter:</description>
+    </item>
+    
+    <item>
+      <title>Statuses</title>
+      <link>/reference/front-matter/statuses/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/reference/front-matter/statuses/</guid>
+      <description>Each article can be assigned a status to track its lifecycle:
+ draft review published retired  Statuses can be set in the site’s front matter:
+--- status: draft|review|published|retired --- To show or hide statuses on your generated site, use the following setting in the site config:
+params: show: status: true|false </description>
+    </item>
+    
+    <item>
+      <title>External URLs</title>
+      <link>/front-matter/external-urls/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/front-matter/external-urls/</guid>
+      <description>Sections can redirect to an external URL either in the same tab or a new one.
+This can be done by setting the externalUrl in the site config like so:
+menu:main:- identifier:external-linkname:External Linkurl:/weight:1params:externalUrl:href:&amp;#34;https://www.anothersite.com&amp;#34;newTab:true- identifier:another-external-linkname:Another External Linkurl:/weight:2params:externalUrl:href:&amp;#34;https://www.anothersite.com&amp;#34;newTab:falseThe newTab attribute is optional and defaults to true</description>
+    </item>
+    
+  </channel>
+</rss>
