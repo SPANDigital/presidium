@@ -36,5 +36,5 @@ brews:
     description: "Presidium is a software documentation management system for agile teams"
     tap:
       owner: spandigital
-      name: presidium-tap
+      name: homebrew-tap
     folder: Formula
