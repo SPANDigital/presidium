@@ -19,7 +19,7 @@ Follow the wizard instructions:
 Then, navigate to the newly created folder (with your project name) and start a local server:
 
 ```
-presidium hugo serve
+hugo serve
 ```
 
 

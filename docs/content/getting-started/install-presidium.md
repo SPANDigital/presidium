@@ -14,3 +14,10 @@ Install using brew
    ```
    brew install presidium
    ```
+
+
+Install Hugo
+
+```
+brew install hugo
+```
