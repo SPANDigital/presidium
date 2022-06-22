@@ -12,5 +12,5 @@ It can also include links to other key articles, such as:
 
 * [Design principles]({{ `{{< ref "design-principles/design-principles.md" >}}` }})
 * [Branding]({{ `{{< ref "design-principles/branding.md" >}}` }})
-* [Style Guide]({{`{{ ref "resources/style-guide.md" }}`}})
-* [Pattern Library]({{`{{ ref "resources/pattern-library.md" }}`}})
+* [Style Guide]({{ `{{< ref "resources/style-guide.md" >}}` }})
+* [Pattern Library]({{ `{{< ref "resources/pattern-library.md" >}}` }})
