@@ -1,8 +1,6 @@
 ---
 title: FAQs
 author: author
-slug: faqs
-url: faqs/faqs
 ---
 
 This article should contain any anticipated FAQs about the design system in a question-and-answer format.

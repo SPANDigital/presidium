@@ -1,8 +1,6 @@
 ---
 title: Color
 author: author
-url: visual-elements/color
-slug: color
 ---
 
 This article should explain the role color plays in the design system, such as:

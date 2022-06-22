@@ -1,8 +1,6 @@
 ---
 title: Buttons
 author: author
-slug: buttons
-url: components/buttons
 ---
 
 A button is a graphical control element that provides a way to trigger an event, such as submitting a form or triggering a new UI element. This article should describe the component used for buttons. Possible topics include:

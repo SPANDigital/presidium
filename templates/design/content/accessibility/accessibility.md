@@ -1,8 +1,6 @@
 ---
 title: Accessibility
 author: author
-slug: accessibility
-url: accessibility/accessibility
 ---
 
 If applicable, this article should describe the accessibility features of the design system, as required by Section 508. Accessibility includes considerations about appropriate use of color, keyboard navigation, and text-based alternatives to images and icons.
