@@ -2,9 +2,10 @@ name: github pages
 
 on:
   push:
+    paths:
+      - docs/**
     branches:
       - release/v2.0.0
-
 jobs:
   deploy:
     runs-on: ubuntu-20.04
