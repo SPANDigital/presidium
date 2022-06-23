@@ -1,8 +1,6 @@
 ---
 title: Sample Development Workflow
 author: author
-slug: sample-development-workflow
-url: tool-chain/sample-development-workflow
 ---
 
 This article should describe the standard development workflow. For example, the following workflow might be used for a hotfix:

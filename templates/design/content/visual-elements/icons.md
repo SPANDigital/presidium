@@ -1,8 +1,6 @@
 ---
 title: Icons
 author: author
-slug: icons
-url: visual-elements/icons
 ---
 
 An icon is a visual representation of a command, file, device, directory, or common action.

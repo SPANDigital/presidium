@@ -1,8 +1,6 @@
 ---
 title: Project Lifecycle
 author: author
-slug: project-lifecycle
-url: reference/project-lifecycle
 ---
 
 This article should provide a high-level description of the development phases and the output for each phase.

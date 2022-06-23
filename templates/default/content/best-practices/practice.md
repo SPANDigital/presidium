@@ -1,8 +1,6 @@
 ---
 title: A Best Practice
 author: author
-slug: practice
-url: best-practices/practice
 ---
 Content...
 
