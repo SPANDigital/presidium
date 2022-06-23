@@ -1,7 +1,7 @@
 before:
   hooks:
     - go mod tidy
-    - packr
+    - packr2
 builds:
   - env:
       - CGO_ENABLED=0

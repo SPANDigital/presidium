@@ -18,7 +18,7 @@ jobs:
         with:
           go-version: 1.16
       - name: Get packr
-        run: go get -u github.com/gobuffalo/packr/packr
+        run: go get -u github.com/gobuffalo/packr/v2/packr2
       - name: Prepare
         run: git reset --hard
       - name: Run GoReleaser
