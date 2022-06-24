@@ -1,0 +1,95 @@
+languageCode: en-us
+title: "Presidium"
+copyright: SPAN Digital
+assetDir: static
+pluralizelisttitles: false
+enableGitInfo: false
+markup:
+  goldmark:
+    renderer:
+      Unsafe: true
+  highlight:
+    style: github
+params:
+  audience: ""
+  description: ""
+  logo: /images/logo.png
+  roles:
+    label: ""
+    all: ""
+    options: []
+  scope: ""
+  show:
+    status: false
+    author: false
+    role: true
+sectionPagesMenu: ""
+menu:
+  Main:
+  - identifier: overview
+    name: Overview
+    url: /overview
+    weight: 1
+  - identifier: key-concepts
+    name: Key Concepts
+    url: /key-concepts/
+    weight: 2
+  - identifier: prerequisites
+    name: Prerequisites
+    url: /prerequisites/
+    weight: 3
+  - identifier: getting-started
+    name: Getting Started
+    url: /getting-started/
+    weight: 4
+  - identifier: best-practices
+    name: Best Practices
+    url: /best-practices/
+    weight: 5
+  - identifier: reference
+    name: Reference
+    url: /reference/
+    weight: 6
+  - identifier: recipes
+    name: Recipes
+    url: /recipes/
+    weight: 7
+  - identifier: tools
+    name: Tools
+    url: /tools/
+    weight: 8
+  - identifier: support
+    name: Support
+    url: /support/
+    weight: 9
+  - identifier: updates
+    name: Updates
+    url: /updates/
+    weight: 10
+  - identifier: glossary
+    name: Glossary
+    url: /glossary/
+    weight: 11
+outputFormats:
+  MenuIndex:
+    baseName: menu
+    mediaType: application/json
+  SearchMap:
+    baseName: searchmap
+    mediaType: application/json
+outputs:
+  home:
+  - HTML
+  - RSS
+  - MenuIndex
+  - SearchMap
+module:
+  imports:
+  - path: github.com/spandigital/presidium-theme-website
+    disabled: false
+enableInlineShortcodes: true
+frontmatter:
+  lastmod:
+  - lastmod
+  - :fileModTime
+  - :default

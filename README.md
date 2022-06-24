@@ -14,13 +14,3 @@ For detailed instructions on getting started, please see [Getting Started](http:
 
 # Features and Issues
 All upcoming features and issues are tracked [here](https://github.com/SPANDigital/presidium/issues).
-
-# Development
-
-Presidium is built on two core projects:
-
-* [presidium-core](https://github.com/SPANDigital/presidium-core): A Node.js package that bundles all of the workflows, layouts and dependencies required to build and publish documentation
-
-* [presidium-js](https://github.com/SPANDigital/presidium-js): Presidium's user interface built using [React](http://reactjs.org). Note: `presidium-js` is already bundled with `presidium-core`.  
-
-
