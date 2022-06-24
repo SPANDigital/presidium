@@ -5,7 +5,7 @@ on:
     paths:
       - docs/**
     branches:
-      - release/v2.0.0
+      - master
 jobs:
   deploy:
     runs-on: ubuntu-20.04
@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: release/v2.0.0
+          ref: master
           submodules: true 
           fetch-depth: 0
 
