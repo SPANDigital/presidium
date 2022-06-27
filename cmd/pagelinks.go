@@ -4,7 +4,10 @@ import (
 	"fmt"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/validate"
+	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/cobra"
+	"os"
+	"path/filepath"
 )
 
 var (
@@ -14,6 +17,14 @@ var (
 		Args:  cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			path := args[0]
+			if !filepath.IsAbs(path) {
+				cwd, err := os.Getwd()
+				if err != nil {
+					log.Fatal("failed to get working directory: ", err.Error())
+				}
+				path = filepath.Join(cwd, path)
+			}
+
 			report, err := validate.New(path).Validate()
 			if err != nil {
 				fmt.Printf("error validating : %s\n", path)
