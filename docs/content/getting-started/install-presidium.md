@@ -3,21 +3,28 @@ title: Install Presidium
 weight: 1
 ---
 
-Tap SPAN's repository
+### 1. Install [Homebrew](https://brew.sh/)
 
-   ```
-   brew tap SPANDigital/homebrew-tap git@github.com:SPANDigital/homebrew-tap.git
-   ```
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
-Install using brew
+### 2. Add SPAN's Homebrew tap
 
-   ```
-   brew install presidium
-   ```
+```
+brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
+```
 
+### 3. Install [Presidium](https://github.com/SPANDigital/presidium) with Homebrew
 
-Install Hugo
+```
+brew install presidium
+```
+
+### 4. Install [Hugo](https://gohugo.io/getting-started/installing/) with Homebrew
 
 ```
 brew install hugo
 ```
+
+### 5. Download and install [Golang](https://go.dev/dl/)
