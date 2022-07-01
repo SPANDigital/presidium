@@ -8,6 +8,7 @@ import (
 	"github.com/spf13/cobra"
 	"os"
 	"path/filepath"
+	"strings"
 )
 
 var (
@@ -42,14 +43,14 @@ var (
 			fmt.Printf("     warnings: %v\n", report.Warning)
 			fmt.Printf("\n")
 
-			printLinks(report, model.Broken)
-			printLinks(report, model.Warning)
-			printLinks(report, model.External)
+			printLinks(path, report, model.Broken)
+			printLinks(path, report, model.Warning)
+			printLinks(path, report, model.External)
 		},
 	}
 )
 
-func printLinks(report model.Report, status model.Status) {
+func printLinks(path string, report model.Report, status model.Status) {
 
 	links, found := report.Data[status]
 
@@ -65,6 +66,10 @@ func printLinks(report model.Report, status model.Status) {
 		if len(link.Message) > 0 {
 			message = fmt.Sprintf(" %s", link.Message)
 		}
-		fmt.Printf("%s: %s [%s]%s\n", status, link.Uri, link.Label, message)
+
+		uri := strings.TrimPrefix(link.Uri, path)
+		location := strings.TrimPrefix(link.Location, path)
+
+		fmt.Printf("%s: %s\nlabel: [%s]\nhtml file: %s\nmd file: %s\nmessage:%s\n========================\n", status, uri, link.Label, location, link.DataId, message)
 	}
 }

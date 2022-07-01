@@ -206,7 +206,11 @@ func (v validation) process(path string) error {
 		} else {
 			v.reportLink(link, model.Valid, "")
 			// Find all links referenced by this page!
-			doc.Find("a[href]").Each(func(i int, item *goquery.Selection) {
+			doc.Find(".article.child a[href]").Each(func(i int, item *goquery.Selection) {
+
+				anchor := item.Closest(".article.child").Find("span.anchor[data-id]")
+				dataId, _ := anchor.Attr("data-id")
+
 				href, ok := item.Attr("href")
 				if !ok || len(href) == 0 || href == "/" {
 					return
@@ -237,6 +241,7 @@ func (v validation) process(path string) error {
 				v.queue.PushFront(model.Link{
 					Uri:        href,
 					Location:   link.Uri,
+					DataId:     dataId,
 					IsExternal: isExternal,
 					Label:      strings.TrimSpace(item.Text()),
 				})
@@ -264,7 +269,7 @@ func (v validation) validateRemoteAnchor(link model.Link) error {
 	anchor := anchorRe.FindString(link.Uri)
 	path := strings.Replace(link.Uri, anchor, "index.html", 1)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
-		v.reportLink(link, model.Broken, "path does not exist")
+		v.reportLink(link, model.Broken, "path does not exist: ")
 		return err
 	}
 
@@ -289,7 +294,7 @@ func fileOnPath(path string, name string) (string, error) {
 		return file, err
 	}
 	if info.IsDir() {
-		return file, errors.New(fmt.Sprintf("expected file but foun directory: %s", file))
+		return file, errors.New(fmt.Sprintf("expected file but found directory: %s", file))
 	}
 	return file, nil
 }
