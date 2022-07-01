@@ -265,12 +265,17 @@ func (v validation) validateAnchor(doc *goquery.Document, link model.Link, ancho
 }
 
 func (v validation) validateRemoteAnchor(link model.Link) error {
-	anchorRe := regexp.MustCompile(`#[\w-.]+$`)
+	anchorRe := regexp.MustCompile(`#[\w-.]*$`)
 	anchor := anchorRe.FindString(link.Uri)
 	path := strings.Replace(link.Uri, anchor, "index.html", 1)
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		v.reportLink(link, model.Broken, "path does not exist: ")
 		return err
+	}
+
+	// Anchor links to page
+	if anchor == "#" {
+		return nil
 	}
 
 	file, err := filesystem.AFS.OpenFile(path, os.O_RDONLY, 0666)
