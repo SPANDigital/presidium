@@ -70,6 +70,6 @@ func printLinks(path string, report model.Report, status model.Status) {
 		uri := strings.TrimPrefix(link.Uri, path)
 		location := strings.TrimPrefix(link.Location, path)
 
-		fmt.Printf("%s: %s\nlabel: [%s]\nhtml file: %s\nmd file: %s\nmessage:%s\n========================\n", status, uri, link.Label, location, link.DataId, message)
+		fmt.Printf("%s: %s\nlabel: [%s]\noutput file: %s\nsource file: %s\nmessage:%s\n========================\n", status, uri, link.Label, location, link.DataId, message)
 	}
 }
