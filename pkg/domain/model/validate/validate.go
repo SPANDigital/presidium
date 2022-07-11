@@ -5,6 +5,7 @@ type LinkListener = func(link Link)
 type Link struct {
 	Uri        string
 	Location   string
+	DataId     string
 	Status     Status
 	Message    string
 	IsExternal bool

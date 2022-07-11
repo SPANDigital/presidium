@@ -12,6 +12,8 @@ import (
 	"io/fs"
 	"net/url"
 	"os"
+	"path/filepath"
+	"regexp"
 	"strings"
 )
 
@@ -23,8 +25,8 @@ type validation struct {
 	tracked map[model.Status]*list.List // Keep track of collected links per status
 }
 
-func (validation validation) IsLocal() bool {
-	return validation.isLocal
+func (v validation) IsLocal() bool {
+	return v.isLocal
 }
 
 func New(path string) Validator {
@@ -37,55 +39,50 @@ func New(path string) Validator {
 	}
 }
 
-func (validation validation) hasSeen(f string) bool {
-	seen := validation.seen.Has(f)
+func (v validation) hasSeen(f string) bool {
+	seen := v.seen.Has(f)
 	if !seen {
-		validation.seen.Add(f)
+		v.seen.Add(f)
 	}
 	return seen
 }
 
-func (validation validation) cleanUp() {
-	validation.seen.Clear()
-	for k, v := range validation.tracked {
-		v.Init()
-		delete(validation.tracked, k)
+func (v validation) cleanUp() {
+	v.seen.Clear()
+	for k, val := range v.tracked {
+		val.Init()
+		delete(v.tracked, k)
 	}
 }
 
-func (validation validation) Validate() (model.Report, error) {
+func (v validation) Validate() (model.Report, error) {
+	v.seen.Clear()
 
-	validation.seen.Clear()
-
-	err := filesystem.AFS.Walk(validation.path, func(path string, info fs.FileInfo, err error) error {
-
+	err := filesystem.AFS.Walk(v.path, func(path string, info fs.FileInfo, err error) error {
 		if err != nil {
 			log.ErrorWithFields(err, log.Fields{"validation_path": path})
 			return err
 		}
 
 		if !info.IsDir() {
-			log.DebugWithFields("validation started", log.Fields{"validation_path": path})
-			err = validation.process(path)
+			log.DebugWithFields("v started", log.Fields{"validation_path": path})
+			err = v.process(path)
 			if err != nil {
 				log.ErrorWithFields(err, log.Fields{"validation_path": path})
 				return err
 			}
 		}
-
 		return nil
 	})
 
 	if err != nil {
 		return model.Report{}, err
 	} else {
-		return validation.newReport(), err
+		return v.newReport(), err
 	}
-
 }
 
-func (validation validation) newReport() model.Report {
-
+func (v validation) newReport() model.Report {
 	report := model.Report{
 		Data:       make(map[model.Status][]model.Link),
 		Valid:      0,
@@ -95,8 +92,7 @@ func (validation validation) newReport() model.Report {
 		TotalLinks: 0,
 	}
 
-	for s, links := range validation.tracked {
-
+	for s, links := range v.tracked {
 		countedLinks := links.Len()
 		report.TotalLinks += countedLinks
 		collected := make([]model.Link, 0)
@@ -129,11 +125,9 @@ func (validation validation) newReport() model.Report {
 	return report
 }
 
-func (validation validation) process(path string) error {
-
+func (v validation) process(path string) error {
 	s := strings.TrimSpace(strings.ToLower(path))
-
-	if validation.hasSeen(s) {
+	if v.hasSeen(s) {
 		return nil
 	}
 
@@ -141,23 +135,22 @@ func (validation validation) process(path string) error {
 		return nil
 	}
 
-	validation.queue.PushFront(model.Link{
+	v.queue.PushFront(model.Link{
 		Uri:        path,
 		Location:   path,
 		IsExternal: false,
 	})
 
 	for {
-
-		if validation.queue.Len() == 0 {
+		if v.queue.Len() == 0 {
 			break
 		}
 
-		todo := validation.queue.Front()
-		validation.queue.Remove(todo)
+		todo := v.queue.Front()
+		v.queue.Remove(todo)
 		link := todo.Value.(model.Link)
 
-		if validation.hasSeen(link.Uri) {
+		if v.hasSeen(link.Uri) {
 			continue
 		}
 
@@ -166,12 +159,22 @@ func (validation validation) process(path string) error {
 		}
 
 		if link.IsExternal {
-			validation.reportLink(link, model.External, "")
+			v.reportLink(link, model.External, "")
+			continue
+		}
+
+		if strings.Contains(link.Uri, "#") {
+			if strings.Contains(link.Uri, "github") {
+				fmt.Println("dadasd")
+			}
+
+			if err := v.validateRemoteAnchor(link); err != nil {
+				continue
+			}
 			continue
 		}
 
 		info, err := filesystem.AFS.Stat(link.Uri)
-
 		if err != nil {
 			link.Message = err.Error()
 			continue
@@ -191,20 +194,23 @@ func (validation validation) process(path string) error {
 		}
 
 		file, err := filesystem.AFS.OpenFile(link.Uri, os.O_RDONLY, 0666)
-
 		if err != nil {
-			validation.reportLink(link, model.Broken, fmt.Sprintf("Unable to open file %s: %s", link.Uri, err.Error()))
+			v.reportLink(link, model.Broken, fmt.Sprintf("Unable to open file %s: %s", link.Uri, err.Error()))
 			continue
 		}
 
 		var doc *goquery.Document
 		doc, err = goquery.NewDocumentFromReader(file)
 		if err != nil {
-			validation.reportLink(link, model.Broken, fmt.Sprintf("file %s is propably not a valid HTML file: %s", link.Uri, err.Error()))
+			v.reportLink(link, model.Broken, fmt.Sprintf("file %s is propably not a valid HTML file: %s", link.Uri, err.Error()))
 		} else {
-			validation.reportLink(link, model.Valid, "")
+			v.reportLink(link, model.Valid, "")
 			// Find all links referenced by this page!
-			doc.Find("a[href]").Each(func(i int, item *goquery.Selection) {
+			doc.Find(".article.child a[href]").Each(func(i int, item *goquery.Selection) {
+
+				anchor := item.Closest(".article.child").Find("span.anchor[data-id]")
+				dataId, _ := anchor.Attr("data-id")
+
 				href, ok := item.Attr("href")
 				if !ok || len(href) == 0 || href == "/" {
 					return
@@ -213,35 +219,75 @@ func (validation validation) process(path string) error {
 				validationHref = strings.TrimSpace(validationHref)
 				if strings.HasPrefix(validationHref, "mailto:") ||
 					strings.HasPrefix(validationHref, "tel:") {
-					validation.reportLink(link, model.Warning, fmt.Sprintf("Unhandled url scheme: %s", href))
-				} else if strings.Contains(validationHref, "#") {
+					v.reportLink(link, model.Warning, fmt.Sprintf("Unhandled url scheme: %s", href))
+				}
+
+				if strings.HasPrefix(href, "#") {
+					v.validateAnchor(doc, link, href)
 					return
 				}
 
 				parsedLinkUrl, err := url.Parse(href)
-
 				if err != nil {
 					link.Message = fmt.Sprintf("%v", err.Error())
 					return
 				}
 
-				link.IsExternal = len(parsedLinkUrl.Scheme) > 0
+				isExternal := len(parsedLinkUrl.Scheme) > 0
+				if !isExternal {
+					href = filepath.Clean(fmt.Sprintf("%s/%s", v.path, href))
+				}
 
-				finalUri := fmt.Sprintf("%s%s", validation.path, href)
-
-				validation.reportLink(link, model.Valid, "")
-
-				validation.queue.PushFront(model.Link{
-					Uri:      finalUri,
-					Location: link.Uri,
-					Label:    strings.TrimSpace(item.Text()),
+				v.queue.PushFront(model.Link{
+					Uri:        href,
+					Location:   link.Uri,
+					DataId:     dataId,
+					IsExternal: isExternal,
+					Label:      strings.TrimSpace(item.Text()),
 				})
 			})
 		}
 
 		_ = file.Close()
-
 	}
+
+	return nil
+}
+
+func (v validation) validateAnchor(doc *goquery.Document, link model.Link, anchor string) {
+	link.Uri = strings.Replace(link.Uri, "index.html", anchor, 1)
+	anchor = strings.Replace(anchor, ".", "\\.", -1)
+	if len(doc.Find(anchor).Nodes) == 0 {
+		v.reportLink(link, model.Broken, "broken anchor reference")
+		return
+	}
+	v.reportLink(link, model.Valid, "")
+}
+
+func (v validation) validateRemoteAnchor(link model.Link) error {
+	anchorRe := regexp.MustCompile(`#[\w-.]*$`)
+	anchor := anchorRe.FindString(link.Uri)
+	path := strings.Replace(link.Uri, anchor, "index.html", 1)
+	if _, err := os.Stat(path); os.IsNotExist(err) {
+		v.reportLink(link, model.Broken, "path does not exist: ")
+		return err
+	}
+
+	// Anchor links to page
+	if anchor == "#" {
+		return nil
+	}
+
+	file, err := filesystem.AFS.OpenFile(path, os.O_RDONLY, 0666)
+	if err != nil {
+		v.reportLink(link, model.Broken, "failed to open file")
+		return err
+	}
+
+	defer file.Close()
+
+	doc, err := goquery.NewDocumentFromReader(file)
+	v.validateAnchor(doc, link, anchor)
 
 	return nil
 }
@@ -253,21 +299,21 @@ func fileOnPath(path string, name string) (string, error) {
 		return file, err
 	}
 	if info.IsDir() {
-		return file, errors.New(fmt.Sprintf("expected file but foun directory: %s", file))
+		return file, errors.New(fmt.Sprintf("expected file but found directory: %s", file))
 	}
 	return file, nil
 }
 
-func (validation validation) reportLink(link model.Link, status model.Status, message string) {
+func (v validation) reportLink(link model.Link, status model.Status, message string) {
 
 	link.Status = status
 	link.Message = message
 
-	collection, found := validation.tracked[status]
+	collection, found := v.tracked[status]
 
 	if !found {
 		collection = list.New()
-		validation.tracked[status] = collection
+		v.tracked[status] = collection
 	}
 
 	collection.PushBack(link)

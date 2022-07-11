@@ -4,7 +4,11 @@ import (
 	"fmt"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/validate"
+	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/cobra"
+	"os"
+	"path/filepath"
+	"strings"
 )
 
 var (
@@ -14,6 +18,14 @@ var (
 		Args:  cobra.ExactArgs(1),
 		Run: func(cmd *cobra.Command, args []string) {
 			path := args[0]
+			if !filepath.IsAbs(path) {
+				cwd, err := os.Getwd()
+				if err != nil {
+					log.Fatal("failed to get working directory: ", err.Error())
+				}
+				path = filepath.Join(cwd, path)
+			}
+
 			report, err := validate.New(path).Validate()
 			if err != nil {
 				fmt.Printf("error validating : %s\n", path)
@@ -31,14 +43,14 @@ var (
 			fmt.Printf("     warnings: %v\n", report.Warning)
 			fmt.Printf("\n")
 
-			printLinks(report, model.Broken)
-			printLinks(report, model.Warning)
-			printLinks(report, model.External)
+			printLinks(path, report, model.Broken)
+			printLinks(path, report, model.Warning)
+			printLinks(path, report, model.External)
 		},
 	}
 )
 
-func printLinks(report model.Report, status model.Status) {
+func printLinks(path string, report model.Report, status model.Status) {
 
 	links, found := report.Data[status]
 
@@ -54,6 +66,10 @@ func printLinks(report model.Report, status model.Status) {
 		if len(link.Message) > 0 {
 			message = fmt.Sprintf(" %s", link.Message)
 		}
-		fmt.Printf("%s: %s [%s]%s\n", status, link.Uri, link.Label, message)
+
+		uri := strings.TrimPrefix(link.Uri, path)
+		location := strings.TrimPrefix(link.Location, path)
+
+		fmt.Printf("%s: %s\nlabel: [%s]\noutput file: %s\nsource file: %s\nmessage:%s\n========================\n", status, uri, link.Label, location, link.DataId, message)
 	}
 }
