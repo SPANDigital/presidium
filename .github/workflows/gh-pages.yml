@@ -31,4 +31,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./docs/public
-          custom-domain: https://presidium.spandigital.net
+          cname: presidium.spandigital.net
