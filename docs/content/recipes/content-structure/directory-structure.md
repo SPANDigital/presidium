@@ -24,3 +24,12 @@ The following is an example of how you can order and organize files and director
 
 Please note that for `Directory-2/_index.md` file we specify `weight` as `2`, as in this case, this weight 
 determines the ordering for the entire section with respect of its siblings (`article-1.md`, `article-2.md`, `article-3.md`, `article-4.md`)
+
+### Using Filename Sorting
+
+Alternatively if you don't want the `weight` in the front matter you can prefix the filename with the appropriate *weight* number, for example, `01-article.md`. Specify `sortByFilePath: true` under `params:` in your `config.yml` to use this method. For example:
+
+```
+params:
+    sortByFilePath: true
+```
