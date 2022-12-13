@@ -8,7 +8,9 @@ selected template.
 
 Sections and articles by default are ordered by file path. To make it easier to track the order of articles you can prefix your filenames and directories (not `_index.md` files) with a number, for example, `01-article.md`.
 
-> **Note**: The main sections (for example, Reference and Overview) are ordered by their `weight` value in the `config.yml`. For more information on `weight`, see below:
+> **Note**: The number is added to the URL, for example, `reference/01-section`. To remove this add `url: reference/section` to the front matter of the section's `_index.md` file.
+
+The main sections (for example, Reference and Overview) are ordered by their `weight` value in the `config.yml`. For more information on `weight`, see below:
 
 
 ### Sort Using Weight
