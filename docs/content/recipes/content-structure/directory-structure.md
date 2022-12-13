@@ -2,11 +2,25 @@
 title: Directory Structure
 weight: "1"
 ---
+
 When you create a Presidium site using the CLI `init` command, Presidium creates the directory structure for the 
 selected template.
 
-Sections and articles are arranged using the `weight` key in the `front matter` of each file, and to specify section
-level title and ordering you may use the `_index.md` file inside the directory containing a section.
+Sections and articles by default are ordered by file path. To make it easier to track the order of articles you can prefix your filenames and directories (not `_index.md` files) with a number, for example, `01-article.md`.
+
+> **Note**: The main sections (for example, Reference and Overview) are ordered by their `weight` value in the `config.yml`. For more information on `weight`, see below:
+
+
+### Sort Using Weight
+
+In the project's `conifg.yml`, under `params:`,  change `sortByFilePath: true` to `sortByFilePath: false` to disable sorting by file path. 
+
+```yml
+params:
+    sortByFilePath: false
+```
+
+Sections and articles can be arranged using the `weight` key in the `front matter` of each file. For specifying section level titles and ordering use the `_index.md` file inside the directory for that section. Should a `weight` not be specified and `sortByFilePath: false` Hugo will fall back to the following to order content: Data > Link Title > FilePath. For more information, see [Order Content](https://gohugo.io/templates/lists/#order-content) in the Hugo documentation.
 
 The following is an example of how you can order and organize files and directories:
 
@@ -22,16 +36,4 @@ The following is an example of how you can order and organize files and director
     └── _index.md // Specify weight 1 here in front matter
 ```
 
-Please note that for `Directory-2/_index.md` file we specify `weight` as `2`, as in this case, this weight 
-determines the ordering for the entire section with respect of its siblings (`article-1.md`, `article-2.md`, `article-3.md`, `article-4.md`)
-
-### Using File Path Sorting
-
-Add `sortByFilePath: true` under `params:` in the project's `config.yml` to enable sorting by filepath. This will allow you to prefix your filenames and directories (not `_index.md` files) with a number instead of having to use weight in the front matter, for example, `01-article.md`. The entry in the config file should resemble the example below:
-
-```
-params:
-    sortByFilePath: true
-```
-
-> *Note*: The main sections (for example, Reference and Overview) still have their weights set in the `config.yml`.
+> **Note**: For `Directory-2/_index.md` file we specify `weight` as `2`, as in this case, this weight determines the ordering for the entire section with respect of its siblings (`article-1.md`, `article-2.md`, `article-3.md`, `article-4.md`)
