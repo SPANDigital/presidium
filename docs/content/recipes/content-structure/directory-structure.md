@@ -34,4 +34,4 @@ params:
     sortByFilePath: true
 ```
 
-> *Note*: The main sections (for example, Reference and Overview) still have their weights set in the `config.yml`.
+> **Note**: The main sections (for example, Reference and Overview) still have their weights set in the `config.yml`.
