@@ -2,6 +2,8 @@ languageCode: en-us
 title: "{{ .Title }}"
 copyright: Template Footer
 pluralizelisttitles: false
+params:
+    sortByFilePath: true
 markup:
   goldmark:
     renderer:
