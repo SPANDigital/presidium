@@ -1,6 +1,6 @@
 ---
 title: Jsdoc
-weight: "4"
+weight: 4
 draft: true
 ---
 
