@@ -12,6 +12,7 @@ weight: 3
 
 ---
 
+
 ## Installation
 
 Install from Homebrew
@@ -58,6 +59,9 @@ Convert local html files
 html2md convert ./html-files ./presidium --select=.article --headers=h1
 ```
 
+> **Note**  
+> This converter does not output all the files needed to build a complete Presidium website. You will still need to [create](https://presidium.spandigital.net/getting-started/) a Presidium site first, or import the converted markdown files into an existing site.
+> The converted markdown files will be saved in the `content` directory relative to the `dest` path along with assets (images, videos, etc) in the `assets` directory.
 ---
 
 ## Advanced usage
@@ -73,7 +77,6 @@ This can be useful when you want to clean up your HTML content or remove unwante
 **Example Usage:**
 
 ```yaml
-
 html:
   remove: ['.nav-link', '#warning']
 
@@ -93,15 +96,14 @@ html:
   - match: '.tooltips-term' # CSS selector for the element to be replaced
     select: ['?href', '.tooltips-text'] # ?href selects the href attribute of the matched element, .tooltips-text selects the content of a child element with the class "tooltips-text"
     replace: '{{</* tooltip "$1" text="$2" */>}}' # $1 and $2 are the selected elements
-
 ```
 
 In this example, the CSS selector `.tooltips-term` is specified as the element to be replaced. The `select` field allows you to capture specific attributes and content relative to the matched element. Finally, the `replace` pattern converts the selected elements into a Markdown tooltip format.
 
-> [!NOTE]  
+> **Note**  
 > In addition to the standard CSS-selectors, `select` allows you to select attributes on the matched element using the `?` prefix. 
 > You can also get the text of the matched element by passing `text` in the select list.
-> 
+
 ### Replace Markdown
 Similar to the HTML replace you can also replace markdown based on a Regex pattern.
 
@@ -112,7 +114,7 @@ Let's say you have Markdown content with links, and you want to prepend the base
 markdown:
   replace:
     - pattern: '\[([^]]+)\]\(([^\)]+)\)'
-      with: "[$1]({{%baseurl%}}$2)"
+      with: "[$1]({{</* baseurl */>}}$2)"
 ```
 
 ### Sample config
@@ -134,11 +136,3 @@ whitelist: ['https://spandigital.net/assets/'] # URLs that should be whitelisted
 assetDir: 'assets' # The directory where assets should be saved
 contentDir: 'content' # The directory where the converted markdown files should be saved
 ```
-
----
-
-## Limitations
-
-The article parser assumes that every article will have a title defined by the `--headers` selector. 
-If the article doesn't have a header the parsing will fail with error "expected article to have a header: <path>"
-

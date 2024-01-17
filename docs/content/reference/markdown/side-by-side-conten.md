@@ -3,7 +3,7 @@ title: Side By Side Content
 weight: 10
 ---
 
-A shortcode is available (`{{% sidebyside %}}`) in order to have content, within a single file, in two different columns that are side by side.
+A shortcode is available (`{{</* sidebyside */>}}`) in order to have content, within a single file, in two different columns that are side by side.
 
 Create side-by-side content by using the following:
 

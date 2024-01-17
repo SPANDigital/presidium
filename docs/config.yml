@@ -1,6 +1,7 @@
 languageCode: en-us
 title: "Presidium"
 copyright: SPAN Digital
+baseUrl: /
 assetDir: static
 pluralizelisttitles: false
 enableGitInfo: false
