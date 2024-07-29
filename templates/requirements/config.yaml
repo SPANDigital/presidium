@@ -31,7 +31,7 @@ menu:
       name: State Transitions
       url: /state-transitions/
       weight: 4
-    - identifier: features-and-funtions
+    - identifier: features-and-functions
       name: Features and Functions
       url: /features-and-functions/
       weight: 5
