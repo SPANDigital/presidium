@@ -11,4 +11,4 @@ For Presidium to support the functionality it has built on top of Hugo there are
 
 - Less content per markdown file is encouraged, this also supports Presidium's philosophy of small micro-articles
 
-- While project dependent multiple directories with single `_index.md` file has better build performance
+- While project dependent multiple directories with single a `_index.md` file has better build performance
