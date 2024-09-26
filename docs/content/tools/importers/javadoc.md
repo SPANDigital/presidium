@@ -1,6 +1,6 @@
 ---
 title: Javadoc
-weight: "3"
+weight: 3
 draft: true
 ---
 

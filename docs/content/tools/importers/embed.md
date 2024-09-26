@@ -1,6 +1,6 @@
 ---
 title: Embed
-weight: 3
+weight: 5
 ---
 
 A fallback approach to importing generated documentation is to embed documentation in an iframe.

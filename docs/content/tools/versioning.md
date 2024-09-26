@@ -2,6 +2,7 @@
 title: Content Versioning
 url: content-versioning
 slug: content-versioning
+draft: true
 ---
 
 The versioning tool allows the content creator keep up tp 5 versions of the content. These versions live under the `project/versions` folder.  The tool always discards the oldest version number if the user request more than 5 versions. By default this tool is not enabled and only has to be enabled once.
