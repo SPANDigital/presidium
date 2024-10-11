@@ -1,15 +1,89 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Importers on Presidium</title><link>/tools/importers/</link><description>Recent content in Importers on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/tools/importers/index.xml" rel="self" type="application/rss+xml"/><item><title>Importing Documentation</title><link>/tools/importers/reference-documentation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/reference-documentation/</guid><description>The Reference section of Presidium should be reserved as a low-level reference for users. Typical components documented in the Reference section may include a client library or API specification. The process of importing documentation involves parsing a reference source and generating articles that are included in the generated site.
-Where possible, reference documentation should be generated to ensure that your documentation is in sync with the system being documented.
-Presidium supports the following documentation sources:</description></item><item><title>OpenAPI3</title><link>/tools/importers/oapi3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/oapi3/</guid><description>Presidium includes a Golang tool (presidium-oapi3 for importing your OpenAPI 3 spec into Presidium documentation.
-Add the presidium-oapi3 dependency to your site&amp;rsquo;s package.json or run npm install --save presidium-oapi3. Add a script that invokes the tool. Run npm run import-oapi whenever you need to update your API documentation. { &amp;#34;scripts&amp;#34; : { &amp;#34;import-oapi&amp;#34; : &amp;#34;presidium-oapi3&amp;#34; }, } Example:
-$ npm run import-oapi convert -f &amp;lt;YOUR_API_SPEC&amp;gt; -o &amp;lt;THE_OUTPUT_DIRECTORY&amp;gt; -r &amp;lt;THE_PRESIDIUM_REFERENCE_URL&amp;gt; The following options are available for presidium-oapi3:</description></item><item><title>HTML to Markdown converter</title><link>/tools/importers/h2md/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/h2md/</guid><description>html2md is a tool that allows you to convert HTML files into Presidium markdown articles.
-Installation Usage Advanced Usage Limitations Installation Install from Homebrew
-/bin/bash -c &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)&amp;#34; Add SPAN&amp;rsquo;s Homebrew tap
-brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git Install html2md
-brew install html2md Usage Usage: html2md convert [source] [dest] [flags] Flags: -d, --debug enable debug logging --headers strings article header tags (default [h1,h2]) --select string the part of the page to select and convert (default &amp;#34;body&amp;#34;) Params source is the url of the website or the path to the local html file(s).</description></item><item><title>JSON Schema</title><link>/tools/importers/jsonschema/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/jsonschema/</guid><description>presidium-json-schema is a CLI tool for importing your JSON Schema spec into Presidium documentation.
-Install brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git brew install presidium-json-schema
-Usage Usage: presidium-json-schema convert [path] [flags] Flags: -d, --destination string the output directory (default &amp;#34;.&amp;#34;) -e, --extension string the schema extension (default &amp;#34;*.schema.json&amp;#34;) -o, --ordered preserve the schema order (defaults to alphabetical) -w, --walk walk through sub-directories To convert a file you simply:
-presidium-json-schema convert &amp;lt;PATH_TO_SCHEMA_DIR&amp;gt; -d &amp;lt;THE_DESTINATION_DIR&amp;gt;</description></item><item><title>Embed</title><link>/tools/importers/embed/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/embed/</guid><description>A fallback approach to importing generated documentation is to embed documentation in an iframe. This approach is not recommended because items are not indexed or available on the main menu. However, it will work for certain cases when an importer is not yet available.
-When possible, use a simple template when embedding documentation in an iframe.
-To include documentation in an iframe:
-Generate the static site documentation for your component. Put the documentation in the /static folder so that it&amp;rsquo;s statically served.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Importers on Presidium</title><link>/tools/importers/</link><description>Recent content in Importers on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/tools/importers/index.xml" rel="self" type="application/rss+xml"/><item><title>Importing Documentation</title><link>/tools/importers/reference-documentation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/reference-documentation/</guid><description>&lt;p>The Reference section of Presidium should be reserved as a low-level reference for users.
+Typical components documented in the Reference section may include a client library or API specification.
+The process of importing documentation involves parsing a reference source and generating articles that are included in the generated site.&lt;/p>
+&lt;blockquote>
+&lt;p>Where possible, reference documentation should be generated to ensure that your documentation is in sync with the
+system being documented.&lt;/p>
+&lt;/blockquote>
+&lt;p>Presidium supports the following documentation sources:&lt;/p></description></item><item><title>OpenAPI3</title><link>/tools/importers/oapi3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/oapi3/</guid><description>&lt;p>Presidium includes a Golang tool (&lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a> for importing your OpenAPI 3 spec into Presidium documentation.&lt;/p>
+&lt;ol>
+&lt;li>Add the &lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a> dependency to your site&amp;rsquo;s &lt;code>package.json&lt;/code> or run &lt;code>npm install --save presidium-oapi3&lt;/code>.&lt;/li>
+&lt;li>Add a script that invokes the tool.&lt;/li>
+&lt;li>Run &lt;code>npm run import-oapi&lt;/code> whenever you need to update your API documentation.&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-json" data-lang="json">&lt;span style="display:flex;">&lt;span>{
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000080">&amp;#34;scripts&amp;#34;&lt;/span> : {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000080">&amp;#34;import-oapi&amp;#34;&lt;/span> : &lt;span style="color:#d14">&amp;#34;presidium-oapi3&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> },
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-sh" data-lang="sh">&lt;span style="display:flex;">&lt;span>$ npm run import-oapi convert -f &amp;lt;YOUR_API_SPEC&amp;gt; -o &amp;lt;THE_OUTPUT_DIRECTORY&amp;gt; -r &amp;lt;THE_PRESIDIUM_REFERENCE_URL&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The following options are available for &lt;code>presidium-oapi3&lt;/code>:&lt;/p></description></item><item><title>HTML to Markdown converter</title><link>/tools/importers/h2md/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/h2md/</guid><description>&lt;p>&lt;strong>&lt;a href="https://github.com/SPANDigital/presidium-html" target="_blank" rel="noopener">html2md&lt;/a>&lt;/strong> is a tool that allows you to convert HTML files into &lt;a href="https://presidium.spandigital.net/" target="_blank" rel="noopener">Presidium&lt;/a> markdown articles.&lt;/p>
+&lt;ul>
+&lt;li>&lt;a href="#installation">Installation&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#usage">Usage&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#advanced-usage">Advanced Usage&lt;/a>&lt;/li>
+&lt;li>&lt;a href="#limitations">Limitations&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="installation">Installation&lt;/h2>
+&lt;p>Install from Homebrew&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>/bin/bash -c &lt;span style="color:#d14">&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">$(&lt;/span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh&lt;span style="color:#000;font-weight:bold">)&lt;/span>&lt;span style="color:#d14">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Add SPAN&amp;rsquo;s Homebrew tap&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Install html2md&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>brew install html2md
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;hr>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>Usage:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> html2md convert &lt;span style="color:#000;font-weight:bold">[&lt;/span>source&lt;span style="color:#000;font-weight:bold">]&lt;/span> &lt;span style="color:#000;font-weight:bold">[&lt;/span>dest&lt;span style="color:#000;font-weight:bold">]&lt;/span> &lt;span style="color:#000;font-weight:bold">[&lt;/span>flags&lt;span style="color:#000;font-weight:bold">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Flags:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -d, --debug &lt;span style="color:#0086b3">enable&lt;/span> debug logging
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --headers strings article header tags &lt;span style="color:#000;font-weight:bold">(&lt;/span>default &lt;span style="color:#000;font-weight:bold">[&lt;/span>h1,h2&lt;span style="color:#000;font-weight:bold">])&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> --select string the part of the page to &lt;span style="color:#000;font-weight:bold">select&lt;/span> and convert &lt;span style="color:#000;font-weight:bold">(&lt;/span>default &lt;span style="color:#d14">&amp;#34;body&amp;#34;&lt;/span>&lt;span style="color:#000;font-weight:bold">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="params">Params&lt;/h3>
+&lt;p>&lt;code>source&lt;/code> is the url of the website or the path to the local html file(s).&lt;br>
+&lt;code>dest&lt;/code> is the path to the directory where the converted markdown files will be saved.&lt;/p></description></item><item><title>JSON Schema</title><link>/tools/importers/jsonschema/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/jsonschema/</guid><description>&lt;p>&lt;a href="https://github.com/SPANDigital/presidium-json-schema" target="_blank" rel="noopener">presidium-json-schema&lt;/a> is a CLI tool for importing your &lt;a href="http://json-schema.org/" target="_blank" rel="noopener">JSON Schema&lt;/a> spec into
+&lt;a href="http://presidium.spandigital.net" target="_blank" rel="noopener">Presidium&lt;/a> documentation.&lt;/p>
+&lt;h2 id="install">Install&lt;/h2>
+&lt;p>brew tap SPANDigital/homebrew-tap &lt;a href="https://github.com/SPANDigital/homebrew-tap.git" target="_blank" rel="noopener">https://github.com/SPANDigital/homebrew-tap.git&lt;/a>
+brew install presidium-json-schema&lt;/p>
+&lt;h2 id="usage">Usage&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-text" data-lang="text">&lt;span style="display:flex;">&lt;span>Usage:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> presidium-json-schema convert [path] [flags]
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Flags:
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -d, --destination string the output directory (default &amp;#34;.&amp;#34;)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -e, --extension string the schema extension (default &amp;#34;*.schema.json&amp;#34;)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -o, --ordered preserve the schema order (defaults to alphabetical)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> -w, --walk walk through sub-directories
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>To convert a file you simply:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>presidium-json-schema convert &amp;lt;PATH_TO_SCHEMA_DIR&amp;gt; -d &amp;lt;THE_DESTINATION_DIR&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Embed</title><link>/tools/importers/embed/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/embed/</guid><description>&lt;p>A fallback approach to importing generated documentation is to embed documentation in an iframe.
+This approach is not recommended because items are not indexed or available on the main menu. However, it
+will work for certain cases when an importer is not yet available.&lt;/p>
+&lt;blockquote>
+&lt;p>When possible, use a simple template when embedding documentation in an iframe.&lt;/p>
+&lt;/blockquote>
+&lt;p>To include documentation in an iframe:&lt;/p>
+&lt;ol>
+&lt;li>Generate the static site documentation for your component.&lt;/li>
+&lt;li>Put the documentation in the &lt;code>/static&lt;/code> folder so that it&amp;rsquo;s statically served.
+The Presidium convention is to place it under &lt;code>/static/import/{my-reference}&lt;/code>.&lt;/li>
+&lt;li>Add a reference article to the Reference section:&lt;/li>
+&lt;/ol>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-markdown" data-lang="markdown">&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>title: My Reference
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#999"># foo.bar
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#999">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;&lt;span style="color:#000080">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;&lt;span style="color:#000080">iframe&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> src=&amp;#39;/static/import/{my-reference}/foo/bar/package-summary.html&amp;#39;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &amp;lt;/&lt;span style="color:#000080">iframe&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&amp;lt;/&lt;span style="color:#000080">div&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;blockquote>
+&lt;p>You can create multiple Markdown files for different components as required.&lt;/p></description></item></channel></rss>

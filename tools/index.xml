@@ -1,5 +1,12 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tools on Presidium</title><link>/tools/</link><description>Recent content in Tools on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Link Validation</title><link>/link-validation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/link-validation/</guid><description>This tool reports links within a Presidium site. You can use this tool see which links are broken, points to non standard protocols.
-The tool does not need a live Presidium site to work against, so the site does not need to be deployed.
-How to use the tool Generate a local public site by running presidium hugo:
-presidium hugo Next run the tool pointing to the public site:
-presidium report pagelinks .</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Tools on Presidium</title><link>/tools/</link><description>Recent content in Tools on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/tools/index.xml" rel="self" type="application/rss+xml"/><item><title>Link Validation</title><link>/link-validation/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/link-validation/</guid><description>&lt;p>This tool reports links within a Presidium site. You can use this tool see which links are broken, points to non standard protocols.&lt;/p>
+&lt;blockquote>
+&lt;p>The tool does not need a live Presidium site to work against, so the site does not need to be deployed.&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="how-to-use-the-tool">How to use the tool&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Generate a local public site by running presidium hugo:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>presidium hugo
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>
+&lt;p>Next run the tool pointing to the &lt;code>public&lt;/code> site:&lt;/p></description></item></channel></rss>

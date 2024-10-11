@@ -1,7 +1,43 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Source Control on Presidium</title><link>/recipes/source-control/</link><description>Recent content in Source Control on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/recipes/source-control/index.xml" rel="self" type="application/rss+xml"/><item><title>Approaches</title><link>/recipes/source-control/approaches/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/recipes/source-control/approaches/</guid><description>Presidium content can be managed in various ways depending on your project needs. Content may be hosted in:
-A dedicated repo that only contains documentation A sub-folder of an existing repo A dedicated repo is simpler to configure and easier to manage independently. Managing content within in a sub directory inside the source code repo keeps everything in one place and makes it easier to update the documents while changing the code.</description></item><item><title>Sub Folder</title><link>/source-control/sub-folder/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/source-control/sub-folder/</guid><description>Presidium can exist within a sub-folder of an existing source code repository, for example, /docs.
-Getting Presidium The easiest way to incorporate Presidium into your project is to run the wizard from your project root:
-presidium init And specify Project Name as docs, so that, Presidium creates and empty Presidium site under docs/ folder.
-The contents of your docs/ folder should look something like this:
-config.yaml go.mod content/ static Add the following to your project’s .</description></item><item><title>Sub Module</title><link>/recipes/source-control/sub-module/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/recipes/source-control/sub-module/</guid><description>If you want to store your documentation in a separate repository or share documentation between projects you can use submodules. Use the following steps to set up a submodule.
-Create a new repository for you module. Create a config.yml file and add the following module: mounts: - source: content target: content Create a content directory and add your markdown files. E.g. ├── config.yml └── content └── glossary ├── _index.md └── link.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Source Control on Presidium</title><link>/recipes/source-control/</link><description>Recent content in Source Control on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/recipes/source-control/index.xml" rel="self" type="application/rss+xml"/><item><title>Approaches</title><link>/recipes/source-control/approaches/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/recipes/source-control/approaches/</guid><description>&lt;p>Presidium content can be managed in various ways depending on your project needs. Content may be hosted in:&lt;/p>
+&lt;ul>
+&lt;li>A dedicated repo that only contains documentation&lt;/li>
+&lt;li>A sub-folder of an existing repo&lt;/li>
+&lt;/ul>
+&lt;p>A dedicated repo is simpler to configure and easier to manage independently. Managing content within in a sub directory
+inside the source code repo keeps everything in one place and makes it easier to update the documents while changing the
+code.&lt;/p></description></item><item><title>Sub Folder</title><link>/source-control/sub-folder/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/source-control/sub-folder/</guid><description>&lt;p>Presidium can exist within a sub-folder of an existing source code repository, for example, &lt;code>/docs&lt;/code>.&lt;/p>
+&lt;h2 id="getting-presidium">Getting Presidium&lt;/h2>
+&lt;p>The easiest way to incorporate Presidium into your project is to run the wizard from your project root:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>presidium init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>And specify &lt;code>Project Name&lt;/code> as &lt;code>docs&lt;/code>, so that, Presidium creates and empty Presidium site under &lt;code>docs/&lt;/code> folder.&lt;/p>
+&lt;p>The contents of your &lt;code>docs/&lt;/code> folder should look something like this:&lt;/p>
+&lt;pre tabindex="0">&lt;code>config.yaml
+go.mod
+content/
+static
+&lt;/code>&lt;/pre>&lt;p>Add the following to your project’s .gitignore file:&lt;/p></description></item><item><title>Sub Module</title><link>/recipes/source-control/sub-module/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/recipes/source-control/sub-module/</guid><description>&lt;p>If you want to store your documentation in a separate repository or share documentation between projects you can use submodules. Use the following steps to set up a submodule.&lt;/p>
+&lt;ol>
+&lt;li>Create a new repository for you module.&lt;/li>
+&lt;li>Create a &lt;code>config.yml&lt;/code> file and add the following
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000080">module&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">mounts&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">source&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>content&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">target&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>content&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;li>Create a &lt;code>content&lt;/code> directory and add your markdown files. E.g.
+&lt;pre tabindex="0">&lt;code>├── config.yml
+└── content
+ └── glossary
+ ├── _index.md
+ └── link.md
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>Commit and push your changes&lt;/li>
+&lt;li>To use your submodule, add it to the &lt;code>imports&lt;/code> section of your project&amp;rsquo;s &lt;code>config.yml&lt;/code> file. E.g.
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000080">module&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">imports&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">path&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&amp;lt;REPO_URL_OF_SUBMODULE&amp;gt;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">mounts&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">source&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>content&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">target&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>content&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;/li>
+&lt;/ol></description></item></channel></rss>

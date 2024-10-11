@@ -1,20 +1,343 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Markdown on Presidium</title><link>/reference/markdown/</link><description>Recent content in Markdown on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/reference/markdown/index.xml" rel="self" type="application/rss+xml"/><item><title>Headings &amp; Emphasis</title><link>/markdown/headings-and-emphasis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/markdown/headings-and-emphasis/</guid><description>Heading are indicated with a hash.
-Heading 1 # Heading 1 Heading 2 ## Heading 2 Heading 3 ### Heading 3 Use either bold, italics, or monospaced font styling for emphasis:
-Italicized text
-*Italicized text* Bold text
-**Bold text** Identifiers and code
-`Identifiers and code`</description></item><item><title>Bullets &amp; Numbering</title><link>/markdown/bullets-and-numbering/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/markdown/bullets-and-numbering/</guid><description>Markdown allows bullets and numbering to be nested.
-Use bullets to list unordered items.
-Bullets Sentence 1. Sentence 2. Nested sentence 1. Nested sentence 2. Double nested sentence. * Sentence 1. * Sentence 2. - Nested sentence 1. - Nested sentence 2. + Double nested sentence. Numbering Use a numbered list for steps that should be done in order. You can number the list yourself or have Presidium do the numbering automatically:</description></item><item><title>Links</title><link>/reference/markdown/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/links/</guid><description>You can link to internal articles in your repository, to external articles, or even to other semantically significant text. Any text enclosed in angle brackets will be interpreted as a link. If you want to add a description, use square brackets for the description and parenthesis for the link.
-Internal Page link: Presidium Authors Internal Anchor link: Presidium Authors External link: https://github.com/SPANDigital/presidium Alternative: Presidium on Github - Internal Page link: [Presidium Authors]({{&amp;lt; ref &amp;#34;reference/front-matter/authors.</description></item><item><title>Tables</title><link>/reference/markdown/tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/tables/</guid><description>Markdown provides a simple syntax for creating tables using hyphens and horizontal bars / pipes.
-first heading second heading third heading row 1 column 1 row 1 column 2 row 1 column 3 row 2 column 1 row 2 column 2 row 2 column 3 row 3 column 1 row 3 column 2 row 3 column 3 row 4 column 1 row 4 column 2 row 4 column 3 | first heading | second heading | third heading | |----------------|----------------|----------------| | row 1 column 1 | row 1 column 2 | row 1 column 3 | | row 2 column 1 | row 2 column 2 | row 2 column 3 | | row 3 column 1 | row 3 column 2 | row 3 column 3 | | row 4 column 1 | row 4 column 2 | row 4 column 3 |</description></item><item><title>Blockquotes</title><link>/reference/markdown/blockquotes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/blockquotes/</guid><description>Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples, the Bootstrap Glyphicons have been used to embellish the text.
-This is a blockquote
-List in blockquote Note! List in blockquote Other examples TODO http://my/url/ Decision: Example: IMPORTANT &amp;gt; **TODO** &amp;gt; &amp;lt;span class=&amp;#34;glyphicon glyphicon-list-alt&amp;#34;&amp;gt;&amp;lt;/span&amp;gt; &amp;gt; &amp;lt;http://my/url/&amp;gt; &amp;gt; &amp;lt;span class=&amp;#34;glyphicon glyphicon-tags&amp;#34;&amp;gt;&amp;lt;/span&amp;gt; &amp;gt; **Decision:** &amp;gt; &amp;lt;span class=&amp;#34;glyphicon glyphicon-knight&amp;#34;&amp;gt;&amp;lt;/span&amp;gt; &amp;gt; **Example:** &amp;gt; &amp;lt;span class=&amp;#34;glyphicon glyphicon-flag&amp;#34;&amp;gt;&amp;lt;/span&amp;gt; &amp;gt; **IMPORTANT** &amp;gt; &amp;lt;span class=&amp;#34;glyphicon glyphicon-exclamation-sign&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;</description></item><item><title>Codeblocks</title><link>/reference/markdown/code-blocks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/code-blocks/</guid><description>To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language directly after the first set of backticks. Alternatively, you can indent your code / machine output to treat it as preformatted text. For single line inline code, use a single backtick.
-Javascript var N = 32; var buffer = new ArrayBuffer(N); ```js var N = 32; var buffer = new ArrayBuffer(N); ``` Python my_array = [i for i in range(0, N)] ```py my_array = [i for i in range(0, N)] ``` C int * my_func(int * in) { return in; } ```c int * my_func(int * in) { return in; } ``` Go package main import &amp;#34;fmt&amp;#34; func main() { fmt.</description></item><item><title>Images</title><link>/reference/markdown/images/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/images/</guid><description>Image Links Put any images you want to include in the /static/images directory and reference them in the text. Note the exclamation point. The image path may be fully resolved:
-![Image Name](/images/logo.png) Image with attributes Sample image {{&amp;lt; img src=&amp;#34;/images/logo.png&amp;#34; caption=&amp;#34;Sample image&amp;#34; style=&amp;#34;width:25%;&amp;#34; &amp;gt;}} Captions To include a caption, add Caption after an image link. For example:
-Sample Image With Caption
-![Sample Image With Caption](/images/logo.png) *Sample Image With Caption*</description></item><item><title>Tooltips</title><link>/reference/markdown/tooltips/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/tooltips/</guid><description>Tooltips display a short definition of an item. There are two ways to create tooltips:
-Automatic from the Glossary Via Link Override Automatic Tooltips Automatic tooltips reference Glossary entries. If a Glossary article by the name of “Tooltips” exists, a tooltip will be available for the following item:
-TooltipsThis is an example of a Glossary entry linked to from here. {{&amp;lt; tooltip &amp;#34;Tooltips&amp;#34; &amp;gt;}}` Link Override You can use an internal article as the source of a tooltip.</description></item><item><title>Side By Side Content</title><link>/reference/markdown/side-by-side-conten/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/side-by-side-conten/</guid><description>A shortcode is available ({{&amp;lt; sidebyside &amp;gt;}}) in order to have content, within a single file, in two different columns that are side by side.
-Create side-by-side content by using the following:
-&amp;lt;div class=&amp;#34;side-by-side&amp;#34;&amp;gt; &amp;lt;div style=&amp;#34;float:left; width:50%&amp;#34;&amp;gt; Content you want on the left hand side of the site &amp;lt;/div&amp;gt; &amp;lt;div style=&amp;#34;float:right; width:50%&amp;#34;&amp;gt; Content you want on the right hand side of the site &amp;lt;/div&amp;gt; &amp;lt;/div&amp;gt; Note: --split-content-- is where the content is to be split between left and right.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Markdown on Presidium</title><link>/reference/markdown/</link><description>Recent content in Markdown on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/reference/markdown/index.xml" rel="self" type="application/rss+xml"/><item><title>Headings &amp; Emphasis</title><link>/markdown/headings-and-emphasis/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/markdown/headings-and-emphasis/</guid><description>&lt;p>Heading are indicated with a hash.&lt;/p>
+&lt;h1 id="heading-1">Heading 1&lt;/h1>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#999"># Heading 1
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="heading-2">Heading 2&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#aaa">## Heading 2
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="heading-3">Heading 3&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#aaa">### Heading 3
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Use either bold, italics, or monospaced font styling for emphasis:&lt;/p>
+&lt;p>&lt;em>Italicized text&lt;/em>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>*Italicized text*
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;strong>Bold text&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>**Bold text**
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>&lt;code>Identifiers and code&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#d14">`Identifiers and code`&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Bullets &amp; Numbering</title><link>/markdown/bullets-and-numbering/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/markdown/bullets-and-numbering/</guid><description>&lt;p>Markdown allows bullets and numbering to be nested.&lt;/p>
+&lt;p>Use bullets to list unordered items.&lt;/p>
+&lt;h2 id="bullets">Bullets&lt;/h2>
+&lt;ul>
+&lt;li>Sentence 1.&lt;/li>
+&lt;li>Sentence 2.
+&lt;ul>
+&lt;li>Nested sentence 1.&lt;/li>
+&lt;li>Nested sentence 2.
+&lt;ul>
+&lt;li>Double nested sentence.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">*&lt;/span> Sentence 1.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">*&lt;/span> Sentence 2.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000;font-weight:bold">-&lt;/span> Nested sentence 1.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000;font-weight:bold">-&lt;/span> Nested sentence 2.
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> + Double nested sentence.
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="numbering">Numbering&lt;/h2>
+&lt;p>Use a numbered list for steps that should be done in order. You can number the list yourself or have Presidium do the
+numbering automatically:&lt;/p></description></item><item><title>Links</title><link>/reference/markdown/links/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/links/</guid><description>&lt;p>You can link to internal articles in your repository, to external articles, or even to other semantically significant
+text. Any text enclosed in angle brackets will be interpreted as a link. If you want to add a description,
+use square brackets for the description and parenthesis for the link.&lt;/p>
+&lt;ul>
+&lt;li>Internal Page link: &lt;a href="/reference/front-matter/authors/">Presidium Authors&lt;/a>&lt;/li>
+&lt;li>Internal Anchor link: &lt;a href="/reference/front-matter/#authors">Presidium Authors&lt;/a>&lt;/li>
+&lt;li>External link: &lt;a href="https://github.com/SPANDigital/presidium" target="_blank" rel="noopener">https://github.com/SPANDigital/presidium&lt;/a>&lt;/li>
+&lt;li>Alternative: &lt;a href="https://github.com/SPANDigital/presidium" target="_blank" rel="noopener">Presidium on Github&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">-&lt;/span> Internal Page link: [&lt;span style="color:#000080">Presidium Authors&lt;/span>](&lt;span style="color:#008080">{{&amp;lt; ref &amp;#34;reference/front-matter/authors.md&amp;#34; &amp;gt;}}&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">-&lt;/span> Internal Anchor link: [&lt;span style="color:#000080">Presidium Authors&lt;/span>](&lt;span style="color:#008080">{{&amp;lt; ref &amp;#34;reference/front-matter/#authors&amp;#34; &amp;gt;}}&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">-&lt;/span> External link: &amp;lt;&lt;span style="color:#000080">https:&lt;/span>&lt;span style="color:#a61717;background-color:#e3d2d2">//&lt;/span>&lt;span style="color:#008080">github&lt;/span>&lt;span style="color:#a61717;background-color:#e3d2d2">.&lt;/span>&lt;span style="color:#008080">com&lt;/span>&lt;span style="color:#a61717;background-color:#e3d2d2">/&lt;/span>&lt;span style="color:#008080">SPANDigital&lt;/span>&lt;span style="color:#a61717;background-color:#e3d2d2">/&lt;/span>&lt;span style="color:#008080">presidium&lt;/span>&amp;gt;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">-&lt;/span> Alternative: [&lt;span style="color:#000080">Presidium on Github&lt;/span>](&lt;span style="color:#008080">https://github.com/SPANDigital/presidium&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Tables</title><link>/reference/markdown/tables/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/tables/</guid><description>&lt;p>Markdown provides a simple syntax for creating tables using hyphens and horizontal bars / pipes.&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">first heading&lt;/th>
+ &lt;th style="text-align: left">second heading&lt;/th>
+ &lt;th style="text-align: left">third heading&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">row 1 column 1&lt;/td>
+ &lt;td style="text-align: left">row 1 column 2&lt;/td>
+ &lt;td style="text-align: left">row 1 column 3&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">row 2 column 1&lt;/td>
+ &lt;td style="text-align: left">row 2 column 2&lt;/td>
+ &lt;td style="text-align: left">row 2 column 3&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">row 3 column 1&lt;/td>
+ &lt;td style="text-align: left">row 3 column 2&lt;/td>
+ &lt;td style="text-align: left">row 3 column 3&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">row 4 column 1&lt;/td>
+ &lt;td style="text-align: left">row 4 column 2&lt;/td>
+ &lt;td style="text-align: left">row 4 column 3&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>| first heading | second heading | third heading |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>|----------------|----------------|----------------|
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| row 1 column 1 | row 1 column 2 | row 1 column 3 |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| row 2 column 1 | row 2 column 2 | row 2 column 3 |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| row 3 column 1 | row 3 column 2 | row 3 column 3 |
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>| row 4 column 1 | row 4 column 2 | row 4 column 3 |
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Blockquotes</title><link>/reference/markdown/blockquotes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/blockquotes/</guid><description>&lt;p>Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples,
+the &lt;a href="http://glyphicons.bootstrapcheatsheets.com/" target="_blank" rel="noopener">Bootstrap Glyphicons&lt;/a> have been used to embellish the text.&lt;/p>
+&lt;blockquote>
+&lt;p>This is a blockquote&lt;/p>
+&lt;ul>
+&lt;li>List in blockquote&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p> &lt;strong>Note&lt;/strong>!
+&lt;span class="glyphicon glyphicon-pushpin">&lt;/span>&lt;/p>
+&lt;ul>
+&lt;li>List in blockquote&lt;/li>
+&lt;/ul>
+&lt;/blockquote>
+&lt;h2 id="other-examples">Other examples&lt;/h2>
+&lt;blockquote>
+&lt;p> &lt;strong>TODO&lt;/strong>
+&lt;span class="glyphicon glyphicon-list-alt">&lt;/span>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p> &lt;a href="http://my/url/" target="_blank" rel="noopener">http://my/url/&lt;/a>
+&lt;span class="glyphicon glyphicon-tags">&lt;/span>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p> &lt;strong>Decision:&lt;/strong>
+&lt;span class="glyphicon glyphicon-knight">&lt;/span>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p> &lt;strong>Example:&lt;/strong>
+&lt;span class="glyphicon glyphicon-flag">&lt;/span>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p> &lt;strong>IMPORTANT&lt;/strong>
+&lt;span class="glyphicon glyphicon-exclamation-sign">&lt;/span>&lt;/p>
+&lt;/blockquote>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">**TODO**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">&amp;lt;span class=&amp;#34;glyphicon glyphicon-list-alt&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">&amp;lt;http://my/url/&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">&amp;lt;span class=&amp;#34;glyphicon glyphicon-tags&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">**Decision:**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">&amp;lt;span class=&amp;#34;glyphicon glyphicon-knight&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">**Example:**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">&amp;lt;span class=&amp;#34;glyphicon glyphicon-flag&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">**IMPORTANT**
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">&lt;/span>&lt;span style="color:#000;font-weight:bold">&amp;gt; &lt;/span>&lt;span style="color:#000;font-style:italic">&amp;lt;span class=&amp;#34;glyphicon glyphicon-exclamation-sign&amp;#34;&amp;gt;&amp;lt;/span&amp;gt;
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Codeblocks</title><link>/reference/markdown/code-blocks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/code-blocks/</guid><description>&lt;p>To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language
+directly after the first set of backticks. Alternatively, you can indent your code / machine output to treat it as
+preformatted text. For single line inline code, use a single backtick.&lt;/p>
+&lt;h2 id="javascript">Javascript&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-js" data-lang="js">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">var&lt;/span> N &lt;span style="color:#000;font-weight:bold">=&lt;/span> &lt;span style="color:#099">32&lt;/span>;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">var&lt;/span> buffer &lt;span style="color:#000;font-weight:bold">=&lt;/span> &lt;span style="color:#000;font-weight:bold">new&lt;/span> ArrayBuffer(N);
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>```js
+var N = 32;
+var buffer = new ArrayBuffer(N);
+```
+&lt;/code>&lt;/pre>
+&lt;h2 id="python">Python&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-py" data-lang="py">&lt;span style="display:flex;">&lt;span>my_array &lt;span style="color:#000;font-weight:bold">=&lt;/span> [i &lt;span style="color:#000;font-weight:bold">for&lt;/span> i &lt;span style="color:#000;font-weight:bold">in&lt;/span> &lt;span style="color:#0086b3">range&lt;/span>(&lt;span style="color:#099">0&lt;/span>, N)]
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>```py
+my_array = [i for i in range(0, N)]
+```
+&lt;/code>&lt;/pre>
+&lt;h2 id="c">C&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-c" data-lang="c">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#458;font-weight:bold">int&lt;/span> &lt;span style="color:#000;font-weight:bold">*&lt;/span> &lt;span style="color:#900;font-weight:bold">my_func&lt;/span>(&lt;span style="color:#458;font-weight:bold">int&lt;/span> &lt;span style="color:#000;font-weight:bold">*&lt;/span> in) {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> &lt;span style="color:#000;font-weight:bold">return&lt;/span> in;
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>```c
+int * my_func(int * in) {
+ return in;
+}
+```
+&lt;/code>&lt;/pre>
+&lt;h2 id="go">Go&lt;/h2>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-go" data-lang="go">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">package&lt;/span> main
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">import&lt;/span> &lt;span style="color:#d14">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-weight:bold">func&lt;/span> &lt;span style="color:#900;font-weight:bold">main&lt;/span>() {
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> fmt.&lt;span style="color:#900;font-weight:bold">Println&lt;/span>(&lt;span style="color:#d14">&amp;#34;hello world&amp;#34;&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;pre>&lt;code>```go
+package main
+
+import &amp;quot;fmt&amp;quot;
+
+func main() {
+ fmt.Println(&amp;quot;hello world&amp;quot;)
+}
+```
+&lt;/code>&lt;/pre>
+&lt;h2 id="others">Others&lt;/h2>
+&lt;p>Github-flavoured Markdown supports many languages for code blocks. For a full list, go to &lt;a href="https://github.com/github/linguist/blob/master/lib/linguist/languages.yml" target="_blank" rel="noopener">Github&lt;/a>.&lt;/p></description></item><item><title>Images</title><link>/reference/markdown/images/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/images/</guid><description>&lt;h2 id="image-links">Image Links&lt;/h2>
+&lt;p>Put any images you want to include in the &lt;project root>/static/images directory and reference them in the text.
+Note the exclamation point. The image path may be fully resolved:&lt;/p>
+&lt;p>&lt;img src="/images/logo.png" alt="Image Name">&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>![&lt;span style="color:#000080">Image Name&lt;/span>](&lt;span style="color:#008080">/images/logo.png&lt;/span>)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="image-with-attributes">Image with attributes&lt;/h2>
+
+
+
+
+
+ 
+
+
+
+
+
+ 
+
+ 
+
+ 
+ 
+ 
+
+
+&lt;figure >
+
+&lt;img src="/images/logo.png" alt="Sample image" style="width:25%;" />
+
+
+&lt;em>
+Sample image
+&lt;/em>
+
+&lt;/figure>
+
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>{{&amp;lt; &lt;span style="color:#000080">img&lt;/span> &lt;span style="color:#008080">src&lt;/span>&lt;span style="color:#000;font-weight:bold">=&lt;/span>&lt;span style="color:#d14">&amp;#34;/images/logo.png&amp;#34;&lt;/span> &lt;span style="color:#008080">caption&lt;/span>&lt;span style="color:#000;font-weight:bold">=&lt;/span>&lt;span style="color:#d14">&amp;#34;Sample image&amp;#34;&lt;/span> &lt;span style="color:#008080">style&lt;/span>&lt;span style="color:#000;font-weight:bold">=&lt;/span>&lt;span style="color:#d14">&amp;#34;width:25%;&amp;#34;&lt;/span> &amp;gt;}}
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="captions">Captions&lt;/h3>
+&lt;p>To include a caption, add &lt;em>Caption&lt;/em> after an image link. For example:&lt;/p>
+&lt;p>&lt;img src="/images/logo.png" alt="Sample Image With Caption">
+&lt;em>Sample Image With Caption&lt;/em>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>![&lt;span style="color:#000080">Sample Image With Caption&lt;/span>](&lt;span style="color:#008080">/images/logo.png&lt;/span>)
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000;font-style:italic">*Sample Image With Caption*&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Tooltips</title><link>/reference/markdown/tooltips/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/tooltips/</guid><description>&lt;p>Tooltips display a short definition of an item. There are two ways to create tooltips:&lt;/p>
+&lt;ul>
+&lt;li>Automatic from the Glossary&lt;/li>
+&lt;li>Via Link Override&lt;/li>
+&lt;/ul>
+&lt;h2 id="automatic-tooltips">Automatic Tooltips&lt;/h2>
+&lt;p>Automatic tooltips reference Glossary entries. If a Glossary article by the name of “Tooltips” exists, a tooltip will
+be available for the following item:&lt;/p>
+
+
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ &lt;a class="tooltips-term" href="/glossary/#tooltips" >
+ Tooltips&lt;span class="tooltips-text">This is an example of a Glossary entry linked to from here.
+&lt;/span>
+ &lt;/a>
+ 
+
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>{{&amp;lt; &lt;span style="color:#000080">tooltip&lt;/span> &lt;span style="color:#a61717;background-color:#e3d2d2">&amp;#34;&lt;/span>&lt;span style="color:#008080">Tooltips&lt;/span>&lt;span style="color:#a61717;background-color:#e3d2d2">&amp;#34;&lt;/span> &amp;gt;}}`
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="link-override">Link Override&lt;/h2>
+&lt;p>You can use an internal article as the source of a tooltip. Presidium will use the first 100 words of the article to
+construct the tooltip, so you should make sure the text will work as a tooltip. Note that the text used for the
+demarcation of a tooltip does not need to match the article title, like
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+
+ 
+ 
+ 
+ 
+ 
+
+ 
+ &lt;a class="tooltips-term" href="/best-practices/#plan-content-development" >
+ this,&lt;span class="tooltips-text">Before you write any content, spend some time anticipating what tasks you need to perform and make sure you have the time and resources to achieve your goals.
+The following steps work for both small and large projects:
+Design the site structure Inventory existing content Plan the conversion of existing content into articles Map the planned articles to your structure Identify required new articles Repurpose existing content into articles Write new articles Proofread and edit Publish Discussion The most important planning task is identifying the scope of your documentation efforts and understanding the needs of your audience.
+Presidium is pre-configured with a set of standard sections that are commonly used in software documentation. You can use this framework when starting to scope your project.
+&lt;/span>
+ &lt;/a>
+ 
+ which links to an article on plan content
+development.&lt;/p></description></item><item><title>Side By Side Content</title><link>/reference/markdown/side-by-side-conten/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/markdown/side-by-side-conten/</guid><description>&lt;p>A shortcode is available (&lt;code>{{% sidebyside %}}&lt;/code>) in order to have content, within a single file, in two different columns that are side by side.&lt;/p>
+&lt;p>Create side-by-side content by using the following:&lt;/p>
+&lt;pre tabindex="0">&lt;code>
+
+
+
+
+&amp;lt;div class=&amp;#34;side-by-side&amp;#34;&amp;gt;
+&amp;lt;div style=&amp;#34;float:left; width:50%&amp;#34;&amp;gt;
+ 
+
+Content you want on the left hand side of the site
+
+
+&amp;lt;/div&amp;gt;
+&amp;lt;div style=&amp;#34;float:right; width:50%&amp;#34;&amp;gt;
+ 
+
+Content you want on the right hand side of the site
+
+
+&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code>&lt;/pre>&lt;blockquote>
+&lt;p>&lt;strong>Note&lt;/strong>: &lt;code>--split-content--&lt;/code> is where the content is to be split between left and right. Without this keyword the site will fail to render the two columns correctly&lt;/p></description></item></channel></rss>

@@ -1,5 +1,15 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Prerequisites on Presidium</title><link>/prerequisites/</link><description>Recent content in Prerequisites on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/prerequisites/index.xml" rel="self" type="application/rss+xml"/><item><title>Prerequisites</title><link>/prerequisites/prerequisites/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/prerequisites/prerequisites/</guid><description>The following tools are required to use Presidium:
-Install Homebrew
-/bin/bash -c &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&amp;#34; Add the Presidium Tap
-brew tap SPANDigital/homebrew-tap git@github.com:SPANDigital/homebrew-tap.git Install Presidium
-brew install presidium</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Prerequisites on Presidium</title><link>/prerequisites/</link><description>Recent content in Prerequisites on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/prerequisites/index.xml" rel="self" type="application/rss+xml"/><item><title>Prerequisites</title><link>/prerequisites/prerequisites/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/prerequisites/prerequisites/</guid><description>&lt;p>The following tools are required to use Presidium:&lt;/p>
+&lt;ol>
+&lt;li>
+&lt;p>Install Homebrew&lt;/p>
+&lt;pre tabindex="0">&lt;code>/bin/bash -c &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&amp;#34;
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>
+&lt;p>Add the Presidium Tap&lt;/p>
+&lt;pre tabindex="0">&lt;code>brew tap SPANDigital/homebrew-tap git@github.com:SPANDigital/homebrew-tap.git
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;li>
+&lt;p>Install Presidium&lt;/p>
+&lt;pre tabindex="0">&lt;code>brew install presidium
+&lt;/code>&lt;/pre>&lt;/li>
+&lt;/ol></description></item></channel></rss>

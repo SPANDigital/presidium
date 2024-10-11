@@ -1,4 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Getting Started on Presidium</title><link>/getting-started/</link><description>Recent content in Getting Started on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/getting-started/index.xml" rel="self" type="application/rss+xml"/><item><title>Install Presidium</title><link>/getting-started/install-presidium/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/getting-started/install-presidium/</guid><description>1. Install Homebrew /bin/bash -c &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&amp;#34; 2. Add SPAN&amp;rsquo;s Homebrew tap brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git 3. Install Presidium with Homebrew brew install presidium 4. Install Hugo with Homebrew brew install hugo 5. Download and install Golang</description></item><item><title>Run Presidium</title><link>/getting-started/run-presidium/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/getting-started/run-presidium/</guid><description>Start the wizard to create a new Presidium Site:
-presidium init Follow the wizard instructions:
-Project Name: The name of the folder that contains your Presidium Site Title: The title for your Presidium Site Template: The template to use. Templates provide different starting sites based on your needs. Theme: The theme to use. Themes provide different look and feel for your Presidium Site Then, navigate to the newly created folder (with your project name) and start a local server:</description></item><item><title>Update Content</title><link>/getting-started/update-content/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/getting-started/update-content/</guid><description>You can make changes to the following files and folders:
-content/ Content folder for all your articles config.yaml Site configuration properties static/ Static folder for all your resources (images, etc.) All changes can be made without having to restart the local server</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Getting Started on Presidium</title><link>/getting-started/</link><description>Recent content in Getting Started on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/getting-started/index.xml" rel="self" type="application/rss+xml"/><item><title>Install Presidium</title><link>/getting-started/install-presidium/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/getting-started/install-presidium/</guid><description>&lt;h3 id="1-install-homebrewhttpsbrewsh">1. Install &lt;a href="https://brew.sh/" target="_blank" rel="noopener">Homebrew&lt;/a>&lt;/h3>
+&lt;pre tabindex="0">&lt;code>/bin/bash -c &amp;#34;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)&amp;#34;
+&lt;/code>&lt;/pre>&lt;h3 id="2-add-spans-homebrew-tap">2. Add SPAN&amp;rsquo;s Homebrew tap&lt;/h3>
+&lt;pre tabindex="0">&lt;code>brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
+&lt;/code>&lt;/pre>&lt;h3 id="3-install-presidiumhttpsgithubcomspandigitalpresidium-with-homebrew">3. Install &lt;a href="https://github.com/SPANDigital/presidium" target="_blank" rel="noopener">Presidium&lt;/a> with Homebrew&lt;/h3>
+&lt;pre tabindex="0">&lt;code>brew install presidium
+&lt;/code>&lt;/pre>&lt;h3 id="4-install-hugohttpsgohugoiogetting-startedinstalling-with-homebrew">4. Install &lt;a href="https://gohugo.io/getting-started/installing/" target="_blank" rel="noopener">Hugo&lt;/a> with Homebrew&lt;/h3>
+&lt;pre tabindex="0">&lt;code>brew install hugo
+&lt;/code>&lt;/pre>&lt;h3 id="5-download-and-install-golanghttpsgodevdl">5. Download and install &lt;a href="https://go.dev/dl/" target="_blank" rel="noopener">Golang&lt;/a>&lt;/h3></description></item><item><title>Run Presidium</title><link>/getting-started/run-presidium/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/getting-started/run-presidium/</guid><description>&lt;p>Start the wizard to create a new Presidium Site:&lt;/p>
+&lt;pre tabindex="0">&lt;code>presidium init
+&lt;/code>&lt;/pre>&lt;p>Follow the wizard instructions:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Project Name&lt;/strong>: The name of the folder that contains your Presidium Site&lt;/li>
+&lt;li>&lt;strong>Title&lt;/strong>: The title for your Presidium Site&lt;/li>
+&lt;li>&lt;strong>Template&lt;/strong>: The template to use. Templates provide different starting sites based on your needs.&lt;/li>
+&lt;li>&lt;strong>Theme&lt;/strong>: The theme to use. Themes provide different look and feel for your Presidium Site&lt;/li>
+&lt;/ul>
+&lt;p>Then, navigate to the newly created folder (with your project name) and start a local server:&lt;/p></description></item><item><title>Update Content</title><link>/getting-started/update-content/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/getting-started/update-content/</guid><description>&lt;p>You can make changes to the following files and folders:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>content/&lt;/code> Content folder for all your articles&lt;/li>
+&lt;li>&lt;code>config.yaml&lt;/code> Site configuration properties&lt;/li>
+&lt;li>&lt;code>static/&lt;/code> Static folder for all your resources (images, etc.)&lt;/li>
+&lt;/ul>
+&lt;p>All changes can be made without having to restart the local server&lt;/p></description></item></channel></rss>

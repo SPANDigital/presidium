@@ -1,15 +1,118 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Front matter on Presidium</title><link>/reference/front-matter/</link><description>Recent content in Front matter on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/reference/front-matter/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview</title><link>/reference/front-matter/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/overview/</guid><description>Front Matter serves two purposes:
-Indicates that the file should be included as an article in the build process Allows you to set properties for your article For example:
---- title: Presidium slug: overview url: front-matter/overview weight: 1 authors: github-username roles: Developer status: Draft --- Presidium includes the following front matter variables:
-Variable Description title A string representing the article or subsection title or the title of the subsection. slug A string representing the slug for deep linking the article url A string representing the URL for the article weight A number to provide ordering of articles, a higher number means the article will appear later in the section author A string, generally the Github username of the main author of the article.</description></item><item><title>Authors</title><link>/reference/front-matter/authors/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/authors/</guid><description>Every article can include an author in the front matter:
---- author: {author name} --- Optional links to authors can be enabled by setting a base URL in the site config:
-params: author: external: url: https://github.com/ newTab: false To customize the label for authors, provide a new label in the site config:
-params: author: label: Custom Label To hide or show authors on your generated site, enable or disable the component in the site config:</description></item><item><title>User Roles</title><link>/front-matter/user-roles/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/front-matter/user-roles/</guid><description>Various roles can be added to a site to allow readers to filter articles and menu items by a target audience.
-This optional feature can be enabled by defining user roles in the site config.
-params: roles: label: &amp;#34;Show documentation for&amp;#34; all: &amp;#34;All Roles&amp;#34; options: - &amp;#34;Business Analyst&amp;#34; - &amp;#34;Developers&amp;#34; - &amp;#34;Testers&amp;#34; If a role is not specified, articles default to roles.all
-Articles can have one or more roles defined in front-matter:</description></item><item><title>Statuses</title><link>/reference/front-matter/statuses/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/statuses/</guid><description>Each article can be assigned a status to track its lifecycle:
-draft review published retired Statuses can be set in the site’s front matter:
---- status: draft|review|published|retired --- To show or hide statuses on your generated site, use the following setting in the site config:
-params: show: status: true|false</description></item><item><title>External URLs</title><link>/front-matter/external-urls/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/front-matter/external-urls/</guid><description>Sections can redirect to an external URL either in the same tab or a new one.
-This can be done by setting the externalUrl in the site config like so:
-menu: main: - identifier: external-link name: External Link url: / weight: 1 params: externalUrl: href: &amp;#34;https://www.anothersite.com&amp;#34; newTab: true - identifier: another-external-link name: Another External Link url: / weight: 2 params: externalUrl: href: &amp;#34;https://www.anothersite.com&amp;#34; newTab: false The newTab attribute is optional and defaults to true</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Front matter on Presidium</title><link>/reference/front-matter/</link><description>Recent content in Front matter on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/reference/front-matter/index.xml" rel="self" type="application/rss+xml"/><item><title>Overview</title><link>/reference/front-matter/overview/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/overview/</guid><description>&lt;p>Front Matter serves two purposes:&lt;/p>
+&lt;ul>
+&lt;li>Indicates that the file should be included as an article in the build process&lt;/li>
+&lt;li>Allows you to set properties for your article&lt;/li>
+&lt;/ul>
+&lt;p>For example:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-md" data-lang="md">&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>title: Presidium
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>slug: overview
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>url: front-matter/overview
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>weight: 1
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>authors: github-username
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>roles: Developer
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>status: Draft
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>---
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Presidium includes the following front matter variables:&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">&lt;strong>Variable&lt;/strong>&lt;/th>
+ &lt;th style="text-align: left">&lt;strong>Description&lt;/strong>&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">title&lt;/td>
+ &lt;td style="text-align: left">A string representing the article or subsection title or the title of the subsection.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">slug&lt;/td>
+ &lt;td style="text-align: left">A string representing the slug for deep linking the article&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">url&lt;/td>
+ &lt;td style="text-align: left">A string representing the URL for the article&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">weight&lt;/td>
+ &lt;td style="text-align: left">A number to provide ordering of articles, a higher number means the article will appear later in the section&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;a href="#authors">author&lt;/a>&lt;/td>
+ &lt;td style="text-align: left">A string, generally the Github username of the main author of the article.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">github&lt;/td>
+ &lt;td style="text-align: left">A string, representing the Github username of the main author of the article.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;a href="#user-roles">roles&lt;/a>&lt;/td>
+ &lt;td style="text-align: left">A list of strings representing the appropriate roles for an article.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;a href="#statuses">status&lt;/a>&lt;/td>
+ &lt;td style="text-align: left">A string that indicates the status of the article (draft, complete, in progress, etc.)&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table></description></item><item><title>Authors</title><link>/reference/front-matter/authors/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/authors/</guid><description>&lt;p>Every article can include an author in the &lt;code>front matter&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>---
+author: {author name}
+---
+&lt;/code>&lt;/pre>&lt;p>Optional links to authors can be enabled by setting a base URL in the &lt;code>site config&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>params:
+ author:
+ external:
+ url: https://github.com/
+ newTab: false
+&lt;/code>&lt;/pre>&lt;p>To customize the label for authors, provide a new label in the &lt;code>site config&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>params:
+ author:
+ label: Custom Label
+&lt;/code>&lt;/pre>&lt;p>To hide or show authors on your generated site, enable or disable the component in the &lt;code>site config&lt;/code>:&lt;/p></description></item><item><title>User Roles</title><link>/front-matter/user-roles/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/front-matter/user-roles/</guid><description>&lt;p>Various roles can be added to a site to allow readers to filter articles and menu items by a target audience.&lt;/p>
+&lt;p>This optional feature can be enabled by defining user roles in the &lt;code>site config&lt;/code>.&lt;/p>
+&lt;pre tabindex="0">&lt;code>params:
+ roles:
+ label: &amp;#34;Show documentation for&amp;#34;
+ all: &amp;#34;All Roles&amp;#34;
+ options:
+ - &amp;#34;Business Analyst&amp;#34;
+ - &amp;#34;Developers&amp;#34;
+ - &amp;#34;Testers&amp;#34;
+&lt;/code>&lt;/pre>&lt;p>If a role is not specified, articles default to &lt;code>roles.all&lt;/code>&lt;/p>
+&lt;p>Articles can have one or more roles defined in &lt;code>front-matter&lt;/code>:&lt;/p></description></item><item><title>Statuses</title><link>/reference/front-matter/statuses/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/statuses/</guid><description>&lt;p>Each article can be assigned a status to track its lifecycle:&lt;/p>
+&lt;ul>
+&lt;li>draft&lt;/li>
+&lt;li>review&lt;/li>
+&lt;li>published&lt;/li>
+&lt;li>retired&lt;/li>
+&lt;/ul>
+&lt;p>Statuses can be set in the site’s &lt;code>front matter&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>---
+status: draft|review|published|retired
+---
+&lt;/code>&lt;/pre>&lt;p>To show or hide statuses on your generated site, use the following setting in the &lt;code>site config&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>params:
+ show:
+ status: true|false
+&lt;/code>&lt;/pre></description></item><item><title>External URLs</title><link>/front-matter/external-urls/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/front-matter/external-urls/</guid><description>&lt;p>Sections can redirect to an external URL either in the same tab or a new one.&lt;/p>
+&lt;p>This can be done by setting the &lt;code>externalUrl&lt;/code> in the &lt;code>site config&lt;/code> like so:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000080">menu&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">main&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>external-link&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>External Link&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">1&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">params&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">externalUrl&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">href&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#d14">&amp;#34;https://www.anothersite.com&amp;#34;&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">newTab&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000;font-weight:bold">true&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>another-external-link&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Another External Link&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">2&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">params&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">externalUrl&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">href&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#d14">&amp;#34;https://www.anothersite.com&amp;#34;&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">newTab&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000;font-weight:bold">false&lt;/span>&lt;span style="color:#bbb"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>The &lt;code>newTab&lt;/code> attribute is optional and defaults to true&lt;/p></description></item></channel></rss>

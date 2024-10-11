@@ -1,9 +1,113 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reference on Presidium</title><link>/reference/</link><description>Recent content in Reference on Presidium</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/reference/index.xml" rel="self" type="application/rss+xml"/><item><title>Configuration</title><link>/reference/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/configuration/</guid><description>This is a sample Presidium configuration file:
-languageCode: en-us title: &amp;#34;Sample Title&amp;#34; copyright: Template Footer pluralizelisttitles: false markup: goldmark: renderer: Unsafe: true parser: attribute: block: true highlight: style: github menu: Main: - identifier: organization-overview name: Organization Overview url: / weight: 1 - identifier: solution-overview name: Solution Overview url: /solution-overview/ weight: 2 - identifier: technology-stack name: Technology Stack url: /technology-stack/ weight: 3 - identifier: tool-chain name: Tool Chain url: /tool-chain/ weight: 4 - identifier: dev-environment-setup name: Dev Environment Setup url: /dev-environment-setup/ weight: 5 - identifier: getting-started name: Getting Started url: /getting-started/ weight: 6 - identifier: reference name: Reference url: /reference/ weight: 7 - identifier: updates name: Updates url: /updates/ weight: 8 outputFormats: MenuIndex: baseName: menu mediaType: application/json SearchMap: baseName: searchmap mediaType: application/json outputs: home: - HTML - RSS - MenuIndex - SearchMap module: imports: - path: github.</description></item><item><title>Themes</title><link>/reference/themes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/themes/</guid><description>Presidium provides some themes when spinning up your Presidium Site through the command line. You will see something like this when running presidium init:
-Select a theme ✔ Presidium Theme - (Presidium&amp;#39;s default theme) If you already have a presidium site, you can enable your theme by adding a module in the configuration file:
-module: imports: - path: &amp;lt;Your theme&amp;gt; Logo The default Presidium logo image is placed and loaded from the pre-configured template.</description></item><item><title>Directories</title><link>/reference/directories/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/directories/</guid><description>Articles are stored in the content directory. Associated resources, such as images, are stored in the media directory. The config.yaml file is used to configure the project.
-Directory Description ./config.yaml General options to configure the project ./content Articles ./static Various resources for the project (images, imported content, etc.) All content changes are monitored; any change triggers a regeneration of the site.</description></item><item><title>Images</title><link>/reference/images/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/images/</guid><description>Images Images used within the content should be placed in a static/images directory
-/static/images/ -- static/doc-workflow.png Logos and favicons Logos The Logo of the site appears above the Menu Navigation.
-Logos should be placed in the static/images directory.
-Note: If a brand module is used the instruction above does not apply. Ensure the brand module includes the static/images directory with the logo inside.
-The menu bar Logo can be configured in the config file, under params:</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Reference on Presidium</title><link>/reference/</link><description>Recent content in Reference on Presidium</description><generator>Hugo</generator><language>en-us</language><copyright>SPAN Digital</copyright><atom:link href="/reference/index.xml" rel="self" type="application/rss+xml"/><item><title>Configuration</title><link>/reference/configuration/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/configuration/</guid><description>&lt;p>This is a sample Presidium configuration file:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-yaml" data-lang="yaml">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#000080">languageCode&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>en-us&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">title&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#d14">&amp;#34;Sample Title&amp;#34;&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">copyright&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Template Footer&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">pluralizelisttitles&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000;font-weight:bold">false&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">markup&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">goldmark&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">renderer&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">Unsafe&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000;font-weight:bold">true&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">parser&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">attribute&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">block&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000;font-weight:bold">true&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">highlight&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">style&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>github&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">menu&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">Main&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>organization-overview&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Organization Overview&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">1&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>solution-overview&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Solution Overview&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/solution-overview/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">2&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>technology-stack&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Technology Stack&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/technology-stack/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">3&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>tool-chain&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Tool Chain&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/tool-chain/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">4&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>dev-environment-setup&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Dev Environment Setup&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/dev-environment-setup/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">5&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>getting-started&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Getting Started&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/getting-started/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">6&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>reference&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Reference&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/reference/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">7&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">identifier&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>updates&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">name&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>Updates&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">url&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>/updates/&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">weight&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#099">8&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">outputFormats&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">MenuIndex&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">baseName&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>menu&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">mediaType&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>application/json&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">SearchMap&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">baseName&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>searchmap&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">mediaType&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>application/json&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">outputs&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">home&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- HTML&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- RSS&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- MenuIndex&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- SearchMap&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">module&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">imports&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- &lt;span style="color:#000080">path&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>github.com/spandigital/presidium-theme-website&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">enableInlineShortcodes&lt;/span>:&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000;font-weight:bold">true&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#000080">frontmatter&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#000080">lastmod&lt;/span>:&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- lastmod&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- :fileModTime&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>- :default&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Themes</title><link>/reference/themes/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/themes/</guid><description>&lt;p>Presidium provides some themes when spinning up your Presidium Site through the command line. You will see something
+like this when running &lt;code>presidium init&lt;/code>:&lt;/p>
+&lt;pre tabindex="0">&lt;code>Select a theme
+ ✔ Presidium Theme - (Presidium&amp;#39;s default theme)
+&lt;/code>&lt;/pre>&lt;p>If you already have a presidium site, you can enable your theme by adding a module in the configuration file:&lt;/p>
+&lt;pre tabindex="0">&lt;code>module:
+ imports:
+ - path: &amp;lt;Your theme&amp;gt;
+&lt;/code>&lt;/pre>&lt;h2 id="logo">Logo&lt;/h2>
+&lt;p>The default Presidium logo image is placed and loaded from the pre-configured template.&lt;/p></description></item><item><title>Directories</title><link>/reference/directories/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/directories/</guid><description>&lt;p>Articles are stored in the content directory. Associated resources, such as images, are stored in the media directory.
+The &lt;code>config.yaml&lt;/code> file is used to configure the project.&lt;/p>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">&lt;strong>Directory&lt;/strong>&lt;/th>
+ &lt;th style="text-align: left">&lt;strong>Description&lt;/strong>&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;code>./config.yaml&lt;/code>&lt;/td>
+ &lt;td style="text-align: left">General options to configure the project&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;code>./content&lt;/code>&lt;/td>
+ &lt;td style="text-align: left">Articles&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">&lt;code>./static&lt;/code>&lt;/td>
+ &lt;td style="text-align: left">Various resources for the project (images, imported content, etc.)&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table>
+&lt;p>All content changes are monitored; any change triggers a regeneration of the site.&lt;/p></description></item><item><title>Images</title><link>/reference/images/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/images/</guid><description>&lt;h2 id="images">Images&lt;/h2>
+&lt;p>Images used within the content should be placed in a static/images directory&lt;/p>
+&lt;pre tabindex="0">&lt;code>/static/images/
+ -- static/doc-workflow.png
+&lt;/code>&lt;/pre>&lt;h2 id="logos-and-favicons">Logos and favicons&lt;/h2>
+&lt;h3 id="logos">Logos&lt;/h3>
+&lt;p>The Logo of the site appears above the Menu Navigation.&lt;/p>
+&lt;p>Logos should be placed in the &lt;code>static/images&lt;/code> directory.&lt;/p>
+&lt;p>&lt;strong>Note&lt;/strong>: If a brand module is used the instruction above does not apply. Ensure the brand module includes the static/images directory with the logo inside.&lt;/p>
+&lt;p>The menu bar Logo can be configured in the &lt;strong>config&lt;/strong> file, under &lt;em>params&lt;/em>:&lt;/p></description></item></channel></rss>
