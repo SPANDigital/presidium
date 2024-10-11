@@ -8,6 +8,7 @@ presidium-hugo
 presidium
 dist/
 .DS_Store
+resources/
 
 dist/
 docs/resources
