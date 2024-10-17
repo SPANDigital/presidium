@@ -82,22 +82,22 @@ The &lt;code>config.yaml&lt;/code> file is used to configure the project.&lt;/p>
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">&lt;strong>Directory&lt;/strong>&lt;/th>
- &lt;th style="text-align: left">&lt;strong>Description&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Directory&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Description&lt;/strong>&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">&lt;code>./config.yaml&lt;/code>&lt;/td>
- &lt;td style="text-align: left">General options to configure the project&lt;/td>
+ &lt;td>&lt;code>./config.yaml&lt;/code>&lt;/td>
+ &lt;td>General options to configure the project&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;code>./content&lt;/code>&lt;/td>
- &lt;td style="text-align: left">Articles&lt;/td>
+ &lt;td>&lt;code>./content&lt;/code>&lt;/td>
+ &lt;td>Articles&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;code>./static&lt;/code>&lt;/td>
- &lt;td style="text-align: left">Various resources for the project (images, imported content, etc.)&lt;/td>
+ &lt;td>&lt;code>./static&lt;/code>&lt;/td>
+ &lt;td>Various resources for the project (images, imported content, etc.)&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>

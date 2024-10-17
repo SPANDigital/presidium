@@ -132,42 +132,42 @@ system being documented.&lt;/p>
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">&lt;strong>Variable&lt;/strong>&lt;/th>
- &lt;th style="text-align: left">&lt;strong>Description&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Variable&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Description&lt;/strong>&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">title&lt;/td>
- &lt;td style="text-align: left">A string representing the article or subsection title or the title of the subsection.&lt;/td>
+ &lt;td>title&lt;/td>
+ &lt;td>A string representing the article or subsection title or the title of the subsection.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">slug&lt;/td>
- &lt;td style="text-align: left">A string representing the slug for deep linking the article&lt;/td>
+ &lt;td>slug&lt;/td>
+ &lt;td>A string representing the slug for deep linking the article&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">url&lt;/td>
- &lt;td style="text-align: left">A string representing the URL for the article&lt;/td>
+ &lt;td>url&lt;/td>
+ &lt;td>A string representing the URL for the article&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">weight&lt;/td>
- &lt;td style="text-align: left">A number to provide ordering of articles, a higher number means the article will appear later in the section&lt;/td>
+ &lt;td>weight&lt;/td>
+ &lt;td>A number to provide ordering of articles, a higher number means the article will appear later in the section&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;a href="#authors">author&lt;/a>&lt;/td>
- &lt;td style="text-align: left">A string, generally the Github username of the main author of the article.&lt;/td>
+ &lt;td>&lt;a href="#authors">author&lt;/a>&lt;/td>
+ &lt;td>A string, generally the Github username of the main author of the article.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">github&lt;/td>
- &lt;td style="text-align: left">A string, representing the Github username of the main author of the article.&lt;/td>
+ &lt;td>github&lt;/td>
+ &lt;td>A string, representing the Github username of the main author of the article.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;a href="#user-roles">roles&lt;/a>&lt;/td>
- &lt;td style="text-align: left">A list of strings representing the appropriate roles for an article.&lt;/td>
+ &lt;td>&lt;a href="#user-roles">roles&lt;/a>&lt;/td>
+ &lt;td>A list of strings representing the appropriate roles for an article.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;a href="#statuses">status&lt;/a>&lt;/td>
- &lt;td style="text-align: left">A string that indicates the status of the article (draft, complete, in progress, etc.)&lt;/td>
+ &lt;td>&lt;a href="#statuses">status&lt;/a>&lt;/td>
+ &lt;td>A string that indicates the status of the article (draft, complete, in progress, etc.)&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table></description></item><item><title>Plan Content Development</title><link>/best-practices/plan-content-development/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/best-practices/plan-content-development/</guid><description>&lt;p>Before you write any content, spend some time anticipating what tasks you need to perform and make sure you have the
@@ -283,7 +283,7 @@ articles.&lt;/p></description></item><item><title>Menu Structure</title><link>/k
 &lt;p>A significant feature of the menu is its tree structure: &lt;strong>each section or subsection is a node&lt;/strong> and content traverses from
 each node through its children. In Presidium, the node &lt;code>name&lt;/code> or title becomes the main header of the page.
 Everything outside of that sub-tree is not presented on the page. In this example, the user has clicked Content
-Structure. Everything under that section is displayed:&lt;/p></description></item><item><title>OpenAPI3</title><link>/tools/importers/oapi3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/oapi3/</guid><description>&lt;p>Presidium includes a Golang tool (&lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a> for importing your OpenAPI 3 spec into Presidium documentation.&lt;/p>
+Structure. Everything under that section is displayed:&lt;/p></description></item><item><title>OpenAPI3</title><link>/tools/importers/oapi3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/oapi3/</guid><description>&lt;p>Presidium includes a Golang tool (&lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a>) for importing your OpenAPI 3 spec into Presidium documentation.&lt;/p>
 &lt;ol>
 &lt;li>Add the &lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a> dependency to your site&amp;rsquo;s &lt;code>package.json&lt;/code> or run &lt;code>npm install --save presidium-oapi3&lt;/code>.&lt;/li>
 &lt;li>Add a script that invokes the tool.&lt;/li>
@@ -337,22 +337,22 @@ The &lt;code>config.yaml&lt;/code> file is used to configure the project.&lt;/p>
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">&lt;strong>Directory&lt;/strong>&lt;/th>
- &lt;th style="text-align: left">&lt;strong>Description&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Directory&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Description&lt;/strong>&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">&lt;code>./config.yaml&lt;/code>&lt;/td>
- &lt;td style="text-align: left">General options to configure the project&lt;/td>
+ &lt;td>&lt;code>./config.yaml&lt;/code>&lt;/td>
+ &lt;td>General options to configure the project&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;code>./content&lt;/code>&lt;/td>
- &lt;td style="text-align: left">Articles&lt;/td>
+ &lt;td>&lt;code>./content&lt;/code>&lt;/td>
+ &lt;td>Articles&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;code>./static&lt;/code>&lt;/td>
- &lt;td style="text-align: left">Various resources for the project (images, imported content, etc.)&lt;/td>
+ &lt;td>&lt;code>./static&lt;/code>&lt;/td>
+ &lt;td>Various resources for the project (images, imported content, etc.)&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
@@ -542,31 +542,31 @@ status: draft|review|published|retired
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">first heading&lt;/th>
- &lt;th style="text-align: left">second heading&lt;/th>
- &lt;th style="text-align: left">third heading&lt;/th>
+ &lt;th>first heading&lt;/th>
+ &lt;th>second heading&lt;/th>
+ &lt;th>third heading&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">row 1 column 1&lt;/td>
- &lt;td style="text-align: left">row 1 column 2&lt;/td>
- &lt;td style="text-align: left">row 1 column 3&lt;/td>
+ &lt;td>row 1 column 1&lt;/td>
+ &lt;td>row 1 column 2&lt;/td>
+ &lt;td>row 1 column 3&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">row 2 column 1&lt;/td>
- &lt;td style="text-align: left">row 2 column 2&lt;/td>
- &lt;td style="text-align: left">row 2 column 3&lt;/td>
+ &lt;td>row 2 column 1&lt;/td>
+ &lt;td>row 2 column 2&lt;/td>
+ &lt;td>row 2 column 3&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">row 3 column 1&lt;/td>
- &lt;td style="text-align: left">row 3 column 2&lt;/td>
- &lt;td style="text-align: left">row 3 column 3&lt;/td>
+ &lt;td>row 3 column 1&lt;/td>
+ &lt;td>row 3 column 2&lt;/td>
+ &lt;td>row 3 column 3&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">row 4 column 1&lt;/td>
- &lt;td style="text-align: left">row 4 column 2&lt;/td>
- &lt;td style="text-align: left">row 4 column 3&lt;/td>
+ &lt;td>row 4 column 1&lt;/td>
+ &lt;td>row 4 column 2&lt;/td>
+ &lt;td>row 4 column 3&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>

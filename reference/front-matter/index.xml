@@ -17,42 +17,42 @@
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">&lt;strong>Variable&lt;/strong>&lt;/th>
- &lt;th style="text-align: left">&lt;strong>Description&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Variable&lt;/strong>&lt;/th>
+ &lt;th>&lt;strong>Description&lt;/strong>&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">title&lt;/td>
- &lt;td style="text-align: left">A string representing the article or subsection title or the title of the subsection.&lt;/td>
+ &lt;td>title&lt;/td>
+ &lt;td>A string representing the article or subsection title or the title of the subsection.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">slug&lt;/td>
- &lt;td style="text-align: left">A string representing the slug for deep linking the article&lt;/td>
+ &lt;td>slug&lt;/td>
+ &lt;td>A string representing the slug for deep linking the article&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">url&lt;/td>
- &lt;td style="text-align: left">A string representing the URL for the article&lt;/td>
+ &lt;td>url&lt;/td>
+ &lt;td>A string representing the URL for the article&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">weight&lt;/td>
- &lt;td style="text-align: left">A number to provide ordering of articles, a higher number means the article will appear later in the section&lt;/td>
+ &lt;td>weight&lt;/td>
+ &lt;td>A number to provide ordering of articles, a higher number means the article will appear later in the section&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;a href="#authors">author&lt;/a>&lt;/td>
- &lt;td style="text-align: left">A string, generally the Github username of the main author of the article.&lt;/td>
+ &lt;td>&lt;a href="#authors">author&lt;/a>&lt;/td>
+ &lt;td>A string, generally the Github username of the main author of the article.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">github&lt;/td>
- &lt;td style="text-align: left">A string, representing the Github username of the main author of the article.&lt;/td>
+ &lt;td>github&lt;/td>
+ &lt;td>A string, representing the Github username of the main author of the article.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;a href="#user-roles">roles&lt;/a>&lt;/td>
- &lt;td style="text-align: left">A list of strings representing the appropriate roles for an article.&lt;/td>
+ &lt;td>&lt;a href="#user-roles">roles&lt;/a>&lt;/td>
+ &lt;td>A list of strings representing the appropriate roles for an article.&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">&lt;a href="#statuses">status&lt;/a>&lt;/td>
- &lt;td style="text-align: left">A string that indicates the status of the article (draft, complete, in progress, etc.)&lt;/td>
+ &lt;td>&lt;a href="#statuses">status&lt;/a>&lt;/td>
+ &lt;td>A string that indicates the status of the article (draft, complete, in progress, etc.)&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table></description></item><item><title>Authors</title><link>/reference/front-matter/authors/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/reference/front-matter/authors/</guid><description>&lt;p>Every article can include an author in the &lt;code>front matter&lt;/code>:&lt;/p>

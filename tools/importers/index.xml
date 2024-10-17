@@ -5,7 +5,7 @@ The process of importing documentation involves parsing a reference source and g
 &lt;p>Where possible, reference documentation should be generated to ensure that your documentation is in sync with the
 system being documented.&lt;/p>
 &lt;/blockquote>
-&lt;p>Presidium supports the following documentation sources:&lt;/p></description></item><item><title>OpenAPI3</title><link>/tools/importers/oapi3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/oapi3/</guid><description>&lt;p>Presidium includes a Golang tool (&lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a> for importing your OpenAPI 3 spec into Presidium documentation.&lt;/p>
+&lt;p>Presidium supports the following documentation sources:&lt;/p></description></item><item><title>OpenAPI3</title><link>/tools/importers/oapi3/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>/tools/importers/oapi3/</guid><description>&lt;p>Presidium includes a Golang tool (&lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a>) for importing your OpenAPI 3 spec into Presidium documentation.&lt;/p>
 &lt;ol>
 &lt;li>Add the &lt;a href="https://www.npmjs.com/package/presidium-oapi-3" target="_blank" rel="noopener">presidium-oapi3&lt;/a> dependency to your site&amp;rsquo;s &lt;code>package.json&lt;/code> or run &lt;code>npm install --save presidium-oapi3&lt;/code>.&lt;/li>
 &lt;li>Add a script that invokes the tool.&lt;/li>

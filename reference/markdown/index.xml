@@ -52,31 +52,31 @@ use square brackets for the description and parenthesis for the link.&lt;/p>
 &lt;table>
  &lt;thead>
  &lt;tr>
- &lt;th style="text-align: left">first heading&lt;/th>
- &lt;th style="text-align: left">second heading&lt;/th>
- &lt;th style="text-align: left">third heading&lt;/th>
+ &lt;th>first heading&lt;/th>
+ &lt;th>second heading&lt;/th>
+ &lt;th>third heading&lt;/th>
  &lt;/tr>
  &lt;/thead>
  &lt;tbody>
  &lt;tr>
- &lt;td style="text-align: left">row 1 column 1&lt;/td>
- &lt;td style="text-align: left">row 1 column 2&lt;/td>
- &lt;td style="text-align: left">row 1 column 3&lt;/td>
+ &lt;td>row 1 column 1&lt;/td>
+ &lt;td>row 1 column 2&lt;/td>
+ &lt;td>row 1 column 3&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">row 2 column 1&lt;/td>
- &lt;td style="text-align: left">row 2 column 2&lt;/td>
- &lt;td style="text-align: left">row 2 column 3&lt;/td>
+ &lt;td>row 2 column 1&lt;/td>
+ &lt;td>row 2 column 2&lt;/td>
+ &lt;td>row 2 column 3&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">row 3 column 1&lt;/td>
- &lt;td style="text-align: left">row 3 column 2&lt;/td>
- &lt;td style="text-align: left">row 3 column 3&lt;/td>
+ &lt;td>row 3 column 1&lt;/td>
+ &lt;td>row 3 column 2&lt;/td>
+ &lt;td>row 3 column 3&lt;/td>
  &lt;/tr>
  &lt;tr>
- &lt;td style="text-align: left">row 4 column 1&lt;/td>
- &lt;td style="text-align: left">row 4 column 2&lt;/td>
- &lt;td style="text-align: left">row 4 column 3&lt;/td>
+ &lt;td>row 4 column 1&lt;/td>
+ &lt;td>row 4 column 2&lt;/td>
+ &lt;td>row 4 column 3&lt;/td>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
