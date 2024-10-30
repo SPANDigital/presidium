@@ -3,7 +3,16 @@ title: "{{ .Title }}"
 copyright: Template Footer
 pluralizelisttitles: false
 params:
-    sortByFilePath: true
+  _merge: deep
+  sortByFilePath: true
+  enterprise_key: {{ .Uuid }}
+  frontmatter:
+  - key: author
+    type: email
+    strict: false
+  - key: title
+    type: text
+    strict: true
 markup:
   goldmark:
     renderer:
@@ -81,19 +90,18 @@ outputs:
   - MenuIndex
   - SearchMap
 module:
+  _merge: shallow
   imports:
-  {{ if .Brand -}}
-  - path: {{ .Brand }}
-    mounts:
-      - source: assets
-        target: assets
-      - source: static
-        target: static
-  {{- end }}
-  - path: {{ .Theme }}
+    - path: github.com/spandigital/presidium-styling-base
+      mounts:
+        - source: assets
+          target: assets
+        - source: static
+          target: static
+    - path: github.com/spandigital/presidium-layouts-base
 enableInlineShortcodes: true
 frontmatter:
   lastmod:
-  - lastmod
-  - :fileModTime
-  - :default
+    - lastmod
+    - :fileModTime
+    - :default
