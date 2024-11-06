@@ -1,8 +1,10 @@
 package generator
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
 	"path/filepath"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
+	"github.com/google/uuid"
 )
 
 type (
@@ -52,6 +54,7 @@ type (
 		Theme               Theme                // Theme to use
 		Template            Template             // Template to use
 		WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
+		Uuid                string               // Unique identifier for the site
 	}
 )
 
@@ -81,6 +84,7 @@ func (t *InitialSiteTarget) GetTemplateParameters() TemplateParameters {
 		Theme:       t.Theme.ModulePath(),
 		Template:    t.Template.Code(),
 		Brand:       t.BrandingModelUrl,
+		Uuid:        uuid.NewString(),
 	}
 }
 
@@ -91,6 +95,7 @@ type TemplateParameters struct {
 	Theme       string `json:"theme"`
 	Template    string `json:"template"`
 	Brand       string `json:"brand"`
+	Uuid        string `json:"uuid"`
 }
 
 func (t Template) Name() string {

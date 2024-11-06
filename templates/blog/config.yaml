@@ -4,7 +4,24 @@ copyright: Template Footer
 pluralizelisttitles: false
 params:
   _merge: deep
-  sortByFilePath: true
+  show:
+    status: false
+    author: true
+    role: false
+  home:
+    featured:
+      order: -date
+  thumbnail:
+    resource: thumbnail
+    name: thumbnail
+  presentation:
+    default: video
+    mixedMedia:
+      - article
+    mediaOnly:
+      - video
+      - slideshow
+  lazyLoad: false
   enterprise_key: {{ .Uuid }}
   frontmatter:
   - key: author
@@ -13,6 +30,10 @@ params:
   - key: title
     type: text
     strict: true
+  archive:
+    path: archive/index.md
+    age: 0
+  logo: /images/logo.png
 markup:
   goldmark:
     renderer:
