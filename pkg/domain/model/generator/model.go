@@ -17,6 +17,7 @@ const (
 	SpanTemplate Template = iota
 	OnBoardingTemplate
 	DesignTemplate
+	BlogTemplate
 )
 
 const (
@@ -33,6 +34,7 @@ var (
 		SpanTemplate,
 		OnBoardingTemplate,
 		DesignTemplate,
+		BlogTemplate,
 	}
 	SupportedThemes = []Theme{
 		PresidiumTheme,
@@ -103,6 +105,7 @@ func (t Template) Name() string {
 		"SPAN Default Template",
 		"SPAN On-boarding Template",
 		"SPAN Design Template",
+		"SPAN Blog Template",
 	}[t]
 }
 
@@ -111,6 +114,7 @@ func (t Template) Description() string {
 		"SPAN's default template",
 		"SPAN's on-boarding template",
 		"SPAN's design template",
+		"SPAN's blog template",
 	}[t]
 }
 
@@ -119,6 +123,7 @@ func (t Template) Code() string {
 		"default",
 		"onboarding",
 		"design",
+		"blog",
 	}[t]
 }
 
@@ -154,6 +159,8 @@ func GetTemplate(code string) (Template, error) {
 		return OnBoardingTemplate, nil
 	case DesignTemplate.Code():
 		return DesignTemplate, nil
+	case BlogTemplate.Code():
+		return BlogTemplate, nil
 	default:
 		return 0, presidiumerr.GenericError{Code: presidiumerr.UnsupportedTemplate}
 	}

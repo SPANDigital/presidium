@@ -2,13 +2,14 @@ package cmd
 
 import (
 	"fmt"
+	"os"
+	"path/filepath"
+	"strings"
+
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/validate"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/cobra"
-	"os"
-	"path/filepath"
-	"strings"
 )
 
 var (
