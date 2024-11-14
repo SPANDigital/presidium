@@ -4,17 +4,18 @@ import (
 	"container/list"
 	"errors"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
-	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
-	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
-	"github.com/SPANDigital/presidium-hugo/pkg/log"
-	"github.com/scylladb/go-set/strset"
 	"io/fs"
 	"net/url"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"github.com/PuerkitoBio/goquery"
+	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/validate"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
+	"github.com/SPANDigital/presidium-hugo/pkg/log"
+	"github.com/scylladb/go-set/strset"
 )
 
 type validation struct {

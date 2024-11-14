@@ -2,17 +2,18 @@ package generator
 
 import (
 	"fmt"
+	"io/fs"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+
 	"github.com/Masterminds/goutils"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
-	"io/fs"
-	"os"
-	"path/filepath"
-	"strings"
-	"testing"
 )
 
 func TestGeneratorImpl(t *testing.T) {
@@ -48,7 +49,6 @@ var _ = Describe("Site generation behaviour:", func() {
 			SiteName:            "Test Site",
 			SiteTitle:           "A Test site",
 			BrandingModelUrl:    "",
-			Theme:               model.PresidiumTheme,
 			Template:            model.SpanTemplate,
 			WhenSiteExists:      model.AbortWhenTargetSiteExists,
 		}

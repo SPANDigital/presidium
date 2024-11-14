@@ -85,7 +85,6 @@ require (
 	github.com/jmespath/go-jmespath v0.4.0 // indirect
 	github.com/juju/ansiterm v0.0.0-20180109212912-720a0952cc2a // indirect
 	github.com/karrick/godirwalk v1.17.0 // indirect
-	github.com/kr/text v0.2.0 // indirect
 	github.com/kyokomi/emoji/v2 v2.2.8 // indirect
 	github.com/lunixbochs/vtclean v0.0.0-20180621232353-2d01aacdc34a // indirect
 	github.com/magiconair/properties v1.8.5 // indirect
@@ -113,7 +112,6 @@ require (
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
 	github.com/rwcarlsen/goexif v0.0.0-20190401172101-9e8deecbddbd // indirect
 	github.com/sanity-io/litter v1.5.1 // indirect
-	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/spf13/cast v1.4.1 // indirect
 	github.com/spf13/fsync v0.9.0 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
@@ -139,7 +137,6 @@ require (
 	google.golang.org/genproto v0.0.0-20211208223120-3a66f561d7aa // indirect
 	google.golang.org/grpc v1.42.0 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
-	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/ini.v1 v1.66.2 // indirect
 	gopkg.in/tomb.v1 v1.0.0-20141024135613-dd632973f1e7 // indirect
 )
