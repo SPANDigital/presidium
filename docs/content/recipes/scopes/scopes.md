@@ -1,3 +1,8 @@
+---
+title: Scoped Presidium Sites Continued
+draft: true
+---
+
 Presidium allows content creators to scope the final site specific audiences. For example: _internal_, _public_, _customer_, or even something such as _head-office_. Presidium will take care of excluding/including only relevant articles and sections from the final site.
 
 It is both possible to scope articles and the menu segments by adding the appropriate front matter.
