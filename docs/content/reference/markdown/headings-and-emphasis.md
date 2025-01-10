@@ -3,6 +3,7 @@ title: Headings & Emphasis
 slug: headings-and-emphasis
 url: markdown/headings-and-emphasis
 weight: 1
+status: GOOD
 ---
 
 Heading are indicated with a hash.

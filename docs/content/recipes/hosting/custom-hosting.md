@@ -2,6 +2,7 @@
 title: Custom Hosting
 weight: "3"
 draft: true
+status: GOOD
 ---
 
 A common use case is to build Presidium documentation using a continuous integration environment. The generated website can be served by a web host of your choice depending on your particular requirements.

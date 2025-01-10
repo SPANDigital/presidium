@@ -1,6 +1,7 @@
 ---
 title: Links
 weight: 4
+status: GOOD
 ---
 
 You can link to internal articles in your repository, to external articles, or even to other semantically significant 

@@ -3,6 +3,7 @@ title: Bullets & Numbering
 slug: bullets-and-numbering
 url: markdown/bullets-and-numbering
 weight: 2
+status: GOOD
 ---
 
 Markdown allows bullets and numbering to be nested.

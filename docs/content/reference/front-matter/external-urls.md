@@ -3,6 +3,7 @@ title: External URLs
 slug: external-urls
 url: front-matter/external-urls
 weight: 6
+status: OUTDATED (https://gohugo.io/content-management/menus/#example-site-configuration)
 ---
 
 Sections can redirect to an external URL either in the same tab or a new one.

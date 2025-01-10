@@ -1,6 +1,7 @@
 ---
 title: Sub Module
 weight: "3"
+status: GOOD
 ---
 
 If you want to store your documentation in a separate repository or share documentation between projects you can use submodules. Use the following steps to set up a submodule.

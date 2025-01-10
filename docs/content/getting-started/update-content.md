@@ -1,6 +1,7 @@
 ---
 title: Update Content
 weight: 3
+status: GOOD
 ---
 
 You can make changes to the following files and folders:

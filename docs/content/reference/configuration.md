@@ -1,6 +1,7 @@
 ---
 title: Configuration
 weight: 1
+status: OUTDATED
 ---
 
 This is a sample Presidium configuration file:

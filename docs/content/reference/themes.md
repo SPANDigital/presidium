@@ -1,6 +1,7 @@
 ---
 title: Themes
 weight: 2
+status: OUTDATED
 ---
 
 Presidium provides some themes when spinning up your Presidium Site through the command line. You will see something

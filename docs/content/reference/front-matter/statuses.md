@@ -1,6 +1,7 @@
 ---
 title: Statuses
 weight: 4
+status: GOOD
 ---
 
 Each article can be assigned a status to track its lifecycle:

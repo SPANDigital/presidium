@@ -1,6 +1,7 @@
 ---
 title: Configure
 weight: "2"
+status: UNKNOWN (very old content)
 ---
 
 # Update Variables in _config.yml

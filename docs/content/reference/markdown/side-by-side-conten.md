@@ -1,6 +1,7 @@
 ---
 title: Side By Side Content
 weight: 10
+status: GOOD
 ---
 
 A shortcode is available (`{{%/* sidebyside */%}}`) in order to have content, within a single file, in two different columns that are side by side.

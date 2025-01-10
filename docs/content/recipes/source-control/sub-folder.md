@@ -3,6 +3,7 @@ title: Sub Folder
 slug: sub-folder
 url: source-control/sub-folder
 weight: 2
+status: GOOD
 ---
 
 Presidium can exist within a sub-folder of an existing source code repository, for example, `/docs`.

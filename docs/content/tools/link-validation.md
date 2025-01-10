@@ -2,6 +2,7 @@
 title: Link Validation
 url: link-validation
 slug: link-validation
+status: GOOD
 ---
 This tool reports links within a Presidium site. You can use this tool see which links are broken, points to non standard protocols.
 

@@ -1,6 +1,7 @@
 ---
 title: The Big Picture
 weight: 1
+status: OUTDATED
 ---
 
 Presidium is an open-source, static website generator built on Hugo for creating and maintaining software 

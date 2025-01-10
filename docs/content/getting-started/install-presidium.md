@@ -1,6 +1,7 @@
 ---
 title: Install Presidium
 weight: 1
+status: GOOD
 ---
 
 ### 1. Install [Homebrew](https://brew.sh/)

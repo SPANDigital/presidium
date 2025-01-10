@@ -3,6 +3,7 @@ title: User Roles
 slug: user-roles
 url: front-matter/user-roles
 weight: 3
+status: DEPRECATED
 ---
 
 Various roles can be added to a site to allow readers to filter articles and menu items by a target audience.

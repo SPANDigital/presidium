@@ -1,6 +1,7 @@
 ---
 title: Images
 weight: 4
+status: GOOD
 ---
 
  ## Images 

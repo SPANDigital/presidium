@@ -1,6 +1,7 @@
 ---
 title: Codeblocks
 weight: 6
+status: GOOD
 ---
 
 To add code blocks to your content, enclose the code with three backticks. For syntax highlighting, set the language 

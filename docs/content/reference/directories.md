@@ -1,6 +1,7 @@
 ---
 title: Directories
 weight: 3
+status: GOOD
 ---
 
 Articles are stored in the content directory. Associated resources, such as images, are stored in the media directory.

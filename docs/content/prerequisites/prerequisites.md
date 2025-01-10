@@ -1,6 +1,6 @@
 ---
 title: Prerequisites
-
+status: DUPLICATED (install-presidium)
 ---
 
 The following tools are required to use Presidium:

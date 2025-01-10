@@ -1,6 +1,7 @@
 ---
 title: Run Presidium
 weight: 2
+status: OUTDATED
 ---
 
 Start the wizard to create a new Presidium Site:

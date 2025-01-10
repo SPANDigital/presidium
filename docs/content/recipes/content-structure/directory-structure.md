@@ -1,6 +1,7 @@
 ---
 title: Directory Structure
 weight: "1"
+status: GOOD
 ---
 
 When you create a Presidium site using the CLI `init` command, Presidium creates the directory structure for the 

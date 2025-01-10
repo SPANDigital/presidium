@@ -1,6 +1,7 @@
 ---
 title: Blockquotes
 weight: 5
+status: GOOD
 ---
 
 Unusual content can be included in blockquotes, which always begin with a closed angle bracket. In these examples, 

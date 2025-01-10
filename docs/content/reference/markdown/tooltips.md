@@ -1,6 +1,7 @@
 ---
 title: Tooltips
 weight: 8
+status: GOOD
 ---
 
 Tooltips display a short definition of an item. There are two ways to create tooltips:

@@ -2,6 +2,7 @@
 title: Publish Your Site
 weight: 4
 draft: true
+status: WRONG
 ---
 
 It is simple. Just call from your Presidium Site

@@ -1,6 +1,7 @@
 ---
 title: Tables
 weight: 4
+status: GOOD
 ---
 
 Markdown provides a simple syntax for creating tables using hyphens and horizontal bars / pipes.

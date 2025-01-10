@@ -1,6 +1,7 @@
 ---
 title: Authors
 weight: 2
+status: GOOD
 ---
 
 Every article can include an author in the `front matter`:

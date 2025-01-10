@@ -1,6 +1,7 @@
 ---
 title: Github Pages
 weight: 1
+status: OUTDATED
 ---
 
 [GitHub Pages](https://pages.github.com/) provides a quick and convenient means of hosting and serving your 

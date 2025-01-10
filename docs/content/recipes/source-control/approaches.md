@@ -1,6 +1,7 @@
 ---
 title: Approaches
 weight: 1
+status: GOOD
 ---
 
 Presidium content can be managed in various ways depending on your project needs. Content may be hosted in:

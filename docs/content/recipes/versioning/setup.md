@@ -1,6 +1,7 @@
 ---
 title: Setup
 weight: "1"
+status: NEEDS MORE INFO
 ---
 
 Presidium supports semantic versioning of your documentation when publishing to Github pages.
