@@ -1,6 +1,7 @@
 ---
 title: HTML to Markdown converter
 weight: 3
+status: GOOD
 ---
 
 **[html2md](https://github.com/SPANDigital/presidium-html)** is a tool that allows you to convert HTML files into [Presidium](https://presidium.spandigital.net/) markdown articles.

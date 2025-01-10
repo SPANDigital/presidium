@@ -2,6 +2,7 @@
 title: Swagger
 weight: 2
 draft: true
+status: DEPRECATED/UNKNOWN (oapi3 takes care of this)
 ---
 
 Presidium includes a Java-based tool ([presidium-swagger](https://www.npmjs.com/package/presidium-swagger), based on [Swagger2Markup](https://github.com/Swagger2Markup/swagger2markup)) to import your API's Swagger into your Presidium documentation.

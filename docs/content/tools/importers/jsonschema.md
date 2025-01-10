@@ -1,6 +1,7 @@
 ---
 title: JSON Schema
 weight: 4
+status: GOOD
 ---
 
 [presidium-json-schema](https://github.com/SPANDigital/presidium-json-schema) is a CLI tool for importing your [JSON Schema](http://json-schema.org/) spec into

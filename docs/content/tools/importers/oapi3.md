@@ -1,6 +1,7 @@
 ---
 title: OpenAPI3
 weight: 2
+status: OUTDATED
 ---
 
 Presidium includes a Golang tool ([presidium-oapi3](https://www.npmjs.com/package/presidium-oapi-3)) for importing your OpenAPI 3 spec into Presidium documentation.
