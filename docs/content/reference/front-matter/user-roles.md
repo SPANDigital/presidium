@@ -6,6 +6,11 @@ weight: 3
 status: SHOULD BE DEPRECATING
 ---
 
+> [NB] **DEPRECATED:** 
+> 
+> Per article level roles are being deprecated in favour of module/docset level group access control.
+
+
 Various roles can be added to a site to allow readers to filter articles and menu items by a target audience.
 
 This optional feature can be enabled by defining user roles in the `site config`.

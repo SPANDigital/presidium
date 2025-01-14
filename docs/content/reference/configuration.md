@@ -1,7 +1,7 @@
 ---
 title: Configuration
 weight: 1
-status: OUTDATED
+status: UPTDATED
 ---
 
 This is a sample Presidium configuration file:
@@ -69,12 +69,7 @@ outputs:
   - SearchMap
 module:
   imports:
-  - path: github.com/spandigital/presidium-theme-website
+  - path: github.com/spandigital/presidium-styling-base
+  - path: github.com/spandigital/presidium-layouts-base
 enableInlineShortcodes: true
-frontmatter:
-  lastmod:
-  - lastmod
-  - :fileModTime
-  - :default
-
 ```

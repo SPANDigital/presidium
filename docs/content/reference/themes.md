@@ -1,7 +1,7 @@
 ---
 title: Themes
 weight: 2
-status: OUTDATED
+status: MOSTLY CORRECT
 ---
 
 Presidium provides some themes when spinning up your Presidium Site through the command line. You will see something
@@ -12,8 +12,7 @@ Select a theme
   ✔ Presidium Theme - (Presidium's default theme)
 ```
 
-If you already have a presidium site, you can enable your theme by adding a module in the configuration file:
-
+If you already have a presidium site, you can enable your theme by adding a theme module in the configuration file:
 ```
 module:
   imports:
@@ -41,5 +40,5 @@ Ideally the favIcon can be of type: png, jpg or svg, ico.
 
 ## Title tag
 
-The browser `<title>` tag is populated with the `title` provided when spinning up your Presidium Site throught the
+The browser `<title>` tag is populated with the `title` provided when spinning up your Presidium Site through the
 command line. You can modify it by changing the `title` key in the configuration file.

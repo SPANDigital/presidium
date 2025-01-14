@@ -17,13 +17,13 @@ title: Presidium
 slug: overview
 url: front-matter/overview
 weight: 1
-authors: github-username
-roles: Developer
+authors: someone@example.com
 status: Draft
+draft: true
 ---
 ```
-
-Presidium includes the following front matter variables:
+  
+Presidium uses the following standard Hugo front matter variables:
 
 | **Variable** | **Description** |
 |--------------|-----------------|
@@ -31,7 +31,10 @@ Presidium includes the following front matter variables:
 | slug | A string representing the slug for deep linking the article |
 | url | A string representing the URL for the article |
 | weight | A number to provide ordering of articles, a higher number means the article will appear later in the section |
-| [author](#authors) | A string, generally the Github username of the main author of the article. |
-| github | A string, representing the Github username of the main author of the article. |
-| [roles](#user-roles) | A list of strings representing the appropriate roles for an article. |
+| [author](#authors) | A string, must be a valid email address, normally of the main author of the article. |
+
+Presidium includes the following custom front matter variables:
+
+| **Variable** | **Description** |
+|--------------|-----------------|
 | [status](#statuses) | A string that indicates the status of the article (draft, complete, in progress, etc.) |

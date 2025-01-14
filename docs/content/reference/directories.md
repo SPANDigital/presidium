@@ -9,7 +9,6 @@ The `config.yaml` file is used to configure the project.
 
 | **Directory** | **Description** |
 |---------------|-----------------|
-| `./config.yaml` | General options to configure the project |
 | `./content` | Articles |
 | `./static` | Various resources for the project (images, imported content, etc.) |
 

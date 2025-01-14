@@ -4,16 +4,15 @@ weight: 4
 status: GOOD
 ---
 
- ## Images 
+### Images 
 Images used within the content should be placed in a static/images directory
 ```
-/static/images/
-    -- static/doc-workflow.png
+/static/images/doc-workflow.png
 ```
 
-## Logos and favicons
+### Logos and favicons
 
-### Logos 
+#### Logos 
 
 The Logo of the site appears above the Menu Navigation. 
 
@@ -32,7 +31,7 @@ logo: images/logo.png
 logo: images/logo.svg
 ```
 
-### Favicons
+#### Favicons
 The favicon is the symbol that appears on the tab of the site, next to the title. 
 
 Favicons should be placed in the ```static/images``` directory.

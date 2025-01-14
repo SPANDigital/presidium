@@ -1,26 +1,28 @@
 ---
 title: Authors
 weight: 2
-status: GOOD
+status: NEEDS REFRESH
 ---
 
-Every article can include an author in the `front matter`:
+Every article is strongly recommended to include an author in the `front matter`:
 
 ```
 ---
-author: {author name}
+author: {author email}
 ---
 ```
 
-Optional links to authors can be enabled by setting a base URL in the `site config`:
-
-```
-params:
-  author:
-    external:
-      url: https://github.com/
-      newTab: false
-```
+> **NOT SURE THIS IS STILL USED**:  
+>
+> Optional links to authors can be enabled by setting a base URL in the `site config`:
+>
+> ```
+> params:
+>   author:
+>     external:
+>       url: https://github.com/
+>       newTab: false
+> ```
 
 To customize the label for authors, provide a new label in the `site config`:
 
