@@ -1,8 +1,12 @@
 ---
 title: Side By Side Content
 weight: 10
-status: GOOD
+status: NEEDS REFRESH
 ---
+
+> <bold style="color:red;">**NOT WORKING:**</bold>
+> 
+> Noticed that this shortcode isn't working on the old theme or SoC. I suspect the shortcode is missing.
 
 A shortcode is available (`{{%/* sidebyside */%}}`) in order to have content, within a single file, in two different columns that are side by side.
 
