@@ -1,13 +1,14 @@
 package generator
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
 	"path/filepath"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
+	"github.com/google/uuid"
 )
 
 type (
 	Template             int
-	Theme                int
 	WhenSiteTargetExists int // What should happen if the generator targets an existing site
 )
 
@@ -15,10 +16,7 @@ const (
 	SpanTemplate Template = iota
 	OnBoardingTemplate
 	DesignTemplate
-)
-
-const (
-	PresidiumTheme Theme = iota
+	BlogTemplate
 )
 
 const (
@@ -31,9 +29,7 @@ var (
 		SpanTemplate,
 		OnBoardingTemplate,
 		DesignTemplate,
-	}
-	SupportedThemes = []Theme{
-		PresidiumTheme,
+		BlogTemplate,
 	}
 )
 
@@ -49,9 +45,9 @@ type (
 		SiteName            string               // The name of the site
 		SiteTitle           string               // The title for the site
 		BrandingModelUrl    string               // The Hugo model used for branding
-		Theme               Theme                // Theme to use
 		Template            Template             // Template to use
 		WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
+		Uuid                string               // Unique identifier for the site
 	}
 )
 
@@ -78,9 +74,9 @@ func (t *InitialSiteTarget) GetTemplateParameters() TemplateParameters {
 	return TemplateParameters{
 		Title:       or(t.SiteTitle, t.SiteName),
 		ProjectName: projectName,
-		Theme:       t.Theme.ModulePath(),
 		Template:    t.Template.Code(),
 		Brand:       t.BrandingModelUrl,
+		Uuid:        uuid.NewString(),
 	}
 }
 
@@ -88,9 +84,9 @@ func (t *InitialSiteTarget) GetTemplateParameters() TemplateParameters {
 type TemplateParameters struct {
 	Title       string `json:"title"`
 	ProjectName string `json:"project_name"`
-	Theme       string `json:"theme"`
 	Template    string `json:"template"`
 	Brand       string `json:"brand"`
+	Uuid        string `json:"uuid"`
 }
 
 func (t Template) Name() string {
@@ -98,6 +94,7 @@ func (t Template) Name() string {
 		"SPAN Default Template",
 		"SPAN On-boarding Template",
 		"SPAN Design Template",
+		"SPAN Blog Template",
 	}[t]
 }
 
@@ -106,6 +103,7 @@ func (t Template) Description() string {
 		"SPAN's default template",
 		"SPAN's on-boarding template",
 		"SPAN's design template",
+		"SPAN's blog template",
 	}[t]
 }
 
@@ -114,30 +112,7 @@ func (t Template) Code() string {
 		"default",
 		"onboarding",
 		"design",
-	}[t]
-}
-
-func (t Theme) Name() string {
-	return [...]string{
-		"Presidium Theme",
-	}[t]
-}
-
-func (t Theme) Description() string {
-	return [...]string{
-		"Presidium's default theme",
-	}[t]
-}
-
-func (t Theme) Code() string {
-	return [...]string{
-		"presidium",
-	}[t]
-}
-
-func (t Theme) ModulePath() string {
-	return [...]string{
-		"github.com/spandigital/presidium-theme-website",
+		"blog",
 	}[t]
 }
 
@@ -149,16 +124,9 @@ func GetTemplate(code string) (Template, error) {
 		return OnBoardingTemplate, nil
 	case DesignTemplate.Code():
 		return DesignTemplate, nil
+	case BlogTemplate.Code():
+		return BlogTemplate, nil
 	default:
 		return 0, presidiumerr.GenericError{Code: presidiumerr.UnsupportedTemplate}
-	}
-}
-
-func GetTheme(code string) (Theme, error) {
-	switch code {
-	case PresidiumTheme.Code():
-		return PresidiumTheme, nil
-	default:
-		return 0, presidiumerr.GenericError{Code: presidiumerr.UnsupportedTheme}
 	}
 }

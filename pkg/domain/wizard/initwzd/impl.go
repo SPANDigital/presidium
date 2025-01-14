@@ -1,6 +1,8 @@
 package initwzd
 
 import (
+	"strings"
+
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	. "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/generator"
@@ -10,7 +12,6 @@ import (
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/viper"
 	"golang.org/x/mod/module"
-	"strings"
 )
 
 type (
@@ -35,8 +36,6 @@ func (i initWizard) Run() {
 
 	promptSupportedTemplates()
 
-	promptSupportedThemes()
-
 	err = askBrandRepo()
 	if err != nil {
 		log.Error(err)
@@ -55,17 +54,6 @@ func (i initWizard) Run() {
 
 func generateSiteModel() InitialSiteTarget {
 
-	mustHaveTheme := func() Theme {
-		themeName := viper.GetString(config.ThemeKey)
-		theme, err := GetTheme(themeName)
-		if err != nil {
-			log.FatalWithFields(err, log.Fields{
-				"theme_name": themeName,
-			})
-		}
-		return theme
-	}
-
 	mustHaveTemplate := func() Template {
 		templateName := viper.GetString(config.TemplateNameKey)
 		template, err := GetTemplate(templateName)
@@ -82,7 +70,6 @@ func generateSiteModel() InitialSiteTarget {
 		SiteName:            viper.GetString(config.ProjectNameKey),
 		SiteTitle:           viper.GetString(config.TitleKey),
 		BrandingModelUrl:    viper.GetString(config.BrandKey),
-		Theme:               mustHaveTheme(),
 		Template:            mustHaveTemplate(),
 		WhenSiteExists:      AbortWhenTargetSiteExists,
 	}
@@ -159,26 +146,4 @@ func promptSupportedTemplates() {
 	}
 	selected := SupportedTemplates[idx]
 	viper.Set(config.TemplateNameKey, selected.Code())
-}
-
-func promptSupportedThemes() {
-	items := make([]ItemSelection, 0)
-	for _, item := range SupportedThemes {
-		items = append(items, ItemSelection{
-			Name:        item.Name(),
-			Description: item.Description(),
-		})
-	}
-	prompt := promptui.Select{
-		Label:     "Select a theme",
-		Items:     items,
-		Templates: wizard.GetSelectTemplate(),
-	}
-
-	idx, _, err := prompt.Run()
-	if err != nil {
-		log.FatalWithFields("error selecting theme", log.Fields{"error": err})
-	}
-	selected := SupportedThemes[idx]
-	viper.Set(config.ThemeKey, selected.Code())
 }
