@@ -1,4 +1,5 @@
 ---
+title: Scopes
 status: SHOULD BE DEPRECATING
 ---
 

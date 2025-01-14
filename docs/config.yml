@@ -82,11 +82,6 @@ outputs:
   - SearchMap
 module:
   imports:
-  - path: github.com/spandigital/presidium-theme-website
-    disabled: false
+  - path: github.com/spandigital/presidium-styling-base
+  - path: github.com/spandigital/presidium-layouts-base
 enableInlineShortcodes: true
-frontmatter:
-  lastmod:
-  - lastmod
-  - :fileModTime
-  - :default

@@ -1,10 +1,14 @@
 ---
 title: The Big Picture
 weight: 1
-status: OUTDATED
+status: NEEDS WORK
 ---
 
-Presidium is an open-source, static website generator built on Hugo for creating and maintaining software 
+{{% callout level="warning" title="OUTDATED"%}}
+What is referred to as `Presidium` below is called 'Presidium Writing Tools' in Separation of Concerns, which helps a Presidium user set up an initial doc site.
+{{% /callout %}}
+
+`Presidium` is an open-source, static website generator built on Hugo for creating and maintaining software 
 documentation for Agile teams and their users. Being static simplifies publication - you don’t need to provision 
 a server and can host your documentation in a matter of seconds on Github Pages.
 You can easily include documentation publication in your continuous integration pipeline.
@@ -18,10 +22,11 @@ Presidium is based on sound theoretical strategies for developing learning conte
 The core of this approach is the development of specific focused micro-articles that explain individual concepts. 
 Predefined article templates and a menu structure get you up and running quickly.
 
-In addition to the template for software documentation, Presidium includes templates for:
-
+In addition to the content template for software documentation, the Presidium writing tools includes content templates for:
+- Services (default)
 - On-boarding
 - Design systems
+- Blog
 
 Presidium supports:
 
