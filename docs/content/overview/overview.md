@@ -4,14 +4,12 @@ weight: 1
 status: NEEDS WORK
 ---
 
-{{% callout level="warning" title="OUTDATED"%}}
-What is referred to as `Presidium` below is called 'Presidium Writing Tools' in Separation of Concerns, which helps a Presidium user set up an initial doc site.
-{{% /callout %}}
-
-`Presidium` is an open-source, static website generator built on Hugo for creating and maintaining software 
-documentation for Agile teams and their users. Being static simplifies publication - you don’t need to provision 
-a server and can host your documentation in a matter of seconds on Github Pages.
-You can easily include documentation publication in your continuous integration pipeline.
+> **OUTDATED** : What is referred to as `Presidium` below is called 'Presidium Writing Tools' in Separation of Concerns, which helps a Presidium user set up an initial doc site.
+>   
+> `Presidium` is an open-source, static website generator built on Hugo for creating and maintaining software 
+> documentation for Agile teams and their users. Being static simplifies publication - you don’t need to provision 
+> a server and can host your documentation in a matter of seconds on Github Pages.
+> You can easily include documentation publication in your continuous integration pipeline.
 
 Presidium gives Agile teams a way to evangelize, explain, and support solutions to their peers so they can be 
 correctly used and successfully adopted. Wikis can be unstructured and lose their value, tribal knowledge and 
@@ -29,7 +27,6 @@ In addition to the content template for software documentation, the Presidium wr
 - Blog
 
 Presidium supports:
-
 - [Automatic Menus]({{< ref "key-concepts/#menu-structure" >}}): The left navigation menu is dynamically created every time you publish your site.
 - [Theming]({{< ref "reference/#themes" >}}): Easily select supported themes
 - [Role Filtering]({{< ref "reference/front-matter/#user-roles" >}}): Define user roles and filter site content by a specific selected role.

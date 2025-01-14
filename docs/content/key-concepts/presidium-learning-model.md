@@ -1,6 +1,7 @@
 ---
 title: Presidium's Learning Model
 weight: 1
+status: NEEDS WORK
 ---
 
 Presidium is more than a framework for producing documentation. It asks you to think about, structure, author, and
@@ -50,7 +51,9 @@ deep-dives beyond the needs of most readers, etc.)
 
 ### Recipes
 
-Recipes are clear sets of steps that explain how to do something useful or unusual with your product or service.
+> **OUTDATED**: Recipe term is being used here in a different way to later sections.
+>  
+> Recipes are clear sets of steps that explain how to do something useful or unusual with your product or service.
 
 ### Glossary
 
