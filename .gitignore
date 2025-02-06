@@ -9,6 +9,6 @@ presidium
 dist/
 .DS_Store
 resources/
-
+.hugo_build.lock
 dist/
 docs/resources

@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/X-icon">
-    {{ $style := resources.Get "presidium.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+    {{ $style := resources.Get "presidium.scss" | css.Sass | minify | fingerprint }}
     <link rel="stylesheet" href="{{ $style.Permalink }}">
     <title>Presidium</title>
     <style type="text/css">
