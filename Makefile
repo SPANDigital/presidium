@@ -26,3 +26,29 @@ coverage_report:
 dist:
 	[ -d "dist" ] || mkdir "dist"
 	go build -o "dist/presidium" --tags extended
+
+hugo:
+	hugo mod get
+	hugo --templateMetrics --ignoreCache --logLevel info
+
+drafts:
+	hugo mod get
+	hugo --templateMetrics --ignoreCache --logLevel info --buildDrafts
+
+tidy:
+	go mod tidy
+	hugo mod tidy
+
+refresh:
+	hugo mod clean
+	make tidy
+	make hugo
+
+serve:
+	hugo server -w --ignoreCache --disableFastRender --logLevel info
+
+serve-a:
+	hugo server -w --ignoreCache --disableFastRender --logLevel info -p 6060
+
+serve-b:
+	hugo server -w --ignoreCache --disableFastRender --logLevel info -p 7070
