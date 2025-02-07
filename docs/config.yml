@@ -47,6 +47,10 @@ menu:
     name: Best Practices
     url: /best-practices/
     weight: 70
+  - identifier: prerequisites
+    name: Prerequisites
+    url: /prerequisites/
+    weight: 75
   - identifier: reference
     name: Reference
     url: /reference/
