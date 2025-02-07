@@ -30,43 +30,47 @@ menu:
   - identifier: overview
     name: Overview
     url: /overview
-    weight: 1
+    weight: 10
   - identifier: key-concepts
     name: Key Concepts
     url: /key-concepts/
-    weight: 2
+    weight: 20
   - identifier: getting-started
     name: Getting Started
     url: /getting-started/
-    weight: 3
+    weight: 30
+  - identifier: presidium-basics
+    name: Presidium Basics
+    url: /presidium-basics/
+    weight: 40
   - identifier: best-practices
     name: Best Practices
     url: /best-practices/
-    weight: 4
+    weight: 70
   - identifier: reference
     name: Reference
     url: /reference/
-    weight: 5
+    weight: 80
   - identifier: recipes
     name: Recipes
     url: /recipes/
-    weight: 6
+    weight: 90
   - identifier: tools
     name: Tools
     url: /tools/
-    weight: 7
+    weight: 100
   - identifier: support
     name: Support
     url: /support/
-    weight: 8
+    weight: 110
   - identifier: updates
     name: Updates
     url: /updates/
-    weight: 9
+    weight: 120
   - identifier: glossary
     name: Glossary
     url: /glossary/
-    weight: 10
+    weight: 130
 outputFormats:
   MenuIndex:
     baseName: menu
