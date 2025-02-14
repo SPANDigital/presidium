@@ -26,7 +26,7 @@ Presidium supports:
 
 - [Automatic Menus]({{< ref "key-concepts/#menu-structure" >}}): The left navigation menu is dynamically created every time you publish your site.
 - [Theming]({{< ref "reference/#themes" >}}): Easily select supported themes
-- [Role Filtering]({{< ref "reference/front-matter/#user-roles" >}}): Define user roles and filter site content by a specific selected role.
+- Group-based access.
 - [Article Status Tracking]({{< ref "reference/front-matter/#statuses" >}}): Track the status of an article and manage simple authoring workflows.
 - [Link Validation]({{< ref "tools/#link-validation" >}}): Make sure your links actually go somewhere!
 <!-- - [Versioning: Support] for multiple documentation versions. You can easily switch between versions without losing context. // TODO insert correct link to versionin article -->
