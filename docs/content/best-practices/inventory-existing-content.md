@@ -24,8 +24,6 @@ Before starting:
 1. Identify how each item could be decomposed or converted into an article.
 1. Identify where these articles can fit in your documentation structure.
 
-## Discussion
-
 If there is no existing documentation set, some areas will be well documented, while others will either be poorly 
 defined or missing. Expect to find duplicate and outdated content. Maintain a list of the best documentation you find 
 for any learning objective.

@@ -18,10 +18,9 @@ The following steps work for both small and large projects:
 1. Proofread and edit
 1. Publish
 
-## Discussion
-
-The most important planning task is identifying the scope of your documentation efforts and understanding the needs 
-of your audience.
+The most important planning tasks are:
+* Identifying the scope of your documentation efforts
+* Understanding the needs of your audience.
 
 Presidium is pre-configured with a set of standard sections that are commonly used in software documentation. 
 You can use this framework when starting to scope your project.

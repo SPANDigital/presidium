@@ -9,7 +9,7 @@ Presidium has two ways of setting the order of folders and articles.
   * For all other sections: in the `_index.md` of the folder.
   * For articles: in the frontmatter
 
-Using `weight` is recommended--relying on names can make it difficult to track revisions in GitHub.
+Using `weight` is recommended: Relying on names can make it difficult to track revisions in GitHub.
 
 You can turn ordering by name on and off using the `SortByFilePath` attribute in the `params` section of config.yml.
 

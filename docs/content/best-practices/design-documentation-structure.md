@@ -34,7 +34,6 @@ The following table shows the pre-configured sections in the software documentat
 | Tools | A list of tools and services that can be used with the solution. |
 | Updates | New releases, patches, or other announcements of interest to the user community. |
 
-## Discussion
 
 After you have identified the sections you want to use for your documentation, define and compile a list of the learning
 objectives for each section.

@@ -26,10 +26,8 @@ Clearly worded learning objectives enable you to focus the content on comprehens
 objectives should be evident in the title and content of articles. Often, one learning objective corresponds to one 
 content article.
 
-## Discussion
-
-Define the knowledge and skill set of your target audience before starting your documentation. Use this information to 
-avoid wasting time explaining information your audience already knows.
+Correctly defining the knowledge and skill set of your target audience
+helps you avoid wasting time in explaining information your audience already knows, such as:
 
 ```
 - As a user of Presidium I already know how to use Github as a version control system.

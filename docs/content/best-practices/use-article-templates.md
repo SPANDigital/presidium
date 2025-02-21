@@ -32,6 +32,4 @@ For example, here is the template for the Best Practices section:
     * [REPLACE WITH a link description](http://www.example.com)
 
 
-# Discussion
-
 Templates encourage consistency and provide a simple checklist that an author can use for inspiration.
