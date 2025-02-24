@@ -14,7 +14,7 @@ The following tools are required to use Presidium:
 1. Add the Presidium Tap
 
     ```
-    brew tap SPANDigital/homebrew-tap git@github.com:SPANDigital/homebrew-tap.git
+    brew tap SPANDigital/tap
     ```
 
 1. Install Presidium
