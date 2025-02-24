@@ -12,7 +12,7 @@ weight: 1
 ### 2. Add SPAN's Homebrew tap
 
 ```
-brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
+brew tap SPANDigital/tap
 ```
 
 ### 3. Install [Presidium](https://github.com/SPANDigital/presidium) with Homebrew
