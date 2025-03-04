@@ -11,7 +11,7 @@ import (
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
-	"github.com/gohugoio/hugo/common/paths"
+	"github.com/gohugoio/hugo/helpers"
 	"github.com/spf13/viper"
 )
 
@@ -156,7 +156,8 @@ func fixFigureCaptions(path string) error {
 // https://github.com/gohugoio/hugo/issues/6703
 func parseSource(path string, dir string, filename string, rawSource bool) string {
 	src := dir + filename
-	if paths.IsAbsURL(src) {
+	ps := helpers.PathSpec{}
+	if isAbs, _ := ps.IsAbsURL(src); isAbs {
 		return src
 	}
 	if imgIsInSameDir(path, filename) {

@@ -1,9 +1,18 @@
 package cmd
 
 import (
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
+	"github.com/gohugoio/hugo/commands"
 	"github.com/spf13/cobra"
 )
+
+type Service struct{}
+
+func New() Service {
+	return Service{}
+}
+func (s Service) Execute(args ...string) {
+	commands.Execute(args)
+}
 
 var (
 	// hugoCommand wraps hugo into Presidium.  This allows you to run hugo
@@ -12,7 +21,7 @@ var (
 		Use:   "hugo",
 		Short: "Runs hugo against your presidium site",
 		Run: func(cmd *cobra.Command, args []string) {
-			hugo := hugo.New()
+			hugo := New()
 			hugo.Execute(args...)
 		},
 	}
