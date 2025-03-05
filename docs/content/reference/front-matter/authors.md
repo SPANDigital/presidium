@@ -3,7 +3,7 @@ title: Authors
 weight: 2
 ---
 
-Every article can include an author in the `front matter`:
+Every article can include an author in the `frontmatter`:
 
 ```
 ---

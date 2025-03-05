@@ -11,7 +11,7 @@ For example, here is the template for the Best Practices section:
     ```# Template Instructions
     # ---------------------   
     # 1) Replace any content placeholders with the appropriate content. Search for "REPLACE WITH".
-    # 2) Delete this line and all lines above so that the front matter below is at the top of the file.
+    # 2) Delete this line and all lines above so that the frontmatter below is at the top of the file.
     ---
     title: REPLACE WITH Best Practice Title
     author: REPLACE WITH repository username

@@ -3,7 +3,7 @@ title: Overview
 weight: 1
 ---
 
-Front Matter serves two purposes:
+frontmatter serves two purposes:
 
 - Indicates that the file should be included as an article in the build process
 - Allows you to set properties for your article
@@ -22,7 +22,7 @@ status: Draft
 ---
 ```
 
-Presidium includes the following front matter variables:
+Presidium includes the following frontmatter variables:
 
 | **Variable** | **Description** |
 |--------------|-----------------|

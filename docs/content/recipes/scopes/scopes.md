@@ -5,7 +5,7 @@ draft: true
 
 Presidium allows content creators to scope the final site specific audiences. For example: _internal_, _public_, _customer_, or even something such as _head-office_. Presidium will take care of excluding/including only relevant articles and sections from the final site.
 
-It is both possible to scope articles and the menu segments by adding the appropriate front matter.
+It is both possible to scope articles and the menu segments by adding the appropriate frontmatter.
 
 To use scopes follow these 4 simple steps:
 
@@ -28,7 +28,7 @@ Presidium Hugo offers a very simple simple scoping rules, which are applied to b
 
 ## Scoping Articles
 
-To scope articles start by adding front matter to your page:
+To scope articles start by adding frontmatter to your page:
 
 ```yaml
 ---
@@ -40,7 +40,7 @@ Important to note the following
 
 1. You may have multiple scopes.
 2. Scopes must always be enclosed by squire (`[]`) brackets, even if there is only one scope.
-3. You may only have front matter named `scope`.
+3. You may only have frontmatter named `scope`.
 4. Empty scope is allowed.
 
 ## Scoping Section Menu

@@ -5,7 +5,7 @@ author: helgard.meyer@spandigital.com
 status: review
 ---
 
-Every article can include an author in the `front matter`:
+Every article can include an author in the frontmatter:
 
 ```
 ---

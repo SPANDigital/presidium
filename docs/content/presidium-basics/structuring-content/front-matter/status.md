@@ -34,7 +34,7 @@ params:
 ```
 
 
-Note that while this `status` front matter field appears similar to the Hugo `draft` front matter field, it performs a different function.
-The Hugo `draft: true` frontmatter field switches an article to `render` only if a special draft build flag is used, otherwise an article with this front matter field is hidden from the `rendered` site.
+Note that while this `status` frontmatter field appears similar to the Hugo `draft` frontmatter field, it performs a different function.
+The Hugo `draft: true` frontmatter field switches an article to `render` only if a special draft build flag is used, otherwise an article with this frontmatter field is hidden from the `rendered` site. Then if the `show status:true` param is set in the config file then all `status` fields that are populated in any article's frontmatter, are always visible on any `rendered` article. This indicates the maturity status of the article to the reader for any rendered article.
 
-Then if the `show status:true` param is set in the config file then all `status` fields that are populated in any article's front matter, are always visible on any `rendered` article. This indicates the maturity status of the article to the reader for any rendered article.
+<span style="color:purple">**Reviewers:** This is unclear. First it says that this status field is different from the referenced Hugo field. Then we have three sentences about how the Hugo field works. What is the contrasting behavior/function of the Presidium field?

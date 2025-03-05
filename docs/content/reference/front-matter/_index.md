@@ -1,4 +1,4 @@
 ---
-title: Front matter
+title: frontmatter
 weight: "5"
 ---

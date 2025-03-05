@@ -10,7 +10,7 @@ Each article can be assigned a status to track its lifecycle:
 - published
 - retired
 
-Statuses can be set in the site’s `front matter`:
+Statuses can be set in the site’s `frontmatter`:
 
 ```
 ---
