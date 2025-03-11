@@ -2,10 +2,8 @@
 
 # Define the packages you want to download - we can improve this by reading from a file
 PACKAGES=(
-    "github.com/spandigital/presidium-layouts-base@v0.2.1"
-    "github.com/spandigital/presidium-styling-base@v0.2.2"
-    "github.com/spandigital/presidium-layouts-base@v0.2.3"
-    "github.com/spandigital/presidium-styling-base@v0.2.6"
+    "github.com/spandigital/presidium-layouts-base@latest"
+    "github.com/spandigital/presidium-styling-base@latest"
 )
 
 # Get the directory of the script
