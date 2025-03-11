@@ -2,17 +2,17 @@ package cmd
 
 import (
 	"embed"
-	"fmt"
-	"github.com/gohugoio/hugo/commands"
-	"github.com/spf13/cobra"
 	"io/fs"
 	"log"
 	"os"
+	"os/exec"
 	"path/filepath"
+
+	"github.com/spf13/cobra"
 )
 
-//go:embed hugo-packages/*
-var hugoPackages embed.FS
+//go:embed hugo-files/*
+var hugoFiles embed.FS
 
 type Service struct{}
 
@@ -21,7 +21,22 @@ func New() Service {
 }
 
 func (s Service) Execute(args ...string) {
-	commands.Execute(args)
+	// Write the embedded Hugo binary to a temporary file
+	hugoBinaryPath := filepath.Join(os.TempDir(), "hugo")
+	hugoBinary, err := hugoFiles.ReadFile("hugo-files/hugo")
+	if err != nil {
+		log.Fatalf("Failed to read embedded Hugo binary: %v", err)
+	}
+	if err := os.WriteFile(hugoBinaryPath, hugoBinary, 0755); err != nil {
+		log.Fatalf("Failed to write Hugo binary to temporary file: %v", err)
+	}
+
+	cmd := exec.Command(hugoBinaryPath, args...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Run(); err != nil {
+		log.Fatalf("Failed to run Hugo: %v", err)
+	}
 }
 
 var (
@@ -30,43 +45,23 @@ var (
 		Short: "Runs hugo against your presidium site",
 		Run: func(cmd *cobra.Command, args []string) {
 			hugo := New()
-			// hugo.Execute(args...)
-
-			//Verify embedded packages
-
-			// This is failing to read the go.mod file
-			//data, err := hugoPackages.ReadFile("hugo-packages/github.com/spandigital/presidium-layouts-base@v0.2.1/go.mod")
-			//if err != nil {
-			//	log.Fatalf("Error reading embedded file: %v", err)
-			//}
-			//fmt.Println("File content:", string(data))
-
-			dirs, err := hugoPackages.ReadDir("hugo-packages/github.com")
-			if err != nil {
-				log.Fatal(err)
-			}
-			for _, dir := range dirs {
-				if dir.IsDir() {
-					fmt.Println("Directory name:", dir.Name())
-				}
-			}
 
 			// Create a temporary directory to extract the embedded packages
-			tempDir, err := os.MkdirTemp("", "hugo-packages")
+			tempDir, err := os.MkdirTemp("", "hugo-files")
 			if err != nil {
 				log.Fatal(err)
 			}
 			defer os.RemoveAll(tempDir)
 
 			// Extract the embedded packages to the temporary directory
-			err = fs.WalkDir(hugoPackages, ".", func(path string, d fs.DirEntry, err error) error {
+			err = fs.WalkDir(hugoFiles, ".", func(path string, d fs.DirEntry, err error) error {
 				if err != nil {
 					return err
 				}
 				if d.IsDir() {
 					return nil
 				}
-				data, err := hugoPackages.ReadFile(path)
+				data, err := hugoFiles.ReadFile(path)
 				if err != nil {
 					return err
 				}

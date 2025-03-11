@@ -13,5 +13,5 @@ resources/
 dist/
 docs/resources
 
-cmd/hugo-packages/
+cmd/hugo-files/
 
