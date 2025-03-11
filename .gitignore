@@ -12,3 +12,6 @@ resources/
 
 dist/
 docs/resources
+
+cmd/hugo-packages/
+

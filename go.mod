@@ -161,6 +161,8 @@ require (
 	github.com/pkg/browser v0.0.0-20240102092130-5ac0b6a4141c // indirect
 	github.com/rogpeppe/go-internal v1.12.0 // indirect
 	github.com/russross/blackfriday/v2 v2.1.0 // indirect
+	github.com/spandigital/presidium-layouts-base v0.2.1 // indirect
+	github.com/spandigital/presidium-styling-base v0.2.2 // indirect
 	github.com/spf13/cast v1.7.0 // indirect
 	github.com/spf13/fsync v0.10.1 // indirect
 	github.com/spf13/jwalterweatherman v1.1.0 // indirect
