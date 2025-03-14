@@ -91,12 +91,13 @@ The html.replace option allows you to transform specific HTML elements into cust
 Example Usage:
 Suppose you have HTML content that includes tooltips, and you want to convert them into Markdown-friendly syntax. Here’s how you can achieve this using the “Replace HTML” feature:
 
-
+```
 html:
  replace:
  - match: '.tooltips-term' # CSS selector for the element to be replaced
    select: ['?href', '.tooltips-text'] # ?href selects the href attribute of the matched element, .tooltips-text selects the content of a child element with the class "tooltips-text"
-   replace: `{{< tooltip "$1" text="$2" >}}` # $1 and $2 are the selected elements
+   replace: '{{</* tooltip "$1" text="$2" */>}}' # $1 and $2 are the selected elements
+```
 
 In this example, the CSS selector .tooltips-term is specified as the element to be replaced. The select field allows you to capture specific attributes and content relative to the matched element. Finally, the replace pattern converts the selected elements into a Markdown tooltip format.
 Note
@@ -117,7 +118,7 @@ html:
      # Below are the arguments to select elements relative to the matched element.
      select: ['?href', '.tooltips-text']
      # Replacement pattern with the selected arguments.
-     replace: '{{< tooltip "$1" text="$2" >}}'
+     replace: '{{</* tooltip "$1" text="$2" */>}}'
 markdown:
  replace:
    - pattern: '\[([^]]+)\]\(([^\)]+)\)' # Regex pattern used for selecting and capturing specific content.
