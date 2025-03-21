@@ -47,34 +47,6 @@ menu:
     name: Best Practices
     url: /best-practices/
     weight: 70
-  - identifier: prerequisites
-    name: Prerequisites
-    url: /prerequisites/
-    weight: 75
-  - identifier: reference
-    name: Reference
-    url: /reference/
-    weight: 80
-  - identifier: recipes
-    name: Recipes
-    url: /recipes/
-    weight: 90
-  - identifier: tools
-    name: Tools
-    url: /tools/
-    weight: 100
-  - identifier: support
-    name: Support
-    url: /support/
-    weight: 110
-  - identifier: updates
-    name: Updates
-    url: /updates/
-    weight: 120
-  - identifier: glossary
-    name: Glossary
-    url: /glossary/
-    weight: 130
 outputFormats:
   MenuIndex:
     baseName: menu
