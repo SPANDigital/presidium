@@ -13,6 +13,7 @@ Folders:
 File: [config.yml]({{< ref "presidium-basics/structuring-content/#config.yml" >}}): Defines the docset's navigational structure, along with global site settings like the docset title, base URL, layouts, and styling.
 
 **Items You'll Access Less**
+
 This list is not exhaustive.
 
 Folders:

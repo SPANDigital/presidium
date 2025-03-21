@@ -1,10 +1,37 @@
 ---
-title: Docset Templates
+title: Docset Templates and Article Archetypes
 weight: 30
 ---
-Presidium provides five docset templates. Each one includes (by way of `import` in config.yml) its own layouts and styling, as well as the following top-level sections:
+Presidium provides five docset templates: Default, Blog, Design, Onboarding, and Requirements. Each one includes the following, tailored to the particular use case:
+* Layouts and styling 
+* A suggested set of top-level sections
+* Archetypes for suggested articles
 
-### Default and Blog Templates
+The archetypes always define the article's frontmatter, and in many cases provide suggestions about the content.
+
+For example, the Onboarding docset template includes a top-level section "Tool Chain", and that contains eight article archetypes, one of which is the following:
+```
+---
+title: Version Control
+author: author
+weight: 2
+---
+
+This article should contain information about the version control system that tracks all changes to files and the user who made the change.
+
+Examples include:
+
+* Github
+* Atlassian Bitbucket
+* Atlassian Fisheye/Crucible
+* Perforce
+* Mercurial
+
+Optionally, add links to the official websites.
+```
+Below are the docset templates and their top-level sections.
+
+Default and Blog templates have the same set of sections:
 * Overview
 * Key Concepts
 * Prerequisites
@@ -16,7 +43,7 @@ Presidium provides five docset templates. Each one includes (by way of `import` 
 * Tools
 * Updates
 
-### Design Template
+Design template:
 * Introduction
 * Design Principles
 * Visual Elements
@@ -31,7 +58,7 @@ Presidium provides five docset templates. Each one includes (by way of `import` 
 * FAQs
 * Updates
 
-### Onboarding Template
+Onboarding Template:
 * Organization Overview
 * Solution Overview
 * Technology Stack
@@ -40,7 +67,8 @@ Presidium provides five docset templates. Each one includes (by way of `import` 
 * Getting Started
 * Reference
 * Updates
-### Requirements Template
+  
+Requirements Template:
 * Overview
 * Archetypes and Personas
 * Entities and Relationships

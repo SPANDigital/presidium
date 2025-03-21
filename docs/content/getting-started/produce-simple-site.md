@@ -4,71 +4,75 @@ weight: 5
 ---
 
 #### Prerequisites
-To embark on producing a simple documentation site with Presidium, ensure that you have a functional development
-environment. This includes having Git installed for version control, as well as Hugo, which Presidium relies on for
-site generation. Familiarity with Markdown is advantageous as it is the primary language for content creation.
-Additionally, access to a terminal and a text editor will facilitate the development process.
+To produce a simple documentation site with Presidium, ensure that you have a functional development
+environment: 
+* Git, for version control
+* Hugo, which Presidium is based on, for site generation. 
+
+Also helpful:
+* Familiarity with Markdown
+* Access to a terminal and a text editor
 
 #### Install Presidium
 
-1. **Homebrew Installation (for macOS):**
-    - Install Homebrew if not already installed:
+1. Install Homebrew if you don't have it already. For macOS:
       ```bash
       /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
       ```
 
-2. **Tap SPAN Digital's Homebrew Repository:**
-    - Use the following command to access Presidium:
+2. Tap SPAN Digital's Homebrew Repository:
       ```bash
       brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
       ```
 
-3. **Install Presidium and Hugo:**
-    - Execute these commands to install the necessary components:
+3. Install Presidium and Hugo:
       ```bash
       brew install presidium
       brew install hugo
       ```
-    - Golang installation is also suggested but not mandatory unless building from source.
+4. Install Golang. This is optional unless you are building from source.
 
 #### Run Presidium
-1. **Initialize the Project:**
-    - First, navigate to your chosen directory and initialize your Presidium project:
+1. Initialize the project:
+   1. Navigate to your chosen directory and initialize your Presidium project:
       ```bash
       presidium init
       ```
-    - Go through the setup wizard:
-        - Define the Project Name and Title.
+   2. Go through the setup wizard:
+        - Define the project name and title.
         - Select appropriate Template and Theme according to your project’s purpose.
-2. **Start Local Development Server:**
-    - After initialization, navigate into your project directory:
+2. Start a local development server:
+   1. After initialization, navigate into your project directory:
       ```bash
       cd [your-project-name]
       ```
-    - Serve your site locally to preview changes using:
+   2. Serve your site locally to preview changes using:
       ```bash
       hugo serve
       ```
-    - This launches the site at `http://localhost:1313`.
+      This launches the site at `http://localhost:1313`.
 
 #### Add Content
-1. **Edit the `config.yml` file:**
-    - Update the `config.yml` to structure your site's top-level sections.
-    - Example:
+1. Update the `config.yml` file to structure your site's top-level sections. For example:
       ```yaml
-      - name: Overview
+      - identifier: overview
+        name: Overview
         URL: /
-      - name: Getting Started
+        weight: 10
+      - identifier: getting-started
+        name: Getting Started
         URL: /getting-started/
+        weight: 20
       ```
 
-2. **Create Content Using Markdown:**
-    - Add articles in the `content` directory. Use clear filenames and directories that reflect the content structure:
+1. Create content Using Markdown:
+    - Add articles and directories in the `content` directory. Use clear filenames and directories that reflect the content structure:
       ```bash
       hugo new content/overview/introduction.md
       ```
-    - Edit articles using your text editor, maintaining consistency in format with project guidelines.
+    - Add any desired image files to `static/images`.
+    - Edit articles using your text editor, maintaining consistency in keeping with project guidelines.
 
 #### Run Presidium Locally
-- Re-run `hugo serve` whenever you make changes. This refreshes your local server, allowing you to view updates in
-- real time. It ensures documentation is accurate before publishing.
+If you are running your site locally, Presidium generally updates whenever you make changes.
+Some more complex changes may require you to quit (control-C), then relaunch with `hugo serve`.

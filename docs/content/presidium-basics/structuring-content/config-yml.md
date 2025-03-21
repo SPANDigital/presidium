@@ -21,7 +21,7 @@ These are some of the more common fields  <span style="color:purple">[correct te
   * type
   * strict
 
-  <span style="color:purple">Isn't this Enterprise only? If kept, how does the linked page relate?</span>
+  <span style="color:purple">Isn't this Enterprise only? If we keep it here, how does the linked page relate?</span>
 <!--* enterprise_key: Key that is used in the URL in Enterprise instances; for example, `docs.spandigital.net/docs/{key}/overview` ENTERPRISE ONLY-->
 * `favicon`: Path to the favicon image
 * `logo`: Path to the logo image (displayed at the top of the left navigation bar)
