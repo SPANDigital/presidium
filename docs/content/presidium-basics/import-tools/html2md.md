@@ -33,25 +33,40 @@ Params:
 
 
 ### Examples
-Download and convert the Presidium website
+Download and convert the [Presidium](https://presidium.spandigital.net/) website
+```
 html2md convert https://presidium.spandigital.net/ ./presidium --select="#presidium-content"
+```
 Convert local html files
+```
 html2md convert ./html-files ./presidium --select=.article --headers=h1
-Note
-This converter does not output all the files needed to build a complete Presidium website. You will still need to create a Presidium site first, or import the converted markdown files into an existing site. The converted markdown files will be saved in the content directory relative to the dest path along with assets (images, videos, etc) in the assets directory.
+```
+
+> **Note**
+>
+> This converter does not output all the files needed to build a complete Presidium website.
+> You will still need to [create]({{<ref "getting-started">}}) a Presidium site first, or import the converted markdown files into an existing site.
+> The converted markdown files will be saved in the `content` directory relative to the `dest` path along with assets (images, videos, etc) in the `assets` directory.
 
 ### Advanced usage
-You can define a config.yml file in your working directory or in$HOME/.html2md directory with additional options to control the conversion.
-Remove HTML
-The html.remove option allows you to selectively remove elements from your source document before converting it to Markdown. This can be useful when you want to clean up your HTML content or remove unwanted elements that have no relevance.
-Example Usage:
+You can define a `config.yml` file in your working directory or in `$HOME/.html2md` directory with additional options to control the conversion.
+
+#### Remove HTML
+The `html.remove` option allows you to selectively remove elements from your source document before converting it to Markdown. This can be useful when you want to clean up your HTML content or remove unwanted elements that have no relevance.
+
+**Example Usage:**
+```
 html:
  remove: ['.nav-link', '#warning']
+```
 In this example, all element matching the CSS selectors .nav-link or #warning will be removed before conversion.
-Replace HTML
-The html.replace option allows you to transform specific HTML elements into custom Markdown syntax, giving you greater control over the appearance and structure of your converted document.
-Example Usage:
-Suppose you have HTML content that includes tooltips, and you want to convert them into Markdown-friendly syntax. Here’s how you can achieve this using the “Replace HTML” feature:
+
+#### Replace HTML
+The `html.replace` option allows you to transform specific HTML elements into custom Markdown syntax, giving you greater control over the appearance and structure of your converted document.
+
+**Example Usage:**
+
+Suppose you have HTML content that includes [tooltips]({{<ref "reference/markdown/tooltips.md">}}), and you want to convert them into Markdown-friendly syntax. Here’s how you can achieve this using the “Replace HTML” feature:
 
 ```
 html:
@@ -61,18 +76,27 @@ html:
    replace: '{{</* tooltip "$1" text="$2" */>}}' # $1 and $2 are the selected elements
 ```
 
-In this example, the CSS selector .tooltips-term is specified as the element to be replaced. The select field allows you to capture specific attributes and content relative to the matched element. Finally, the replace pattern converts the selected elements into a Markdown tooltip format.
-Note
-In addition to the standard CSS-selectors, select allows you to select attributes on the matched element using the ? prefix. You can also get the text of the matched element by passing text in the select list.
-Replace Markdown
+In this example, the CSS selector `.tooltips-term` is specified as the element to be replaced. The `select` field allows you to capture specific attributes and content relative to the matched element. Finally, the `replace` pattern converts the selected elements into a Markdown tooltip format.
+
+>**Note**
+>
+>In addition to the standard CSS-selectors, select allows you to select attributes on the matched element using the ? prefix. You can also get the text of the matched element by passing text in the select list.
+
+#### Replace Markdown
 Similar to the HTML replace you can also replace markdown based on a Regex pattern.
-Example Usage:
+
+**Example Usage:**
+
 Let’s say you have Markdown content with links, and you want to prepend the base URL to all these links.
+```
 markdown:
  replace:
    - pattern: '\[([^]]+)\]\(([^\)]+)\)'
      with: "[$1]({{< baseurl >}}$2)"
-Sample config
+```
+
+#### Sample config
+```
 html:
  remove: ['.article-title .permalink', '#warning'] # CSS selectors for elements that should be removed before conversion.
  replace:
@@ -89,3 +113,4 @@ markdown:
 whitelist: ['https://spandigital.net/assets/'] # URLs that should be whitelisted for conversion
 assetDir: 'assets' # The directory where assets should be saved
 contentDir: 'content' # The directory where the converted markdown files should be saved
+```
