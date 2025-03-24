@@ -6,7 +6,7 @@ The process of importing documentation involves parsing a reference source and g
 
 Presidium supports the following documentation sources:
 * OpenAPI3
-* JSON
 * HTML
 * RST
+* JSON
 * Embedding

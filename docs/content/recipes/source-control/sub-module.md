@@ -13,7 +13,7 @@ If you want to store your documentation in a separate repository or share docume
        - source: content
          target: content
    ```
-3. Create a `content` directory and add your markdown files. E.g.
+3. Create a `content` directory and add your Markdown files. E.g.
    ```
    ├── config.yml
    └── content

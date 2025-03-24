@@ -3,7 +3,7 @@ title: HTML to Markdown converter
 weight: 3
 ---
 
-**[html2md](https://github.com/SPANDigital/presidium-html)** is a tool that allows you to convert HTML files into [Presidium](https://presidium.spandigital.net/) markdown articles.
+**[html2md](https://github.com/SPANDigital/presidium-html)** is a tool that allows you to convert HTML files into [Presidium](https://presidium.spandigital.net/) Markdown articles.
 
 * [Installation](#installation)
 * [Usage](#usage)
@@ -45,8 +45,8 @@ Flags:
 ```
 
 ### Params
-`source` is the url of the website or the path to the local html file(s).  
-`dest` is the path to the directory where the converted markdown files will be saved.
+`source` is the url of the website or the path to the local HTML file(s).  
+`dest` is the path to the directory where the converted Markdown files will be saved.
 
 ### Examples
 Download and convert the [Presidium](https://presidium.spandigital.net/) website
@@ -54,14 +54,14 @@ Download and convert the [Presidium](https://presidium.spandigital.net/) website
 html2md convert https://presidium.spandigital.net/ ./presidium --select="#presidium-content"
 ```
 
-Convert local html files
+Convert local HTML files
 ```bash
 html2md convert ./html-files ./presidium --select=.article --headers=h1
 ```
 
 > **Note**  
-> This converter does not output all the files needed to build a complete Presidium website. You will still need to [create](https://presidium.spandigital.net/getting-started/) a Presidium site first, or import the converted markdown files into an existing site.
-> The converted markdown files will be saved in the `content` directory relative to the `dest` path along with assets (images, videos, etc) in the `assets` directory.
+> This converter does not output all the files needed to build a complete Presidium website. You will still need to [create](https://presidium.spandigital.net/getting-started/) a Presidium site first, or import the converted Markdown files into an existing site.
+> The converted Markdown files will be saved in the `content` directory relative to the `dest` path along with assets (images, videos, etc) in the `assets` directory.
 ---
 
 ## Advanced usage
@@ -134,5 +134,5 @@ markdown:
       with: "[$1]({{%baseurl%}}/$2)" # This is the replacement pattern for converting Markdown links.
 whitelist: ['https://spandigital.net/assets/'] # URLs that should be whitelisted for conversion
 assetDir: 'assets' # The directory where assets should be saved
-contentDir: 'content' # The directory where the converted markdown files should be saved
+contentDir: 'content' # The directory where the converted Markdown files should be saved
 ```
