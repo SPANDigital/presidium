@@ -12,17 +12,11 @@ It typically contains the following sections.
 
 #### `markup` Section
 Configures the markup parser. Will most likely be the same for all Presidium docs.
-Source: https://gohugo.io/getting-started/configuration-markup/
+Source: https://gohugo.io/getting-started/configuration-markup/.
 
 #### `params` Section
-These are some of the more common fields  <span style="color:purple">[correct term?]</span> used in this section:
-* frontmatter: https://docs.spandigital.net/docs/presidium-docs-internal/official-features/paved-path/hugo/#frontmatter-validation
-  * key
-  * type
-  * strict
+These are some of the more common fields used in this section:
 
-  <span style="color:purple">Isn't this Enterprise only? If we keep it here, how does the linked page relate?</span>
-<!--* enterprise_key: Key that is used in the URL in Enterprise instances; for example, `docs.spandigital.net/docs/{key}/overview` ENTERPRISE ONLY-->
 * `favicon`: Path to the favicon image
 * `logo`: Path to the logo image (displayed at the top of the left navigation bar)
 * `quality_category`: 

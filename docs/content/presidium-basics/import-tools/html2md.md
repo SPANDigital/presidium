@@ -65,7 +65,7 @@ The `html.replace` option allows you to transform specific HTML elements into cu
 
 **Example Usage:**
 
-Suppose you have HTML content that includes [tooltips]({{<ref "reference/markdown/tooltips.md">}}), and you want to convert them into Markdown-friendly syntax. Here’s how you can achieve this using the “Replace HTML” feature:
+Suppose you have HTML content that includes tooltips, and you want to convert them into Markdown-friendly syntax. Here’s how you can achieve this using the “Replace HTML” feature:
 
 ```
 html:

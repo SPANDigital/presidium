@@ -2,7 +2,6 @@
 title: JSON Schema
 weight: 50
 ---
-JSON Schema
 
 presidium-json-schema is a CLI tool for importing your JSON Schema spec into Presidium documentation.
 
@@ -22,7 +21,7 @@ Flags:
 * `-o` `--ordered`: Preserve the schema order (defaults to alphabetical)
 * `-w` `--walk`: Walk through sub-directories
 
-To convert a file you simply:
+To convert a file, simply run:
 
 `presidium-json-schema convert <PATH_TO_SCHEMA_DIR> -d <THE_DESTINATION_DIR>`
 
