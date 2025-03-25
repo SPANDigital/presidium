@@ -13,7 +13,7 @@ author: {author name}
 ---
 ```
 
-To customize the label for authors, provide a new label in the `site config`:
+To customize the label for authors, provide a new label in the `config.yml` file:
 
 ```
 params:
@@ -21,7 +21,7 @@ params:
     label: Custom Label
 ```
 
-To hide or show authors on your generated site, enable or disable the component in the `site config`:
+To hide or show authors on your generated site, enable or disable the component in the `config.yml` file:
 
 ```
 params:

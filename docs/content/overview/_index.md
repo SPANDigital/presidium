@@ -6,14 +6,14 @@ Presidium is an open-source, static website generator built on Hugo, specificall
 
 Presidium empowers Agile teams to effectively evangelize, explain, and support solutions for their peers, promoting correct usage and successful adoption. Unlike unstructured wikis or the ephemeral knowledge of Slack channels, Presidium offers a structured approach that leverages the precision of predefined article templates and an intuitive menu structure.
 
-Presidium extends Hugo with enterprise-grade features, making it more than just a static site generator. For example:
+Presidium extends Hugo with additional features, making it more than just a static site generator. For example:
 * Automatic generation of the left navigation menu
-* b
-* c
+* Permalink icon: single click to copy a link to an article
+* <span style="color:purple">What else?</span>
 
 Presidium is designed to lend itself to the use of sound theoretical strategies for developing learning content and managing knowledge assets, with the core principle being the development of specific, focused micro-articles. These are concise, self-contained articles that explain individual concepts clearly and effectively, improving the accessibility and usability of documentation. This practice not only facilitates easier knowledge transfer and quicker information retrieval but also streamlines the update process, ensuring documentation remains accurate and relevant.
 
-Also available is Presidium Enterprise, which supports advanced features such as:
+Also available is Presidium Enterprise <span style="color:purple">[link]</span>, which supports advanced features such as:
 
 * Docset templates: Preconfigured layout and framework for use cases such as blogs and onboarding, as well as a general document template.
 * Landing page: Users can see their reading history, see a list of available docsets, search across them, get notifications, and so on.

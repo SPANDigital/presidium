@@ -17,13 +17,14 @@ File: [config.yml]({{< ref "presidium-basics/structuring-content/#config.yml" >}
 This list is not exhaustive.
 
 Folders:
-* `build`: Contains additional scripts that must run when the docset is built
-* `public`: Created when you build the docset: the published website
-* `resources`: Created when you build the docset; contains cached output from Hugo’s asset pipelines
+* `build`: Contains additional scripts that must run when the docset is built.
+* `public`: Created when you build the docset. It is the published website.
+* `resources`: Created when you build the docset; contains cached output from Hugo’s asset pipelines.
 
 Files:
 * `go.mod`: Contains layouts and styling configuration
 * `go.sum`: Generated from the go.mod file
-* 
+* <span style="color:purple">Any others that would be good to list here?</span>
+  
 … and any other files you want to include, such as `.gitignore`, readmes, license, and so on.
 <!--<span style="color:purple">**Reviewers:** -->

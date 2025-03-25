@@ -19,8 +19,9 @@ These are some of the more common fields used in this section:
 
 * `favicon`: Path to the favicon image
 * `logo`: Path to the logo image (displayed at the top of the left navigation bar)
-* `quality_category`: 
 * `sortByFilePath`: If set to `true`, navigation is sorted alphabetically instead of by `weight`
+<!--* `quality_category`: Enterprise only -->
+
 
 #### `menu` Section
 Typically contains only a subsection called `main` that defines the top-level sections of the docset.
