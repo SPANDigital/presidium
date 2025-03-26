@@ -22,5 +22,5 @@ The most important planning tasks are:
 * Identifying the scope of your documentation efforts
 * Understanding the needs of your audience.
 
-Presidium is pre-configured with a set of standard sections that are commonly used in software documentation. 
+Presidium [docset templates]({{< ref "key-concepts/#docset-tempalte" >}}) provide  a set of standard sections that are commonly used in various documentation types. 
 You can use this framework when starting to scope your project.

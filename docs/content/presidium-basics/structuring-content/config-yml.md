@@ -22,7 +22,6 @@ These are some of the more common fields used in this section:
 * `sortByFilePath`: If set to `true`, navigation is sorted alphabetically instead of by `weight`
 <!--* `quality_category`: Enterprise only -->
 
-
 #### `menu` Section
 Typically contains only a subsection called `main` that defines the top-level sections of the docset.
 The fields are:

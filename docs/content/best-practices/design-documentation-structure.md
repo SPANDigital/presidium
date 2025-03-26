@@ -19,7 +19,7 @@ articles.
 The Presidium templates are pre-configured with a standard menu structure that you can use to start scoping your 
 documentation. You can add new sections but in most cases, the standard sections will suffice.
 
-The following table shows the pre-configured sections in the software documentation template:
+The following table shows the pre-configured sections in the default docset template, designed for documenting software:
 
 | Section | Description |
 |---------|-------------|

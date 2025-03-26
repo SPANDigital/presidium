@@ -7,7 +7,7 @@ Presidium has two ways of setting the order of folders and articles.
 * According to the `weight` attribute. You set this:
   * For top-level sections: in the [config.yml]({{< ref "presidium-basics/structuring-content/#config.yml" >}}) file
   * For all other sections: in the `_index.md` of the folder
-  * For articles: in the frontmatter
+  * For articles: in the [frontmatter]({{< ref "presidium-basics/#front-matter" >}})
 
 Using `weight` is recommended: Relying on names can make it difficult to track revisions in GitHub.
 

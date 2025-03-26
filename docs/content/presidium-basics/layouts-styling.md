@@ -12,4 +12,4 @@ module:
   - path: github.com/spandigital/presidium-styling-base
   - path: github.com/spandigital/presidium-layouts-base
 ```
-<span style="color:purple">**Reviewers**: Would it be good to list the items that these repos must or should contain? What would they be?</span>
+<span style="color:purple">**Reviewers**: Would it be good to list the items that these repos must or should contain?</span>
