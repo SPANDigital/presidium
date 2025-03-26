@@ -8,7 +8,7 @@ presidium-json-schema is a CLI tool for importing your JSON Schema spec into Pre
 ### Install
 
 ```
-brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git brew install presidium-json-schema`
+brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git brew install presidium-json-schema
 ```
 
 ### Usage
