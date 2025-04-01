@@ -33,13 +33,12 @@ For a full list of possible frontmatter fields, see https://gohugo.io/content-ma
 - `author`: String; generally the email address of the main author of the article.
 - `status`: String; indicates the status of the article. Possible values are draft, review, published, and deprecated. These article status indicators display next to the author's name:
 
-<div class="article-status">
-<ul>
-<li><span title="Article Status" class="label label-success status-draft">Draft</span></li> We’re still working on this article, so feedback is premature.
-<li><span title="Article Status" class="label label-success status-review">Review</span></li> This article is ready for review. Please add your comments and feedback.
-<li><span title="Article Status" class="label label-success status-published">Published</span></li> This article has been published and should be correct, but please provide feedback, if you have any.
-<li><span title="Article Status" class="label label-success status-retired">Deprecated</span></li> This article has been deprecated—it’s either no longer relevant or it has been replaced by more up-to-date information.
+  <div class="article-status">
+  <ul>
+  <li><span title="Article Status" class="label label-success status-draft">Draft</span></li> We’re still working on this article, so feedback is premature.
+  <li><span title="Article Status" class="label label-success status-review">Review</span></li> This article is ready for review. Please add your comments and feedback.
+  <li><span title="Article Status" class="label label-success status-published">Published</span></li> This article has been published and should be correct, but please provide feedback, if you have any.
+  <li><span title="Article Status" class="label label-success status-retired">Deprecated</span></li> This article has been deprecated—it’s either no longer relevant or it has been replaced by more up-to-date information.
 </ul>
 </div>
-
-<span style="color:blue">**I removed the html tags here, because it was causing the layouts to break.**</span>
+<!--I removed the html tags here, because it was causing the layouts to break.-->
