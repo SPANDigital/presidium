@@ -42,4 +42,4 @@ For a full list of possible frontmatter fields, see https://gohugo.io/content-ma
 </ul>
 </div>
 
-<span style="color:red">**I removed the html tags here, because it was causing the layouts to break.**</span>
+<span style="color:blue">**I removed the html tags here, because it was causing the layouts to break.**</span>
