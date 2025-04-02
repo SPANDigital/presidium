@@ -7,7 +7,8 @@ weight: 5
 To produce a simple documentation site with Presidium, ensure that you have a functional development
 environment: 
 * Git, for version control
-* Hugo, which Presidium is based on, for site generation. 
+* Hugo version <span style="color:purple">XY.Z</span> or greater, for site generation. 
+<br><span style="color:purple">**what's the minimum version?**</span>
 
 Also helpful:
 * Familiarity with Markdown
@@ -70,9 +71,8 @@ Also helpful:
       ```bash
       hugo new content/overview/introduction.md
       ```
-    - Add any desired image files to `static/images`.
     - Edit articles using your text editor, maintaining consistency in keeping with project guidelines.
-
+    - Add any desired image files to the directory containing the article they are used in.
 #### Run Presidium Locally
 If you are running your site locally, Presidium generally updates whenever you make changes.
 Some more complex changes may require you to quit (control-C), then relaunch with `hugo serve`.

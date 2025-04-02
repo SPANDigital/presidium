@@ -3,7 +3,7 @@ title: Layouts and Styling
 weight: 50
 ---
 
-Presidium stores layouts and styling separately. This allows multiple docsets to use a single source for layouts and styling.
+Presidium stores layouts and styling separately. This allows multiple modules to use a single source for layouts and styling.
 
 For example, this section of a `config.yml` file points to the repositories that store layouts and styling:
 ```

@@ -9,7 +9,7 @@ Presidium empowers Agile teams to effectively evangelize, explain, and support s
 
 Presidium extends Hugo with additional features, making it more than just a static site generator. For example:
 
-- Docset templates: Preconfigured layout and framework for use cases such as blogs and onboarding, as well as a general document template
+- Module templates: Preconfigured layout and framework for use cases such as blogs and onboarding, as well as a general document template
 - Automatic generation of the left navigation menu
 - Permalink icon: single click to copy a link to an article
 - Article maturity status indicators
@@ -19,9 +19,9 @@ Presidium is designed to lend itself to the use of sound theoretical strategies 
 
 Also available is Presidium Enterprise <span style="color:purple">[link]</span>, which supports advanced features such as:
 
-- Landing page: Users can see their reading history, see a list of available docsets, search across them, get notifications, and so on.
+- Landing page: Users can see their reading history, see a list of available modules, search across them, get notifications, and so on.
 - Article bar: Each article shows freshness, comments, up/down votes, and reported issues
-- Advanced configuration: Ability to specify docset features across the enterprise and override them per docset.
+- Advanced configuration: Ability to specify module features across the enterprise and override them per module.
 - User authentication and access controls.
 - Collections and collection manager
 - User engagement analytics for content authors

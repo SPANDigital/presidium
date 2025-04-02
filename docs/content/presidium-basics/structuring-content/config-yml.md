@@ -4,7 +4,7 @@ weight: 30
 ---
 The `config.yml` file
 * Sets specifications for the top-level sections, including their title and order
-* Sets docset-wide specifications, such as the docset title, language, logo and favicon, and others
+* Sets module-wide specifications, such as the module title, language, copyright text, and others
 
 It typically contains the following sections.
 
@@ -23,15 +23,15 @@ These are some of the more common fields used in this section:
 <!--* `quality_category`: Enterprise only -->
 
 #### `menu` Section
-Typically contains only a subsection called `main` that defines the top-level sections of the docset.
+Typically contains only a subsection called `main` that defines the top-level sections of the module.
 The fields are:
 * `identifier`: Name of the directory associated with the menu item
 * `name`: Section title as it appears when rendered
-* `url`: String appended to the docset URL to identify this section
+* `url`: String appended to the module URL to identify this section
 * `weight`: Order of this section relative to other top-level sections
 
 #### `outputformats` Section
-Defines the formats to be generated when building the docset. All the necessary formats are already set up by SPAN. For custom output formats, refer to https://gohugo.io/methods/page/outputformats/#article
+Defines the formats to be generated when building the module. All the necessary formats are already set up by SPAN. For custom output formats, refer to https://gohugo.io/methods/page/outputformats/#article
 
 #### `outputs` section
 Defines what parts of the site use specific output formats. As with `outputformats`, the necessary setup is already done by SPAN.
