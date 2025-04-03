@@ -1,4 +1,4 @@
-module github.com/spandigital/presidium/docs
+module presidium
 
 go 1.19
 
