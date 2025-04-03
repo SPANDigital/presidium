@@ -1,4 +1,4 @@
-module github.com/SPANDigital/presidium-os-docs
+module github.com/spandigital/presidium/docs
 
 go 1.19
 
