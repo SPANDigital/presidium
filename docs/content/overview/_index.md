@@ -17,7 +17,7 @@ Presidium extends Hugo with additional features, making it more than just a stat
 
 Presidium is designed to lend itself to the use of sound theoretical strategies for developing learning content and managing knowledge assets, with the core principle being the development of specific, focused micro-articles. These are concise, self-contained articles that explain individual concepts clearly and effectively, improving the accessibility and usability of documentation. This practice not only facilitates easier knowledge transfer and quicker information retrieval but also streamlines the update process, ensuring documentation remains accurate and relevant.
 
-Also available is Presidium Enterprise <span style="color:purple">[link]</span>, which supports advanced features such as:
+Also available is [Presidium Enterprise](https://test.presidium.spandigital.io/docs/presidium), which supports advanced features such as:
 
 - Landing page: Users can see their reading history, see a list of available modules, search across them, get notifications, and so on.
 - Article bar: Each article shows freshness, comments, up/down votes, and reported issues
