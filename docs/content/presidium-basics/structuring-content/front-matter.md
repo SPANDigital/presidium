@@ -8,7 +8,9 @@ Frontmatter is a required element in Presidium articles that
 - Indicates that the file should be included as an article during the build process
 - Sets various properties for the article
 
-Here is an example:
+Frontmatter is written in YAML. You add any [valid YAML](https://yaml.org/) to frontmatter and refer to it in a module template, but that some frontmatter elements are required by Presdium.
+
+Here is an example of frontmatter:
 
 ```
 ---
