@@ -7,7 +7,7 @@ Presidium includes a Golang tool ([presidium-oapi3](https://formulae.brew.sh/for
 
 1. Install the [presidium-oapi3](https://github.com/SPANDigital/presidium-oapi3) tool using Homebrew:
 
-   ```sh
+```sh
    brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
    brew install presidium-oapi3
 ```
