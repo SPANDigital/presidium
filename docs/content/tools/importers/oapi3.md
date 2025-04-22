@@ -3,7 +3,7 @@ title: OpenAPI3
 weight: 2
 ---
 
-Presidium includes a Golang tool ([presidium-oapi3](https://formulae.brew.sh/formula/presidium-oapi3)) for importing your OpenAPI 3 spec into Presidium documentation.
+Presidium includes a Golang tool ([presidium-oapi3](https://github.com/SPANDigital/presidium-oapi3)) for importing your OpenAPI 3 spec into Presidium documentation.
 
 1. Install the [presidium-oapi3](https://github.com/SPANDigital/presidium-oapi3) tool using Homebrew:
 
