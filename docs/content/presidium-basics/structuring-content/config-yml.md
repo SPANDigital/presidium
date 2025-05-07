@@ -6,9 +6,7 @@ The `config.yml` file
 * Sets specifications for the top-level sections, including their title and order
 * Sets module-wide specifications, such as the module title, language, copyright text, and others
 
-It typically contains the following sections.
-
-<span style="color:purple">Are some of them required and others optional? Could there be others that we don't (don't need to) describe here?</span>
+This file can use many parameters, as described in [the Hugo documentation](https://gohugo.io/), but in Presidium it typically contains the following sections and fields:
 
 #### `markup` Section
 Configures the markup parser. Will most likely be the same for all Presidium docs.
@@ -44,7 +42,7 @@ Typically contains only a subsection called `imports`, which brings in styling a
 ```
 
 #### `frontmatter` Section
-Defines what frontmatter fields are available in articles, as well as the required data type for each field and whether the field is required or not. For details, see https://gohugo.io/configuration/front-matter/.
+Defines what frontmatter fields are available in articles, as well as the required data type for each field and whether the field is required or not.
 
 If the field is marked as required but not present in an article, the site throws an error when attempting to build. If the field is not required and not present, the site throws a warning, but still builds successfully.
 

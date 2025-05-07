@@ -7,11 +7,11 @@ weight: 5
 To produce a simple documentation site with Presidium, ensure that you have a functional development
 environment: 
 * Git, for version control
-* Hugo version <span style="color:purple">XY.Z</span> or greater, for site generation. 
-<br><span style="color:purple">**what's the minimum version?**</span>
+* Hugo version 0.131.0 or greater, for site generation
+* Go, for support of modules
 
 Also helpful:
-* Familiarity with Markdown
+* Familiarity with Markdown and YAML
 * Access to a terminal and a text editor
 
 #### Install Presidium

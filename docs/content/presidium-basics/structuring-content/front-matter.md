@@ -8,8 +8,6 @@ Frontmatter is a required element in Presidium articles that
 - Indicates that the file should be included as an article during the build process
 - Sets various properties for the article
 
-Frontmatter is written in YAML. You add any [valid YAML](https://yaml.org/) to frontmatter and refer to it in a module template, but that some frontmatter elements are required by Presdium.
-
 Here is an example of frontmatter:
 
 ```
@@ -24,7 +22,7 @@ status: Draft
 ---
 ```
 
-The only required elements are the enclosing lines of three hyphens and `title`.
+Frontmatter is written in YAML. You add any [valid YAML](https://yaml.org/) to frontmatter and refer to it in a module template; Presdium requires only  the enclosing lines of three hyphens and `title`.
 
 For a full list of possible frontmatter fields, see https://gohugo.io/content-management/front-matter/. Following are details on the variables in the above example:
 
