@@ -9,8 +9,7 @@ The `config.yml` file
 This file can use many parameters, as described in [the Hugo documentation](https://gohugo.io/), but in Presidium it typically contains the following sections and fields:
 
 #### `markup` Section
-Configures the markup parser. Will most likely be the same for all Presidium docs.
-Source: https://gohugo.io/getting-started/configuration-markup/.
+Configures the markup parser. The default is Goldmark. For use of other parsers see [the Hugo documentation](https://gohugo.io/getting-started/configuration-markup/).
 
 #### `params` Section
 These are some of the more common fields used in this section:
