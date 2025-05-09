@@ -12,6 +12,7 @@ markup:
   highlight:
     style: github
 params:
+  enterprise_key: presidium
   audience: ""
   description: ""
   logo: /images/logo.png
@@ -24,29 +25,37 @@ params:
     status: false
     author: false
     role: true
+  frontmatter:
+    - key: author
+      strict: false
+      type: email
+    - key: title
+      strict: true
+      type: text
+  lazyLoad: false
 sectionPagesMenu: ""
 menu:
   Main:
-  - identifier: overview
-    name: Overview
-    url: /
-    weight: 10
-  - identifier: key-concepts
-    name: Key Concepts
-    url: /key-concepts/
-    weight: 20
-  - identifier: getting-started
-    name: Getting Started
-    url: /getting-started/
-    weight: 30
-  - identifier: presidium-basics
-    name: Presidium Basics
-    url: /presidium-basics/
-    weight: 40
-  - identifier: best-practices
-    name: Best Practices
-    url: /best-practices/
-    weight: 70
+    - identifier: overview
+      name: Overview
+      url: /
+      weight: 10
+    - identifier: key-concepts
+      name: Key Concepts
+      url: /key-concepts/
+      weight: 20
+    - identifier: getting-started
+      name: Getting Started
+      url: /getting-started/
+      weight: 30
+    - identifier: presidium-basics
+      name: Presidium Basics
+      url: /presidium-basics/
+      weight: 40
+    - identifier: best-practices
+      name: Best Practices
+      url: /best-practices/
+      weight: 70
 outputFormats:
   MenuIndex:
     baseName: menu
@@ -56,17 +65,17 @@ outputFormats:
     mediaType: application/json
 outputs:
   home:
-  - HTML
-  - RSS
-  - MenuIndex
-  - SearchMap
+    - HTML
+    - RSS
+    - MenuIndex
+    - SearchMap
 module:
   imports:
-  - path: github.com/spandigital/presidium-styling-base
-  - path: github.com/spandigital/presidium-layouts-base
+    - path: github.com/spandigital/presidium-styling-base
+    - path: github.com/spandigital/presidium-layouts-base
 enableInlineShortcodes: true
 frontmatter:
   lastmod:
-  - lastmod
-  - :fileModTime
-  - :default
+    - lastmod
+    - :fileModTime
+    - :default

@@ -1,38 +1,36 @@
 default:
-	make hugo
-
-clear:
-	rm -rf public resources
+	make serve
 
 hugo:
-	make clear
 	hugo mod get
 	hugo --templateMetrics --ignoreCache --logLevel info
 
 drafts:
-	make clear
 	hugo mod get
 	hugo --templateMetrics --ignoreCache --logLevel info --buildDrafts
 
 tidy:
-	make clear
 	go mod tidy
 	hugo mod tidy
 
 refresh:
-	make clear
+	rm -rf public resources go.sum .hugo_build.lock themes
 	hugo mod clean
 	make tidy
 	make hugo
 
 serve:
-	make clear
+	make refresh
 	hugo server -w --ignoreCache --disableFastRender --logLevel info
 
+serve-drafts:
+	make refresh
+	hugo server -w --ignoreCache --disableFastRender --logLevel info --buildDrafts
+
 serve-a:
-	make clear
+	make refresh
 	hugo server -w --ignoreCache --disableFastRender --logLevel info -p 6060
 
 serve-b:
-	make clear
+	make refresh
 	hugo server -w --ignoreCache --disableFastRender --logLevel info -p 7070

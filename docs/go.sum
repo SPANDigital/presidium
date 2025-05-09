@@ -1,4 +1,4 @@
-github.com/spandigital/presidium-layouts-base v0.2.0 h1:Kb86lmMcE5zjObZrLr+t/foP19+glx8GUbhRvZoPbH4=
-github.com/spandigital/presidium-layouts-base v0.2.0/go.mod h1:sBRhQpfijPC3gfgoaN4sYxgEzu4C8DYR+tEey+34TJw=
-github.com/spandigital/presidium-styling-base v0.2.0 h1:tldBQz2IgoL6lbOgPyBvgZJWkxUXjtmsvdd/iIh0Ftw=
-github.com/spandigital/presidium-styling-base v0.2.0/go.mod h1:NC3IsAi2ryXooQKMMBE9/dwhHyx1DT92bvjRf9yM6SA=
+github.com/spandigital/presidium-layouts-base v0.4.4 h1:/PZCo49RANjennGSyB8Sz4BxbpmwA3dZPMf506+rImE=
+github.com/spandigital/presidium-layouts-base v0.4.4/go.mod h1:sBRhQpfijPC3gfgoaN4sYxgEzu4C8DYR+tEey+34TJw=
+github.com/spandigital/presidium-styling-base v0.3.0 h1:0iPeowTPMi7HFOIJw9YrDmBNt+veU00eid8UMqiwy0U=
+github.com/spandigital/presidium-styling-base v0.3.0/go.mod h1:NC3IsAi2ryXooQKMMBE9/dwhHyx1DT92bvjRf9yM6SA=
