@@ -12,7 +12,13 @@ To include documentation in an iframe:
 2. Put the documentation in the `/static` folder so that it’s statically served. The Presidium convention is to place it under `/static/import/{my-reference}`.
 3. Add a reference article to the Reference section:
 
-{{< img src="presidium-basics/import-tools/iframe-shortcode.png" style="width:40%">}}
+```
+    ---
+    title: My Reference
+    ---
+    # foo.bar
 
+    {{</* iframe src="/static/import/{my-reference}" */>}}
+```
 
 You can create multiple Markdown files for different components as required.
