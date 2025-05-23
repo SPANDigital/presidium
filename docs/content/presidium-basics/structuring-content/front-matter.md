@@ -27,7 +27,7 @@ Frontmatter is written in YAML. You add any [valid YAML](https://yaml.org/) to f
 For a full list of possible frontmatter fields, see https://gohugo.io/content-management/front-matter/. Following are details on the variables in the above example:
 
 - `title`: String; must be enclosed in double quotes if it contains special characters such as colon or parentheses.
-- `slug`: String; the slug for deep linking the article. Note the slug only updates the leaf node, and does not update the section slug. This overwrites the default, which is the last segment of the URL.
+- `slug`: String; the slug for deep linking the article. Note that the slug only updates the article itself, and does not update the section containing the article. This overwrites the default, which is the last segment of the URL.
 - `url`: String; the URL for the article. Note that this is an absolute URL, and not a relative URL. Overwrites the default URL.
 - `weight`: Integer; sets the order of this article relative to others in its section. Higher numbers are ordered later.
 - `author`: String; generally the email address of the main author of the article.

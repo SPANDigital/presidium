@@ -1,36 +1,17 @@
 ---
-title: Module Templates and Article Archetypes
+title: Module Templates and Demo Articles
 weight: 30
 ---
 Presidium provides five module templates. Each one includes the following, tailored to the particular use case:
 * Layouts and styling 
 * A suggested set of top-level sections
-* Archetypes for suggested articles
-<!--Default, Blog, Design, Onboarding, and Requirements-->
+* Demo articles, many with suggested content
+* Article archetypes for use with the [hugo new content](https://gohugo.io/commands/hugo_new_content/) command.
 
-The article archetypes always define the article's frontmatter, and in many cases also provide suggestions about the content. For example, the Onboarding module template includes a top-level section "Tool Chain" which contains eight article archetypes, one of which is the following:
-```
----
-title: Version Control
-author: author
-weight: 2
----
-
-This article should contain information about the version control system that tracks all changes to files and the user who made the change.
-
-Examples include:
-
-* Github
-* Atlassian Bitbucket
-* Atlassian Fisheye/Crucible
-* Perforce
-* Mercurial
-
-Optionally, add links to the official websites.
-```
+### Module Templates
 Below are the module templates and their top-level sections.
 
-**Default and Blog templates** have the same inventory of sections:
+**Default templates**
 * Overview
 * Key Concepts
 * Prerequisites
@@ -76,3 +57,32 @@ Below are the module templates and their top-level sections.
 * Capabilities
 * Reference
 * Updates
+
+**Blog Template**
+* Archive
+* General Announcements
+* Product News
+* Project News
+* Social Events
+
+### Demo Articles
+The demo articles always define the article's frontmatter, and in many cases also provide suggestions about the content. For example, the Onboarding module template includes a top-level section "Tool Chain" which contains eight demo articles, one of which is the following:
+```
+---
+title: Version Control
+author: author
+weight: 2
+---
+
+This article should contain information about the version control system that tracks all changes to files and the user who made the change.
+
+Examples include:
+
+* Github
+* Atlassian Bitbucket
+* Atlassian Fisheye/Crucible
+* Perforce
+* Mercurial
+
+Optionally, add links to the official websites.
+```

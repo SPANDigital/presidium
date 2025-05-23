@@ -28,3 +28,6 @@ hugo serve
 ```
 
 This opens the site on `http://localhost:1313`, providing a browser view of what end users will experience.
+
+#### Publish
+The exact procedure for publishing will vary with your particular system. Typically, you would push your changes to a branch with a name like `main` or `prod` that is set up to trigger publication. See [Publishing with CI]({{< ref "presidium-basics/#publishing-with-ci" >}}) for a suggestion on incorporating publication into a Continuous Integration process.

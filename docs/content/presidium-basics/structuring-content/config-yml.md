@@ -14,13 +14,13 @@ Configures the markup parser. The default is Goldmark. For use of other parsers 
 #### `params` Section
 These are some of the more common fields used in this section:
 
-* `favicon`: Path to the favicon image
+* `favicon`: Path to the favicon image. Favicon and logo are stored in the `static/images` folder.
 * `logo`: Path to the logo image (displayed at the top of the left navigation bar)
 * `sortByFilePath`: If set to `true`, navigation is sorted alphabetically instead of by `weight`
 <!--* `quality_category`: Enterprise only -->
 
 #### `menu` Section
-Typically contains only a subsection called `main` that defines the top-level sections of the module.
+Typically contains only a subsection called `main` that defines the top-level sections of the module's left-side navigation menu.
 The fields are:
 * `identifier`: Name of the directory associated with the menu item
 * `name`: Section title as it appears when rendered
@@ -30,7 +30,7 @@ The fields are:
 #### `outputformats` Section
 Defines the formats to be generated when building the module. All the necessary formats are already set up by SPAN. For custom output formats, refer to https://gohugo.io/methods/page/outputformats/#article
 
-#### `outputs` section
+#### `outputs` Section
 Defines what parts of the site use specific output formats. As with `outputformats`, the necessary setup is already done by SPAN.
 
 #### `module` Section
@@ -43,7 +43,7 @@ Typically contains only a subsection called `imports`, which brings in styling a
 #### `frontmatter` Section
 Defines what frontmatter fields are available in articles, as well as the required data type for each field and whether the field is required or not.
 
-If the field is marked as required but not present in an article, the site throws an error when attempting to build. If the field is not required and not present, the site throws a warning, but still builds successfully.
+> **Note:** If the field is marked as required but not present in an article, the site throws an error when attempting to build. If the field is not required and not present, the site throws a warning, but still builds successfully.
 
 #### Other Items
 These are not contained in a section.

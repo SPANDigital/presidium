@@ -2,7 +2,7 @@
 title: Repository Structure
 weight: 20
 ---
-A Presidium repository typically contains the following:
+A Presidium repository is a Git repository which typically contains the following:
 
 **Items You'll Frequently Access**
 
@@ -17,7 +17,6 @@ File: [config.yml]({{< ref "presidium-basics/structuring-content/#config.yml" >}
 This list is not exhaustive.
 
 Folders:
-* `build`: Contains additional scripts that must run when the module is built.
 * `public`: Created when you build the module. It is the published website.
 * `resources`: Created when you build the module; contains cached output from Hugo’s asset pipelines.
 * `data`: Holds data drawn on by articles.

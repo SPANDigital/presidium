@@ -31,7 +31,7 @@ Also helpful:
       brew install presidium
       brew install hugo
       ```
-4. Install Golang. This is optional unless you are building from source.
+4. Optionally, [install Golang](https://go.dev/doc/install). This is required only if you are building from source.
 
 #### Run Presidium
 1. Initialize the project:
@@ -47,11 +47,11 @@ Also helpful:
       ```bash
       cd [your-project-name]
       ```
-   2. Serve your site locally to preview changes using:
+   2. Serve your site locally:
       ```bash
       hugo serve
       ```
-      This launches the site at `http://localhost:1313`.
+3. Navigate to `http://localhost:1313` to see the Hello Presidium article.
 
 #### Add Content
 1. Update the `config.yml` file to structure your site's top-level sections. For example:
@@ -66,13 +66,18 @@ Also helpful:
         weight: 20
       ```
 
-1. Create content Using Markdown:
+    For the use of the `weight` variable, see [Ordering Items]({{<ref "/presidium-basics/structuring-content/#ordering-items">}}).
+
+2. Create content Using Markdown:
     - Add articles and directories in the `content` directory. Use clear filenames and directories that reflect the content structure:
       ```bash
       hugo new content/overview/introduction.md
       ```
     - Edit articles using your text editor, maintaining consistency in keeping with project guidelines.
     - Add any desired image files to the directory containing the article they are used in.
+
+At any point, you can check the appearance of articles by running `hugo serve` and going to `http://localhost:1313`.
+
 #### Run Presidium Locally
 If you are running your site locally, Presidium generally updates whenever you make changes.
 Some more complex changes may require you to quit (control-C), then relaunch with `hugo serve`.
