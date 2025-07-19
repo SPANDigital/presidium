@@ -8,8 +8,7 @@ Presidium includes a Golang tool ([presidium-oapi3](https://github.com/SPANDigit
 1. Install the [presidium-oapi3](https://github.com/SPANDigital/presidium-oapi3) tool using Homebrew:
 
 ```sh
-   brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
-   brew install presidium-oapi3
+brew install SPANDigital/tap/presidium-oapi3
 ```
 
 Example:
