@@ -16,7 +16,6 @@ brew install SPANDigital/tap/presidium
 ```
 
 ### 3. Install [Hugo](https://gohugo.io/getting-started/installing/) with Homebrew
-
 ```
 brew install hugo
 ```
