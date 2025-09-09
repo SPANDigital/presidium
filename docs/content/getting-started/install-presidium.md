@@ -9,22 +9,16 @@ weight: 1
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ```
 
-### 2. Add SPAN's Homebrew tap
+### 2. Install [Presidium](https://github.com/SPANDigital/presidium) with Homebrew
 
 ```
-brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
+brew install SPANDigital/tap/presidium
 ```
 
-### 3. Install [Presidium](https://github.com/SPANDigital/presidium) with Homebrew
-
-```
-brew install presidium
-```
-
-### 4. Install [Hugo](https://gohugo.io/getting-started/installing/) with Homebrew
+### 3. Install [Hugo](https://gohugo.io/getting-started/installing/) with Homebrew
 
 ```
 brew install hugo
 ```
 
-### 5. Download and install [Golang](https://go.dev/dl/)
+### 4. Download and install [Golang](https://go.dev/dl/)

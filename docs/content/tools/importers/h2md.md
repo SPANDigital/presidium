@@ -21,14 +21,9 @@ Install from Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
 ```
 
-Add SPAN's Homebrew tap
-```bash
-brew tap SPANDigital/homebrew-tap https://github.com/SPANDigital/homebrew-tap.git
-```
-
 Install html2md
 ```bash
-brew install html2md
+brew install SPANDigital/tap/html2md
 ```
 
 ---
