@@ -1,8 +1,6 @@
 module github.com/SPANDigital/presidium-hugo
 
-go 1.23.0
-
-toolchain go1.23.9
+go 1.24.0
 
 require (
 	github.com/Masterminds/goutils v1.1.1
@@ -23,7 +21,7 @@ require (
 	github.com/spf13/afero v1.8.2
 	github.com/spf13/cobra v1.5.0
 	github.com/spf13/viper v1.10.0
-	golang.org/x/mod v0.17.0
+	golang.org/x/mod v0.28.0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
