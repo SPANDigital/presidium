@@ -2,53 +2,68 @@ package template
 
 import (
 	"bytes"
-	"github.com/Masterminds/sprig"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
-	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
-	"github.com/gobuffalo/packd"
-	"github.com/gobuffalo/packr/v2"
+	"io/fs"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/Masterminds/sprig"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
+	"github.com/SPANDigital/presidium-hugo/templates"
 )
 
 type Service struct {
-	templates packd.Box
+	templates fs.FS
 }
 
 func New() Service {
-	box := packr.New("templatesBox", "../../../../templates")
 	return Service{
-		templates: box,
+		templates: templates.FS,
 	}
 }
 
 // GetListing returns a list of files by a given template
 func (s Service) GetListing(templateDir string) ([]string, error) {
 	listing := make([]string, 0)
-	return listing, s.templates.WalkPrefix(templateDir, func(templateName string, file packd.File) error {
-		listing = append(listing, templateName)
+	return listing, fs.WalkDir(s.templates, templateDir, func(filePath string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() {
+			listing = append(listing, filePath)
+		}
 		return nil
 	})
 }
 
 func (s Service) ProcessDirTemplates(templateDir string, outputDir string, model generator.TemplateParameters) error {
-	err := s.templates.WalkPrefix(templateDir, func(templateName string, file packd.File) error {
-		relativePath := strings.TrimPrefix(filepath.Dir(templateName), templateDir)
-		outputPath := path.Join(outputDir, relativePath)
-		return s.ProcessTemplate(outputPath, templateName, model)
+	err := fs.WalkDir(s.templates, templateDir, func(filePath string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() {
+			relativePath := strings.TrimPrefix(filepath.Dir(filePath), templateDir)
+			outputPath := path.Join(outputDir, relativePath)
+			return s.ProcessTemplate(outputPath, filePath, model)
+		}
+		return nil
 	})
 	return err
 }
 
 func (s Service) ProcessTemplate(dir, theTemplate string, model generator.TemplateParameters) error {
 	filename := filepath.Base(theTemplate)
-	templateString, err := s.templates.FindString(theTemplate)
+	if filename == "go.mod.tpl" {
+		filename = "go.mod"
+	}
+	templateBytes, err := fs.ReadFile(s.templates, theTemplate)
 	if err != nil {
 		return err
 	}
+	templateString := string(templateBytes)
 	finalPath := path.Join(dir, filename)
 	err = filesystem.AFS.MkdirAll(dir, os.ModePerm)
 	if err != nil {

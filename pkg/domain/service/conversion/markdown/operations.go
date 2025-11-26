@@ -2,16 +2,18 @@ package markdown
 
 import (
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"io"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strings"
 
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
+
+	"net/url"
+
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
-	"github.com/gohugoio/hugo/common/paths"
 	"github.com/spf13/viper"
 )
 
@@ -156,7 +158,7 @@ func fixFigureCaptions(path string) error {
 // https://github.com/gohugoio/hugo/issues/6703
 func parseSource(path string, dir string, filename string, rawSource bool) string {
 	src := dir + filename
-	if paths.IsAbsURL(src) {
+	if isAbsURL(src) {
 		return src
 	}
 	if imgIsInSameDir(path, filename) {
@@ -510,4 +512,12 @@ func replaceComments(path string) error {
 		_, err := io.WriteString(w, strContent)
 		return err
 	})
+}
+
+func isAbsURL(s string) bool {
+	u, err := url.Parse(s)
+	if err != nil {
+		return false
+	}
+	return u.IsAbs()
 }
