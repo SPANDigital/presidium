@@ -2,53 +2,101 @@ package template
 
 import (
 	"bytes"
-	"github.com/Masterminds/sprig"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
-	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
-	"github.com/gobuffalo/packd"
-	"github.com/gobuffalo/packr/v2"
+	"io/fs"
 	"os"
 	"path"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/Masterminds/sprig/v3"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 )
 
+// templatesFS holds the embedded filesystem set from main via SetFS.
+var templatesFS fs.FS
+
+// SetFS sets the embedded filesystem used to read templates.
+func SetFS(fsys fs.FS) {
+	templatesFS = fsys
+}
+
 type Service struct {
-	templates packd.Box
+	templates fs.FS
 }
 
 func New() Service {
-	box := packr.New("templatesBox", "../../../../templates")
+	fsys := templatesFS
+	if fsys == nil {
+		// Fallback for tests: read templates from the module root filesystem.
+		fsys = os.DirFS(findModuleRoot())
+	}
+	// Sub-FS into "templates" so callers can use template names directly (e.g. "default").
+	sub, err := fs.Sub(fsys, "templates")
+	if err != nil {
+		panic("templates directory not found: " + err.Error())
+	}
 	return Service{
-		templates: box,
+		templates: sub,
 	}
 }
 
-// GetListing returns a list of files by a given template
+// findModuleRoot walks up from the working directory to find the module root.
+func findModuleRoot() string {
+	dir, _ := os.Getwd()
+	for {
+		if _, err := os.Stat(filepath.Join(dir, "go.mod")); err == nil {
+			return dir
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			return "."
+		}
+		dir = parent
+	}
+}
+
+// GetListing returns a list of files under a given template directory.
 func (s Service) GetListing(templateDir string) ([]string, error) {
-	listing := make([]string, 0)
-	return listing, s.templates.WalkPrefix(templateDir, func(templateName string, file packd.File) error {
-		listing = append(listing, templateName)
+	var listing []string
+	err := fs.WalkDir(s.templates, templateDir, func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if !d.IsDir() {
+			listing = append(listing, p)
+		}
 		return nil
 	})
+	return listing, err
 }
 
 func (s Service) ProcessDirTemplates(templateDir string, outputDir string, model generator.TemplateParameters) error {
-	err := s.templates.WalkPrefix(templateDir, func(templateName string, file packd.File) error {
-		relativePath := strings.TrimPrefix(filepath.Dir(templateName), templateDir)
+	return fs.WalkDir(s.templates, templateDir, func(p string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+		if d.IsDir() {
+			return nil
+		}
+		relativePath := strings.TrimPrefix(filepath.Dir(p), templateDir)
 		outputPath := path.Join(outputDir, relativePath)
-		return s.ProcessTemplate(outputPath, templateName, model)
+		return s.ProcessTemplate(outputPath, p, model)
 	})
-	return err
 }
 
 func (s Service) ProcessTemplate(dir, theTemplate string, model generator.TemplateParameters) error {
 	filename := filepath.Base(theTemplate)
-	templateString, err := s.templates.FindString(theTemplate)
+	// Strip .tmpl suffix so e.g. "go.mod.tmpl" becomes "go.mod"
+	filename = strings.TrimSuffix(filename, ".tmpl")
+
+	data, err := fs.ReadFile(s.templates, theTemplate)
 	if err != nil {
 		return err
 	}
+	templateString := string(data)
+
 	finalPath := path.Join(dir, filename)
 	err = filesystem.AFS.MkdirAll(dir, os.ModePerm)
 	if err != nil {

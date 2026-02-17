@@ -8,7 +8,7 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
-	"github.com/pkg/errors"
+	"errors"
 	"github.com/spf13/viper"
 	"io/fs"
 	"os"
@@ -93,7 +93,7 @@ func CheckForDirIndex(stagingDir, contentPath string) error {
 func AddFrontMatter(stagingDir, contentPath string) error {
 	pm, err := buildWeightMap(contentPath)
 	if err != nil {
-		return errors.Wrap(err, "path map")
+		return fmt.Errorf("path map: %w", err)
 	}
 
 	dirUrls = map[string]string{}
@@ -294,7 +294,7 @@ func getDirectorySlug(path string) (string, error) {
 	}
 
 	if len(md.FrontMatter.Title) == 0 {
-		return "", errors.Errorf("path has no title: %s", path)
+		return "", fmt.Errorf("path has no title: %s", path)
 	}
 
 	return utils.TitleToSlug(md.FrontMatter.Title), nil

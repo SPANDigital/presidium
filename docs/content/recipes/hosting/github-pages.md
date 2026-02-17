@@ -30,7 +30,7 @@ jobs:
       - name: Setup Hugo
         uses: peaceiris/actions-hugo@v2
         with:
-          hugo-version: '0.87.0'
+          hugo-version: 'latest'
           extended: true
       - name: Build
         run: hugo --minify --baseURL `https://<ORGANIZATION>.github.io/<REPOSITORY_NAME>`

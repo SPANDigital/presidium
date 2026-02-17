@@ -2,7 +2,7 @@ package markdown
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 	"io"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"

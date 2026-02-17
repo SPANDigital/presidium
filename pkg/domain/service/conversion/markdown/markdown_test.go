@@ -2,7 +2,7 @@ package markdown
 
 import (
 	"fmt"
-	"github.com/Masterminds/goutils"
+	"math/rand/v2"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
@@ -159,8 +159,7 @@ func mustHaveDir(path string) {
 }
 
 func mustHaveMarkdownInputFile(dir string, content string) string {
-	fileId, fileIdErr := goutils.RandomAlphaNumeric(4)
-	Expect(fileIdErr).ShouldNot(HaveOccurred())
+	fileId := fmt.Sprintf("%04d", rand.IntN(10000))
 	mustHaveDir(dir)
 	name := fmt.Sprintf("contentOf-%s.md", fileId)
 	path := filepath.Join(dir, name)

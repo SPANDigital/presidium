@@ -1,2 +1,4 @@
-github.com/spandigital/presidium-theme-website v2.17.13+incompatible h1:uzzv1ZZzW8S4LLgJ2h90a31/HAWEdlbqmGTs26qbKQM=
-github.com/spandigital/presidium-theme-website v2.17.13+incompatible/go.mod h1:8fTL83SigfxCino9GI0yWCVPuWVdUP7o4wfDVgChJCU=
+github.com/spandigital/presidium-layouts-base v0.13.0 h1:PG16zEdnGcphKjf8GzOJ0BvJ32rJmGoc1ACXXLZrTYU=
+github.com/spandigital/presidium-layouts-base v0.13.0/go.mod h1:sBRhQpfijPC3gfgoaN4sYxgEzu4C8DYR+tEey+34TJw=
+github.com/spandigital/presidium-styling-base v0.5.1 h1:BX2TfiG0eoCSvnknEsCuFAM63MCuyUjYiBl6scW5yb0=
+github.com/spandigital/presidium-styling-base v0.5.1/go.mod h1:NC3IsAi2ryXooQKMMBE9/dwhHyx1DT92bvjRf9yM6SA=
