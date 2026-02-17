@@ -1,9 +1,10 @@
 before:
   hooks:
     - go mod tidy
-    - packr2
 builds:
-  - env:
+  - tags:
+      - extended
+    env:
       - CGO_ENABLED=0
     goos:
       - linux
