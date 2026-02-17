@@ -1,0 +1,465 @@
+todos:
+  - id: 1
+    status: pending
+    files:
+      - go.mod
+      - go.sum
+    description: |
+      Update root go.mod to use Go 1.23 (latest stable version).
+      Current version is 1.23.0 with toolchain go1.23.9.
+      Update the go directive to go 1.23 and ensure toolchain is set to go1.23.9 or later.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 2
+    status: pending
+    files:
+      - .github/workflows/goreleaser.yml
+    description: |
+      Update GitHub Actions goreleaser workflow to use Go 1.23.
+      Current version specified is 1.16 which is severely outdated.
+      Update the 'go-version' field in the setup-go action to use '1.23.x'.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 3
+    status: pending
+    files:
+      - templates/blog/go.mod
+      - templates/default/go.mod
+      - templates/design/go.mod
+      - templates/onboarding/go.mod
+      - templates/requirements/go.mod
+      - templates/runbook/go.mod
+      - docs/go.mod
+    description: |
+      Update all template and docs go.mod files to use Go 1.23.
+      These directory go.mod files need to be updated to match the root go.mod version.
+      Check each file and update the 'go' directive to 1.23.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 4
+    status: pending
+    files:
+      - go.mod
+      - go.sum
+    description: |
+      Update Hugo dependency to v0.140.0 or later (latest stable).
+      Current version is v0.87.0 which is very outdated (released 2021).
+      Run 'go get github.com/gohugoio/hugo@v0.140.0' or later version.
+      Note: Hugo v0.152 does not exist - latest is around v0.140.x range.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 5
+    status: pending
+    files:
+      - .github/workflows/gh-pages.yml
+      - docs/content/recipes/hosting/github-pages.md
+    description: |
+      Update Hugo version references in GitHub Actions workflows and documentation.
+      The gh-pages.yml workflow uses 'latest' which is good.
+      Update any hardcoded version references in documentation to match the new Hugo version.
+      The docs/content/recipes/hosting/github-pages.md file has a hardcoded '0.87.0' reference.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 6
+    status: pending
+    files:
+      - tools/hugo/go.mod
+    description: |
+      Update the Hugo submodule in tools/hugo to the latest version.
+      This appears to be a git submodule tracking the Hugo repository.
+      Consider updating to the latest Hugo commit or tag.
+      Run 'cd tools/hugo && git fetch && git checkout <latest-tag>'.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 7
+    status: pending
+    files:
+      - pkg/domain/service/template/template.go
+    description: |
+      Replace packr/v2 imports with Go's native embed package in template.go.
+      Current code uses:
+        - "github.com/gobuffalo/packd"
+        - "github.com/gobuffalo/packr/v2"
+      Replace with:
+        - "embed"
+      Update the Service struct to use embed.FS instead of packd.Box.
+      Add //go:embed directive to embed the templates directory.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 8
+    status: pending
+    files:
+      - pkg/domain/service/template/template.go
+    description: |
+      Update the New() function to remove packr initialization.
+      Replace 'packr.New("templatesBox", "../../../../templates")' with proper embed.FS usage.
+      Declare a package-level variable like:
+        //go:embed ../../../../templates
+        var templatesFS embed.FS
+      Update the Service struct initialization to use this embedded FS.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 9
+    status: pending
+    files:
+      - pkg/domain/service/template/template.go
+    description: |
+      Refactor GetListing() method to work with embed.FS.
+      Replace 's.templates.WalkPrefix()' with 'fs.WalkDir()' from io/fs package.
+      The embed.FS implements fs.FS interface, so use fs.WalkDir(s.templates, templateDir, ...).
+      Update function signature and logic accordingly.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 10
+    status: pending
+    files:
+      - pkg/domain/service/template/template.go
+    description: |
+      Refactor ProcessDirTemplates() method to work with embed.FS.
+      Replace packr's WalkPrefix with fs.WalkDir from io/fs package.
+      Update file handling to use embed.FS ReadFile method instead of packd.File.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 11
+    status: pending
+    files:
+      - pkg/domain/service/template/template.go
+    description: |
+      Refactor ProcessTemplate() method to work with embed.FS.
+      Replace 's.templates.FindString(theTemplate)' with 'fs.ReadFile(s.templates, theTemplate)'.
+      Convert []byte result to string if needed.
+      Update error handling accordingly.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 12
+    status: pending
+    files:
+      - go.mod
+      - go.sum
+    description: |
+      Remove packr dependencies from go.mod.
+      Remove the following dependencies:
+        - github.com/gobuffalo/packd v1.0.1
+        - github.com/gobuffalo/packr/v2 v2.8.3
+      Run 'go mod tidy' to clean up indirect dependencies.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 13
+    status: pending
+    files:
+      - Makefile
+    description: |
+      Remove 'pack' target from Makefile.
+      The pack target installs and runs packr2, which is no longer needed:
+        pack:
+          go get -u github.com/gobuffalo/packr/v2/packr2
+          packr2
+          go mod tidy
+      This entire target should be removed.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 14
+    status: pending
+    files:
+      - Makefile
+    description: |
+      Update 'build' target in Makefile to remove packr dependencies.
+      Current build target:
+        build:
+          make pack
+          go build -o $(FILENAME) main.go
+          packr2 clean
+      Should become:
+        build:
+          go build -o $(FILENAME) main.go
+      Remove the 'make pack' and 'packr2 clean' lines.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 15
+    status: pending
+    files:
+      - .goreleaser.yaml
+    description: |
+      Remove packr2 command from .goreleaser.yaml before hooks.
+      Current before hooks:
+        before:
+          hooks:
+            - go mod tidy
+            - packr2
+      Change to:
+        before:
+          hooks:
+            - go mod tidy
+      The packr2 command is no longer needed.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 16
+    status: pending
+    files:
+      - .github/workflows/goreleaser.yml
+    description: |
+      Remove packr installation step from GitHub Actions goreleaser workflow.
+      Current workflow has:
+        - name: Get packr
+          run: go get -u github.com/gobuffalo/packr/v2/packr2
+      This entire step should be removed as packr is no longer needed.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 17
+    status: pending
+    files:
+      - Makefile
+    description: |
+      Modernize the 'test' target in Makefile.
+      Current implementation:
+        test:
+          @mkdir -p reports
+          go test -p 1 -v $(TESTDIRS) -coverprofile=reports/tests-cov.out
+      Consider using modern go test flags and tools:
+        - Use 'go test ./...' instead of manually filtering directories
+        - Add '-race' flag for race detection
+        - Add '-timeout' flag to prevent hanging tests
+        - Consider using 'go test -json' for better CI integration
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 18
+    status: pending
+    files:
+      - Makefile
+    description: |
+      Modernize the 'dist' target in Makefile.
+      Current implementation:
+        dist:
+          [ -d "dist" ] || mkdir "dist"
+          go build -o "dist/presidium" --tags extended
+      Improvements:
+        - Use 'go build' with modern flags like '-trimpath' for reproducible builds
+        - Add '-ldflags' for version information injection
+        - Consider using 'go install' pattern for modern Go tooling
+        - Add 'CGO_ENABLED=0' for static binaries if appropriate
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 19
+    status: pending
+    files:
+      - Makefile
+    description: |
+      Add modern Go tooling targets to Makefile.
+      Consider adding the following targets for better developer experience:
+        - 'fmt' target: go fmt ./...
+        - 'vet' target: go vet ./...
+        - 'lint' target: golangci-lint run (if golangci-lint is available)
+        - 'tidy' target: go mod tidy && go mod verify
+        - 'install-tools' target: for installing development dependencies
+      These are standard targets in modern Go projects.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 20
+    status: pending
+    files:
+      - Makefile
+    description: |
+      Add help target to Makefile for better discoverability.
+      Add a 'help' or default target that displays available commands:
+        help: ## Display this help message
+          @echo "Available targets:"
+          @grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | \
+            awk 'BEGIN {FS = ":.*?## "}; {printf "  %-15s %s\n", $$1, $$2}'
+      Add '## Description' comments to existing targets.
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 21
+    status: pending
+    files:
+      - .github/workflows/goreleaser.yml
+    description: |
+      Update goreleaser GitHub Actions workflow to use modern action versions.
+      Current workflow uses:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-go@v2
+        - uses: goreleaser/goreleaser-action@v2
+      Update to latest versions:
+        - uses: actions/checkout@v4
+        - uses: actions/setup-go@v5
+        - uses: goreleaser/goreleaser-action@v6
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 22
+    status: pending
+    files:
+      - .github/workflows/gh-pages.yml
+    description: |
+      Update gh-pages GitHub Actions workflow to use modern action versions.
+      Current workflow uses:
+        - uses: actions/checkout@v2
+        - uses: peaceiris/actions-hugo@v2
+        - uses: peaceiris/actions-gh-pages@v3
+      Update to latest versions:
+        - uses: actions/checkout@v4
+        - uses: peaceiris/actions-hugo@v3
+        - uses: peaceiris/actions-gh-pages@v4
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 23
+    status: pending
+    files:
+      - go.mod
+      - go.sum
+    description: |
+      Run 'go mod tidy' and 'go mod verify' after all Go version updates.
+      This ensures:
+        - All dependencies are properly resolved for Go 1.23
+        - Unused dependencies are removed
+        - go.sum is correct and verified
+        - All indirect dependencies are properly tracked
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 24
+    status: pending
+    files:
+      - main.go
+      - cmd/
+      - pkg/
+    description: |
+      Test the application after removing packr to ensure embed works correctly.
+      Steps:
+        1. Build the application: make build
+        2. Test template generation: ./presidium init test-project
+        3. Verify templates are properly embedded and extracted
+        4. Run test suite: make test
+        5. Verify all tests pass with the new embed implementation
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+  - id: 25
+    status: pending
+    files:
+      - README.md
+      - docs/content/
+    description: |
+      Update documentation to reflect the new Go and Hugo versions.
+      Tasks:
+        - Update any version requirements in README.md
+        - Update getting-started documentation
+        - Update prerequisites documentation
+        - Remove any references to packr if mentioned
+        - Update build instructions if needed
+    action-taken: null
+    created_at: 2026-02-17T00:00:00Z
+    updated_at: 2026-02-17T00:00:00Z
+    completed_at: null
+
+notes: |
+  Migration Strategy:
+
+  1. Go Version Update (Tasks 1-3):
+     - Update root and all template go.mod files to Go 1.23
+     - Update GitHub Actions workflows
+     - This is the foundation for other updates
+
+  2. Hugo Version Update (Tasks 4-6):
+     - Update Hugo dependency to v0.140.x or latest stable
+     - Note: Hugo v0.152 doesn't exist; latest is ~v0.140.x
+     - Update Hugo submodule if needed
+     - Update documentation references
+
+  3. Remove Packr (Tasks 7-16):
+     - Convert template service to use embed.FS (tasks 7-11)
+     - Remove packr dependencies from go.mod (task 12)
+     - Clean up Makefile (tasks 13-14)
+     - Update goreleaser config (task 15)
+     - Update GitHub Actions (task 16)
+     - This is the most complex migration
+
+  4. Modernize Build Process (Tasks 17-22):
+     - Update Makefile with modern Go tooling practices
+     - Add helpful development targets
+     - Update GitHub Actions to latest versions
+
+  5. Finalize and Test (Tasks 23-25):
+     - Run go mod tidy
+     - Test thoroughly
+     - Update documentation
+
+  Important Notes:
+  - Go 1.23 is the latest stable version (not 1.25)
+  - Hugo latest stable is ~v0.140.x (not 0.152)
+  - embed.FS is available since Go 1.16 and is the modern replacement for packr
+  - The tools/hugo directory appears to be a git submodule with Hugo source
+  - All changes should be tested thoroughly before merging
+
+  Breaking Changes:
+  - Minimum Go version will be 1.23 (up from 1.23.0)
+  - Hugo dependency will jump from v0.87.0 to v0.140.x (major version jump)
+  - packr removal may affect any external tools depending on generated packr files
