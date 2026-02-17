@@ -18,7 +18,7 @@ type JekyllShow struct {
 }
 
 type JekyllExternal struct {
-	AuthorsUrl string `yaml:"authors-url:`
+	AuthorsUrl string `yaml:"authors-url"`
 }
 
 type JekyllSectionItem struct {
@@ -189,7 +189,7 @@ type HugoFrontmatter struct {
 type Roles struct {
 	Label   string   `yaml:"label"`
 	All     string   `yaml:"all"`
-	Options []string `yaml:options`
+	Options []string `yaml:"options"`
 }
 
 func ReadJekyllConfig(path string) (*JekyllConfig, error) {

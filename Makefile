@@ -1,4 +1,4 @@
-FILENAME=main
+FILENAME=presidium
 .DEFAULT_GOAL=help
 .PHONY: build test dist clean fmt vet tidy coverage_report help
 
