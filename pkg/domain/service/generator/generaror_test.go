@@ -8,12 +8,12 @@ import (
 	"strings"
 	"testing"
 
-	"math/rand/v2"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
+	"math/rand/v2"
 )
 
 func TestGeneratorImpl(t *testing.T) {

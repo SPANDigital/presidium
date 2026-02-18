@@ -27,7 +27,6 @@ Workflow is the following:
 
 5. If the user wants to go back he can either reclaim the last version before the update, or restore a previous 1st,
 2nd, 3rd, or 4th version
-
 */
 type Versioning interface {
 	IsEnabled() bool              // check if the versioning has been enabled or not

@@ -19,7 +19,7 @@ type FrontMatter struct {
 	Author string `yaml:"author,omitempty"`
 	Github string `yaml:"github,omitempty"`
 	Status string `yaml:"status,omitempty"`
-	Roles string `yaml:"roles,omitempty"`
+	Roles  string `yaml:"roles,omitempty"`
 }
 
 // SetupExcludes initialize excludes from Viper

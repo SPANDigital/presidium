@@ -1,6 +1,7 @@
 package fileactions
 
 import (
+	"errors"
 	"fmt"
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
@@ -8,7 +9,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/SPANDigital/presidium-hugo/pkg/utils"
-	"errors"
 	"github.com/spf13/viper"
 	"io/fs"
 	"os"

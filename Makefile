@@ -1,4 +1,5 @@
 FILENAME=presidium
+DOCSDIR=docs
 .DEFAULT_GOAL=help
 .PHONY: build test dist clean fmt vet tidy coverage_report help
 
@@ -30,3 +31,8 @@ coverage_report: ## Open coverage report in browser
 dist: ## Build distribution binary
 	mkdir -p "dist"
 	go build -trimpath -o "dist/presidium" --tags extended
+
+checks: tidy fmt vet test build
+
+serve-docs:
+	cd $(DOCSDIR) && make serve
