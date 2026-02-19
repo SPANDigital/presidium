@@ -126,8 +126,8 @@ func (v *versioning) persist() {
 		panic(err)
 	}
 	defer file.Close()
-	_, _ = file.WriteString(fmt.Sprintf("%s\n", strconv.FormatBool(v.enabled)))
-	_, _ = file.WriteString(fmt.Sprintf("%d\n", v.versionNo))
+	_, _ = fmt.Fprintf(file, "%s\n", strconv.FormatBool(v.enabled))
+	_, _ = fmt.Fprintf(file, "%d\n", v.versionNo)
 	_ = file.Sync()
 }
 
@@ -152,12 +152,10 @@ func (v *versioning) load() {
 			if b, err := strconv.ParseBool(scanner.Text()); err == nil {
 				v.enabled = b
 			}
-			break
 		case 1:
 			if i, err := strconv.ParseInt(scanner.Text(), 10, 16); err == nil {
 				v.versionNo = int(i)
 			}
-			break
 		}
 	}
 }

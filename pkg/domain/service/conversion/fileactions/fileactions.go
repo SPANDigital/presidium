@@ -61,7 +61,7 @@ func SetRootUrl(contentPath string) error {
 }
 
 func CheckForDirIndex(stagingDir, contentPath string) error {
-	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
+	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, _ error) error {
 		fmt.Println("Walking", colors.Labels.Info(path))
 		if isContentPath(path, stagingDir) {
 			return nil
@@ -69,8 +69,7 @@ func CheckForDirIndex(stagingDir, contentPath string) error {
 
 		if filepath.Base(path) == "index.md" {
 			newPath := filepath.Join(filepath.Dir(path), "_index.md")
-			err = filesystem.AFS.Rename(path, newPath)
-			if err != nil {
+			if err := filesystem.AFS.Rename(path, newPath); err != nil {
 				return err
 			}
 			return nil
@@ -81,7 +80,7 @@ func CheckForDirIndex(stagingDir, contentPath string) error {
 		}
 
 		indexPath := filepath.Join(path, "_index.md")
-		fmt.Println(fmt.Sprintf("Checking %s for _index.md...\n", colors.Labels.Wanted(indexPath)))
+		fmt.Printf("Checking %s for _index.md...\n", colors.Labels.Wanted(indexPath))
 		if utils.FileExists(indexPath) {
 			return nil
 		}
@@ -97,7 +96,7 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 	}
 
 	dirUrls = map[string]string{}
-	return filesystem.AFS.Walk(contentPath, func(path string, info fs.FileInfo, err error) error {
+	return filesystem.AFS.Walk(contentPath, func(path string, info fs.FileInfo, _ error) error {
 		if isIndex(path) || isContentPath(path, stagingDir) {
 			return nil
 		}
@@ -110,8 +109,8 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 			return nil
 		}
 
-		md, err := markdownForPath(path)
-		if err != nil {
+		md, mdErr := markdownForPath(path)
+		if mdErr != nil {
 			return nil
 		}
 
@@ -121,8 +120,7 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 		if config.Flags.AddSlugAndUrl {
 			fm.Slug, fm.URL = getSlugAndUrl(stagingDir, md.FrontMatter.Title, path)
 		}
-		err = markdown.AddFrontMatter(path, fm)
-		if err != nil {
+		if err := markdown.AddFrontMatter(path, fm); err != nil {
 			return err
 		}
 
@@ -131,7 +129,7 @@ func AddFrontMatter(stagingDir, contentPath string) error {
 }
 
 func CheckForTitles(contentPath string) error {
-	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, err error) error {
+	return filesystem.AFS.Walk(contentPath, func(path string, info os.FileInfo, _ error) error {
 		if info.IsDir() || !isMdFile(path) {
 			return nil
 		}
@@ -148,9 +146,6 @@ func CheckForTitles(contentPath string) error {
 		if isIndex(path) {
 			dir := filepath.Dir(path)
 			md.FrontMatter.Title = titleFromPath(dir)
-			if err != nil {
-				return err
-			}
 		} else {
 			md.FrontMatter.Title = titleFromPath(path)
 		}
@@ -221,11 +216,7 @@ func buildWeightMap(contentPath string) (directoryMap, error) {
 		}
 
 		dir := filepath.Dir(path)
-		if _, ok := dirMap[dir]; ok {
-			dirMap[dir] = append(dirMap[dir], path)
-		} else {
-			dirMap[dir] = []string{path}
-		}
+		dirMap[dir] = append(dirMap[dir], path)
 		return nil
 	})
 	return dirMap, err
@@ -285,7 +276,7 @@ func removeWeightFromFilePath(content string) error {
 func getDirectorySlug(path string) (string, error) {
 	indexPath := filepath.Join(path, "_index.md")
 	if !utils.FileExists(indexPath) {
-		return "", errors.New("Index file not found")
+		return "", errors.New("index file not found")
 	}
 
 	md, err := markdownForPath(indexPath)

@@ -2,6 +2,7 @@ package template
 
 import (
 	"bytes"
+	"fmt"
 	"io/fs"
 	"os"
 	"path"
@@ -26,32 +27,39 @@ type Service struct {
 	templates fs.FS
 }
 
-func New() Service {
+func New() (Service, error) {
 	fsys := templatesFS
 	if fsys == nil {
 		// Fallback for tests: read templates from the module root filesystem.
-		fsys = os.DirFS(findModuleRoot())
+		root, err := findModuleRoot()
+		if err != nil {
+			return Service{}, fmt.Errorf("locating module root: %w", err)
+		}
+		fsys = os.DirFS(root)
 	}
 	// Sub-FS into "templates" so callers can use template names directly (e.g. "default").
 	sub, err := fs.Sub(fsys, "templates")
 	if err != nil {
-		panic("templates directory not found: " + err.Error())
+		return Service{}, fmt.Errorf("templates directory not found: %w", err)
 	}
 	return Service{
 		templates: sub,
-	}
+	}, nil
 }
 
 // findModuleRoot walks up from the working directory to find the module root.
-func findModuleRoot() string {
-	dir, _ := os.Getwd()
+func findModuleRoot() (string, error) {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "", fmt.Errorf("unable to determine working directory: %w", err)
+	}
 	for {
 		if _, err := os.Stat(filepath.Join(dir, "go.mod")); err == nil {
-			return dir
+			return dir, nil
 		}
 		parent := filepath.Dir(dir)
 		if parent == dir {
-			return "."
+			return ".", nil
 		}
 		dir = parent
 	}

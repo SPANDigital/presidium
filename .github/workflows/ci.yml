@@ -1,0 +1,42 @@
+name: CI v2
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feat/**
+  pull_request:
+    branches:
+      - main
+      - develop
+      - feat/**
+
+jobs:
+  cli-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-go@v6
+        with:
+          go-version: stable
+      - name: cli-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: latest
+          args: --timeout=10m
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: stable
+      - name: Run Tests
+        run: make test || exit 1
+      - name: Upload Test Reports
+        uses: actions/upload-artifact@v6
+        with:
+          name: test-reports
+          path: reports/tests-cov.out

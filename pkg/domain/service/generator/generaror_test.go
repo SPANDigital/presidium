@@ -43,7 +43,9 @@ var _ = Describe("Site generation behaviour:", func() {
 	AfterSuite(func() { _ = filesystem.AFS.RemoveAll(workDir) })
 
 	BeforeEach(func() {
-		g = New()
+		var newErr error
+		g, newErr = New()
+		Expect(newErr).ShouldNot(HaveOccurred())
 		t = model.InitialSiteTarget{
 			SiteTargetDirectory: filepath.Join(workDir, "testSite"),
 			SiteName:            "Test Site",

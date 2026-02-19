@@ -56,13 +56,14 @@ func (j *JekyllConfig) reparsedShowOptionsAsSequenceDictionaries() bool {
 				for k, v := range values {
 					if name, ok = k.(string); ok {
 						if flagged, ok = v.(bool); ok {
-							if name == "roles" {
+							switch name {
+							case "roles":
 								parsed.Roles = flagged
-							} else if name == "author" {
+							case "author":
 								parsed.Author = flagged
-							} else if name == "status" {
+							case "status":
 								parsed.Status = flagged
-							} else {
+							default:
 								log.Debug(fmt.Sprintf("unsupported shop option: [%s:%v]", name, flagged))
 							}
 						}
@@ -89,13 +90,14 @@ func (j *JekyllConfig) reparsedShowOptionsAsDictionary() bool {
 			var flagged bool
 			if option, ok = k.(string); ok {
 				if flagged, ok = v.(bool); ok {
-					if option == "author" {
+					switch option {
+					case "author":
 						parsed.Author = flagged
-					} else if option == "roles" {
+					case "roles":
 						parsed.Roles = flagged
-					} else if option == "status" {
+					case "status":
 						parsed.Status = flagged
-					} else {
+					default:
 						log.Debug(fmt.Sprintf("unsupported: [%s:%v]", option, flagged))
 					}
 				}

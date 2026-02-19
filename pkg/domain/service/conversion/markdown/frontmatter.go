@@ -38,7 +38,7 @@ func AddFrontMatter(path string, fm FrontMatter) error {
 			return err
 		}
 
-		_, err = io.WriteString(w, string(out))
+		_, err = w.Write(out)
 		if err != nil {
 			return err
 		}

@@ -21,10 +21,10 @@ func WalkRename(path string, rename func(path string, info os.FileInfo) (*string
 	}
 
 	var renames []Rename
-	err := filesystem.AFS.Walk(path, func(path string, info os.FileInfo, err error) error {
-		newPath, err := rename(path, info)
-		if err != nil {
-			return err
+	err := filesystem.AFS.Walk(path, func(path string, info os.FileInfo, _ error) error {
+		newPath, renameErr := rename(path, info)
+		if renameErr != nil {
+			return renameErr
 		}
 
 		if newPath != nil {

@@ -32,7 +32,10 @@ dist: ## Build distribution binary
 	mkdir -p "dist"
 	go build -trimpath -o "dist/presidium" --tags extended
 
-checks: tidy fmt vet test build
+checks: tidy fmt vet lint test build
 
 serve-docs:
 	cd $(DOCSDIR) && make serve
+
+lint:
+	golangci-lint run --timeout 10m
