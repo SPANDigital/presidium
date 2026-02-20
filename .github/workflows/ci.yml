@@ -16,9 +16,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
+        with:
+          submodules: true
       - uses: actions/setup-go@v6
         with:
           go-version: stable
+      - name: Prepare themes for embedding
+        run: make prepare-themes
       - name: cli-lint
         uses: golangci/golangci-lint-action@v9
         with:
@@ -29,6 +33,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          submodules: true
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
@@ -45,6 +51,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+        with:
+          submodules: true
       - name: Set up Go
         uses: actions/setup-go@v6
         with:
