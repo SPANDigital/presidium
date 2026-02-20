@@ -4,7 +4,7 @@ import (
 	"strings"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	. "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
+	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/wizard"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
@@ -42,7 +42,11 @@ func (i initWizard) Run() {
 		return
 	}
 
-	g := generator.New()
+	g, err := generator.New()
+	if err != nil {
+		log.Error(err)
+		return
+	}
 
 	siteModel := generateSiteModel()
 	err = g.Run(siteModel)
@@ -52,11 +56,11 @@ func (i initWizard) Run() {
 
 }
 
-func generateSiteModel() InitialSiteTarget {
+func generateSiteModel() model.InitialSiteTarget {
 
-	mustHaveTemplate := func() Template {
+	mustHaveTemplate := func() model.Template {
 		templateName := viper.GetString(config.TemplateNameKey)
-		template, err := GetTemplate(templateName)
+		template, err := model.GetTemplate(templateName)
 		if err != nil {
 			log.FatalWithFields(err, log.Fields{
 				"template_name": templateName,
@@ -65,13 +69,13 @@ func generateSiteModel() InitialSiteTarget {
 		return template
 	}
 
-	return InitialSiteTarget{
+	return model.InitialSiteTarget{
 		SiteTargetDirectory: viper.GetString(config.ProjectNameKey),
 		SiteName:            viper.GetString(config.ProjectNameKey),
 		SiteTitle:           viper.GetString(config.TitleKey),
 		BrandingModelUrl:    viper.GetString(config.BrandKey),
 		Template:            mustHaveTemplate(),
-		WhenSiteExists:      AbortWhenTargetSiteExists,
+		WhenSiteExists:      model.AbortWhenTargetSiteExists,
 	}
 }
 
@@ -127,9 +131,9 @@ func askBrandRepo() error {
 }
 
 func promptSupportedTemplates() {
-	items := make([]ItemSelection, 0)
-	for _, item := range SupportedTemplates {
-		items = append(items, ItemSelection{
+	items := make([]model.ItemSelection, 0)
+	for _, item := range model.SupportedTemplates {
+		items = append(items, model.ItemSelection{
 			Name:        item.Name(),
 			Description: item.Description(),
 		})
@@ -144,6 +148,6 @@ func promptSupportedTemplates() {
 	if err != nil {
 		log.FatalWithFields("error selecting template", log.Fields{"error": err})
 	}
-	selected := SupportedTemplates[idx]
+	selected := model.SupportedTemplates[idx]
 	viper.Set(config.TemplateNameKey, selected.Code())
 }

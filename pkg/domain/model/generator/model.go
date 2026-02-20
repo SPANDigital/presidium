@@ -17,6 +17,8 @@ const (
 	OnBoardingTemplate
 	DesignTemplate
 	BlogTemplate
+	RequirementsTemplate
+	RunbookTemplate
 )
 
 const (
@@ -30,6 +32,8 @@ var (
 		OnBoardingTemplate,
 		DesignTemplate,
 		BlogTemplate,
+		RequirementsTemplate,
+		RunbookTemplate,
 	}
 )
 
@@ -95,6 +99,8 @@ func (t Template) Name() string {
 		"SPAN On-boarding Template",
 		"SPAN Design Template",
 		"SPAN Blog Template",
+		"SPAN Requirements Template",
+		"SPAN Runbook Template",
 	}[t]
 }
 
@@ -104,6 +110,8 @@ func (t Template) Description() string {
 		"SPAN's on-boarding template",
 		"SPAN's design template",
 		"SPAN's blog template",
+		"SPAN's requirements template",
+		"SPAN's runbook template",
 	}[t]
 }
 
@@ -113,6 +121,8 @@ func (t Template) Code() string {
 		"onboarding",
 		"design",
 		"blog",
+		"requirements",
+		"runbook",
 	}[t]
 }
 
@@ -126,6 +136,10 @@ func GetTemplate(code string) (Template, error) {
 		return DesignTemplate, nil
 	case BlogTemplate.Code():
 		return BlogTemplate, nil
+	case RequirementsTemplate.Code():
+		return RequirementsTemplate, nil
+	case RunbookTemplate.Code():
+		return RunbookTemplate, nil
 	default:
 		return 0, presidiumerr.GenericError{Code: presidiumerr.UnsupportedTemplate}
 	}

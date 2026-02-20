@@ -1,28 +1,41 @@
-FILENAME=main
-TESTDIRS=`go list ./... |grep -v "vendor/" |grep -v "swagger/"`
-.DEFAULT_GOAL=build
-.PHONY: dist clean
+FILENAME=presidium
+DOCSDIR=docs
+.DEFAULT_GOAL=help
+.PHONY: build test dist clean fmt vet tidy coverage_report help
 
-test:
+help: ## Display available targets
+	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-18s %s\n", $$1, $$2}'
+
+build: ## Build the presidium binary
+	go build -tags extended -o $(FILENAME) .
+
+test: ## Run tests with coverage
 	@mkdir -p reports
-	go test -p 1 -v $(TESTDIRS) -coverprofile=reports/tests-cov.out
+	go test -race -timeout 120s ./... -coverprofile=reports/tests-cov.out
 
-pack:
-	go get -u github.com/gobuffalo/packr/v2/packr2
-	packr2
-	go mod tidy
+fmt: ## Format Go source files
+	go fmt ./...
 
-build:
-	make pack
-	go build  -o $(FILENAME) main.go
-	packr2 clean
+vet: ## Run go vet
+	go vet ./...
 
-clean:
+tidy: ## Tidy and verify module dependencies
+	go mod tidy && go mod verify
+
+clean: ## Remove build artifacts
 	rm -fr "dist"
 
-coverage_report:
+coverage_report: ## Open coverage report in browser
 	@go tool cover -html=reports/tests-cov.out
 
-dist:
-	[ -d "dist" ] || mkdir "dist"
-	go build -o "dist/presidium" --tags extended
+dist: ## Build distribution binary
+	mkdir -p "dist"
+	go build -trimpath -o "dist/presidium" --tags extended
+
+checks: tidy fmt vet lint test build
+
+serve-docs:
+	cd $(DOCSDIR) && make serve
+
+lint:
+	golangci-lint run --timeout 10m

@@ -5,14 +5,14 @@ pluralizelisttitles: false
 params:
   _merge: deep
   sortByFilePath: true
-  enterprise_key: {{ .Uuid }}
+  enterprise_key:
   frontmatter:
-  - key: author
-    type: email
-    strict: false
-  - key: title
-    type: text
-    strict: true
+    - key: author
+      type: email
+      strict: false
+    - key: title
+      type: text
+      strict: true
 markup:
   goldmark:
     renderer:
@@ -24,38 +24,38 @@ markup:
     style: github
 menu:
   Main:
-  - identifier: organization-overview
-    name: Organization Overview
-    url: /
-    weight: 1
-  - identifier: solution-overview
-    name: Solution Overview
-    url: /solution-overview/
-    weight: 2
-  - identifier: technology-stack
-    name: Technology Stack
-    url: /technology-stack/
-    weight: 3
-  - identifier: tool-chain
-    name: Tool Chain
-    url: /tool-chain/
-    weight: 4
-  - identifier: dev-environment-setup
-    name: Dev Environment Setup
-    url: /dev-environment-setup/
-    weight: 5
-  - identifier: getting-started
-    name: Getting Started
-    url: /getting-started/
-    weight: 6
-  - identifier: reference
-    name: Reference
-    url: /reference/
-    weight: 7
-  - identifier: updates
-    name: Updates
-    url: /updates/
-    weight: 8
+    - identifier: organization-overview
+      name: Organization Overview
+      url: /
+      weight: 1
+    - identifier: solution-overview
+      name: Solution Overview
+      url: /solution-overview/
+      weight: 2
+    - identifier: technology-stack
+      name: Technology Stack
+      url: /technology-stack/
+      weight: 3
+    - identifier: tool-chain
+      name: Tool Chain
+      url: /tool-chain/
+      weight: 4
+    - identifier: dev-environment-setup
+      name: Dev Environment Setup
+      url: /dev-environment-setup/
+      weight: 5
+    - identifier: getting-started
+      name: Getting Started
+      url: /getting-started/
+      weight: 6
+    - identifier: reference
+      name: Reference
+      url: /reference/
+      weight: 7
+    - identifier: updates
+      name: Updates
+      url: /updates/
+      weight: 8
 outputFormats:
   MenuIndex:
     baseName: menu
@@ -65,10 +65,10 @@ outputFormats:
     mediaType: application/json
 outputs:
   home:
-  - HTML
-  - RSS
-  - MenuIndex
-  - SearchMap
+    - HTML
+    - RSS
+    - MenuIndex
+    - SearchMap
 module:
   _merge: shallow
   imports:

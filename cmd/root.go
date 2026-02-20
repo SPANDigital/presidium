@@ -35,7 +35,7 @@ func init() {
 	cobra.OnInitialize(initConfig)
 	rootCmd.PersistentFlags().BoolVar(&debug, config.DebugKey, false, "enables debug logs")
 	rootCmd.PersistentFlags().StringVar(&cfgFile, config.ConfigFileKey, "", "config file (default is $HOME/.presidium.yaml)")
-	viper.BindPFlag(config.DebugKey, rootCmd.PersistentFlags().Lookup(config.DebugKey))
+	_ = viper.BindPFlag(config.DebugKey, rootCmd.PersistentFlags().Lookup(config.DebugKey))
 }
 
 // initConfig reads in config file and ENV variables if set.

@@ -16,7 +16,7 @@ func versionCommand() *cobra.Command {
 		Short: "managing versioning of presidium site",
 		Run: func(cmd *cobra.Command, args []string) {
 			if !enabled {
-				v:= versioning.New(".")
+				v := versioning.New(".")
 				if !v.IsEnabled() {
 					v.SetEnabled(true)
 				}
@@ -28,10 +28,9 @@ func versionCommand() *cobra.Command {
 	return cmd
 }
 
-
 func activateNextVersionCommand() *cobra.Command {
 	return &cobra.Command{
-		Use: "next",
+		Use:   "next",
 		Short: "creates a next version based on last version",
 		Run: func(cmd *cobra.Command, args []string) {
 			v := versioning.New(".")
@@ -39,7 +38,6 @@ func activateNextVersionCommand() *cobra.Command {
 		},
 	}
 }
-
 
 func syncLatestCommand() *cobra.Command {
 	return &cobra.Command{
@@ -51,5 +49,3 @@ func syncLatestCommand() *cobra.Command {
 		},
 	}
 }
-
-

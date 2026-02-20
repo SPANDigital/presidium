@@ -65,7 +65,7 @@ func (v validation) FindUndeclaredFiles(projectDir string) (*validate.FilesRepor
 
 	return &validate.FilesReport{
 		Files: missing,
-		Found: missing != nil && len(missing) > 0,
+		Found: len(missing) > 0,
 	}, nil
 }
 

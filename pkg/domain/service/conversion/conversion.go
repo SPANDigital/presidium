@@ -286,7 +286,7 @@ func (c *Converter) prepareStaging() {
 	}
 
 	err := c.fs.CopyWithOptions(c.sourceRepoContentDir, c.stagingContentDir, copy.Options{
-		Skip: func(src string) (bool, error) {
+		Skip: func(srcinfo os.FileInfo, src, dest string) (bool, error) {
 			_, file := filepath.Split(src)
 			if strings.HasPrefix(file, ".") {
 				return true, nil

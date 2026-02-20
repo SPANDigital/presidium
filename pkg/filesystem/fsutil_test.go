@@ -33,8 +33,8 @@ var _ = Describe("Filesystem", func() {
 			dstFileName := "testfile.md"
 			testDir := "/home/testuser/testdata/copy/test"
 			BeforeEach(func() {
-				FS.MkdirAll(testDir, 0755)
-				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
+				_ = FS.MkdirAll(testDir, 0755)
+				_ = AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, srcFileName), []byte("Hello World!"), 0644)
 			})
 			AfterEach(func() {
 				// no need to clean up - memory mapped filesystem will just go away
@@ -68,10 +68,10 @@ var _ = Describe("Filesystem", func() {
 			testDir := "/home/testuser/testdata/copydir/test"
 			file1, file2, file3 := "file1.md", "file2.md", "file3.md"
 			BeforeEach(func() {
-				FS.MkdirAll(testDir, 0755)
-				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
-				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
-				AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
+				_ = FS.MkdirAll(testDir, 0755)
+				_ = AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file1), []byte("Hello World!"), 0644)
+				_ = AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file2), []byte("Hello World!"), 0644)
+				_ = AFS.WriteFile(fmt.Sprintf("%s/%s", testDir, file3), []byte("Hello World!"), 0644)
 			})
 			AfterEach(func() {
 				// no need to clean up - memory mapped filesystem will just go away

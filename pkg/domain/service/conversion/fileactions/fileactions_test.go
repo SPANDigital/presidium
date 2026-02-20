@@ -239,8 +239,12 @@ func mockFrontMatter(path string, fm markdown.FrontMatter) error {
 		Fail("")
 	}
 
-	filesystem.FS.Create(path)
-	markdown.AddFrontMatter(path, fm)
+	if _, err := filesystem.FS.Create(path); err != nil {
+		Fail("failed to create file")
+	}
+	if err := markdown.AddFrontMatter(path, fm); err != nil {
+		return err
+	}
 	return nil
 }
 

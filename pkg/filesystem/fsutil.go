@@ -1,7 +1,6 @@
 package filesystem
 
 import (
-	"errors"
 	"fmt"
 	"github.com/otiai10/copy"
 	"github.com/spf13/afero"
@@ -107,7 +106,7 @@ func (f fsUtil) EmptyDir(dir string) error {
 	}
 
 	if !info.IsDir() {
-		return errors.New(fmt.Sprintf("path is not a directory: %s", dir))
+		return fmt.Errorf("path is not a directory: %s", dir)
 	}
 
 	parentDirs, err := FS.Open(dir)

@@ -11,7 +11,7 @@ var _ = Describe("AddFrontMatter", func() {
 	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	BeforeEach(func() {
-		filesystem.FS.Remove("test.md")
+		_ = filesystem.FS.Remove("test.md")
 	})
 
 	When("adding front matter", func() {

@@ -10,5 +10,5 @@ func New() Service {
 }
 
 func (s Service) Execute(args ...string) {
-	commands.Execute(args)
+	_ = commands.Execute(args)
 }
