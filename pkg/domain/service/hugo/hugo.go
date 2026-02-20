@@ -31,10 +31,17 @@ func (s Service) Execute(args ...string) error {
 		return commands.Execute(args)
 	}
 
+	// Capture the previous value (if any) so we can restore it after execution
+	prevReplacements, hadPrevReplacements := os.LookupEnv("HUGO_MODULE_REPLACEMENTS")
+
 	// Ensure cleanup happens regardless of how Hugo execution ends
 	defer func() {
 		os.RemoveAll(tmpDir)
-		os.Unsetenv("HUGO_MODULE_REPLACEMENTS")
+		if hadPrevReplacements {
+			os.Setenv("HUGO_MODULE_REPLACEMENTS", prevReplacements)
+		} else {
+			os.Unsetenv("HUGO_MODULE_REPLACEMENTS")
+		}
 	}()
 
 	// Set environment variable to point Hugo to local themes

@@ -112,8 +112,8 @@ func (s Service) Extract() (tmpDir string, replacements string, err error) {
 				return fmt.Errorf("reading %s: %w", p, err)
 			}
 
-			// Handle go.mod.tmpl -> go.mod renaming
-			if strings.HasSuffix(destPath, ".tmpl") && strings.HasSuffix(destPath, "go.mod.tmpl") {
+			// Handle go.mod.tmpl -> go.mod and go.sum.tmpl -> go.sum renaming
+			if strings.HasSuffix(destPath, "go.mod.tmpl") || strings.HasSuffix(destPath, "go.sum.tmpl") {
 				destPath = strings.TrimSuffix(destPath, ".tmpl")
 			}
 
