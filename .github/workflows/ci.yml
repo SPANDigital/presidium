@@ -40,3 +40,5 @@ jobs:
         with:
           name: test-reports
           path: reports/tests-cov.out
+      - name: Run Build
+        run: make build || exit 1
