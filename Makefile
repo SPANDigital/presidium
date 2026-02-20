@@ -6,7 +6,22 @@ DOCSDIR=docs
 help: ## Display available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-18s %s\n", $$1, $$2}'
 
-build: ## Build the presidium binary
+stage-themes: ## Copy themes into embeddable staging directory
+	@rm -rf _embedded_themes
+	@mkdir -p _embedded_themes
+	@for dir in themes/presidium-*; do \
+		name=$$(basename "$$dir"); \
+		cp -R "$$dir" "_embedded_themes/$$name"; \
+		if [ -f "_embedded_themes/$$name/go.mod" ]; then \
+			mv "_embedded_themes/$$name/go.mod" "_embedded_themes/$$name/gomod.txt"; \
+		fi; \
+		if [ -f "_embedded_themes/$$name/go.sum" ]; then \
+			mv "_embedded_themes/$$name/go.sum" "_embedded_themes/$$name/gosum.txt"; \
+		fi; \
+		rm -rf "_embedded_themes/$$name/.git"; \
+	done
+
+build: stage-themes ## Build the presidium binary
 	go build -tags extended -o $(FILENAME) .
 
 test: ## Run tests with coverage
@@ -23,16 +38,16 @@ tidy: ## Tidy and verify module dependencies
 	go mod tidy && go mod verify
 
 clean: ## Remove build artifacts
-	rm -fr "dist"
+	rm -fr "dist" "_embedded_themes"
 
 coverage_report: ## Open coverage report in browser
 	@go tool cover -html=reports/tests-cov.out
 
-dist: ## Build distribution binary
+dist: stage-themes ## Build distribution binary
 	mkdir -p "dist"
 	go build -trimpath -o "dist/presidium" --tags extended
 
-checks: tidy fmt vet lint test build
+checks: clean tidy fmt vet lint test build
 
 serve-docs:
 	cd $(DOCSDIR) && make serve

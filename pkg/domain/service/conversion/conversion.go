@@ -3,15 +3,16 @@ package conversion
 import (
 	"errors"
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
-	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"io"
 	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
+	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/fileactions"
@@ -408,7 +409,7 @@ func (c *Converter) generateHugoModule() {
 	}
 
 	c.messageUser(infoMessage("Adding Hugo GO module to site").withContentStyle(colors.Labels.Wanted))
-	hugo.New().Execute("--source", c.stagingDir, "mod", "init", c.moduleName())
+	_ = hugo.New().Execute("--source", c.stagingDir, "mod", "init", c.moduleName())
 	srcModFile := filepath.Join(c.stagingDir, "go.mod")
 	dstModFile := filepath.Join(c.destinationRepoDir, "go.mod")
 	_ = c.fs.Copy(srcModFile, dstModFile, fs.ModePerm)
