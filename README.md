@@ -14,3 +14,25 @@ For detailed instructions on getting started, please see [Getting Started](http:
 
 # Features and Issues
 All upcoming features and issues are tracked [here](https://github.com/SPANDigital/presidium/issues).
+
+# Development
+
+Presidium embeds a specific verison of [Hugo](https://github.com/gohugoio/hugo) to ensure that the user is building their docs with a Hugo version that is compatible with our Presidium Themes.
+
+Since we require the embedded Hugo version to be built into a binary, some of the cli commands only work after running the `make build` cmd.
+
+## Getting started
+
+Run the build command:
+```
+make build
+```
+
+Move the binary into a valid documentation site directory, then run the hugo build cmd:
+```
+./presidium hugo 
+```
+Or if you want to serve the site after the hugo build, then run:
+```
+./presidium hugo server
+```
