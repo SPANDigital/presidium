@@ -23,15 +23,15 @@ FROM golang:1.23-alpine AS test
 # Install runtime dependencies (C++ libraries required by Hugo/presidium)
 RUN apk add --no-cache curl libstdc++ libgcc
 
-# Copy the test site
-COPY ./.tmp/presidium-test-validation /workspace/test-site
+# Copy the docs site
+COPY ./docs /workspace/docs
 
 # Copy the built presidium binary from builder stage
 COPY --from=builder /build/presidium /usr/local/bin/presidium
 RUN chmod +x /usr/local/bin/presidium
 
-# Set working directory to the test site
-WORKDIR /workspace/test-site
+# Set working directory to the docs site
+WORKDIR /workspace/docs
 
 # Verify presidium binary
 RUN presidium --version || echo "Presidium version check completed"

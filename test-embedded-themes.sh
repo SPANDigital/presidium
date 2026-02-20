@@ -8,21 +8,21 @@ echo "║  Testing Presidium with Embedded Themes (Offline Mode)       ║"
 echo "╚═══════════════════════════════════════════════════════════════╝"
 echo ""
 
-# Check if test site exists
-if [ ! -d ".tmp/presidium-test-validation" ]; then
-    echo "❌ Error: Test site not found at .tmp/presidium-test-validation"
-    echo "   Please clone the test site first or provide a test site directory."
+# Check if docs site exists
+if [ ! -d "docs" ]; then
+    echo "❌ Error: Documentation site not found at docs/"
+    echo "   Please ensure the docs directory exists."
     exit 1
 fi
 
-echo "✓ Found test site directory"
+echo "✓ Found docs directory"
 echo ""
 
 # Clean previous build artifacts
 echo "🧹 Cleaning previous build artifacts..."
-rm -rf .tmp/presidium-test-validation/public \
-       .tmp/presidium-test-validation/.hugo_build.lock \
-       .tmp/presidium-test-validation/resources
+rm -rf docs/public \
+       docs/.hugo_build.lock \
+       docs/resources
 
 # Build the Docker image (builds presidium binary and tests it)
 echo "🐋 Building Docker image (compiling presidium for Linux)..."
