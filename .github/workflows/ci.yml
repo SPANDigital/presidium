@@ -40,5 +40,14 @@ jobs:
         with:
           name: test-reports
           path: reports/tests-cov.out
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Set up Go
+        uses: actions/setup-go@v6
+        with:
+          go-version: stable
       - name: Run Build
         run: make build || exit 1
