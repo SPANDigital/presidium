@@ -57,5 +57,5 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: stable
-      - name: Build CLI
+      - name: Run Build
         run: make build || exit 1
