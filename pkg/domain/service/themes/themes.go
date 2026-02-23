@@ -60,13 +60,14 @@ func findModuleRoot() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("unable to determine working directory: %w", err)
 	}
+	startDir := dir
 	for {
 		if _, err := os.Stat(filepath.Join(dir, "go.mod")); err == nil {
 			return dir, nil
 		}
 		parent := filepath.Dir(dir)
 		if parent == dir {
-			return ".", nil
+			return "", fmt.Errorf("no go.mod found when searching upwards from %s", startDir)
 		}
 		dir = parent
 	}

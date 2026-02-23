@@ -5,14 +5,14 @@
 FROM golang:1.25-alpine AS builder
 
 # Install build dependencies
-RUN apk add --no-cache git gcc g++ musl-dev
+RUN apk add --no-cache git gcc g++ musl-dev make
 
 # Copy source code
 WORKDIR /build
 COPY . .
 
-# Build presidium binary
-RUN go build -tags extended -o presidium .
+# Build presidium binary (prepare-themes renames go.mod files so they can be embedded)
+RUN make prepare-themes && go build -tags extended -o presidium .
 
 # Stage 2: Test without network access
 FROM golang:1.25-alpine AS test

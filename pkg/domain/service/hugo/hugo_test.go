@@ -57,9 +57,18 @@ func TestExecute_CleansUpEnvironment(t *testing.T) {
 	// Execute a command that will quickly fail (invalid command)
 	_ = svc.Execute("nonexistent-command-xyz")
 
-	// Check that the environment variable was cleaned up
-	if value, exists := os.LookupEnv(envVarName); exists {
-		t.Errorf("HUGO_MODULE_REPLACEMENTS was not cleaned up, value: %s", value)
+	// Check that the environment variable was cleaned up or restored appropriately
+	value, exists := os.LookupEnv(envVarName)
+	if hadOriginal {
+		if !exists {
+			t.Errorf("HUGO_MODULE_REPLACEMENTS was not restored; expected it to exist with original value %q", originalValue)
+		} else if value != originalValue {
+			t.Errorf("HUGO_MODULE_REPLACEMENTS value was not restored; got %q, want %q", value, originalValue)
+		}
+	} else {
+		if exists {
+			t.Errorf("HUGO_MODULE_REPLACEMENTS was not cleaned up; expected it to be unset, got value: %q", value)
+		}
 	}
 }
 
