@@ -5,6 +5,7 @@ import (
 	"io/fs"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
@@ -84,9 +85,16 @@ func (s Service) Extract() (tmpDir string, replacements string, err error) {
 		return "", "", fmt.Errorf("creating temp directory: %w", err)
 	}
 
-	// Extract each theme
+	// Extract each theme (sorted for deterministic output)
+	modulePaths := make([]string, 0, len(moduleMap))
+	for modulePath := range moduleMap {
+		modulePaths = append(modulePaths, modulePath)
+	}
+	sort.Strings(modulePaths)
+
 	var replacementPairs []string
-	for modulePath, themeName := range moduleMap {
+	for _, modulePath := range modulePaths {
+		themeName := moduleMap[modulePath]
 		// Create the theme directory in temp
 		themeDir := filepath.Join(tmpDir, themeName)
 		if err := os.MkdirAll(themeDir, 0755); err != nil {

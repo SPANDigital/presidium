@@ -2,17 +2,12 @@ package hugo
 
 import (
 	"os"
+	"reflect"
 	"testing"
+	"unsafe"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/themes"
 )
-
-func TestNew(t *testing.T) {
-	svc := New()
-	// Service is intentionally a zero-sized struct (stateless)
-	// This test just verifies New() doesn't panic
-	_ = svc
-}
 
 func TestExecute_WithoutThemes(t *testing.T) {
 	// Save original themesFS
@@ -122,15 +117,12 @@ func TestExecute_PropagatesErrors(t *testing.T) {
 
 func TestService_IsZeroSized(t *testing.T) {
 	// Verify that Service struct has no fields (stateless)
-	svc := New()
-
-	// This is mainly a documentation test - Service should remain stateless
-	if testing.Short() {
-		t.Skip("Skipping structural test in short mode")
+	if numFields := reflect.TypeOf(Service{}).NumField(); numFields != 0 {
+		t.Errorf("Service should be a zero-field struct, but has %d fields", numFields)
 	}
-
-	// Service should be empty struct
-	_ = svc // Just verify it exists and is usable
+	if size := unsafe.Sizeof(Service{}); size != 0 {
+		t.Errorf("Service should be zero-sized, but has size %d", size)
+	}
 }
 
 // TestExecute_Integration is an integration test that requires a real Hugo project
