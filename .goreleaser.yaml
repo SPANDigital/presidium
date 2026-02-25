@@ -41,8 +41,6 @@ builds:
           - CGO_ENABLED=1
           - CC=zig cc -target aarch64-macos-none
           - CXX=zig c++ -target aarch64-macos-none
-    hooks:
-      post: make restore-themes
 
 archives:
   - name_template: >-
