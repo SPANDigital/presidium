@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.25.x
-      - name: Prepare themes for embedding
-        run: make prepare-themes
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
@@ -28,4 +26,4 @@ jobs:
           version: latest
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
