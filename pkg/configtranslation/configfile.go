@@ -64,7 +64,7 @@ func (j *JekyllConfig) reparsedShowOptionsAsSequenceDictionaries() bool {
 							case "status":
 								parsed.Status = flagged
 							default:
-								log.Debug(fmt.Sprintf("unsupported shop option: [%s:%v]", name, flagged))
+								log.Debug(fmt.Sprintf("unsupported show option: [%s:%v]", name, flagged))
 							}
 						}
 					}
