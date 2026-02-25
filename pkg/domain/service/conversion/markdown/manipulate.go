@@ -2,9 +2,10 @@ package markdown
 
 import (
 	"fmt"
-	. "github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"io"
 	"os"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 )
 
 // WriteFrontMatterFunc are for callbacks which allow you to customize
@@ -21,7 +22,7 @@ type WriteContentFunc func(content []byte, w io.Writer) error
 
 func IsRecognizableMarkdown(path string) bool {
 	fmt.Println("Validating", path)
-	b, err := AFS.ReadFile(path) // just pass the file name
+	b, err := filesystem.AFS.ReadFile(path) // just pass the file name
 	if err != nil {
 		return false
 	}
@@ -31,9 +32,9 @@ func IsRecognizableMarkdown(path string) bool {
 
 // Checks if a markdown file exists, if it doesn't create an empty one
 func touch(path string) error {
-	_, err := AFS.Stat(path)
+	_, err := filesystem.AFS.Stat(path)
 	if os.IsNotExist(err) {
-		f, err := AFS.Create(path)
+		f, err := filesystem.AFS.Create(path)
 		if err == nil {
 			_, err = f.WriteString("---\n---\n")
 			if err == nil {
@@ -57,7 +58,7 @@ func ManipulateMarkdown(path string, matterFunc WriteFrontMatterFunc, contentFun
 		return err
 	}
 
-	b, err := AFS.ReadFile(path) // just pass the file name
+	b, err := filesystem.AFS.ReadFile(path) // just pass the file name
 	if err != nil {
 		return err
 	}
@@ -66,35 +67,40 @@ func ManipulateMarkdown(path string, matterFunc WriteFrontMatterFunc, contentFun
 	if matches == nil {
 		matches = [][]byte{
 			// we don't care about matches[0]
-			[]byte{},
+			{},
 			[]byte("---\n"),
-			[]byte{},
+			{},
 			[]byte("---\n"),
 			b,
 		}
 	}
-	f, err := FS.Create(path)
+	f, err := filesystem.FS.Create(path)
 	if err != nil {
 		return err
 	}
-	f.Write(matches[1])
-	if matterFunc != nil {
-		err := matterFunc(matches[2], f)
-		if err != nil {
-			return err
-		}
-	} else {
-		f.Write(matches[2])
+	if _, err := f.Write(matches[1]); err != nil {
+		return err
 	}
-	f.Write(matches[3])
-	if contentFunc != nil {
-		err := contentFunc(matches[4], f)
-		if err != nil {
+	if matterFunc != nil {
+		if err := matterFunc(matches[2], f); err != nil {
 			return err
 		}
 	} else {
-		f.Write(matches[4])
+		if _, err := f.Write(matches[2]); err != nil {
+			return err
+		}
+	}
+	if _, err := f.Write(matches[3]); err != nil {
+		return err
+	}
+	if contentFunc != nil {
+		if err := contentFunc(matches[4], f); err != nil {
+			return err
+		}
+	} else {
+		if _, err := f.Write(matches[4]); err != nil {
+			return err
+		}
 	}
 	return f.Close()
-
 }

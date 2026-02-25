@@ -9,6 +9,8 @@ presidium
 dist/
 .DS_Store
 resources/
-
 dist/
 docs/resources
+reports/
+reports/tests-cov.out
+.claude/

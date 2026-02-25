@@ -1,8 +1,8 @@
 package generator
 
 import (
-	"errors"
 	"fmt"
+
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/template"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
@@ -13,11 +13,15 @@ type SiteGenerator interface {
 	Run(target model.InitialSiteTarget) error
 }
 
-func New() SiteGenerator {
+func New() (SiteGenerator, error) {
+	tmplSvc, err := template.New()
+	if err != nil {
+		return nil, fmt.Errorf("initializing template service: %w", err)
+	}
 	return &gen{
 		FsUtil:  filesystem.New(),
-		Service: template.New(),
-	}
+		Service: tmplSvc,
+	}, nil
 }
 
 type gen struct {
@@ -51,7 +55,7 @@ func (g gen) prepareSiteTarget(t model.InitialSiteTarget) error {
 	} else {
 		switch t.WhenSiteExists {
 		case model.AbortWhenTargetSiteExists:
-			return errors.New(fmt.Sprintf("site already exists here: %s", t.SiteTargetDirectory))
+			return fmt.Errorf("site already exists here: %s", t.SiteTargetDirectory)
 		case model.ReplaceTargetSiteIfExists:
 			if err := g.EmptyDir(t.SiteTargetDirectory); err != nil {
 				return err

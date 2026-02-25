@@ -2,7 +2,7 @@ package markdown
 
 import (
 	"fmt"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 	"io"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
@@ -19,7 +19,7 @@ type FrontMatter struct {
 	Author string `yaml:"author,omitempty"`
 	Github string `yaml:"github,omitempty"`
 	Status string `yaml:"status,omitempty"`
-	Roles string `yaml:"roles,omitempty"`
+	Roles  string `yaml:"roles,omitempty"`
 }
 
 // SetupExcludes initialize excludes from Viper
@@ -38,7 +38,7 @@ func AddFrontMatter(path string, fm FrontMatter) error {
 			return err
 		}
 
-		_, err = io.WriteString(w, string(out))
+		_, err = w.Write(out)
 		if err != nil {
 			return err
 		}

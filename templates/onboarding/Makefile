@@ -1,25 +1,36 @@
 default:
-	hugo mod get
-	hugo --templateMetrics --ignoreCache --logLevel info 
+	make serve
 
 hugo:
 	hugo mod get
-	hugo --templateMetrics --ignoreCache --logLevel info 
+	hugo --templateMetrics --ignoreCache --logLevel info
+
+drafts:
+	hugo mod get
+	hugo --templateMetrics --ignoreCache --logLevel info --buildDrafts
 
 tidy:
 	go mod tidy
 	hugo mod tidy
 
-refresh:
+refresh: 
+	rm -rf public resources go.sum .hugo_build.lock themes
 	hugo mod clean
 	make tidy
 	make hugo
 
 serve:
-	hugo server -w --ignoreCache --logLevel info
+	make refresh
+	hugo server -w --ignoreCache --disableFastRender --logLevel info
+
+serve-drafts:
+	make refresh
+	hugo server -w --ignoreCache --disableFastRender --logLevel info --buildDrafts
 
 serve-a:
-	hugo server -w --ignoreCache --logLevel info -p 6060
+	make refresh
+	hugo server -w --ignoreCache --disableFastRender --logLevel info -p 6060
 
 serve-b:
-	hugo server -w --ignoreCache --logLevel info -p 7070
+	make refresh
+	hugo server -w --ignoreCache --disableFastRender --logLevel info -p 7070

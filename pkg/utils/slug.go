@@ -3,6 +3,9 @@ package utils
 import (
 	"regexp"
 	"strings"
+
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
 // UnSlugify turns "something-like_this" into "Something Like This"
@@ -10,7 +13,7 @@ func UnSlugify(name string) string {
 	re := regexp.MustCompile(`(([\d.]+)\s)?(.+)?`)
 	reDividers := regexp.MustCompile(`[\-_]+`)
 	name = reDividers.ReplaceAllString(name, " ")
-	name = strings.Title(name)
+	name = cases.Title(language.English).String(name)
 	matches := re.FindStringSubmatch(name)
 	if matches != nil {
 		return strings.TrimSpace(matches[3])
@@ -29,7 +32,7 @@ func Slugify(name string) string {
 // TitleToSlug Take a capitalized title and turn it into a slug
 func TitleToSlug(title string) string {
 	title = strings.ToLower(title)
-	title = strings.Replace(title, "&", "and", -1)
+	title = strings.ReplaceAll(title, "&", "and")
 	title = Slugify(title)
 	return title
 }

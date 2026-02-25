@@ -5,14 +5,14 @@ pluralizelisttitles: false
 params:
   _merge: deep
   sortByFilePath: true
-  enterprise_key: {{ .Uuid }}
+  enterprise_key:
   frontmatter:
-  - key: author
-    type: email
-    strict: false
-  - key: title
-    type: text
-    strict: true
+    - key: author
+      type: email
+      strict: false
+    - key: title
+      type: text
+      strict: true
 markup:
   goldmark:
     renderer:
@@ -24,58 +24,58 @@ markup:
     style: github
 menu:
   Main:
-  - identifier: introduction
-    name: Introduction
-    url: /
-    weight: 1
-  - identifier: design-principles
-    name: Design Principles
-    url: /design-principles/
-    weight: 2
-  - identifier: visual-elements
-    name: Visual Elements
-    url: /visual-elements/
-    weight: 3
-  - identifier: typography
-    name: Typography
-    url: /typography/
-    weight: 4
-  - identifier: components
-    name: Components
-    url: /components/
-    weight: 5
-  - identifier: motion
-    name: Motion
-    url: /motion/
-    weight: 6
-  - identifier: design-tokens
-    name: Design Tokens
-    url: /design-tokens/
-    weight: 7
-  - identifier: resources
-    name: Resources
-    url: /resources/
-    weight: 8
-  - identifier: accessibility
-    name: Accessibility
-    url: /accessibility/
-    weight: 9
-  - identifier: contributing
-    name: Contributing
-    url: /contributing/
-    weight: 10
-  - identifier: reference
-    name: Reference
-    url: /reference/
-    weight: 11
-  - identifier: faqs
-    name: FAQs
-    url: /faqs/
-    weight: 12
-  - identifier: updates
-    name: Updates
-    url: /updates/
-    weight: 13
+    - identifier: introduction
+      name: Introduction
+      url: /
+      weight: 1
+    - identifier: design-principles
+      name: Design Principles
+      url: /design-principles/
+      weight: 2
+    - identifier: visual-elements
+      name: Visual Elements
+      url: /visual-elements/
+      weight: 3
+    - identifier: typography
+      name: Typography
+      url: /typography/
+      weight: 4
+    - identifier: components
+      name: Components
+      url: /components/
+      weight: 5
+    - identifier: motion
+      name: Motion
+      url: /motion/
+      weight: 6
+    - identifier: design-tokens
+      name: Design Tokens
+      url: /design-tokens/
+      weight: 7
+    - identifier: resources
+      name: Resources
+      url: /resources/
+      weight: 8
+    - identifier: accessibility
+      name: Accessibility
+      url: /accessibility/
+      weight: 9
+    - identifier: contributing
+      name: Contributing
+      url: /contributing/
+      weight: 10
+    - identifier: reference
+      name: Reference
+      url: /reference/
+      weight: 11
+    - identifier: faqs
+      name: FAQs
+      url: /faqs/
+      weight: 12
+    - identifier: updates
+      name: Updates
+      url: /updates/
+      weight: 13
 outputFormats:
   MenuIndex:
     baseName: menu
@@ -85,19 +85,14 @@ outputFormats:
     mediaType: application/json
 outputs:
   home:
-  - HTML
-  - RSS
-  - MenuIndex
-  - SearchMap
+    - HTML
+    - RSS
+    - MenuIndex
+    - SearchMap
 module:
   _merge: shallow
   imports:
     - path: github.com/spandigital/presidium-styling-base
-      mounts:
-        - source: assets
-          target: assets
-        - source: static
-          target: static
     - path: github.com/spandigital/presidium-layouts-base
 enableInlineShortcodes: true
 frontmatter:
