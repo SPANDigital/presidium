@@ -75,12 +75,12 @@ func findModuleRoot() (string, error) {
 }
 
 // Extract extracts all embedded themes to a temporary directory and returns:
-// - tmpDir: the temporary directory path (caller must clean up with os.RemoveAll)
+// - tmpDir: the temporary directory path (caller must clean up)
 // - replacements: comma-separated string for HUGO_MODULE_REPLACEMENTS env var
 // - err: any error encountered during extraction
 func (s Service) Extract() (tmpDir string, replacements string, err error) {
 	// Create a temporary directory for themes
-	tmpDir, err = os.MkdirTemp("", "presidium-themes-*")
+	tmpDir, err = filesystem.AFS.TempDir("", "presidium-themes-*")
 	if err != nil {
 		return "", "", fmt.Errorf("creating temp directory: %w", err)
 	}
@@ -97,8 +97,8 @@ func (s Service) Extract() (tmpDir string, replacements string, err error) {
 		themeName := moduleMap[modulePath]
 		// Create the theme directory in temp
 		themeDir := filepath.Join(tmpDir, themeName)
-		if err := os.MkdirAll(themeDir, 0755); err != nil {
-			os.RemoveAll(tmpDir)
+		if err := filesystem.AFS.MkdirAll(themeDir, 0755); err != nil {
+			_ = filesystem.AFS.RemoveAll(tmpDir)
 			return "", "", fmt.Errorf("creating theme directory %s: %w", themeName, err)
 		}
 
@@ -146,7 +146,7 @@ func (s Service) Extract() (tmpDir string, replacements string, err error) {
 		})
 
 		if err != nil {
-			os.RemoveAll(tmpDir)
+			_ = filesystem.AFS.RemoveAll(tmpDir)
 			return "", "", fmt.Errorf("extracting theme %s: %w", themeName, err)
 		}
 

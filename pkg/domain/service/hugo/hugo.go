@@ -5,6 +5,7 @@ import (
 	"os"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/themes"
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/gohugoio/hugo/commands"
 )
@@ -36,7 +37,7 @@ func (s Service) Execute(args ...string) error {
 
 	// Ensure cleanup happens regardless of how Hugo execution ends
 	defer func() {
-		os.RemoveAll(tmpDir)
+		_ = filesystem.AFS.RemoveAll(tmpDir)
 		if hadPrevReplacements {
 			os.Setenv("HUGO_MODULE_REPLACEMENTS", prevReplacements)
 		} else {

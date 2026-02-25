@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 	"testing/fstest"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 )
 
 func TestNew_WithEmbeddedFS(t *testing.T) {
@@ -70,23 +72,23 @@ func TestExtract_WritesFilesAndProducesReplacements(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Extract() returned unexpected error: %v", err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = filesystem.AFS.RemoveAll(tmpDir) }()
 
 	// Verify go.mod.tmpl was renamed to go.mod on disk
 	goModPath := filepath.Join(tmpDir, "presidium-styling-base", "go.mod")
-	if _, err := os.Stat(goModPath); os.IsNotExist(err) {
+	if exists, _ := filesystem.AFS.Exists(goModPath); !exists {
 		t.Error("Expected go.mod.tmpl to be extracted as go.mod, but file does not exist")
 	}
 
 	// Verify go.sum.tmpl was renamed to go.sum on disk
 	goSumPath := filepath.Join(tmpDir, "presidium-styling-base", "go.sum")
-	if _, err := os.Stat(goSumPath); os.IsNotExist(err) {
+	if exists, _ := filesystem.AFS.Exists(goSumPath); !exists {
 		t.Error("Expected go.sum.tmpl to be extracted as go.sum, but file does not exist")
 	}
 
 	// Verify config.yml was extracted
 	configPath := filepath.Join(tmpDir, "presidium-styling-base", "config.yml")
-	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+	if exists, _ := filesystem.AFS.Exists(configPath); !exists {
 		t.Error("Expected config.yml to be extracted, but file does not exist")
 	}
 
@@ -127,7 +129,7 @@ func TestExtract_EmptyTheme(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Extract() returned unexpected error: %v", err)
 	}
-	defer os.RemoveAll(tmpDir)
+	defer func() { _ = filesystem.AFS.RemoveAll(tmpDir) }()
 
 	if replacements == "" {
 		t.Error("Expected non-empty replacements string")
