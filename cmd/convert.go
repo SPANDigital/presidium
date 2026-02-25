@@ -35,19 +35,6 @@ var convertCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(convertCmd)
-	fs := filesystem.New()
-
-	cwd, err := fs.GetWorkingDir()
-	if err != nil {
-		log.Fatal("could not get working dir")
-	} else {
-		cwd, err = fs.AbsolutePath(".")
-		if err != nil {
-			log.Fatal("something bad happened to get working dir")
-		} else {
-			cwd = "."
-		}
-	}
 
 	stagingDir, err := filesystem.AFS.TempDir(os.TempDir(), "staging")
 	if err != nil {
@@ -60,7 +47,7 @@ func init() {
 	pflags.StringVarP(&config.Flags.SourceRepoDir, "sourceRepoDir", "s", "", "Source directory")
 	pflags.StringVar(&config.Flags.BrandTheme, "brand", "", "path to brand theme")
 	pflags.StringVar(&config.Flags.SyntaxStyle, "markup", "github", "specify markup theme, other than the default github style")
-	pflags.StringVarP(&config.Flags.DestinationRepoDir, "destDir", "d", cwd, "Destination directory")
+	pflags.StringVarP(&config.Flags.DestinationRepoDir, "destDir", "d", ".", "Destination directory")
 	pflags.BoolVar(&config.Flags.AddSlugAndUrl, "slugIt", false, "Add slug and url in the front matter")
 	pflags.BoolVar(&config.Flags.CleanTarget, "clean", true, "Clean the target directory")
 	pflags.BoolVarP(&config.Flags.WeightBasedOnFilename, "weightBasedOnFilename", "w", conversion.Defaults.WeightBasedOnFileName, "Base front matter weight on filename")

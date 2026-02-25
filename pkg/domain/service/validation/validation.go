@@ -2,16 +2,16 @@ package validation
 
 import (
 	"container/list"
-	"errors"
 	"fmt"
+	"io/fs"
+	"net/url"
+	"os"
+	"strings"
+
 	"github.com/PuerkitoBio/goquery"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/scylladb/go-set/strset"
-	"io/fs"
-	"net/url"
-	"os"
-	strings "strings"
 )
 
 type LinkListener = func(link Link)
@@ -56,8 +56,8 @@ type validation struct {
 	tracked map[Status]*list.List // Keep track of collected links per status
 }
 
-func (validation validation) IsLocal() bool {
-	return validation.isLocal
+func (v validation) IsLocal() bool {
+	return v.isLocal
 }
 
 func New(path string) Validator {
@@ -70,26 +70,18 @@ func New(path string) Validator {
 	}
 }
 
-func (validation validation) hasSeen(f string) bool {
-	seen := validation.seen.Has(f)
+func (v validation) hasSeen(f string) bool {
+	seen := v.seen.Has(f)
 	if !seen {
-		validation.seen.Add(f)
+		v.seen.Add(f)
 	}
 	return seen
 }
 
-func (validation validation) cleanUp() {
-	validation.seen.Clear()
-	for k, v := range validation.tracked {
-		v.Init()
-		delete(validation.tracked, k)
-	}
-}
+func (v validation) Validate() (Report, error) {
+	v.seen.Clear()
 
-func (validation validation) Validate() (Report, error) {
-	validation.seen.Clear()
-
-	err := filesystem.AFS.Walk(validation.path, func(path string, info fs.FileInfo, err error) error {
+	err := filesystem.AFS.Walk(v.path, func(path string, info fs.FileInfo, err error) error {
 
 		if err != nil {
 			log.ErrorWithFields(err, log.Fields{"validation_path": path})
@@ -98,7 +90,7 @@ func (validation validation) Validate() (Report, error) {
 
 		if !info.IsDir() {
 			log.DebugWithFields("validation started", log.Fields{"validation_path": path})
-			err = validation.process(path)
+			err = v.process(path)
 			if err != nil {
 				log.ErrorWithFields(err, log.Fields{"validation_path": path})
 				return err
@@ -110,13 +102,11 @@ func (validation validation) Validate() (Report, error) {
 
 	if err != nil {
 		return Report{}, err
-	} else {
-		return validation.newReport(), err
 	}
-
+	return v.newReport(), nil
 }
 
-func (validation validation) newReport() Report {
+func (v validation) newReport() Report {
 
 	report := Report{
 		Data:       make(map[Status][]Link),
@@ -127,7 +117,7 @@ func (validation validation) newReport() Report {
 		TotalLinks: 0,
 	}
 
-	for s, links := range validation.tracked {
+	for s, links := range v.tracked {
 
 		countedLinks := links.Len()
 		report.TotalLinks += countedLinks
@@ -145,27 +135,23 @@ func (validation validation) newReport() Report {
 		switch s {
 		case Valid:
 			report.Valid = countedLinks
-			break
 		case Broken:
 			report.Broken = countedLinks
-			break
 		case Warning:
 			report.Warning = countedLinks
-			break
 		case External:
 			report.External = countedLinks
-			break
 		}
 	}
 
 	return report
 }
 
-func (validation validation) process(path string) error {
+func (v validation) process(path string) error {
 
 	s := strings.TrimSpace(strings.ToLower(path))
 
-	if validation.hasSeen(s) {
+	if v.hasSeen(s) {
 		return nil
 	}
 
@@ -173,23 +159,19 @@ func (validation validation) process(path string) error {
 		return nil
 	}
 
-	validation.queue.PushFront(Link{
+	v.queue.PushFront(Link{
 		Uri:        path,
 		Location:   path,
 		IsExternal: false,
 	})
 
-	for {
+	for v.queue.Len() > 0 {
 
-		if validation.queue.Len() == 0 {
-			break
-		}
-
-		todo := validation.queue.Front()
-		validation.queue.Remove(todo)
+		todo := v.queue.Front()
+		v.queue.Remove(todo)
 		link := todo.Value.(Link)
 
-		if validation.hasSeen(link.Uri) {
+		if v.hasSeen(link.Uri) {
 			continue
 		}
 
@@ -198,7 +180,7 @@ func (validation validation) process(path string) error {
 		}
 
 		if link.IsExternal {
-			validation.reportLink(link, External, "")
+			v.reportLink(link, External, "")
 			continue
 		}
 
@@ -225,16 +207,15 @@ func (validation validation) process(path string) error {
 		file, err := filesystem.AFS.OpenFile(link.Uri, os.O_RDONLY, 0666)
 
 		if err != nil {
-			validation.reportLink(link, Broken, fmt.Sprintf("Unable to open file %s: %s", link.Uri, err.Error()))
+			v.reportLink(link, Broken, fmt.Sprintf("Unable to open file %s: %s", link.Uri, err.Error()))
 			continue
 		}
 
-		var doc *goquery.Document
-		doc, err = goquery.NewDocumentFromReader(file)
+		doc, err := goquery.NewDocumentFromReader(file)
 		if err != nil {
-			validation.reportLink(link, Broken, fmt.Sprintf("file %s is propably not a valid HTML file: %s", link.Uri, err.Error()))
+			v.reportLink(link, Broken, fmt.Sprintf("file %s is propably not a valid HTML file: %s", link.Uri, err.Error()))
 		} else {
-			validation.reportLink(link, Valid, "")
+			v.reportLink(link, Valid, "")
 			// Find all links referenced by this page!
 			doc.Find("a[href]").Each(func(i int, item *goquery.Selection) {
 				href, ok := item.Attr("href")
@@ -245,25 +226,25 @@ func (validation validation) process(path string) error {
 				validationHref = strings.TrimSpace(validationHref)
 				if strings.HasPrefix(validationHref, "mailto:") ||
 					strings.HasPrefix(validationHref, "tel:") {
-					validation.reportLink(link, Warning, fmt.Sprintf("Unhandled url scheme: %s", href))
+					v.reportLink(link, Warning, fmt.Sprintf("Unhandled url scheme: %s", href))
 				} else if strings.Contains(validationHref, "#") {
 					return
 				}
 
-				parsedLinkUrl, err := url.Parse(href)
+				parsedLinkUrl, parseErr := url.Parse(href)
 
-				if err != nil {
-					link.Message = fmt.Sprintf("%v", err.Error())
+				if parseErr != nil {
+					link.Message = parseErr.Error()
 					return
 				}
 
 				link.IsExternal = len(parsedLinkUrl.Scheme) > 0
 
-				finalUri := fmt.Sprintf("%s%s", validation.path, href)
+				finalUri := fmt.Sprintf("%s%s", v.path, href)
 
-				validation.reportLink(link, Valid, "")
+				v.reportLink(link, Valid, "")
 
-				validation.queue.PushFront(Link{
+				v.queue.PushFront(Link{
 					Uri:      finalUri,
 					Location: link.Uri,
 					Label:    strings.TrimSpace(item.Text()),
@@ -278,28 +259,16 @@ func (validation validation) process(path string) error {
 	return nil
 }
 
-func fileOnPath(path string, name string) (string, error) {
-	file := fmt.Sprintf("%s/%s", path, name)
-	info, err := filesystem.AFS.Stat(file)
-	if err != nil {
-		return file, err
-	}
-	if info.IsDir() {
-		return file, errors.New(fmt.Sprintf("expected file but foun directory: %s", file))
-	}
-	return file, nil
-}
-
-func (validation validation) reportLink(link Link, status Status, message string) {
+func (v validation) reportLink(link Link, status Status, message string) {
 
 	link.Status = status
 	link.Message = message
 
-	collection, found := validation.tracked[status]
+	collection, found := v.tracked[status]
 
 	if !found {
 		collection = list.New()
-		validation.tracked[status] = collection
+		v.tracked[status] = collection
 	}
 
 	collection.PushBack(link)

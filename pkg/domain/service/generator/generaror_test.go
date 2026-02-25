@@ -8,12 +8,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/Masterminds/goutils"
 	model "github.com/SPANDigital/presidium-hugo/pkg/domain/model/generator"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
 	"github.com/spf13/afero"
+	"math/rand/v2"
 )
 
 func TestGeneratorImpl(t *testing.T) {
@@ -43,7 +43,9 @@ var _ = Describe("Site generation behaviour:", func() {
 	AfterSuite(func() { _ = filesystem.AFS.RemoveAll(workDir) })
 
 	BeforeEach(func() {
-		g = New()
+		var newErr error
+		g, newErr = New()
+		Expect(newErr).ShouldNot(HaveOccurred())
 		t = model.InitialSiteTarget{
 			SiteTargetDirectory: filepath.Join(workDir, "testSite"),
 			SiteName:            "Test Site",
@@ -67,7 +69,7 @@ var _ = Describe("Site generation behaviour:", func() {
 	})
 
 	It("should overwrite the existing site if so configured.", func() {
-		pathId, _ := goutils.RandomNumeric(6)
+		pathId := fmt.Sprintf("%06d", rand.IntN(1000000))
 		up := func(s string) string { return strings.Replace(s, "*", pathId, 1) } // making a unique path here
 		removablePats := mustMakeTree("will be removed", []string{
 			up("content-*/introduction/_index.md"),

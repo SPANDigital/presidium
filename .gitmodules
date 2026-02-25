@@ -1,0 +1,20 @@
+[submodule "tools/hugo"]
+	path = tools/hugo
+	url = https://github.com/gohugoio/hugo
+	branch = master
+	shallow = true
+[submodule "themes/presidium-layouts-base"]
+	path = themes/presidium-layouts-base
+	url = https://github.com/SPANDigital/presidium-layouts-base
+	branch = main
+	shallow = true
+[submodule "themes/presidium-layouts-blog"]
+	path = themes/presidium-layouts-blog
+	url = https://github.com/SPANDigital/presidium-layouts-blog
+	branch = main
+	shallow = true
+[submodule "themes/presidium-styling-base"]
+	path = themes/presidium-styling-base
+	url = https://github.com/SPANDigital/presidium-styling-base
+	branch = main
+	shallow = true

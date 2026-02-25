@@ -9,9 +9,10 @@ import (
 	"regexp"
 	"strings"
 
+	"net/url"
+
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/colors"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/html"
-	"github.com/gohugoio/hugo/common/paths"
 	"github.com/spf13/viper"
 )
 
@@ -152,11 +153,17 @@ func fixFigureCaptions(path string) error {
 	})
 }
 
+// isAbsURL returns true if the given string is an absolute URL.
+func isAbsURL(in string) bool {
+	u, err := url.Parse(in)
+	return err == nil && u.IsAbs()
+}
+
 // shortcodes in strings are not supported atm
 // https://github.com/gohugoio/hugo/issues/6703
 func parseSource(path string, dir string, filename string, rawSource bool) string {
 	src := dir + filename
-	if paths.IsAbsURL(src) {
+	if isAbsURL(src) {
 		return src
 	}
 	if imgIsInSameDir(path, filename) {
@@ -289,7 +296,7 @@ func simpleReplaceContentInMarkdown(path string, finds []string, replace string)
 	for _, find := range finds {
 		err := ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 			strContent := string(content)
-			if strings.Index(strContent, find) > -1 {
+			if strings.Contains(strContent, find) {
 				if replace == "" {
 					fmt.Println("Blanking", colors.Labels.Unwanted(find), "in", path)
 				} else {
@@ -313,7 +320,7 @@ func replaceContentInMarkdown(path string, replacements []replacement) error {
 	for _, replacement := range replacements {
 		err := ManipulateMarkdown(path, nil, func(content []byte, w io.Writer) error {
 			strContent := string(content)
-			if strings.Index(strContent, replacement.Find) > -1 {
+			if strings.Contains(strContent, replacement.Find) {
 				if replacement.Replace == "" {
 					fmt.Println("Blanking", colors.Labels.Unwanted(replacement.Find), "in", path)
 				} else {
@@ -401,13 +408,8 @@ func replaceTooltips(path string) error {
 func ensureCamelCase(input string) string {
 	var snake = regexp.MustCompile("_([A-Za-z])")
 	return snake.ReplaceAllStringFunc(input, func(s string) string {
-		return strings.ToUpper(strings.Replace(s, "_", "", -1))
+		return strings.ToUpper(strings.ReplaceAll(s, "_", ""))
 	})
-}
-
-func stripTooltips(strContent string) string {
-	var TooltipRe = regexp.MustCompile(`(?ms){{< tooltip "(.*?)" >}}`)
-	return TooltipRe.ReplaceAllString(strContent, "$1")
 }
 
 func parseIfStatements(strContent string) string {

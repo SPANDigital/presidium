@@ -2,7 +2,6 @@ package validate
 
 import (
 	"container/list"
-	"errors"
 	"fmt"
 	"io/fs"
 	"net/url"
@@ -48,14 +47,6 @@ func (v validation) hasSeen(f string) bool {
 	return seen
 }
 
-func (v validation) cleanUp() {
-	v.seen.Clear()
-	for k, val := range v.tracked {
-		val.Init()
-		delete(v.tracked, k)
-	}
-}
-
 func (v validation) Validate() (model.Report, error) {
 	v.seen.Clear()
 
@@ -78,9 +69,8 @@ func (v validation) Validate() (model.Report, error) {
 
 	if err != nil {
 		return model.Report{}, err
-	} else {
-		return v.newReport(), err
 	}
+	return v.newReport(), nil
 }
 
 func (v validation) newReport() model.Report {
@@ -110,16 +100,12 @@ func (v validation) newReport() model.Report {
 		switch s {
 		case model.Valid:
 			report.Valid = countedLinks
-			break
 		case model.Broken:
 			report.Broken = countedLinks
-			break
 		case model.Warning:
 			report.Warning = countedLinks
-			break
 		case model.External:
 			report.External = countedLinks
-			break
 		}
 	}
 
@@ -142,11 +128,7 @@ func (v validation) process(path string) error {
 		IsExternal: false,
 	})
 
-	for {
-		if v.queue.Len() == 0 {
-			break
-		}
-
+	for v.queue.Len() > 0 {
 		todo := v.queue.Front()
 		v.queue.Remove(todo)
 		link := todo.Value.(model.Link)
@@ -200,8 +182,7 @@ func (v validation) process(path string) error {
 			continue
 		}
 
-		var doc *goquery.Document
-		doc, err = goquery.NewDocumentFromReader(file)
+		doc, err := goquery.NewDocumentFromReader(file)
 		if err != nil {
 			v.reportLink(link, model.Broken, fmt.Sprintf("file %s is propably not a valid HTML file: %s", link.Uri, err.Error()))
 		} else {
@@ -228,9 +209,9 @@ func (v validation) process(path string) error {
 					return
 				}
 
-				parsedLinkUrl, err := url.Parse(href)
-				if err != nil {
-					link.Message = fmt.Sprintf("%v", err.Error())
+				parsedLinkUrl, parseErr := url.Parse(href)
+				if parseErr != nil {
+					link.Message = parseErr.Error()
 					return
 				}
 
@@ -257,7 +238,7 @@ func (v validation) process(path string) error {
 
 func (v validation) validateAnchor(doc *goquery.Document, link model.Link, anchor string) {
 	link.Uri = strings.Replace(link.Uri, "index.html", anchor, 1)
-	anchor = strings.Replace(anchor, ".", "\\.", -1)
+	anchor = strings.ReplaceAll(anchor, ".", "\\.")
 	if len(doc.Find(anchor).Nodes) == 0 {
 		v.reportLink(link, model.Broken, "broken anchor reference")
 		return
@@ -287,22 +268,10 @@ func (v validation) validateRemoteAnchor(link model.Link) error {
 
 	defer file.Close()
 
-	doc, err := goquery.NewDocumentFromReader(file)
+	doc, _ := goquery.NewDocumentFromReader(file)
 	v.validateAnchor(doc, link, anchor)
 
 	return nil
-}
-
-func fileOnPath(path string, name string) (string, error) {
-	file := fmt.Sprintf("%s/%s", path, name)
-	info, err := filesystem.AFS.Stat(file)
-	if err != nil {
-		return file, err
-	}
-	if info.IsDir() {
-		return file, errors.New(fmt.Sprintf("expected file but found directory: %s", file))
-	}
-	return file, nil
 }
 
 func (v validation) reportLink(link model.Link, status model.Status, message string) {

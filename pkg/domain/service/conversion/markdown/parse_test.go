@@ -30,7 +30,7 @@ var _ = Describe("Parse", func() {
 	filesystem.SetFileSystem(afero.NewMemMapFs())
 
 	BeforeEach(func() {
-		filesystem.AFS.Remove("test.md")
+		_ = filesystem.AFS.Remove("test.md")
 	})
 
 	When("parsing markdown file", func() {

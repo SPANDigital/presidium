@@ -3,15 +3,16 @@ package conversion
 import (
 	"errors"
 	"fmt"
-	"github.com/SPANDigital/presidium-hugo/pkg/config"
-	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
-	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 	"io"
 	"io/fs"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/SPANDigital/presidium-hugo/pkg/config"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
+	"github.com/SPANDigital/presidium-hugo/pkg/utils"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/conversion/fileactions"
@@ -286,7 +287,7 @@ func (c *Converter) prepareStaging() {
 	}
 
 	err := c.fs.CopyWithOptions(c.sourceRepoContentDir, c.stagingContentDir, copy.Options{
-		Skip: func(src string) (bool, error) {
+		Skip: func(srcinfo os.FileInfo, src, dest string) (bool, error) {
 			_, file := filepath.Split(src)
 			if strings.HasPrefix(file, ".") {
 				return true, nil
@@ -408,10 +409,14 @@ func (c *Converter) generateHugoModule() {
 	}
 
 	c.messageUser(infoMessage("Adding Hugo GO module to site").withContentStyle(colors.Labels.Wanted))
-	hugo.New().Execute("--source", c.stagingDir, "mod", "init", c.moduleName())
+	if err := hugo.New().Execute("--source", c.stagingDir, "mod", "init", c.moduleName()); err != nil {
+		log.Fatalf("failed to initialize Hugo Go module in staging directory %q: %v", c.stagingDir, err)
+	}
 	srcModFile := filepath.Join(c.stagingDir, "go.mod")
 	dstModFile := filepath.Join(c.destinationRepoDir, "go.mod")
-	_ = c.fs.Copy(srcModFile, dstModFile, fs.ModePerm)
+	if err := c.fs.Copy(srcModFile, dstModFile, fs.ModePerm); err != nil {
+		log.Fatalf("failed to copy generated go.mod from %q to %q: %v", srcModFile, dstModFile, err)
+	}
 	c.messageUser(infoMessage("Copied over hugo mod file"))
 
 }

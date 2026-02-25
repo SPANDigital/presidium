@@ -2,7 +2,7 @@ package markdown
 
 import (
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
-	"gopkg.in/yaml.v2"
+	"gopkg.in/yaml.v3"
 )
 
 type Markdown struct {
