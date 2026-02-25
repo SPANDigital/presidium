@@ -33,14 +33,14 @@ builds:
         goarch: amd64
         env:
           - CGO_ENABLED=1
-          - CC=zig cc -target x86_64-macos-none
-          - CXX=zig c++ -target x86_64-macos-none
+          - CC=zig cc -target x86_64-macos
+          - CXX=zig c++ -target x86_64-macos
       - goos: darwin
         goarch: arm64
         env:
           - CGO_ENABLED=1
-          - CC=zig cc -target aarch64-macos-none
-          - CXX=zig c++ -target aarch64-macos-none
+          - CC=zig cc -target aarch64-macos
+          - CXX=zig c++ -target aarch64-macos
 
 archives:
   - name_template: >-
