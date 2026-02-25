@@ -60,7 +60,7 @@ coverage_report: ## Open coverage report in browser
 	@go tool cover -html=reports/tests-cov.out
 
 dist: prepare-themes ## Build distribution binary
-	mkdir -p "dist" && go build -trimpath -o "dist/presidium" --tags extended ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
+	mkdir -p "dist" && go build -trimpath -o "dist/presidium" -tags extended ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
 
 serve-docs:
 	cd $(DOCSDIR) && make serve
