@@ -19,8 +19,6 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: 1.25.x
-      - name: Prepare themes for embedding
-        run: make prepare-themes
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:

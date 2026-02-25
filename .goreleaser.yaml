@@ -3,6 +3,7 @@ version: 2
 before:
   hooks:
     - go mod tidy
+    - make prepare-themes
 
 builds:
   - tags:
@@ -23,6 +24,8 @@ builds:
         goarch: "386"
       - goos: windows
         goarch: arm64
+    hooks:
+      post: make restore-themes
 
 archives:
   - name_template: >-
