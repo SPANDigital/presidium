@@ -17,7 +17,7 @@ All upcoming features and issues are tracked [here](https://github.com/SPANDigit
 
 # Development
 
-Presidium embeds a specific verison of [Hugo](https://github.com/gohugoio/hugo) to ensure that the user is building their docs with a Hugo version that is compatible with our Presidium Themes.
+Presidium embeds a specific version of [Hugo](https://github.com/gohugoio/hugo) to ensure that the user is building their docs with a Hugo version that is compatible with our Presidium Themes.
 
 Since we require the embedded Hugo version to be built into a binary, some of the cli commands only work after running the `make build` cmd.
 
