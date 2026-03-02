@@ -31,12 +31,16 @@ builds:
           - CXX=zig c++ -target aarch64-linux-gnu
       - goos: darwin
         goarch: amd64
+        ldflags:
+          - -s -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
         env:
           - CGO_ENABLED=1
           - CC=zig cc -target x86_64-macos
           - CXX=zig c++ -target x86_64-macos
       - goos: darwin
         goarch: arm64
+        ldflags:
+          - -s -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
         env:
           - CGO_ENABLED=1
           - CC=zig cc -target aarch64-macos
