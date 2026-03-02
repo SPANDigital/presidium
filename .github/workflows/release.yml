@@ -1,12 +1,17 @@
-name: goreleaser
+name: Release
 
 on:
   push:
     tags:
       - "v*"
 
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+
 jobs:
-  goreleaser:
+  release:
     environment: releaser
     runs-on: ubuntu-latest
     steps:
@@ -15,19 +20,22 @@ jobs:
         with:
           fetch-depth: 0
           submodules: true
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: 1.25.x
+
       - name: Set up Zig
         uses: goto-bus-stop/setup-zig@v2
         with:
           version: 0.11.0
+
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          version: latest
+          version: "~> v2.12"
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
