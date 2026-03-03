@@ -1,4 +1,4 @@
-name: Release
+name: Go Releaser
 
 on:
   push:
@@ -7,19 +7,19 @@ on:
 
 permissions:
   contents: write
-  packages: write
-  id-token: write
+  # packages: write
+  # issues: write
 
 jobs:
-  release:
-    environment: releaser
+  goreleaser:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
           submodules: true
+      - run: git fetch --force --tags
 
       - name: Set up Go
         uses: actions/setup-go@v5
@@ -35,7 +35,8 @@ jobs:
         uses: goreleaser/goreleaser-action@v6
         with:
           distribution: goreleaser
-          version: "~> v2.12"
+          version: latest
           args: release --clean
         env:
-          GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
