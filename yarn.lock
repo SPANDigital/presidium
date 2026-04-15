@@ -449,8 +449,8 @@ flux-standard-action@^2.0.3:
     lodash.isstring "^4.0.1"
 
 follow-redirects@^1.15.4:
-  version "1.15.11"
-  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.15.11.tgz#777d73d72a92f8ec4d2e410eb47352a56b8e8340"
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.16.0.tgz#28474a159d3b9d11ef62050a14ed60e4df6d61bc"
 
 form-data@^4.0.4:
   version "4.0.5"
