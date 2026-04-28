@@ -4,10 +4,16 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/SPANDigital/presidium-hugo/pkg/configtranslation"
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/themes"
 	"github.com/SPANDigital/presidium-hugo/pkg/filesystem"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/gohugoio/hugo/commands"
+)
+
+const (
+	moduleStylingBase = "github.com/spandigital/presidium-styling-base"
+	moduleLayoutsBase = "github.com/spandigital/presidium-layouts-base"
 )
 
 type Service struct {
@@ -48,6 +54,59 @@ func (s Service) Execute(args ...string) error {
 	// Set environment variable to point Hugo to local themes
 	os.Setenv("HUGO_MODULE_REPLACEMENTS", replacements)
 
+	if err := validateModuleImportOrder(configPath()); err != nil {
+		return err
+	}
+
 	// Execute Hugo with local themes - return the error to preserve Hugo's exit behavior
 	return commands.Execute(args)
+}
+
+// configPath returns the path to the Hugo config file in the working directory.
+// Returns an empty string if neither config.yaml nor config.yml exists.
+func configPath() string {
+	for _, name := range []string{"config.yaml", "config.yml"} {
+		if _, err := os.Stat(name); err == nil {
+			return name
+		}
+	}
+	return ""
+}
+
+// validateModuleImportOrder checks that presidium-styling-base appears before
+// presidium-layouts-base in the Hugo module imports. Returns nil when either
+// module is absent — no opinion on configs that do not use both.
+// Config read errors are silently ignored; Hugo will report them downstream.
+func validateModuleImportOrder(configFile string) error {
+	cfg, err := configtranslation.ReadHugoConfig(configFile)
+	if err != nil {
+		return nil
+	}
+
+	stylingIdx := -1
+	layoutsIdx := -1
+	for i, imp := range cfg.Module.Imports {
+		switch imp.Path {
+		case moduleStylingBase:
+			stylingIdx = i
+		case moduleLayoutsBase:
+			layoutsIdx = i
+		}
+	}
+
+	if stylingIdx == -1 || layoutsIdx == -1 {
+		return nil
+	}
+
+	if layoutsIdx < stylingIdx {
+		return fmt.Errorf(
+			"invalid module import order: %q (index %d) must come before %q (index %d).\n"+
+				"Fix config.yaml: list %s before %s.",
+			moduleStylingBase, stylingIdx,
+			moduleLayoutsBase, layoutsIdx,
+			moduleStylingBase, moduleLayoutsBase,
+		)
+	}
+
+	return nil
 }
