@@ -100,8 +100,7 @@ func validateModuleImportOrder(configFile string) error {
 
 	if layoutsIdx < stylingIdx {
 		return fmt.Errorf(
-			"invalid module import order: %q (index %d) must come before %q (index %d).\n"+
-				"Fix config.yaml: list %s before %s.",
+			"invalid module import order: %q (index %d) must come before %q (index %d); fix config.yaml by listing %s before %s",
 			moduleStylingBase, stylingIdx,
 			moduleLayoutsBase, layoutsIdx,
 			moduleStylingBase, moduleLayoutsBase,
