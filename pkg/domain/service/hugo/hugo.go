@@ -66,7 +66,7 @@ func (s Service) Execute(args ...string) error {
 // Returns an empty string if neither config.yaml nor config.yml exists.
 func configPath() string {
 	for _, name := range []string{"config.yaml", "config.yml"} {
-		if _, err := os.Stat(name); err == nil {
+		if _, err := filesystem.AFS.Stat(name); err == nil {
 			return name
 		}
 	}
@@ -88,9 +88,13 @@ func validateModuleImportOrder(configFile string) error {
 	for i, imp := range cfg.Module.Imports {
 		switch imp.Path {
 		case moduleStylingBase:
-			stylingIdx = i
+			if stylingIdx == -1 {
+				stylingIdx = i
+			}
 		case moduleLayoutsBase:
-			layoutsIdx = i
+			if layoutsIdx == -1 {
+				layoutsIdx = i
+			}
 		}
 	}
 
@@ -100,9 +104,10 @@ func validateModuleImportOrder(configFile string) error {
 
 	if layoutsIdx < stylingIdx {
 		return fmt.Errorf(
-			"invalid module import order: %q (index %d) must come before %q (index %d); fix config.yaml by listing %s before %s",
+			"invalid module import order: %q (index %d) must come before %q (index %d); fix %s by listing %s before %s",
 			moduleStylingBase, stylingIdx,
 			moduleLayoutsBase, layoutsIdx,
+			configFile,
 			moduleStylingBase, moduleLayoutsBase,
 		)
 	}

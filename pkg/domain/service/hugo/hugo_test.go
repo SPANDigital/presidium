@@ -223,8 +223,12 @@ func TestValidateModuleImportOrder(t *testing.T) {
 				if err != nil {
 					t.Fatal(err)
 				}
-				_, _ = f.WriteString(tt.yaml)
-				_ = f.Close()
+				if _, err := f.WriteString(tt.yaml); err != nil {
+					t.Fatalf("failed to write temp config file: %v", err)
+				}
+				if err := f.Close(); err != nil {
+					t.Fatalf("failed to close temp config file: %v", err)
+				}
 				configFile = f.Name()
 			}
 
