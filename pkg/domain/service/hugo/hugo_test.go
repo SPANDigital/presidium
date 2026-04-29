@@ -3,6 +3,7 @@ package hugo
 import (
 	"os"
 	"reflect"
+	"strings"
 	"testing"
 	"unsafe"
 
@@ -171,6 +172,79 @@ func TestExecute_WithThemesExtraction(t *testing.T) {
 	// Version command should always work
 	if err != nil {
 		t.Logf("Hugo version command error: %v", err)
+	}
+}
+
+func TestValidateModuleImportOrder(t *testing.T) {
+	tests := []struct {
+		name    string
+		yaml    string
+		wantErr bool
+	}{
+		{
+			name: "correct order",
+			yaml: "module:\n  imports:\n    - path: github.com/spandigital/presidium-styling-base\n    - path: github.com/spandigital/presidium-layouts-base",
+		},
+		{
+			name:    "incorrect order",
+			yaml:    "module:\n  imports:\n    - path: github.com/spandigital/presidium-layouts-base\n    - path: github.com/spandigital/presidium-styling-base",
+			wantErr: true,
+		},
+		{
+			name: "only styling-base present",
+			yaml: "module:\n  imports:\n    - path: github.com/spandigital/presidium-styling-base",
+		},
+		{
+			name: "only layouts-base present",
+			yaml: "module:\n  imports:\n    - path: github.com/spandigital/presidium-layouts-base",
+		},
+		{
+			name: "neither module present",
+			yaml: "module:\n  imports:\n    - path: github.com/spandigital/some-other-module",
+		},
+		{
+			name:    "config file missing",
+			yaml:    "",
+			wantErr: false,
+		},
+		{
+			name: "additional modules interspersed, correct order",
+			yaml: "module:\n  imports:\n    - path: github.com/spandigital/other\n    - path: github.com/spandigital/presidium-styling-base\n    - path: github.com/spandigital/another\n    - path: github.com/spandigital/presidium-layouts-base",
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var configFile string
+			if tt.name == "config file missing" {
+				configFile = "/nonexistent/path/config.yaml"
+			} else {
+				f, err := os.CreateTemp(t.TempDir(), "config*.yaml")
+				if err != nil {
+					t.Fatal(err)
+				}
+				if _, err := f.WriteString(tt.yaml); err != nil {
+					t.Fatalf("failed to write temp config file: %v", err)
+				}
+				if err := f.Close(); err != nil {
+					t.Fatalf("failed to close temp config file: %v", err)
+				}
+				configFile = f.Name()
+			}
+
+			err := validateModuleImportOrder(configFile)
+			if (err != nil) != tt.wantErr {
+				t.Errorf("validateModuleImportOrder() error = %v, wantErr %v", err, tt.wantErr)
+			}
+			if err != nil && tt.wantErr {
+				if !strings.Contains(err.Error(), moduleStylingBase) {
+					t.Errorf("error should name the styling module, got: %v", err)
+				}
+				if !strings.Contains(err.Error(), moduleLayoutsBase) {
+					t.Errorf("error should name the layouts module, got: %v", err)
+				}
+			}
+		})
 	}
 }
 

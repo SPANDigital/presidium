@@ -23,6 +23,11 @@ Since we require the embedded Hugo version to be built into a binary, some of th
 
 ## Getting started
 
+Initialize the theme submodules before building or running tests:
+```
+git submodule update --init --recursive
+```
+
 Run the build command:
 ```
 make build

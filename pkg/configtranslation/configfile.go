@@ -210,6 +210,18 @@ func ReadJekyllConfig(path string) (*JekyllConfig, error) {
 	return config, nil
 }
 
+func ReadHugoConfig(path string) (*HugoConfig, error) {
+	b, err := filesystem.AFS.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	cfg := &HugoConfig{}
+	if err := yaml.Unmarshal(b, cfg); err != nil {
+		return nil, err
+	}
+	return cfg, nil
+}
+
 func WriteHugoConfig(path string, config *HugoConfig) error {
 	b, err := yaml.Marshal(config)
 	if err != nil {
