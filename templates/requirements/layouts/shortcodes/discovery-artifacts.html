@@ -1,0 +1,96 @@
+{{/*
+  discovery-artifacts
+
+  Description:
+    Renders a collapsible table view of discovery artifacts from Hugo's data directory.
+    Data is synced from the discovery folder by the hugo-data-sync skill.
+
+  Usage:
+    {{< discovery-artifacts >}}
+
+  Context:
+    - Requires data file at data/discovery-artifacts.yaml
+    - Run `make sync-data` to update data files
+*/}}
+
+{{- $data := index site.Data "discovery-artifacts" -}}
+{{- if $data -}}
+
+<table class="discovery-table">
+<thead>
+<tr>
+<th>Name</th>
+</tr>
+</thead>
+<tbody>
+{{- range $data.items -}}
+  {{- if not .children -}}
+    {{- if not .file_count -}}
+      <tr>
+        <td>{{ .name }}</td>
+      </tr>
+    {{- else -}}
+      <tr>
+        <td>{{ .name }} <small>({{ .file_count }} files)</small></td>
+      </tr>
+    {{- end -}}
+  {{- else -}}
+    <tr>
+      <td>
+        <details>
+          <summary><strong>{{ .name }}</strong></summary>
+          <table class="discovery-table nested">
+          <tbody>
+          {{- range .children -}}
+            {{- if not .children -}}
+              {{- if not .file_count -}}
+                <tr>
+                  <td>{{ .name }}</td>
+                </tr>
+              {{- else -}}
+                <tr>
+                  <td>{{ .name }}/ <small>({{ .file_count }} files)</small></td>
+                </tr>
+              {{- end -}}
+            {{- else -}}
+              <tr>
+                <td>
+                  <details>
+                    <summary><strong>{{ .name }}</strong></summary>
+                    <table class="discovery-table nested">
+                    <tbody>
+                    {{- range .children -}}
+                      {{- if not .file_count -}}
+                        <tr>
+                          <td>{{ .name }}</td>
+                        </tr>
+                      {{- else -}}
+                        <tr>
+                          <td>{{ .name }} <small>({{ .file_count }} files)</small></td>
+                        </tr>
+                      {{- end -}}
+                    {{- end -}}
+                    </tbody>
+                    </table>
+                  </details>
+                </td>
+              </tr>
+            {{- end -}}
+          {{- end -}}
+          </tbody>
+          </table>
+        </details>
+      </td>
+    </tr>
+  {{- end -}}
+{{- end -}}
+</tbody>
+</table>
+
+<style>
+
+</style>
+
+{{- else -}}
+<p>Discovery artifacts data not found.</p>
+{{- end -}}

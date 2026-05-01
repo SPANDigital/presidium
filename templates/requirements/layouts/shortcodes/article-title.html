@@ -1,0 +1,29 @@
+{{/*
+  article-title
+  
+  Description:
+    Renders the title from the current page's frontmatter. Provides a simple way to reference
+    the current article's title within the content body.
+  
+  Usage:
+    {{< article-title >}}
+  
+  Parameters:
+    None - reads title from the current page's frontmatter
+  
+  Context:
+    - Requires page to have "title" in frontmatter
+    - Outputs nothing if title is not present
+  
+  Example frontmatter:
+    ---
+    title: "User Authentication Guide"
+    ---
+  
+  Example output:
+    User Authentication Guide
+*/}}
+
+{{- if .Page.Params.title }}
+{{- .Page.Params.title -}}
+{{ end }}

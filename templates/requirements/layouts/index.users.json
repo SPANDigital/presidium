@@ -1,0 +1,22 @@
+{{- $archetypes := slice -}}
+{{- range where .Site.Pages "Params.type" "story" -}}
+  {{- with .Params.archetypes -}}
+    {{- range . -}}
+      {{- $key := replace . " " "_" -}}
+      {{- if not (in $archetypes $key) -}}
+        {{- $archetypes = $archetypes | append $key -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $archetypes = sort $archetypes -}}
+{
+  "default": {
+    "username": "DEFAULT_USER",
+    "password": "DEFAULT_USER_PASSWORD"
+  }{{- range $archetypes }},
+  "{{ . }}": {
+    "username": "{{ . | upper }}_USER",
+    "password": "{{ . | upper }}_USER_PASSWORD"
+  }{{- end }}
+}

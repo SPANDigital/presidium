@@ -1,0 +1,56 @@
+{{/*
+  session-log
+
+  Description:
+    Renders a session log table from Hugo's data directory.
+    Data is synced from agent-artifacts by the session-log-sync skill.
+
+  Usage:
+    {{< session-log domain="domain-modeling" >}}
+    {{< session-log domain="requirements-content" >}}
+
+  Parameters:
+    domain - The session log domain name (required)
+            Valid values: domain-modeling, requirements-content
+
+  Context:
+    - Requires data file at data/session-logs/{domain}.yaml
+    - Run session-log-sync skill to update data files
+*/}}
+
+{{- $domain := .Get "domain" -}}
+{{- if $domain -}}
+  {{- $dataKey := printf "session-logs/%s" $domain -}}
+  {{- $data := index site.Data "session-logs" $domain -}}
+  {{- if $data -}}
+    {{- $entries := $data.entries -}}
+    {{- if $entries -}}
+<table>
+<thead>
+<tr>
+<th>Timestamp</th>
+<th>Agent</th>
+<th>Files Processed</th>
+<th>Summary</th>
+</tr>
+</thead>
+<tbody>
+{{- range $entries }}
+<tr>
+<td>{{ .timestamp }}</td>
+<td>{{ .agent_name }}</td>
+<td><small>{{ .files_processed }}</small></td>
+<td>{{ .summary }}</td>
+</tr>
+{{- end }}
+</tbody>
+</table>
+    {{- else -}}
+      <p>No session log entries found.</p>
+    {{- end -}}
+  {{- else -}}
+    <p>Error: Session log data not found for domain "{{ $domain }}". Run the session-log-sync skill to generate data files.</p>
+  {{- end -}}
+{{- else -}}
+  <p>Error: domain parameter is required</p>
+{{- end -}}

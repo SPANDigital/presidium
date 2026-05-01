@@ -1,0 +1,9 @@
+{{ $attributes := slice }}
+{{ range .Params.attributes }}
+  {{ $attr := printf "`%s: %s`" .name .type }}
+  {{ $attributes = $attributes | append $attr }}
+{{ end }}
+
+| Entity | Description | Attributes |
+|--------|-------------|------------|
+| **{{ .Params.name }}** | {{ .Params.description }} | {{ delimit $attributes ", " }} |

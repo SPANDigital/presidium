@@ -1,0 +1,31 @@
+{{ define "header" }}
+    {{ .Scratch.Set "scope" "list" }}
+    <!-- {{ partial "page/header" . }} -->
+{{ end }}
+
+{{ define "content" }}
+<div class="page index">
+    <div class="presidium-article-wrapper">
+        <article class="article-actions" data-align="center-top" title="{{ .Title }}" aria-label="{{ .Title }}">
+            <h1>{{ .Data.Plural | replaceRE "([a-z])([A-Z])" "${1} ${2}" | title }}</h1>
+            <p>Available {{ .Data.Singular | lower }}s:</p>
+            {{ if .Data.Terms }}
+            <ul>
+                {{ range .Data.Terms.ByCount.Reverse }}
+                <li>
+                    <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }}</a>
+                    <span class="count">({{ .Count }} {{ if eq .Count 1 }}item{{ else }}items{{ end }})</span>
+                </li>
+                {{ end }}
+            </ul>
+            {{ else }}
+            <p>No {{ .Data.Plural | lower }} found. Make sure content has valid {{ .Data.Singular | lower }} taxonomy values.</p>
+            {{ end }}
+        </article>
+    </div>
+</div>
+{{ end }}
+
+{{ define "footer" }}
+    {{ partial "page/footer" . }}
+{{ end }}

@@ -18,6 +18,26 @@ import (
 // templatesFS holds the embedded filesystem set from main via SetFS.
 var templatesFS fs.FS
 
+// verbatimPathPrefixes lists template subdirectories whose contents are copied
+// to the generated site as-is, without running them through text/template.
+// These paths typically contain Hugo template syntax ({{ ... }}) which
+// collides with Go's template syntax and would otherwise fail to parse.
+//
+// TODO: when requirements-specific layouts are extracted into a Hugo module
+// (e.g. github.com/spandigital/presidium-layouts-requirements), "layouts/"
+// can be removed from this list — at that point no template should ship
+// inlined Hugo layouts.
+var verbatimPathPrefixes = []string{
+	"layouts/",
+	"static/",
+	"data/",
+	"scripts/",
+	"assets/",
+	"discovery/",
+	"resources/", // Hugo build cache (e.g. _gen/) — must not be templated
+	"public/",    // Hugo output cache shipped with some templates
+}
+
 // SetFS sets the embedded filesystem used to read templates.
 func SetFS(fsys fs.FS) {
 	templatesFS = fsys
@@ -90,8 +110,52 @@ func (s Service) ProcessDirTemplates(templateDir string, outputDir string, model
 		}
 		relativePath := strings.TrimPrefix(filepath.Dir(p), templateDir)
 		outputPath := path.Join(outputDir, relativePath)
+		if isVerbatimPath(p, templateDir) {
+			return s.CopyVerbatim(outputPath, p)
+		}
 		return s.ProcessTemplate(outputPath, p, model)
 	})
+}
+
+// isVerbatimPath reports whether the file at p (relative to the embedded
+// templates filesystem) lives under one of the verbatimPathPrefixes for the
+// given templateDir, and therefore must be copied without text/template
+// processing.
+func isVerbatimPath(p, templateDir string) bool {
+	rel := strings.TrimPrefix(p, templateDir)
+	rel = strings.TrimPrefix(rel, "/")
+	for _, prefix := range verbatimPathPrefixes {
+		if strings.HasPrefix(rel, prefix) {
+			return true
+		}
+	}
+	return false
+}
+
+// CopyVerbatim writes the source template file to dir/filename without
+// running it through text/template. The .tmpl suffix is still stripped so
+// that authors can opt out of accidental shell/IDE interference by naming a
+// file e.g. raw-payload.json.tmpl.
+func (s Service) CopyVerbatim(dir, theTemplate string) error {
+	filename := filepath.Base(theTemplate)
+	filename = strings.TrimSuffix(filename, ".tmpl")
+
+	data, err := fs.ReadFile(s.templates, theTemplate)
+	if err != nil {
+		return err
+	}
+
+	finalPath := path.Join(dir, filename)
+	if err := filesystem.AFS.MkdirAll(dir, os.ModePerm); err != nil {
+		return err
+	}
+	f, err := filesystem.AFS.Create(finalPath)
+	if err != nil {
+		return err
+	}
+	defer f.Close()
+	_, err = f.Write(data)
+	return err
 }
 
 func (s Service) ProcessTemplate(dir, theTemplate string, model generator.TemplateParameters) error {

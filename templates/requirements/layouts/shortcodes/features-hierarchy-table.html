@@ -1,0 +1,147 @@
+{{/*
+Features and Functions Hierarchy Table Shortcode
+Generates a comprehensive table showing the 4-level functional decomposition
+*/}}
+
+{{ $featuresPath := "content/04-features-and-functions" }}
+{{ $hierarchyData := slice }}
+
+{{/* Create a lookup map for _index.md titles */}}
+{{ $indexTitles := dict }}
+{{ range where .Site.Pages "Section" "04-features-and-functions" }}
+  {{ if eq .File.LogicalName "_index.md" }}
+    {{ $relPath := strings.TrimPrefix "/04-features-and-functions/" .RelPermalink }}
+    {{ $relPath = strings.TrimSuffix "/" $relPath }}
+    {{ $indexTitles = merge $indexTitles (dict $relPath .Title) }}
+  {{ end }}
+{{ end }}
+
+{{/* Get all content from features and functions section */}}
+{{ range where .Site.Pages "Section" "04-features-and-functions" }}
+  {{ if ne .File.LogicalName "_index.md" }}
+    {{/* Parse the path to determine hierarchy level */}}
+    {{ $pathParts := split (strings.TrimPrefix "/04-features-and-functions/" .RelPermalink) "/" }}
+    {{ $level := len $pathParts }}
+
+    {{/* Extract functional area, feature, function, sub-function from path and get titles */}}
+    {{ $functionalArea := "" }}
+    {{ $feature := "" }}
+    {{ $function := "" }}
+    {{ $subFunction := "" }}
+    {{ $functionalAreaTitle := "" }}
+    {{ $featureTitle := "" }}
+    {{ $functionTitle := "" }}
+    {{ $subFunctionTitle := "" }}
+
+    {{ if ge $level 1 }}
+      {{ $functionalArea = index $pathParts 0 }}
+      {{ $functionalAreaTitle = index $indexTitles $functionalArea }}
+      {{ if not $functionalAreaTitle }}{{ $functionalAreaTitle = $functionalArea | title }}{{ end }}
+    {{ end }}
+    {{ if ge $level 2 }}
+      {{ $feature = index $pathParts 1 }}
+      {{ $featureKey := printf "%s/%s" $functionalArea $feature }}
+      {{ $featureTitle = index $indexTitles $featureKey }}
+      {{ if not $featureTitle }}{{ $featureTitle = $feature | title }}{{ end }}
+    {{ end }}
+    {{ if ge $level 3 }}
+      {{ $function = index $pathParts 2 }}
+      {{ $functionKey := printf "%s/%s/%s" $functionalArea $feature $function }}
+      {{ $functionTitle = index $indexTitles $functionKey }}
+      {{ if not $functionTitle }}{{ $functionTitle = $function | title }}{{ end }}
+    {{ end }}
+    {{ if ge $level 4 }}
+      {{ $subFunction = index $pathParts 3 }}
+      {{ $subFunctionKey := printf "%s/%s/%s/%s" $functionalArea $feature $function $subFunction }}
+      {{ $subFunctionTitle = index $indexTitles $subFunctionKey }}
+      {{ if not $subFunctionTitle }}{{ $subFunctionTitle = $subFunction | title }}{{ end }}
+    {{ end }}
+
+    {{/* Create hierarchy entry */}}
+    {{ $entry := dict
+      "level" $level
+      "functionalArea" $functionalArea
+      "feature" $feature
+      "function" $function
+      "subFunction" $subFunction
+      "functionalAreaTitle" $functionalAreaTitle
+      "featureTitle" $featureTitle
+      "functionTitle" $functionTitle
+      "subFunctionTitle" $subFunctionTitle
+      "title" .Title
+      "type" .Type
+      "path" .RelPermalink
+      "scenarioId" .Params.scenarioId
+    }}
+
+    {{ $hierarchyData = $hierarchyData | append $entry }}
+  {{ end }}
+{{ end }}
+
+{{/* Sort by path for proper hierarchy display */}}
+{{ $hierarchyData = sort $hierarchyData "path" }}
+
+<div class="features-hierarchy-table">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Functional Area</th>
+        <th>Feature</th>
+        <th>Function</th>
+        <th>Sub-Function</th>
+        <th>Scenario ID</th>
+        <th>Scenario Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{ range $hierarchyData }}
+      <tr class="level-{{ .level }}">
+        <td>{{ .level }}</td>
+        <td>
+          {{ if eq .level 1 }}
+            <strong>{{ .functionalAreaTitle }}</strong>
+          {{ else if .functionalAreaTitle }}
+            {{ .functionalAreaTitle }}
+          {{ end }}
+        </td>
+        <td>
+          {{ if ge .level 2 }}
+            {{ if eq .level 2 }}
+              <strong>{{ .featureTitle }}</strong>
+            {{ else }}
+              {{ .featureTitle }}
+            {{ end }}
+          {{ end }}
+        </td>
+        <td>
+          {{ if ge .level 3 }}
+            {{ if eq .level 3 }}
+              <strong>{{ .functionTitle }}</strong>
+            {{ else }}
+              {{ .functionTitle }}
+            {{ end }}
+          {{ end }}
+        </td>
+        <td>
+          {{ if ge .level 4 }}
+            {{ if eq .level 4 }}
+              <strong>{{ .subFunctionTitle }}</strong>
+            {{ else }}
+              {{ .subFunctionTitle }}
+            {{ end }}
+          {{ end }}
+        </td>
+        <td>
+          {{ if .scenarioId }}
+            <span class="scenario-id">{{ .scenarioId }}</span>
+          {{ end }}
+        </td>
+        <td>
+          <a href="{{ .path }}">{{ .title }}</a>
+        </td>
+      </tr>
+      {{ end }}
+    </tbody>
+  </table>
+</div>

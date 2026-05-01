@@ -1,0 +1,177 @@
+{{/*
+  discovery-stats
+
+  Description:
+    Renders discovery artifact statistics from time-series data, grouped by category.
+
+  Usage:
+    {{< discovery-stats >}}                                    - Show all artifacts by category
+    {{< discovery-stats show-history="true" >}}                - Show historical data
+    {{< discovery-stats show-status="true" >}}                 - Show status breakdown (default)
+
+  Parameters:
+    - show-history: Show historical snapshots (default: false)
+    - show-status: Show breakdown by status (default: true)
+    - limit: Number of historical snapshots to show (default: 10)
+
+  Context:
+    - Requires data file at data/discovery-stats.yaml
+    - Run `python scripts/snapshot-stats.py` to update stats
+*/}}
+
+{{- $data := index site.Data "discovery-stats" -}}
+{{- if not $data -}}
+  <p class="stats-error">Discovery stats data not found. Run <code>python scripts/snapshot-stats.py</code> to generate.</p>
+{{- else -}}
+
+{{- /* Parse parameters */ -}}
+{{- $showHistory := eq (.Get "show-history" | default "false") "true" -}}
+{{- $showStatus := eq (.Get "show-status" | default "true") "true" -}}
+{{- $limit := .Get "limit" | default "10" | int -}}
+
+{{- /* Get snapshots */ -}}
+{{- $snapshots := $data.snapshots -}}
+{{- if not $snapshots -}}
+  <p class="stats-error">No snapshots found. Run <code>python3 scripts/snapshot-stats.py</code> to generate.</p>
+{{- else if lt (len $snapshots) 1 -}}
+  <p class="stats-error">No snapshots found. Run <code>python3 scripts/snapshot-stats.py</code> to generate.</p>
+{{- else -}}
+{{- $latestSnapshot := index $snapshots (sub (len $snapshots) 1) -}}
+
+{{- /* Get categories and sort by order */ -}}
+{{- $categoriesMap := $latestSnapshot.categories -}}
+{{- $categoryList := slice -}}
+{{- range $name, $cat := $categoriesMap -}}
+  {{- $categoryList = $categoryList | append (dict "name" $name "label" $cat.label "order" $cat.order) -}}
+{{- end -}}
+{{- $categoryList = sort $categoryList "order" -}}
+
+<div class="stats-container">
+  <p class="stats-updated">Last updated: {{ $latestSnapshot.date }}</p>
+
+  {{- /* Group artifacts by category */ -}}
+  {{- range $category := $categoryList -}}
+    {{- $categoryName := $category.name -}}
+    {{- $categoryLabel := $category.label -}}
+    <div class="stats-category">
+      <h4 class="category-header">{{ $categoryLabel }}</h4>
+      <table class="stats-table">
+        <thead>
+          <tr>
+            <th>Artifact</th>
+            <th>Total</th>
+            {{- if $showStatus -}}
+            <th>Status Breakdown</th>
+            {{- end -}}
+            {{- if $showHistory -}}
+            <th>Trend</th>
+            {{- end -}}
+          </tr>
+        </thead>
+        <tbody>
+          {{- /* Build sorted list of artifacts for this category */ -}}
+          {{- $categoryArtifacts := slice -}}
+          {{- range $name, $stats := $latestSnapshot.artifacts -}}
+            {{- if eq $stats.category $categoryName -}}
+              {{- $categoryArtifacts = $categoryArtifacts | append (dict "name" $name "stats" $stats "order" $stats.order) -}}
+            {{- end -}}
+          {{- end -}}
+          {{- range sort $categoryArtifacts "order" -}}
+            {{- $name := .name -}}
+            {{- $stats := .stats -}}
+              <tr>
+                <td><strong>{{ $stats.label }}</strong></td>
+                <td class="stats-total">{{ $stats.total }}</td>
+                {{- if $showStatus -}}
+                <td class="stats-status">
+                  {{- if $stats.by_status -}}
+                    {{- range $status, $count := $stats.by_status -}}
+                      <span class="status-badge status-{{ $status | urlize }}">{{ $status }}: {{ $count }}</span>
+                    {{- end -}}
+                  {{- else -}}
+                    <span class="status-na">-</span>
+                  {{- end -}}
+                </td>
+                {{- end -}}
+                {{- if $showHistory -}}
+                <td class="stats-trend">
+                  {{- /* Calculate trend from historical data */ -}}
+                  {{- $historyValues := slice -}}
+                  {{- range $snapshots -}}
+                    {{- $artifactStats := index .artifacts $name -}}
+                    {{- if $artifactStats -}}
+                      {{- $historyValues = $historyValues | append $artifactStats.total -}}
+                    {{- end -}}
+                  {{- end -}}
+                  {{- if gt (len $historyValues) 1 -}}
+                    {{- $prev := index $historyValues (sub (len $historyValues) 2) -}}
+                    {{- $curr := index $historyValues (sub (len $historyValues) 1) -}}
+                    {{- if gt $curr $prev -}}
+                      <span class="trend-up">+{{ sub $curr $prev }}</span>
+                    {{- else if lt $curr $prev -}}
+                      <span class="trend-down">-{{ sub $prev $curr }}</span>
+                    {{- else -}}
+                      <span class="trend-flat">-</span>
+                    {{- end -}}
+                  {{- else -}}
+                    <span class="trend-na">-</span>
+                  {{- end -}}
+                </td>
+                {{- end -}}
+              </tr>
+          {{- end -}}
+        </tbody>
+      </table>
+    </div>
+  {{- end -}}
+
+  {{- if $showHistory -}}
+  {{- /* Build sorted artifact list for consistent column order */ -}}
+  {{- /* Use composite key (catOrder * 100 + order) for proper multi-key sorting */ -}}
+  {{- $sortedArtifacts := slice -}}
+  {{- range $name, $stats := $latestSnapshot.artifacts -}}
+    {{- $catData := index $categoriesMap $stats.category -}}
+    {{- $catOrder := 99 -}}
+    {{- if $catData -}}
+      {{- $catOrder = $catData.order -}}
+    {{- end -}}
+    {{- $sortKey := add (mul $catOrder 100) $stats.order -}}
+    {{- $sortedArtifacts = $sortedArtifacts | append (dict "name" $name "stats" $stats "sortKey" $sortKey) -}}
+  {{- end -}}
+  {{- $sortedArtifacts = sort $sortedArtifacts "sortKey" -}}
+  <details class="stats-history">
+    <summary>Historical Data ({{ len $snapshots }} snapshots)</summary>
+    <table class="stats-table history-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          {{- range $sortedArtifacts -}}
+            <th title="{{ .stats.category }}">{{ .stats.label }}</th>
+          {{- end -}}
+        </tr>
+      </thead>
+      <tbody>
+        {{- /* Show most recent first, limited */ -}}
+        {{- $count := 0 -}}
+        {{- $total := len $snapshots -}}
+        {{- range $i, $_ := seq $total -}}
+          {{- if lt $count $limit -}}
+            {{- $idx := sub $total (add $i 1) -}}
+            {{- $snapshot := index $snapshots $idx -}}
+            <tr>
+              <td>{{ $snapshot.date }}</td>
+              {{- range $sortedArtifacts -}}
+                {{- $snapshotStats := index $snapshot.artifacts .name -}}
+                <td>{{ if $snapshotStats }}{{ $snapshotStats.total }}{{ else }}-{{ end }}</td>
+              {{- end -}}
+            </tr>
+            {{- $count = add $count 1 -}}
+          {{- end -}}
+        {{- end -}}
+      </tbody>
+    </table>
+  </details>
+  {{- end -}}
+</div>
+{{- end -}}{{- /* end snapshots guard */ -}}
+{{- end -}}{{- /* end data guard */ -}}

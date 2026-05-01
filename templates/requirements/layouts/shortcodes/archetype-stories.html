@@ -1,0 +1,116 @@
+{{/* Get the archetype name from the current page - try both archetype and archetypes fields */}}
+{{ $archetypeName := "" }}
+{{ if .Page.Params.archetype }}
+    {{ $archetypeName = .Page.Params.archetype }}
+{{ else if .Page.Params.archetypes }}
+    {{ if reflect.IsSlice .Page.Params.archetypes }}
+        {{ $archetypeName = index .Page.Params.archetypes 0 }}
+    {{ else }}
+        {{ $archetypeName = .Page.Params.archetypes }}
+    {{ end }}
+{{ end }}
+
+{{ $matchingPages := slice }}
+
+{{/* Find all pages that have this archetype in their taxonomy */}}
+{{ range $page := .Site.Pages }}
+    {{ $pageArchetypes := $page.Params.archetypes }}
+    {{ if $pageArchetypes }}
+        {{ if reflect.IsSlice $pageArchetypes }}
+            {{ range $pageArchetypes }}
+                {{ if eq (lower .) (lower $archetypeName) }}
+                    {{ $matchingPages = $matchingPages | append $page }}
+                {{ end }}
+            {{ end }}
+        {{ else }}
+            {{ if eq (lower $pageArchetypes) (lower $archetypeName) }}
+                {{ $matchingPages = $matchingPages | append $page }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ end }}
+
+{{ if gt (len $matchingPages) 0 }}
+<div class="archetype-related-stories">
+    <h5>Related Stories</h5>
+    <p>{{ len $matchingPages }} {{ if eq (len $matchingPages) 1 }}story{{ else }}stories{{ end }} found for this archetype:</p>
+
+    <details>
+        <summary>View Stories</summary>
+
+        {{/* Group stories by their parent feature */}}
+        {{ $groupedStories := dict }}
+        {{ range $matchingPages }}
+            {{ $feature := .Parent }}
+            {{ if $feature }}
+                {{ $featureKey := $feature.RelPermalink }}
+                {{ $existing := index $groupedStories $featureKey }}
+                {{ if $existing }}
+                    {{ $updated := $existing | append . }}
+                    {{ $groupedStories = merge $groupedStories (dict $featureKey $updated) }}
+                {{ else }}
+                    {{ $groupedStories = merge $groupedStories (dict $featureKey (slice .)) }}
+                {{ end }}
+            {{ end }}
+        {{ end }}
+
+        {{/* Display grouped stories */}}
+        {{ range $featureKey, $stories := $groupedStories }}
+            {{ $feature := (index $stories 0).Parent }}
+            <div class="feature-group">
+                <p class="feature-title">
+                    <a href="{{ $feature.RelPermalink }}">{{ $feature.Title }}</a>
+                </p>
+
+                <ul class="story-list">
+                    {{ range $stories }}
+                    <li class="story-item">
+                        <div class="story-header">
+                            <a href="{{ .RelPermalink }}" class="story-link">{{ .Title }}</a>
+                        </div>
+
+                        {{/* Build functional path breadcrumb */}}
+                        {{ $ancestors := slice }}
+                        {{ $current := . }}
+                        {{ range $i := seq 10 }}
+                            {{ if $current.Parent }}
+                                {{ if ne $current.Parent.Section "04-features-and-functions" }}
+                                    {{ $ancestors = $ancestors | append $current.Parent }}
+                                    {{ $current = $current.Parent }}
+                                {{ else }}
+                                    {{ break }}
+                                {{ end }}
+                            {{ end }}
+                        {{ end }}
+
+                        {{ if gt (len $ancestors) 0 }}
+                        <div class="functional-path">
+                            {{ $reversedAncestors := slice }}
+                            {{ range $i := seq (len $ancestors) }}
+                                {{ $idx := sub (len $ancestors) $i }}
+                                {{ $reversedAncestors = $reversedAncestors | append (index $ancestors $idx) }}
+                            {{ end }}
+
+                            {{ range $idx, $ancestor := $reversedAncestors }}
+                                {{ if gt $idx 0 }} → {{ end }}
+                                <span class="path-segment">{{ $ancestor.Title }}</span>
+                            {{ end }}
+                            {{ if gt (len $reversedAncestors) 0 }} → {{ end }}
+                            <span class="path-segment current">{{ .Title }}</span>
+                        </div>
+                        {{ end }}
+                    </li>
+                    {{ end }}
+                </ul>
+            </div>
+        {{ end }}
+    </details>
+</div>
+
+
+{{ else }}
+<div class="archetype-related-stories">
+    <h5>Related Stories</h5>
+    <p>No stories found for this archetype yet.</p>
+</div>
+{{ end }}

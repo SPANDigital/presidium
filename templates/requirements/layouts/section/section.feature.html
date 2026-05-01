@@ -1,0 +1,70 @@
+{{- if eq .Params.type "story" -}}
+{{ .RawContent | safeHTML }}
+{{- $currentPath := .File.Dir -}}
+{{- $scenarios := where .Site.Pages "Params.type" "scenario" -}}
+{{- $matchingScenarios := slice -}}
+{{- range $scenarios -}}
+{{- if hasPrefix .File.Dir $currentPath -}}
+{{- $matchingScenarios = $matchingScenarios | append . -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* Create a site-wide map of scenario ID to scenario page for quick lookup (supports cross-story dependencies) */ -}}
+{{- $scenarioMap := dict -}}
+{{- range $scenarios -}}
+{{- if .Params.scenarioId -}}
+{{- $scenarioMap = merge $scenarioMap (dict (string .Params.scenarioId) .) -}}
+{{- end -}}
+{{- end -}}
+
+{{- /* Build ordered list with dependency-aware ordering */ -}}
+{{- $orderedScenarios := slice -}}
+{{- $processedIds := slice -}}
+
+{{- /* Process each scenario and its dependencies */ -}}
+{{- range $matchingScenarios -}}
+  {{- $scenario := . -}}
+  {{- $scenarioId := string .Params.scenarioId -}}
+
+  {{- /* Skip if already processed */ -}}
+  {{- if not (in $processedIds $scenarioId) -}}
+
+    {{- /* First, add all dependencies in sequence order */ -}}
+    {{- if .Params.depends_on -}}
+      {{- $deps := .Params.depends_on -}}
+      {{- $sortedDeps := sort $deps "sequence_order" -}}
+
+      {{- range $sortedDeps -}}
+        {{- $depId := string (index . "scenario_id") -}}
+        {{- if not (in $processedIds $depId) -}}
+          {{- if index $scenarioMap $depId -}}
+            {{- /* Found dependency - add it to ordered list */ -}}
+            {{- $depScenario := index $scenarioMap $depId -}}
+            {{- $orderedScenarios = $orderedScenarios | append $depScenario -}}
+            {{- $processedIds = $processedIds | append $depId -}}
+          {{- else -}}
+            {{- /* Missing dependency - add a comment marker */ -}}
+            {{- $missingMarker := dict "isMissing" true "scenarioId" $depId -}}
+            {{- $orderedScenarios = $orderedScenarios | append $missingMarker -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+
+    {{- /* Then add the scenario itself */ -}}
+    {{- $orderedScenarios = $orderedScenarios | append $scenario -}}
+    {{- $processedIds = $processedIds | append $scenarioId -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Render all scenarios in dependency order */ -}}
+{{- range $orderedScenarios -}}
+  {{- if .isMissing -}}
+# Missing dependency: scenario {{ .scenarioId }}
+
+  {{- else }}
+
+{{ .RawContent | safeHTML }}
+  {{- end -}}
+{{- end -}}
+{{- end -}}

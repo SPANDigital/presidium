@@ -1,0 +1,57 @@
+<div class="entity-summary">
+  <p><strong>Entity:</strong> {{ .Page.Params.name }}</p>
+  <p><strong>Description:</strong> {{ .Page.Params.description | markdownify }}</p>
+</div>
+
+<h3>Attributes</h3>
+{{ if .Page.Params.attributes }}
+{{ $primaryColumns := slice "name" "key_role" "optionality" "description" "enum" }}
+{{ $allColumns := slice }}
+{{ $columnsWithData := slice }}
+{{ range $.Page.Params.attributes }}
+  {{ range $key, $value := . }}
+    {{ if $value }}
+      {{ if not (in $columnsWithData $key) }}
+        {{ $columnsWithData = $columnsWithData | append $key }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $columnOrder := slice }}
+{{ range $primaryColumns }}
+  {{ if in $columnsWithData . }}
+    {{ $columnOrder = $columnOrder | append . }}
+  {{ end }}
+{{ end }}
+{{ range $columnsWithData }}
+  {{ if not (in $primaryColumns .) }}
+    {{ $columnOrder = $columnOrder | append . }}
+  {{ end }}
+{{ end }}
+  <table>
+    <thead>
+      <tr>
+        {{ range $columnOrder }}
+        <th>{{ humanize . }}</th>
+        {{ end }}
+        </tr>
+        </thead>
+        <tbody>
+      {{ range $.Page.Params.attributes }}
+      {{ $attr := . }}
+      <tr>
+        {{ range $columnOrder }}
+        {{ $value := index $attr . }}
+        <td>
+            {{ if eq . "name" }}
+            <code>{{ $value }}</code>
+            {{ else if $value }}
+            {{ $value | markdownify }}
+            {{ end }}
+          </td>
+        {{ end }}
+      </tr>
+      {{ end }}
+    </tbody>
+    </table>
+{{ end }}

@@ -1,65 +1,86 @@
 languageCode: "en-us"
 title: "{{ .Title }}"
+description: ""
 copyright: Template Footer
 pluralizelisttitles: false
-params:
-  _merge: deep
-  sortByFilePath: true
-  enterprise_key:
-  frontmatter:
-    - key: author
-      type: email
-      strict: false
-    - key: title
-      type: text
-      strict: true
+taxonomies:
+  archetype: archetypes
+  testSuite: testSuites
 markup:
   goldmark:
     renderer:
       Unsafe: true
+      hardWraps: false
     parser:
       attribute:
         block: true
   highlight:
-    style: github
+    style: monokailight
+    codeFences: true
+    guessSyntax: true
+    noClasses: true
+    lineNos: false
 menu:
   main:
-    - identifier: overview
+    - identifier: 01-overview
       name: Overview
       url: /
       weight: 1
-    - identifier: archetypes-and-personas
+    - identifier: 02-archetypes-and-personas
       name: Archetypes and Personas
       url: /archetypes-and-personas/
       weight: 2
-    - identifier: entities-and-relationships
+    - identifier: 03-entities-and-relationships
       name: Entities and Relationships
       url: /entities-and-relationships/
       weight: 3
-    - identifier: state-transitions
-      name: State Transitions
-      url: /state-transitions/
-      weight: 4
-    - identifier: features-and-functions
+    - identifier: 04-features-and-functions
       name: Features and Functions
       url: /features-and-functions/
+      weight: 4
+    - identifier: 05-state-transitions
+      name: State Transitions
+      url: /state-transitions/
       weight: 5
-    - identifier: process-flows
+    - identifier: 06-process-flows
       name: Process Flows
       url: /process-flows/
       weight: 6
-    - identifier: capabilities
+    - identifier: 07-capabilities
       name: Capabilities
       url: /capabilities/
       weight: 7
-    - identifier: reference
+    - identifier: 08-reference
       name: Reference
       url: /reference/
       weight: 8
-    - identifier: updates
+    - identifier: 09-updates
       name: Updates
       url: /updates/
       weight: 9
+    - identifier: 10-glossary
+      name: Glossary
+      url: /glossary/
+      weight: 10
+    - identifier: 11-dashboard
+      name: Dashboard
+      url: /dashboard/
+      weight: 11
+params:
+  enterprise_key: "{{ .ProjectName }}"
+  sortByFilePath: true
+  includeNestedArticles: true
+  # Controls rendering of scenario.dependency_runs in scenario articles.
+  # Values: "all" | "failed" | "pass". Default behaviour when unset is "failed".
+  depRunsFilter: all
+  frontmatter:
+    - key: author
+      strict: false
+      type: email
+mediaTypes:
+  text/gherkin:
+    suffixes:
+      - feature
 outputFormats:
   MenuIndex:
     baseName: menu
@@ -67,12 +88,30 @@ outputFormats:
   SearchMap:
     baseName: searchmap
     mediaType: application/json
+  Users:
+    baseName: users
+    mediaType: application/json
+  Feature:
+    mediaType: text/gherkin
+    path: features/  # All `.feature` files go to `/public/features/`
+    isPlainText: true
+    notAlternative: true
 outputs:
   home:
     - HTML
     - RSS
     - MenuIndex
     - SearchMap
+    - Users
+  page:
+    - HTML
+  section:
+    - HTML
+    - Feature
+# TODO: when a `presidium-layouts-requirements` Hugo module exists, delete the
+# inlined templates/requirements/layouts/ directory and add its module path to
+# imports below. The custom shortcodes/partials currently shipped under that
+# folder are an interim measure.
 module:
   imports:
     - path: github.com/spandigital/presidium-styling-base

@@ -1,0 +1,25 @@
+{{ define "header" }}
+    {{ .Scratch.Set "scope" "list" }}
+    {{ partial "page/header" . }}
+{{ end }}
+
+{{ define "content" }}
+<div class="article index">
+    <div class="presidium-article-wrapper">
+        <article class="article-actions" data-align="center-top" title="{{ .Title }}" aria-label="{{ .Title }}">
+            <h1>{{ .Title }}</h1>
+            <p>{{ .Pages.Len }} {{ if eq .Pages.Len 1 }}item{{ else }}items{{ end }} found for this {{ .Data.Singular | lower }}:</p>
+        </article>
+        <hr />
+    </div>
+</div>
+
+{{/* Render each page directly using article/root partial */}}
+{{ range .Pages }}
+    {{ partial "article/root" . }}
+{{ end }}
+{{ end }}
+
+{{ define "footer" }}
+    {{ partial "page/footer" . }}
+{{ end }}

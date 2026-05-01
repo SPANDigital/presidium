@@ -1,0 +1,5 @@
+{{/*
+Generates Gherkin tags for a scenario based on scenarioId and testSuites
+Usage: {{ partial "gherkin-tags.html" . }}
+*/}}
+@scenario:{{ .Params.scenarioId }}{{- if .Params.testSuites }}{{- range .Params.testSuites }} @test_suite:{{ replace . " " "_" }}{{- end }}{{- end }}{{ "\n" }}

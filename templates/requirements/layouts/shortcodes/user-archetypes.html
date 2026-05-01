@@ -1,0 +1,45 @@
+{{/*
+  user-archetypes
+  
+  Description:
+    Renders the archetypes from the current page's frontmatter as a grammatically correct list
+    with links to their corresponding archetype detail pages. Used in user stories to display
+    "As a [archetype]" with proper linking.
+  
+  Usage:
+    {{< user-archetypes >}}
+  
+  Parameters:
+    None - reads archetypes from the current page's frontmatter
+  
+  Context:
+    - Requires page to have "archetypes" in frontmatter (array of strings)
+    - Links to pages where frontmatter "archetype" field matches the value
+    - Falls back to plain text if no matching archetype page is found
+  
+  Example frontmatter:
+    ---
+    archetypes:
+      - "content consumer"
+      - "article author"
+    ---
+  
+  Example output:
+    Single: a <a href="/path/">content consumer</a>
+    Multiple: a <a href="/path/">content consumer</a>, or a <a href="/path/">article author</a>
+*/}}
+
+{{- $archetypes := .Page.Params.archetypes -}}
+{{- if $archetypes -}}
+  {{- range $i, $archetype := $archetypes -}}
+    {{- $page := first 1 (where $.Site.Pages "Params.archetype" $archetype) -}}
+    {{- if $i -}}, or a {{ end -}}
+    {{- if $page -}}
+    <a href="{{ (index $page 0).RelPermalink }}">{{ $archetype }}</a>
+    {{- else -}}
+      {{ $archetype }}
+      {{- end -}}
+  {{- end -}}
+{{- else -}}
+  [archetype]
+{{- end -}}

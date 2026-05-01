@@ -1,16 +1,7 @@
 ---
-title: "Hello Presidium!"
+title: "Welcome"
 ---
 
-This template project provides a basic structure to start your presidium module.
+This site is a starting point for documenting the requirements of your product. Replace this page with a short introduction to the system the rest of the site describes.
 
-For recipes and help on creating your content, see: [presidium.spandigital.net](http://presidium.spandigital.net)
-for detailed examples.
-
-# Heading 1
-## My Table
-
-One  |  Two |  Three
---|---|--
-  |   |
-  |   |
+The remaining sections cover archetypes and personas, entities and relationships, features and functions, state transitions, process flows, capabilities, reference material, and a glossary.

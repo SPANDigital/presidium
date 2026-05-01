@@ -1,0 +1,39 @@
+{{/* Display scenario dependencies for HTML output only */}}
+{{- if and (eq .Type "scenario") .Params.depends_on -}}
+  {{- $currentPage := . -}}
+  {{- $dependencies := .Params.depends_on -}}
+
+  <div class="scenario-dependencies">
+    <p><strong>Dependencies</strong></p>
+    <p>This scenario depends on the following scenarios:</p>
+
+    <ol class="dependency-list">
+      {{- range $dependencies -}}
+        {{- $depScenarioId := .scenario_id -}}
+        {{- $confidenceLevel := .confidence_level -}}
+
+        {{/* Find the scenario page with matching scenarioId */}}
+        {{- $foundScenario := false -}}
+        {{- range $currentPage.Site.AllPages -}}
+          {{- if and (eq .Type "scenario") (eq (string .Params.scenarioId) (string $depScenarioId)) -}}
+            {{- $foundScenario = . -}}
+          {{- end -}}
+        {{- end -}}
+
+        <li class="dependency-item">
+          {{- if $foundScenario -}}
+            <a href="{{ $foundScenario.RelPermalink }}" class="dependency-link">
+              <span class="dependency-title">{{ $foundScenario.Title }}</span>
+              <span class="dependency-id">(Scenario ID:{{ $depScenarioId }})</span>
+            </a>
+          {{- else -}}
+            <span class="dependency-missing">
+              <span class="dependency-id">Scenario ID: {{ $depScenarioId }}</span>
+              <span class="dependency-error">(Scenario not found)</span>
+            </span>
+          {{- end -}}
+        </li>
+      {{- end -}}
+    </ol>
+  </div>
+{{- end -}}

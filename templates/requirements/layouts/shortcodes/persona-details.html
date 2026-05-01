@@ -1,0 +1,69 @@
+{{- $persona := .Page.Params.persona -}}
+{{- if $persona -}}
+<div class="persona-details">
+  <h3>Demographics</h3>
+  <ul>
+    {{- if $persona.name }}<li><strong>Persona:</strong> {{ $persona.name }}</li>{{- end }}
+    {{- if $persona.role }}<li><strong>Role:</strong> {{ $persona.role }}</li>{{- end }}
+    {{- if $persona.experienceLevel }}<li><strong>Experience Level:</strong> {{ $persona.experienceLevel }}</li>{{- end }}
+    {{- if $persona.age }}<li><strong>Age:</strong> {{ $persona.age }}</li>{{- end }}
+    {{- if $persona.location }}<li><strong>Location:</strong> {{ $persona.location }}</li>{{- end }}
+    {{- if $persona.industry }}<li><strong>Industry:</strong> {{ $persona.industry }}</li>{{- end }}
+    {{- if $persona.education }}<li><strong>Education:</strong> {{ $persona.education }}</li>{{- end }}
+    {{- if $persona.yearsOfExperience }}<li><strong>Years of Experience:</strong> {{ $persona.yearsOfExperience }}</li>{{- end }}
+    {{- if $persona.techSavviness }}<li><strong>Tech Savviness:</strong> {{ $persona.techSavviness }}</li>{{- end }}
+    {{- if $persona.personalityTraits }}<li><strong>Personality Traits:</strong> {{ $persona.personalityTraits }}</li>{{- end }}
+    {{- if $persona.interests }}<li><strong>Interests:</strong> {{ $persona.interests }}</li>{{- end }}
+    {{- if $persona.hobbies }}<li><strong>Hobbies:</strong> {{ $persona.hobbies }}</li>{{- end }}
+    {{- if $persona.quotes }}
+    <li><strong>Quotes:</strong>
+      <ul>
+        {{- range $persona.quotes }}
+        <li>"{{ . }}"</li>
+        {{- end }}
+      </ul>
+    </li>
+    {{- end }}
+  </ul>
+
+  {{- if .Page.Params.goalsAndMotivations }}
+  <h3>Goals and Motivations</h3>
+  <ul>
+    {{- range .Page.Params.goalsAndMotivations }}
+    <li>{{ . }}</li>
+    {{- end }}
+  </ul>
+  {{- end }}
+
+  {{- if .Page.Params.habitsAndBehaviors }}
+  <h3>Habits and Behaviors</h3>
+  <ul>
+    {{- range .Page.Params.habitsAndBehaviors }}
+    <li>{{ . }}</li>
+    {{- end }}
+  </ul>
+  {{- end }}
+
+  {{- if .Page.Params.wantsAndNeeds }}
+  <h3>Wants and Needs</h3>
+  <ul>
+    {{- range .Page.Params.wantsAndNeeds }}
+    <li>{{ . }}</li>
+    {{- end }}
+  </ul>
+  {{- end }}
+
+  {{- if .Page.Params.frustrationsAndPainPoints }}
+  <h3>Frustrations and Pain Points</h3>
+  <ul>
+    {{- range .Page.Params.frustrationsAndPainPoints }}
+    <li>{{ . }}</li>
+    {{- end }}
+  </ul>
+  {{- end }}
+</div>
+{{- else -}}
+<div class="persona-details-error">
+  <p><strong>No persona data found in frontmatter</strong></p>
+</div>
+{{- end -}}

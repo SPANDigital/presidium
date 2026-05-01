@@ -1,0 +1,55 @@
+{{ $roles := .Params.roles | default "All Roles" }}
+{{ $slug := (partial "common/slug" .) }}
+
+{{ $nestedArticles := .Site.Params.includeNestedArticles | default true }}
+
+{{ $articleLink := (printf "%v#%v" .Parent.Page.RelPermalink $slug ) }}
+{{ $.Scratch.Set "articleLink" $articleLink }}
+
+{{/*  Type of article  */}}
+{{ $type := cond (not .Data.Pages) "child" "parent" }}
+
+{{/* Unique id for this article */}}
+{{ $file := .File }}
+{{ if $file}}
+{{ $articleId := (.Params.id | default $file.Path) }}
+{{ $noContent := (eq (len .Content) 0) }}
+
+{{/* Unique id for file, used by scroll-spy and menu toggle  */}}
+{{ $uid := $file.UniqueID }}
+
+<div class="article {{ $type }}{{- if eq .Params.type "story" }} story-content{{- else if eq .Params.type "scenario" }} scenario-content{{- end }}" data-roles="{{ $roles }}" id="{{ $uid }}" data-link="{{ $articleLink }}" permalink="{{.Page.RelPermalink}}" data-no-content="{{ $noContent }}" title="{{ .Title }}" >
+    {{ if or (ne (len .Content) 0) (and $nestedArticles (partial "common/pages" .)) }}
+        <div class="presidium-article-wrapper">
+            <span class="anchor"  id="{{ $slug }}" data-id="{{ $articleId }}"></span>
+
+            {{ partial "article/header" . }}
+            {{ partial "article/title" . }}
+            {{ partial "article/frontmatter" . }}
+            {{ partial "article/content" . }}
+            {{ partial "scenario-test-result.html" . }}
+            {{ partial "scenario-dependencies.html" . }}
+            {{ partial "article/footer" . }}
+        </div>
+    </div>
+
+    {{ if $nestedArticles }}
+        {{/* Sort by filename if specified in config */}}
+        {{ $sortByFilePath := .Parent.Params.sortByFilePath | default .Site.Params.sortByFilePath }}
+        {{ if $sortByFilePath }}
+            {{ $sortOrder := (partial "common/sortorder" (dict "SortByFilePath" $sortByFilePath)) }}
+            {{/* Sort by file prefix */}}
+            {{ range sort .Data.Pages "File.Path" $sortOrder }}
+                {{ partial "article/root" . }}
+            {{ end }}
+        {{ else }}
+            {{/* Sort by weight otherwise the hugo default */}}
+            {{ range .Data.Pages.ByWeight }}
+                {{ partial "article/root" . }}
+            {{ end }}
+        {{ end }}
+    {{ end }}
+{{ else }}
+</div>
+{{ end }}
+{{ end }}

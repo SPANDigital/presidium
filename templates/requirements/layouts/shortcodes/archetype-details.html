@@ -1,0 +1,70 @@
+{{- if .Page.Params.goalsAndMotivation }}
+<h3>Goals and Motivation</h3>
+{{- if reflect.IsSlice .Page.Params.goalsAndMotivation }}
+<ul>
+{{ range .Page.Params.goalsAndMotivation }}
+<li>{{ . | markdownify }}</li>
+{{ end }}
+</ul>
+{{- else }}
+<p>{{ .Page.Params.goalsAndMotivation }}</p>
+{{- end }}
+{{ end }}
+
+{{- if .Page.Params.jobDescription }}
+<h3>Job Description</h3>
+{{- if reflect.IsSlice .Page.Params.jobDescription }}
+<ul>
+{{ range .Page.Params.jobDescription }}
+<li>{{ . | markdownify }}</li>
+{{ end }}
+</ul>
+{{- else }}
+<p>{{ .Page.Params.jobDescription }}</p>
+{{- end }}
+{{ end }}
+
+{{- if .Page.Params.prerequisites }}
+<h3>Prerequisites</h3>
+<ul>
+{{ range .Page.Params.prerequisites }}
+{{- if reflect.IsMap . }}
+  {{- if .skill }}
+<li>{{ .skill | markdownify }}</li>
+  {{- else if .genericAttribute }}
+<li>{{ .genericAttribute | markdownify }}</li>
+  {{- end }}
+{{- else }}
+<li>{{ . | markdownify }}</li>
+{{- end }}
+{{ end }}
+</ul>
+{{ end }}
+
+{{- if .Page.Params.environment }}
+<h3>Environment</h3>
+
+{{- if .Page.Params.environment.tools }}
+<h4>Tools</h4>
+<ul>
+{{ range .Page.Params.environment.tools }}
+<li>{{ . }}</li>
+{{ end }}
+</ul>
+{{- end }}
+
+{{- if .Page.Params.environment.workContext }}
+<h4>Work Context</h4>
+<p>{{ .Page.Params.environment.workContext }}</p>
+{{- end }}
+
+{{- if .Page.Params.environment.responsibilities }}
+<h4>Responsibilities</h4>
+<ul>
+{{ range .Page.Params.environment.responsibilities }}
+<li>{{ . }}</li>
+{{ end }}
+</ul>
+{{- end }}
+
+{{ end }}

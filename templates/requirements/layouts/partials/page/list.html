@@ -1,0 +1,69 @@
+{{- $roles := .Params.roles | default "All Roles" -}}
+{{- $uid := "" -}}
+{{- $articleId := .Params.id -}}
+{{- with .File }}
+    {{- $uid = .UniqueID -}}
+    {{- if not $articleId -}}
+        {{ $articleId = .Path }}
+    {{- end -}}
+{{- end -}}
+{{- $pageLink := .Page.RelPermalink -}}
+{{- $slug := (partial "common/slug" .) -}}
+{{- $noContent := (eq (len .Content) 0) -}}
+{{- $type := cond $noContent "page" "article" -}}
+{{- $contentType := "" -}}
+{{- if .Params.type -}}
+    {{- $contentType = printf " %s-content" .Params.type -}}
+{{- end -}}
+
+<div class="{{ $type }} index{{ $contentType }}" data-roles="{{ $roles }}" {{- if .Params.type }} data-content-type="{{ .Params.type }}"{{ end }} id="{{ $uid }}" data-link="{{ $pageLink }}" permalink="{{ .Page.RelPermalink }}" data-no-content="{{ $noContent }}" >
+    <div class="presidium-article-wrapper">
+        <span class="anchor" id="{{ $slug }}" data-id="{{ $articleId }}"></span>
+        {{ if (ne (len .Content) 0) -}}
+            <article class="article-actions" data-align="center-top" title="{{ .Title }}" aria-label="{{ .Title }}">{{ .Content }}</article>
+            <hr />
+        {{- end }}
+    </div>
+</div>
+{{- $pages := (partial "common/pages" .) -}}
+{{- $siteScopes := .Site.Params.scopes -}}
+{{- $siteScopesEnabled := .Site.Params.scopesEnabled -}}
+{{/* Sort by filename if specified in config */}}
+{{- $sortByFilePath := .Params.sortByFilePath | default .Site.Params.sortByFilePath -}}
+{{- if $sortByFilePath -}}
+    {{- $sortOrder := (partial "common/sortorder" (dict "SortByFilePath" $sortByFilePath)) -}}
+    {{/* Sort by file prefix - only for pages with files */}}
+    {{- $filteredPages := slice -}}
+    {{- range $pages -}}
+        {{- if .File -}}
+            {{- $filteredPages = $filteredPages | append . -}}
+        {{- end -}}
+    {{- end -}}
+    {{- range sort $filteredPages "File.Path" $sortOrder -}}
+        {{- $isRendering := true -}}
+
+        {{- if $siteScopesEnabled -}}
+            {{- if isset .Params "scope" -}}
+                {{- $pageScopes := .Params.scope -}}
+                {{- $isRendering = gt (len (intersect $pageScopes $siteScopes)) 0 -}}
+            {{- end -}}
+        {{- end -}}
+        {{- if $isRendering }}
+            {{ partial "article/root" . }}
+        {{ end -}}
+    {{- end -}}
+{{- else -}}
+    {{/* Sort by weight otherwise the hugo default */}}
+    {{- range $pages.ByWeight -}}
+        {{- $isRendering := true -}}
+        {{- if $siteScopesEnabled -}}
+            {{- if isset .Params "scope" }}
+                {{- $pageScopes := .Params.scope -}}
+                {{- $isRendering = gt (len (intersect $pageScopes $siteScopes)) 0 -}}
+            {{ end -}}
+        {{- end -}}
+        {{- if $isRendering }}
+            {{ partial "article/root" . }}
+        {{ end -}}
+    {{- end -}}
+{{- end -}}

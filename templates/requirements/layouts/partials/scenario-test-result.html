@@ -1,0 +1,154 @@
+{{/* Display scenario test status for HTML output only */}}
+{{/*
+  Dependency-runs filter: "all" | "failed" | "pass"
+  Override globally via `depRunsFilter` in Hugo site params; defaults to "failed"
+  so only actionable signal (failed dep runs) renders unless opted in.
+*/}}
+{{- $depRunsFilter := .Site.Params.depRunsFilter | default "failed" -}}
+
+{{- define "partials/scenario-test-result/format-date" -}}
+  {{- with (time .) -}}
+    {{- .Format "Jan 2, 2006 · 3:04 PM" -}}
+  {{- else -}}
+    {{- . -}}
+  {{- end -}}
+{{- end -}}
+
+{{- if and (eq .Type "scenario") .Params.scenarioId -}}
+  {{- $scenarioId := .Params.scenarioId -}}
+  {{- $scenario := index .Site.Data.test_results.test_status $scenarioId -}}
+
+  {{- if $scenario -}}
+    {{- $status := $scenario.status -}}
+    {{- $icon := "•" -}}
+    {{- if eq $status "pass"    -}}{{- $icon = "✓" -}}{{- end -}}
+    {{- if eq $status "failed"  -}}{{- $icon = "✕" -}}{{- end -}}
+    {{- if eq $status "skipped" -}}{{- $icon = "↷" -}}{{- end -}}
+    {{- if eq $status "error"   -}}{{- $icon = "!" -}}{{- end -}}
+
+    <section class="scenario-status status-{{ $status }}">
+      <header class="ss-header">
+        <div class="ss-id">
+          <span class="ss-id-label">Scenario ID</span>
+          <code class="ss-id-value">{{ $scenarioId }}</code>
+        </div>
+        <div class="ss-status">
+          <span class="ss-badge ss-badge-{{ $status }}">
+            <span class="ss-badge-icon" aria-hidden="true">{{ $icon }}</span>
+            <span class="ss-badge-label">{{ $status | title }}</span>
+          </span>
+          {{- with $scenario.history -}}
+            <span class="scenario-history" title="Past runs (oldest first)" aria-label="Past run history">
+              {{- range . -}}
+                {{- $when := .run_date -}}
+                {{- with (time .run_date) -}}
+                  {{- $when = .Format "Jan 2, 2006 · 3:04 PM" -}}
+                {{- end -}}
+                <span class="history-dot history-{{ .status }}" title="{{ $when }} — {{ .status | title }}"></span>
+              {{- end -}}
+            </span>
+          {{- end -}}
+        </div>
+      </header>
+
+      <dl class="ss-meta">
+        <div class="ss-meta-item">
+          <dt>Run</dt>
+          <dd>{{- partial "scenario-test-result/format-date" $scenario.run_date -}}</dd>
+        </div>
+        <div class="ss-meta-item">
+          <dt>Duration</dt>
+          <dd>{{ $scenario.execution_duration | default "—" }}</dd>
+        </div>
+        <div class="ss-meta-item">
+          <dt>Environment</dt>
+          <dd>{{ $scenario.environment | default "—" }}</dd>
+        </div>
+        <div class="ss-meta-item">
+          <dt>Browser</dt>
+          <dd>{{ $scenario.browser_agent | default "—" }}</dd>
+        </div>
+      </dl>
+
+      {{- if eq $status "failed" -}}
+        {{- if $scenario.failure_reason -}}
+          <div class="ss-callout ss-callout-failure">
+            <div class="ss-callout-label">Failure reason</div>
+            <div class="ss-callout-body">{{ $scenario.failure_reason }}</div>
+          </div>
+        {{- end -}}
+        {{- if $scenario.error_message -}}
+          <details class="ss-error-details">
+            <summary>Error details</summary>
+            <pre class="ss-error-message">{{ $scenario.error_message }}</pre>
+          </details>
+        {{- end -}}
+      {{- end -}}
+
+      {{- with $scenario.dependency_runs -}}
+        {{- $filtered := . -}}
+        {{- if eq $depRunsFilter "failed" -}}
+          {{- $filtered = where . "status" "failed" -}}
+        {{- else if eq $depRunsFilter "pass" -}}
+          {{- $filtered = where . "status" "pass" -}}
+        {{- end -}}
+
+        {{- if $filtered -}}
+          {{- $count := len $filtered -}}
+          {{- $noun := cond (eq $count 1) "test" "tests" -}}
+          {{- $label := "" -}}
+          {{- if eq $depRunsFilter "failed" -}}
+            {{- $label = printf "Also failed as a dependency in %d %s" $count $noun -}}
+          {{- else if eq $depRunsFilter "pass" -}}
+            {{- $label = printf "Ran successfully as a dependency in %d %s" $count $noun -}}
+          {{- else -}}
+            {{- $label = printf "Ran as a dependency in %d %s" $count $noun -}}
+          {{- end -}}
+
+          <details class="ss-dep-runs filter-{{ $depRunsFilter }}">
+            <summary>
+              <span class="ss-dep-runs-label">{{ $label }}</span>
+              <span class="ss-dep-runs-count">{{ $count }}</span>
+            </summary>
+            <ul class="ss-dep-runs-list">
+              {{- range $filtered -}}
+                <li class="ss-dep-run status-{{ .status }}">
+                  <span class="ss-badge ss-badge-{{ .status }} ss-badge-sm">
+                    <span class="ss-badge-label">{{ .status | title }}</span>
+                  </span>
+                  <code class="ss-dep-file">{{ .file }}</code>
+                  {{- if .failure_reason -}}
+                    <div class="ss-dep-failure">{{ .failure_reason }}</div>
+                  {{- end -}}
+                  <div class="ss-dep-meta">
+                    <span>{{ partial "scenario-test-result/format-date" .run_date }}</span>
+                    {{- with .execution_duration -}}
+                      <span class="ss-dep-meta-sep">·</span>
+                      <span>{{ . }}</span>
+                    {{- end -}}
+                  </div>
+                </li>
+              {{- end -}}
+            </ul>
+          </details>
+        {{- end -}}
+      {{- end -}}
+    </section>
+  {{- else -}}
+    <section class="scenario-status status-no-result">
+      <header class="ss-header">
+        <div class="ss-id">
+          <span class="ss-id-label">Scenario ID</span>
+          <code class="ss-id-value">{{ $scenarioId }}</code>
+        </div>
+        <div class="ss-status">
+          <span class="ss-badge ss-badge-no-result">
+            <span class="ss-badge-icon" aria-hidden="true">○</span>
+            <span class="ss-badge-label">No result</span>
+          </span>
+        </div>
+      </header>
+      <p class="ss-empty">No test result available for this scenario.</p>
+    </section>
+  {{- end -}}
+{{- end -}}

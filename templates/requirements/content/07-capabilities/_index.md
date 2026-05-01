@@ -1,5 +1,6 @@
 ---
 title: Capabilities
+url: /capabilities/
 ---
 
 Capabilities, or non-functional requirements, are quantifiable attributes of the solution that define the overall fitness for purpose of the solution. Common capabilities include 
