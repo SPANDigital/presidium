@@ -2,7 +2,7 @@
 # This tests that themes work without network access
 
 # Stage 1: Build presidium binary for Linux
-FROM golang:1.25-alpine AS builder
+FROM golang:1.26-alpine AS builder
 
 # Install build dependencies
 RUN apk add --no-cache git gcc g++ musl-dev make
@@ -15,7 +15,7 @@ COPY . .
 RUN make prepare-themes && go build -tags extended -o presidium .
 
 # Stage 2: Test without network access
-FROM golang:1.25-alpine AS test
+FROM golang:1.26-alpine AS test
 
 # Install runtime dependencies (C++ libraries required by Hugo/presidium)
 RUN apk add --no-cache curl libstdc++ libgcc
