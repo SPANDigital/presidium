@@ -25,8 +25,56 @@ var (
 			}
 		},
 	}
+
+	// serverCommand provides a direct way to run 'hugo server'
+	serverCommand = &cobra.Command{
+		Use:   "server",
+		Short: "Start the Hugo development server",
+		Long:  "Start the Hugo development server with live reload and other development features",
+		Run: func(cmd *cobra.Command, args []string) {
+			hugoService := hugo.New()
+			err := hugoService.Execute(append([]string{"server"}, args...)...)
+			if err != nil {
+				log.Error(err)
+				os.Exit(1)
+			}
+		},
+	}
+
+	// newCommand provides a direct way to run 'hugo new'
+	newCommand = &cobra.Command{
+		Use:   "new",
+		Short: "Create new content for your Hugo site",
+		Long:  "Create new content for your Hugo site, such as posts, pages, etc.",
+		Run: func(cmd *cobra.Command, args []string) {
+			hugoService := hugo.New()
+			err := hugoService.Execute(append([]string{"new"}, args...)...)
+			if err != nil {
+				log.Error(err)
+				os.Exit(1)
+			}
+		},
+	}
+
+	// versionCommand provides a direct way to run 'hugo version'
+	hugoVersionCommand = &cobra.Command{
+		Use:   "hugo-version",
+		Short: "Print the version number of Hugo",
+		Long:  "Print the version number of Hugo that Presidium is using",
+		Run: func(cmd *cobra.Command, args []string) {
+			hugoService := hugo.New()
+			err := hugoService.Execute(append([]string{"version"}, args...)...)
+			if err != nil {
+				log.Error(err)
+				os.Exit(1)
+			}
+		},
+	}
 )
 
 func init() {
 	rootCmd.AddCommand(hugoCommand)
+	rootCmd.AddCommand(serverCommand)
+	rootCmd.AddCommand(newCommand)
+	rootCmd.AddCommand(hugoVersionCommand)
 }

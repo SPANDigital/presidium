@@ -1,8 +1,3 @@
-[submodule "tools/hugo"]
-	path = tools/hugo
-	url = https://github.com/gohugoio/hugo
-	branch = master
-	shallow = true
 [submodule "themes/presidium-layouts-base"]
 	path = themes/presidium-layouts-base
 	url = https://github.com/SPANDigital/presidium-layouts-base
