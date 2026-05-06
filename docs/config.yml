@@ -74,12 +74,26 @@ outputFormats:
   SearchMap:
     baseName: searchmap
     mediaType: application/json
+  Markdown:
+    baseName: index
+    mediaType: text/markdown
+    isPlainText: true
+    rel: alternate
 outputs:
   home:
     - HTML
     - RSS
     - MenuIndex
     - SearchMap
+    - Navigation
+  page:
+    - HTML
+    - Embed
+    - Markdown
+  section:
+    - HTML
+    - Embed
+
 module:
   imports:
     - path: github.com/spandigital/presidium-styling-base

@@ -62,6 +62,53 @@ Or if you want to serve the site after the hugo build, then run:
 ./presidium hugo server
 ```
 
+Or use the `server` command with the built-in proxy middleware:
+
+```
+./presidium server
+```
+
+## Development Server with Proxy Middleware
+
+The `presidium server` command runs Hugo's development server behind a proxy layer that provides Caddy-style URL rewriting middleware. This enables advanced features like format conversion and section navigation without requiring an external reverse proxy.
+
+### Middleware Features
+
+The proxy automatically handles:
+
+1. **Article Navigation** (`?article=<id>`): Strips the query parameter while keeping the path clean
+2. **Section Navigation** (`?section=<section>`): Rewrites URLs to section roots (e.g., `/docs/module/article?section=module` → `/module/`)
+3. **Markdown Export** (`?format=md`): Serves pre-built markdown output with appropriate Content-Type header
+4. **Embed Format** (`?format=embed`): Serves embed-optimized HTML for iframe integration
+5. **WebSocket Support**: Transparently proxies WebSocket connections for Hugo's live-reload feature
+
+### Server Options
+
+```bash
+# Default: proxy on port 3131, Hugo on auto-selected port
+presidium server
+
+# Custom port for proxy
+presidium server --port 8080
+
+# Disable proxy (direct Hugo server)
+presidium server --no-proxy
+
+# Pass additional Hugo flags
+presidium server --buildDrafts --buildFuture
+```
+
+### Architecture
+
+When `presidium server` runs:
+
+1. Hugo server starts on an auto-selected internal port (typically 1313+)
+2. Presidium proxy starts on port 3131 (or custom --port)
+3. Requests flow through middleware chain: Normalize → Rewrite → WebSocket → Proxy
+4. Both servers shut down gracefully on Ctrl+C
+
+This architecture is equivalent to running Hugo behind Caddy but without requiring external dependencies.
+
 ## Testing
 
 ### Unit Tests

@@ -1,14 +1,24 @@
 package cmd
 
 import (
+	"context"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
+	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/proxy"
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/cobra"
 )
 
 var (
+	// Server command flags
+	useProxy   bool
+	proxyPort  int
+	disableMiddleware bool
+
 	// hugoCommand wraps hugo into Presidium.  This allows you to run hugo
 	// in Presidium, and makes it easier to debug etc.
 	// All arguments and flags are passed through to Hugo unchanged.
@@ -30,13 +40,53 @@ var (
 	serverCommand = &cobra.Command{
 		Use:   "server",
 		Short: "Start the Hugo development server",
-		Long:  "Start the Hugo development server with live reload and other development features",
+		Long:  "Start the Hugo development server with live reload and other development features.\nBy default, runs with a proxy layer that provides Caddy-style URL rewriting.",
 		Run: func(cmd *cobra.Command, args []string) {
-			hugoService := hugo.New()
-			err := hugoService.Execute(append([]string{"server"}, args...)...)
-			if err != nil {
-				log.Error(err)
-				os.Exit(1)
+			// Check if user wants direct Hugo server or proxy
+			if disableMiddleware {
+				// Direct Hugo server without proxy
+				hugoService := hugo.New()
+				err := hugoService.Execute(append([]string{"server"}, args...)...)
+				if err != nil {
+					log.Error(err)
+					os.Exit(1)
+				}
+				return
+			}
+
+			// Start with proxy middleware (default behavior)
+			proxyServer := proxy.NewServer(proxyPort)
+			
+			// Set up graceful shutdown
+			// Handle interrupt signals
+			sigChan := make(chan os.Signal, 1)
+			signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
+			
+			// Start proxy server in goroutine
+			errChan := make(chan error, 1)
+			go func() {
+				if err := proxyServer.Start(append([]string{"server"}, args...)); err != nil {
+					errChan <- err
+				}
+			}()
+
+			// Wait for interrupt or error
+			select {
+			case <-sigChan:
+				log.Info("Shutting down gracefully...")
+				shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
+				defer shutdownCancel()
+				
+				if err := proxyServer.Shutdown(shutdownCtx); err != nil {
+					log.Error(err)
+					os.Exit(1)
+				}
+				log.Info("Server stopped")
+			case err := <-errChan:
+				if err != nil {
+					log.Error(err)
+					os.Exit(1)
+				}
 			}
 		},
 	}
@@ -73,6 +123,10 @@ var (
 )
 
 func init() {
+	// Add server command flags
+	serverCommand.Flags().BoolVar(&disableMiddleware, "no-proxy", false, "Disable proxy middleware and run Hugo server directly")
+	serverCommand.Flags().IntVar(&proxyPort, "port", 3131, "Port for the proxy server (Hugo will run on an auto-selected port)")
+	
 	rootCmd.AddCommand(hugoCommand)
 	rootCmd.AddCommand(serverCommand)
 	rootCmd.AddCommand(newCommand)
