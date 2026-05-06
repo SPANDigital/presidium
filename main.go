@@ -8,6 +8,6 @@ import (
 
 func main() {
 	template.SetFS(templatesFS)
-	themes.SetFS(themesFS)
+	themes.SetZip(themesZip)
 	cmd.Execute()
 }

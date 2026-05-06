@@ -10,16 +10,16 @@ import (
 )
 
 func TestExecute_WithoutThemes(t *testing.T) {
-	// Save original themesFS
-	originalFS := themes.GetThemesFS()
+	// Save original themesZip
+	originalZip := themes.GetThemesZip()
 	defer func() {
-		if originalFS != nil {
-			themes.SetFS(originalFS)
+		if originalZip != nil {
+			themes.SetZip(originalZip)
 		}
 	}()
 
-	// Set themes FS to nil to simulate no embedded themes
-	themes.SetFS(nil)
+	// Set themes zip to nil to simulate no embedded themes
+	themes.SetZip(nil)
 
 	svc := New()
 

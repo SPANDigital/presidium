@@ -1,9 +1,14 @@
 package main
 
-import "embed"
+import (
+	"embed"
+	_ "embed"
+)
 
 //go:embed all:templates
 var templatesFS embed.FS
 
-//go:embed all:themes
-var themesFS embed.FS
+// Embed themes as a compressed zip bundle
+// This avoids Go module embedding restrictions and improves extraction speed
+//go:embed themes.zip
+var themesZip []byte

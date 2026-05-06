@@ -14,3 +14,9 @@ docs/resources
 reports/
 reports/tests-cov.out
 .claude/
+
+# Theme embedding artifacts (created during build)
+themes.zip
+
+# Docker test artifacts
+Dockerfile.offline-test.tmp
