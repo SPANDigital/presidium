@@ -34,6 +34,13 @@ func NewServer(proxyPort int) *Server {
 
 // Start initializes Hugo server and reverse proxy
 func (s *Server) Start(hugoArgs []string) error {
+	// Fail fast if the proxy port is already in use — before Hugo starts.
+	// Without this check the error surfaces only after Hugo is running,
+	// leaving a dangling Hugo process the user cannot easily stop.
+	if err := checkPortAvailable(s.proxyPort); err != nil {
+		return fmt.Errorf("proxy port %d is already in use — stop the existing process and try again", s.proxyPort)
+	}
+
 	// Prepare Hugo with themes
 	hugoService := hugo.New()
 
@@ -194,5 +201,15 @@ func findAvailablePort(startPort int) int {
 		}
 	}
 	return startPort // Fallback to original port
+}
+
+// checkPortAvailable returns an error if the given port is already in use
+func checkPortAvailable(port int) error {
+	listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
+	if err != nil {
+		return err
+	}
+	listener.Close()
+	return nil
 }
 
