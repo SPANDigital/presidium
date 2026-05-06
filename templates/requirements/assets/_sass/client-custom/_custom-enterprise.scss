@@ -1,0 +1,493 @@
+// Client custom styles for presidium-template-requirements
+// Project-specific additions live here; loaded via vendor's _client-custom.scss manifest.
+#presidium-content {
+  padding: 0px 0 0px;
+}
+.scenario-content {
+  // Simple scenario status styling
+  .scenario-status {
+    margin: 15px 0;
+    padding: 12px;
+    border: 1px solid #e1e5e9;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    font-family: inherit;
+    font-size: 0.9em;
+
+    .scenario-id-line {
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    .result-line {
+      color: #6c757d;
+
+      .result-value {
+        font-weight: 500;
+        color: #495057;
+      }
+    }
+
+    // Pass state
+    &.status-pass {
+      border-color: #28a745;
+      background-color: #d4edda;
+
+      .result-value {
+        color: #155724;
+        font-weight: 600;
+      }
+    }
+
+    // Failed state
+    &.status-failed {
+      border-color: #dc3545;
+      background-color: #f8d7da;
+
+      .result-value {
+        color: #721c24;
+        font-weight: 600;
+      }
+    }
+
+    // Error state (API failure)
+    &.status-error {
+      border-color: #6c757d;
+      background-color: #e2e3e5;
+
+      .result-value {
+        color: #495057;
+        font-weight: 600;
+      }
+    }
+
+    // Additional status-specific styling for data-driven scenarios
+    .meta-info {
+      margin-top: 8px;
+      font-size: 0.8em;
+      color: #6c757d;
+
+      span {
+        margin-right: 12px;
+        display: inline-block;
+      }
+    }
+  }
+
+  // Scenario dependencies styling
+  .scenario-dependencies {
+    margin: 20px 0;
+    padding: 15px;
+    border: 1px solid #e1e5e9;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+  }
+}
+.story-content,
+.scenario-content {
+  /* Cucumber-style Gherkin syntax highlighting */
+  .highlight[data-lang="gherkin"] {
+    background: #f8f9fa;
+    border: 1px solid #e1e5e9;
+    border-radius: 6px;
+    padding: 16px;
+    margin: 16px 0;
+    font-family: "Monaco", "Menlo", "Ubuntu Mono", monospace;
+    font-size: 14px;
+    line-height: 1.6;
+
+    pre {
+      background: transparent;
+      border: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    code {
+      background: transparent;
+      border: none;
+      padding: 0;
+      font-size: inherit;
+    }
+  }
+
+  /* Gherkin keyword styling (Feature, Scenario, Given, When, Then, And, But) */
+  .highlight .gherkin-keyword,
+  .highlight .language-gherkin .gherkin-keyword {
+    color: #1f7a8c;
+    font-weight: bold;
+  }
+
+  /* Feature keyword specific styling */
+  .highlight .gherkin-feature {
+    color: #1f7a8c;
+    font-weight: bold;
+    font-size: 1.1em;
+  }
+
+  /* Scenario keywords */
+  .highlight .gherkin-scenario {
+    color: #1f7a8c;
+    font-weight: bold;
+  }
+
+  /* Step keywords (Given, When, Then, And, But) */
+  .highlight .gherkin-step {
+    color: #1f7a8c;
+    font-weight: bold;
+  }
+
+  /* Examples keyword */
+  .highlight .gherkin-examples {
+    color: #1f7a8c;
+    font-weight: bold;
+  }
+
+  /* String values and scenario outline parameters */
+  .highlight .gherkin-string,
+  .highlight .gherkin-outline-param {
+    color: #d73027;
+    font-style: italic;
+  }
+
+  /* Table content */
+  .highlight .gherkin-table-delimiter {
+    color: #5cb85c;
+    font-weight: bold;
+  }
+
+  .highlight .gherkin-table-content {
+    color: #333;
+  }
+
+  /* Comments */
+  .highlight .gherkin-comment {
+    color: #999;
+    font-style: italic;
+  }
+
+  /* Tags */
+  .highlight .gherkin-tag {
+    color: #f39c12;
+    font-weight: bold;
+  }
+
+  /* Override Hugo's default Gherkin highlighting with Cucumber colors */
+  .highlight code.language-gherkin {
+    /* Feature line */
+    .gh {
+      /* Generic.Heading - often used for Feature */
+      color: #1f7a8c !important;
+      font-weight: bold !important;
+      font-size: 1.1em;
+    }
+
+    /* Keywords: Scenario, Given, When, Then, And, But, Examples */
+    .k,
+    .kd,
+    .kn {
+      /* Keyword, Keyword.Declaration, Keyword.Namespace */
+      color: #1f7a8c !important;
+      font-weight: bold !important;
+    }
+
+    /* Scenario Outline, Background */
+    .nc {
+      /* Name.Class */
+      color: #1f7a8c !important;
+      font-weight: bold !important;
+    }
+
+    /* String literals and parameters */
+    .s,
+    .s1,
+    .s2,
+    .sb,
+    .sc,
+    .sd,
+    .se,
+    .sh,
+    .si,
+    .sx {
+      /* String variants */
+      color: #d73027 !important;
+      font-style: italic !important;
+    }
+
+    /* Table separators */
+    .p,
+    .o {
+      /* Punctuation, Operator */
+      color: #5cb85c !important;
+      font-weight: bold !important;
+    }
+
+    /* Table content */
+    .n,
+    .nv {
+      /* Name, Name.Variable */
+      color: #333 !important;
+    }
+
+    /* Comments */
+    .c,
+    .c1,
+    .cm,
+    .cs {
+      /* Comment variants */
+      color: #999 !important;
+      font-style: italic !important;
+    }
+
+    /* Tags (@tag) */
+    .nd {
+      /* Name.Decorator */
+      color: #f39c12 !important;
+      font-weight: bold !important;
+    }
+
+    /* Generic text */
+    .w {
+      /* Text.Whitespace */
+      color: #333 !important;
+    }
+  }
+
+  /* Alternative approach: Direct element targeting for better control */
+  .highlight[data-lang="gherkin"] {
+    /* Reset any existing colors */
+    span[style*="color"] {
+      /* Feature keyword */
+      &:contains("Feature:") {
+        color: #1f7a8c !important;
+        font-weight: bold !important;
+        font-size: 1.1em !important;
+      }
+
+      /* Scenario keywords */
+      &:contains("Scenario:"),
+      &:contains("Scenario Outline:"),
+      &:contains("Background:") {
+        color: #1f7a8c !important;
+        font-weight: bold !important;
+      }
+
+      /* Step keywords */
+      &:contains("Given "),
+      &:contains("When "),
+      &:contains("Then "),
+      &:contains("And "),
+      &:contains("But ") {
+        color: #1f7a8c !important;
+        font-weight: bold !important;
+      }
+
+      /* Examples keyword */
+      &:contains("Examples:") {
+        color: #1f7a8c !important;
+        font-weight: bold !important;
+      }
+    }
+  }
+
+  /* More specific targeting using Hugo's syntax highlighting classes */
+  .highlight .language-gherkin {
+    /* Override specific color styles with !important to ensure they apply */
+    span[style*="color:#00a8c8"] {
+      /* Existing keyword color */
+      color: #1f7a8c !important;
+      font-weight: bold !important;
+    }
+
+    span[style*="color:#75af00"] {
+      /* Existing string/text color */
+      color: #333 !important;
+    }
+
+    span[style*="color:#d88200"] {
+      /* Existing table content color */
+      color: #333 !important;
+    }
+
+    span[style*="color:#111"] {
+      /* Existing parameter color */
+      color: #d73027 !important;
+      font-style: italic !important;
+    }
+  }
+}
+
+.discovery-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+.discovery-table th,
+.discovery-table td {
+  padding: 0.5em;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+.discovery-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}
+.discovery-table.nested {
+  margin-left: 1.5em;
+  margin-top: 0.5em;
+  border-left: 2px solid #ddd;
+}
+.discovery-table details {
+  margin: 0;
+}
+.discovery-table summary {
+  cursor: pointer;
+  user-select: none;
+  padding: 0.25em 0;
+}
+.discovery-table small {
+  color: #888;
+}
+
+.stats-container {
+  margin: 1rem 0;
+}
+
+.stats-updated {
+  font-size: 0.85rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+
+.stats-category {
+  margin-bottom: 1.5rem;
+}
+
+.category-header {
+  margin: 0 0 0.5rem 0;
+  padding-bottom: 0.25rem;
+  color: #333;
+}
+
+.stats-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.5rem 0;
+}
+
+.stats-table th,
+.stats-table td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.stats-table th {
+  background: #f5f5f5;
+  font-weight: 600;
+}
+
+.stats-total {
+  font-weight: 600;
+  font-size: 1.1em;
+}
+
+.stats-status {
+  font-size: 0.85rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.15rem 0.4rem;
+  margin: 0.1rem;
+  border-radius: 3px;
+  font-size: 0.8rem;
+}
+
+.status-badge.status-provisionally-accepted {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.status-accepted {
+  background: #28a745;
+  color: white;
+}
+
+.status-badge.status-proposed {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-badge.status-rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.status-provisionally-rejected {
+  background: #f5c6cb;
+  color: #721c24;
+}
+
+.status-badge.status-pass {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-badge.status-failed {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.status-badge.status-skipped {
+  background: #e2e3e5;
+  color: #383d41;
+}
+
+.trend-up {
+  color: #28a745;
+  font-weight: 600;
+}
+
+.trend-down {
+  color: #dc3545;
+  font-weight: 600;
+}
+
+.trend-flat,
+.trend-na,
+.status-na {
+  color: #999;
+}
+
+.stats-history {
+  margin-top: 1.5rem;
+}
+
+.stats-history summary {
+  cursor: pointer;
+  // color: #007bff;
+  font-weight: 500;
+}
+
+.history-table {
+  font-size: 0.9rem;
+}
+
+.history-table th,
+.history-table td {
+  text-align: center;
+}
+
+.history-table td:first-child,
+.history-table th:first-child {
+  text-align: left;
+}
+
+.stats-error {
+  color: #721c24;
+  background: #f8d7da;
+  padding: 0.75rem;
+  border-radius: 4px;
+}

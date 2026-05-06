@@ -1,0 +1,72 @@
+{{/*
+Atomic article renderer - handles individual article display without recursion.
+Optimized for performance with minimal DOM manipulation and efficient conditional rendering.
+
+Project override of vendor item.html (presidium-layouts-base v0.16.0):
+  - Adds `story-content` / `scenario-content` class on the wrapper based on .Params.type
+  - Injects `scenario-test-result` and `scenario-dependencies` partials between content and footer
+*/}}
+
+{{- $params := .Params -}}
+{{- $roles := $params.roles | default "All Roles" -}}
+{{- $slug := (partial "common/slug" .) -}}
+{{- $nestedArticles := .Site.Params.includeNestedArticles | default true -}}
+
+{{/* Pre-compute article metadata for performance */}}
+{{- $articleLink := (printf "%v#%v" .Parent.Page.RelPermalink $slug) -}}
+{{- $.Scratch.Set "articleLink" $articleLink -}}
+
+{{- $hasDataPages := .Data.Pages -}}
+{{- $type := cond (not $hasDataPages) "child" "parent" -}}
+{{- $contentType := "" -}}
+{{- if or (eq $params.type "story") (eq $params.type "scenario") -}}
+    {{- $contentType = printf " %s-content" $params.type -}}
+{{- end -}}
+{{- $importInfo := partial "common/is-imported" . -}}
+{{- $isImported := $importInfo.isImported -}}
+{{- $githubUrl := $importInfo.githubUrl -}}
+
+{{/* File-based article identification with null safety */}}
+{{- $file := .File -}}
+{{- if $file -}}
+    {{- $articleId := ($params.id | default $file.Path) -}}
+    {{- $contentLength := len .Content -}}
+    {{- $noContent := eq $contentLength 0 -}}
+    {{- $uid := $file.UniqueID -}}
+
+    {{/* Optimized conditional rendering - check content existence efficiently */}}
+    {{- $shouldRenderWrapper := or (ne $contentLength 0) (and $nestedArticles (partial "common/pages" .)) -}}
+
+    <div class="article {{ $type }}{{ $contentType }}"
+         data-roles="{{ $roles }}"
+         id="{{ $uid }}"
+         data-link="{{ $articleLink }}"
+         permalink="{{ .Page.RelPermalink }}"
+         data-no-content="{{ $noContent }}"
+         {{ if $.Site.Params.enterprise_enabled }} data-imported="{{ $isImported }}" {{ if $githubUrl }} data-github-url="{{ $githubUrl }}" {{ end }} {{ end }}
+         title="{{ .Title }}">
+
+        {{- if $shouldRenderWrapper -}}
+            <div class="presidium-article-wrapper">
+                <span class="anchor" id="{{ $slug }}" data-id="{{ $articleId }}"></span>
+
+                {{/* Batch render all article components for optimal performance */}}
+                {{- partial "article/header" . -}}
+                {{- partial "article/title" . -}}
+                {{- partial "article/frontmatter" . -}}
+                {{- partial "article/content" . -}}
+                {{- partial "scenario-test-result.html" . -}}
+                {{- partial "scenario-dependencies.html" . -}}
+                {{- partial "article/footer" . -}}
+            </div>
+        {{- end -}}
+    </div>
+{{- else -}}
+    {{/* Graceful degradation for pages without file context */}}
+    <div class="article {{ $type }}{{ $contentType }}"
+         data-roles="{{ $roles }}"
+         {{ if $.Site.Params.enterprise_enabled }} data-imported="{{ $isImported }}" {{ if $githubUrl }} data-github-url="{{ $githubUrl }}" {{ end }} {{ end }}
+         title="{{ .Title }}">
+        <!-- Article without file context -->
+    </div>
+{{- end -}}
