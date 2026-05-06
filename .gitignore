@@ -11,6 +11,7 @@ dist/
 resources/
 dist/
 docs/resources
+docs/.hugo_build.lock
 reports/
 reports/tests-cov.out
 .claude/
