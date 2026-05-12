@@ -1,13 +1,16 @@
 package proxy
 
 import (
+	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/domain/service/hugo"
@@ -48,8 +51,11 @@ func (s *Server) Start(hugoArgs []string) error {
 	hugoDone := make(chan error, 1)
 	s.hugoDone = hugoDone
 	go func() {
-		// Add port flag to Hugo args
-		args := append(hugoArgs, "--port", strconv.Itoa(s.hugoPort))
+		// Add port and baseURL flags to Hugo args
+		// The baseURL must match the proxy port so Hugo generates correct absolute URLs
+		args := append(hugoArgs,
+			"--port", strconv.Itoa(s.hugoPort),
+			"--baseURL", fmt.Sprintf("http://localhost:%d/", s.proxyPort))
 
 		log.Info(fmt.Sprintf("Starting Hugo server on port %d...", s.hugoPort))
 		err := hugoService.Execute(args...)
@@ -98,28 +104,47 @@ func (s *Server) Start(hugoArgs []string) error {
 		ExpectContinueTimeout: 1 * time.Second,
 	}
 
-	// Fix Hugo's relative redirects to be absolute with proxy port
+	// Fix Hugo's URLs to use proxy port instead of Hugo's internal port
 	proxy.ModifyResponse = func(resp *http.Response) error {
-		// Only handle redirects
-		if resp.StatusCode < 300 || resp.StatusCode >= 400 {
-			return nil
+		// Handle redirects
+		if resp.StatusCode >= 300 && resp.StatusCode < 400 {
+			location := resp.Header.Get("Location")
+			if location != "" {
+				// Parse location URL
+				locationURL, err := url.Parse(location)
+				if err == nil && !locationURL.IsAbs() {
+					// Make it absolute using the proxy's scheme and host
+					locationURL.Scheme = "http"
+					locationURL.Host = fmt.Sprintf("localhost:%d", s.proxyPort)
+					resp.Header.Set("Location", locationURL.String())
+				}
+			}
 		}
 		
-		location := resp.Header.Get("Location")
-		if location == "" {
-			return nil
+		// Rewrite HTML content to replace Hugo's internal port with proxy port
+		contentType := resp.Header.Get("Content-Type")
+		if resp.StatusCode == 200 && (strings.Contains(contentType, "text/html") || strings.Contains(contentType, "application/javascript")) {
+			body, err := io.ReadAll(resp.Body)
+			if err != nil {
+				return err
+			}
+			resp.Body.Close()
+			
+			// Replace Hugo's internal port with proxy port in the HTML/JS
+			hugoURL := fmt.Sprintf("http://localhost:%d", s.hugoPort)
+			proxyURL := fmt.Sprintf("http://localhost:%d", s.proxyPort)
+			modifiedBody := bytes.ReplaceAll(body, []byte(hugoURL), []byte(proxyURL))
+			
+			// Also fix WebSocket port in livereload script
+			wsOldPort := fmt.Sprintf("port=%d", s.hugoPort)
+			wsNewPort := fmt.Sprintf("port=%d", s.proxyPort)
+			modifiedBody = bytes.ReplaceAll(modifiedBody, []byte(wsOldPort), []byte(wsNewPort))
+			
+			// Update Content-Length header
+			resp.Body = io.NopCloser(bytes.NewReader(modifiedBody))
+			resp.Header.Set("Content-Length", strconv.Itoa(len(modifiedBody)))
+			resp.ContentLength = int64(len(modifiedBody))
 		}
-
-		// Parse location URL
-		locationURL, err := url.Parse(location)
-		if err != nil || locationURL.IsAbs() {
-			return nil // Already absolute or invalid
-		}
-
-		// Make it absolute using the proxy's scheme and host
-		locationURL.Scheme = "http"
-		locationURL.Host = fmt.Sprintf("localhost:%d", s.proxyPort)
-		resp.Header.Set("Location", locationURL.String())
 		
 		return nil
 	}

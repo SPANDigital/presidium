@@ -33,11 +33,12 @@ serve-offline: ## Run presidium server in Docker with embedded themes — browse
 	@$(MAKE) prepare-themes
 	@docker rm -f presidium-offline-serve 2>/dev/null || true
 	@DOCKER_BUILDKIT=1 docker build -f Dockerfile.offline-serve -t presidium-offline-serve .
+	@docker run -d --rm -p 3131:3131 --name presidium-offline-serve presidium-offline-serve
 	@echo ""
-	@echo "  Presidium server starting at http://localhost:3131"
-	@echo "  Press Ctrl+C to stop"
+	@echo "  Presidium server started at http://localhost:3131"
+	@echo "  View logs:  docker logs -f presidium-offline-serve"
+	@echo "  Stop:       docker stop presidium-offline-serve"
 	@echo ""
-	@docker run --rm -p 3131:3131 --name presidium-offline-serve presidium-offline-serve
 
 fmt: ## Format Go source files
 	go fmt ./...
