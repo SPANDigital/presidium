@@ -60,8 +60,8 @@ dist: ## Build distribution binary
 	@$(MAKE) prepare-themes
 	@mkdir -p "dist" && go build -trimpath -o "dist/presidium" -tags extended
 
-serve-docs: build ## Serve the documentation site
-	cd $(DOCSDIR) && make serve
+serve-docs: build ## Serve the documentation site with proxy — browse at http://localhost:3131
+	cd $(DOCSDIR) && make serve-proxy
 
 lint: ## Run golangci-lint
 	@$(MAKE) prepare-themes
