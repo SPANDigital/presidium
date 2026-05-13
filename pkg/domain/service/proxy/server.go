@@ -51,11 +51,23 @@ func (s *Server) Start(hugoArgs []string) error {
 	hugoDone := make(chan error, 1)
 	s.hugoDone = hugoDone
 	go func() {
-		// Add port and baseURL flags to Hugo args
-		// The baseURL must match the proxy port so Hugo generates correct absolute URLs
-		args := append(hugoArgs,
-			"--port", strconv.Itoa(s.hugoPort),
-			"--baseURL", fmt.Sprintf("http://localhost:%d/", s.proxyPort))
+		// Check if user provided --baseURL flag
+		hasBaseURL := false
+		for _, arg := range hugoArgs {
+			if arg == "--baseURL" || strings.HasPrefix(arg, "--baseURL=") {
+				hasBaseURL = true
+				break
+			}
+		}
+
+		// Add port flag (Hugo always needs to know which port to use)
+		args := append(hugoArgs, "--port", strconv.Itoa(s.hugoPort))
+
+		// Only add baseURL if user hasn't provided one
+		// When proxy is enabled, baseURL should match the proxy port for correct absolute URLs
+		if !hasBaseURL {
+			args = append(args, "--baseURL", fmt.Sprintf("http://localhost:%d/", s.proxyPort))
+		}
 
 		log.Info(fmt.Sprintf("Starting Hugo server on port %d...", s.hugoPort))
 		err := hugoService.Execute(args...)
@@ -77,7 +89,7 @@ func (s *Server) Start(hugoArgs []string) error {
 	}
 
 	proxy := httputil.NewSingleHostReverseProxy(hugoURL)
-	
+
 	// Customize Director to preserve the original path exactly
 	// The default Director can add unwanted redirects
 	originalDirector := proxy.Director
@@ -89,7 +101,7 @@ func (s *Server) Start(hugoArgs []string) error {
 		req.Host = hugoURL.Host
 		// Don't modify the path - keep it exactly as received
 	}
-	
+
 	// Enhance the default transport for better performance
 	proxy.Transport = &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
@@ -106,6 +118,17 @@ func (s *Server) Start(hugoArgs []string) error {
 
 	// Fix Hugo's URLs to use proxy port instead of Hugo's internal port
 	proxy.ModifyResponse = func(resp *http.Response) error {
+		// Set Content-Type for format conversions based on file extension
+		// This overrides any Content-Type from Hugo and avoids duplicate headers
+		if resp.Request != nil && resp.StatusCode == 200 {
+			path := resp.Request.URL.Path
+			if strings.HasSuffix(path, "/index.md") {
+				resp.Header.Set("Content-Type", "text/markdown; charset=utf-8")
+			} else if strings.HasSuffix(path, "/embed.html") {
+				resp.Header.Set("Content-Type", "text/html; charset=utf-8")
+			}
+		}
+
 		// Handle redirects
 		if resp.StatusCode >= 300 && resp.StatusCode < 400 {
 			location := resp.Header.Get("Location")
@@ -120,7 +143,7 @@ func (s *Server) Start(hugoArgs []string) error {
 				}
 			}
 		}
-		
+
 		// Rewrite HTML content to replace Hugo's internal port with proxy port
 		contentType := resp.Header.Get("Content-Type")
 		if resp.StatusCode == 200 && (strings.Contains(contentType, "text/html") || strings.Contains(contentType, "application/javascript")) {
@@ -129,23 +152,23 @@ func (s *Server) Start(hugoArgs []string) error {
 				return err
 			}
 			resp.Body.Close()
-			
+
 			// Replace Hugo's internal port with proxy port in the HTML/JS
 			hugoURL := fmt.Sprintf("http://localhost:%d", s.hugoPort)
 			proxyURL := fmt.Sprintf("http://localhost:%d", s.proxyPort)
 			modifiedBody := bytes.ReplaceAll(body, []byte(hugoURL), []byte(proxyURL))
-			
+
 			// Also fix WebSocket port in livereload script
 			wsOldPort := fmt.Sprintf("port=%d", s.hugoPort)
 			wsNewPort := fmt.Sprintf("port=%d", s.proxyPort)
 			modifiedBody = bytes.ReplaceAll(modifiedBody, []byte(wsOldPort), []byte(wsNewPort))
-			
+
 			// Update Content-Length header
 			resp.Body = io.NopCloser(bytes.NewReader(modifiedBody))
 			resp.Header.Set("Content-Length", strconv.Itoa(len(modifiedBody)))
 			resp.ContentLength = int64(len(modifiedBody))
 		}
-		
+
 		return nil
 	}
 
@@ -196,7 +219,8 @@ func (s *Server) Shutdown(ctx context.Context) error {
 	return nil
 }
 
-// waitForHugo polls the Hugo server until it's ready or times out
+// waitForHugo polls the Hugo server until it's ready or times out.
+// Also checks if the Hugo goroutine exits with an error before the port becomes available.
 func (s *Server) waitForHugo() error {
 	timeout := time.After(30 * time.Second)
 	ticker := time.NewTicker(100 * time.Millisecond)
@@ -206,6 +230,12 @@ func (s *Server) waitForHugo() error {
 		select {
 		case <-timeout:
 			return fmt.Errorf("timeout waiting for Hugo server to start")
+		case err := <-s.hugoDone:
+			// Hugo goroutine exited - it failed to start
+			if err != nil {
+				return fmt.Errorf("hugo server failed to start: %w", err)
+			}
+			return fmt.Errorf("hugo server exited unexpectedly before becoming ready")
 		case <-ticker.C:
 			conn, err := net.DialTimeout("tcp", fmt.Sprintf("localhost:%d", s.hugoPort), time.Second)
 			if err == nil {
@@ -237,4 +267,3 @@ func checkPortAvailable(port int) error {
 	listener.Close()
 	return nil
 }
-

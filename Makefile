@@ -14,7 +14,11 @@ update-themes: ## Update theme submodules to their latest versions
 prepare-themes: ## Prepare themes for embedding (create zip bundle)
 	@rm -f themes.zip
 	@echo "Creating themes.zip bundle..."
-	@cd themes && zip -r ../themes.zip presidium-styling-base presidium-layouts-base presidium-layouts-blog -x '*.git*' '*/.*' '*/.github/*' 2>/dev/null || true
+	@cd themes && zip -r ../themes.zip presidium-styling-base presidium-layouts-base presidium-layouts-blog -x '*.git*' '*/.*' '*/.github/*'
+	@if [ ! -f themes.zip ]; then \
+		echo "ERROR: Failed to create themes.zip"; \
+		exit 1; \
+	fi
 	@echo "Themes bundle created: themes.zip"
 
 build: ## Build the presidium binary
@@ -54,7 +58,17 @@ clean: ## Remove build artifacts
 	rm -fr "dist" "$(FILENAME)" "presidium-test" themes.zip
 
 coverage_report: ## Open coverage report in browser
-	@go test -coverprofile=reports/tests-cov.out ./... && go tool cover -html=reports/tests-cov.out -o reports/coverage.html && open reports/coverage.html
+	@go test -coverprofile=reports/tests-cov.out ./... && go tool cover -html=reports/tests-cov.out -o reports/coverage.html
+	@echo "Coverage report generated at reports/coverage.html"
+	@if command -v open >/dev/null 2>&1; then \
+		open reports/coverage.html; \
+	elif command -v xdg-open >/dev/null 2>&1; then \
+		xdg-open reports/coverage.html; \
+	elif command -v start >/dev/null 2>&1; then \
+		start reports/coverage.html; \
+	else \
+		echo "Please open reports/coverage.html manually in your browser"; \
+	fi
 
 dist: ## Build distribution binary
 	@$(MAKE) prepare-themes

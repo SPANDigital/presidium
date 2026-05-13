@@ -76,7 +76,7 @@ The `presidium server` command runs Hugo's development server behind a proxy lay
 
 The proxy automatically handles:
 
-1. **Article Navigation** (`?article=<id>`): Strips the query parameter while keeping the path clean
+1. **Article Navigation** (`?article=<id>`): Redirects to fragment identifier (`#<id>`) so browser scrolls to the element
 2. **Section Navigation** (`?section=<section>`): Rewrites URLs to section roots (e.g., `/docs/module/article?section=module` → `/module/`)
 3. **Markdown Export** (`?format=md`): Serves pre-built markdown output with appropriate Content-Type header
 4. **Embed Format** (`?format=embed`): Serves embed-optimized HTML for iframe integration
@@ -94,8 +94,11 @@ presidium server --port 8080
 # Disable proxy (direct Hugo server)
 presidium server --no-proxy
 
-# Pass additional Hugo flags
+# Pass additional Hugo flags after the Presidium-specific flags
 presidium server --buildDrafts --buildFuture
+
+# Or be explicit with -- separator (both work the same)
+presidium server -- --buildDrafts --buildFuture
 ```
 
 ### Architecture

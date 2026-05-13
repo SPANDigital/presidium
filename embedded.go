@@ -2,7 +2,6 @@ package main
 
 import (
 	"embed"
-	_ "embed"
 )
 
 //go:embed all:templates

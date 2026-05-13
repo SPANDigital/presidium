@@ -26,28 +26,28 @@ Client Request
     ↓
 [RewriteMiddleware] - Handle query parameter rewrites
     ↓
-[WebSocketUpgradeMiddleware] - Preserve WebSocket headers for live-reload
-    ↓
-[ReverseProxy] - Forward to Hugo server
+[ReverseProxy] - Forward to Hugo server (handles WebSocket upgrades automatically)
     ↓
 Hugo Response → Client
 ```
+
+Note: WebSocket support is built into the reverse proxy and does not require a separate middleware.
 
 ## Rewrite Rules
 
 ### 1. Article Navigation (`?article=<id>`)
 
-Strips the `article` query parameter while preserving the path.
+Redirects to a URL with a fragment identifier so the browser scrolls to the element with that ID.
 
 **Example:**
 
 ```
-Request:  GET /docs/page?article=123
-Rewrite:  GET /docs/page
-Browser:  /docs/page?article=123 (unchanged)
+Request:   GET /docs/page?article=my-section
+Redirect:  302 to /docs/page#my-section
+Browser:   Navigates to /docs/page#my-section and scrolls to element
 ```
 
-**Use Case:** Maintain article IDs in browser history without affecting Hugo's routing.
+**Use Case:** Enable deep linking to specific sections within a page using query parameters, which are then converted to standard HTML anchors for browser scrolling.
 
 ### 2. Section Navigation (`?section=<section>`)
 
@@ -119,10 +119,15 @@ presidium server --no-proxy
 
 ### Pass Hugo Flags
 
-Additional flags are passed through to Hugo:
+Additional flags are passed through to Hugo. The `--port` and `--no-proxy` flags are
+handled by Presidium; all other flags go directly to Hugo:
 
 ```bash
-presidium server --buildDrafts --buildFuture --baseURL http://example.com
+# Pass Hugo flags (Presidium parses only --port and --no-proxy)
+presidium server --buildDrafts --buildFuture
+
+# Or be explicit with -- separator (both work the same)
+presidium server -- --buildDrafts --buildFuture --baseURL http://example.com
 ```
 
 ## WebSocket Support

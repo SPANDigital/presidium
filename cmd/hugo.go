@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"context"
+	"fmt"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 	"time"
 
@@ -15,8 +17,7 @@ import (
 
 var (
 	// Server command flags
-	useProxy   bool
-	proxyPort  int
+	proxyPort         int
 	disableMiddleware bool
 
 	// hugoCommand wraps hugo into Presidium.  This allows you to run hugo
@@ -38,15 +39,43 @@ var (
 
 	// serverCommand provides a direct way to run 'hugo server'
 	serverCommand = &cobra.Command{
-		Use:   "server",
-		Short: "Start the Hugo development server",
-		Long:  "Start the Hugo development server with live reload and other development features.\nBy default, runs with a proxy layer that provides Caddy-style URL rewriting.",
+		Use:                "server",
+		Short:              "Start the Hugo development server",
+		Long:               "Start the Hugo development server with live reload and other development features.\nBy default, runs with a proxy layer that provides Caddy-style URL rewriting.\nPass Hugo flags after -- (e.g., presidium server -- --buildDrafts)",
+		DisableFlagParsing: true, // Let us manually parse only --port and --no-proxy, forward the rest to Hugo
 		Run: func(cmd *cobra.Command, args []string) {
+			// Manually parse --port and --no-proxy flags
+			var hugoArgs []string
+			portSet := false
+
+			for i := 0; i < len(args); i++ {
+				arg := args[i]
+				if arg == "--port" && i+1 < len(args) {
+					// Parse port value
+					_, _ = fmt.Sscanf(args[i+1], "%d", &proxyPort)
+					portSet = true
+					i++ // Skip the value
+				} else if arg == "--no-proxy" {
+					disableMiddleware = true
+				} else if strings.HasPrefix(arg, "--port=") {
+					_, _ = fmt.Sscanf(arg[7:], "%d", &proxyPort)
+					portSet = true
+				} else {
+					// Forward all other args to Hugo
+					hugoArgs = append(hugoArgs, arg)
+				}
+			}
+
+			// If port wasn't set, use default
+			if !portSet {
+				proxyPort = 3131
+			}
+
 			// Check if user wants direct Hugo server or proxy
 			if disableMiddleware {
 				// Direct Hugo server without proxy
 				hugoService := hugo.New()
-				err := hugoService.Execute(append([]string{"server"}, args...)...)
+				err := hugoService.Execute(append([]string{"server"}, hugoArgs...)...)
 				if err != nil {
 					log.Error(err)
 					os.Exit(1)
@@ -56,16 +85,16 @@ var (
 
 			// Start with proxy middleware (default behavior)
 			proxyServer := proxy.NewServer(proxyPort)
-			
+
 			// Set up graceful shutdown
 			// Handle interrupt signals
 			sigChan := make(chan os.Signal, 1)
 			signal.Notify(sigChan, os.Interrupt, syscall.SIGTERM)
-			
+
 			// Start proxy server in goroutine
 			errChan := make(chan error, 1)
 			go func() {
-				if err := proxyServer.Start(append([]string{"server"}, args...)); err != nil {
+				if err := proxyServer.Start(append([]string{"server"}, hugoArgs...)); err != nil {
 					errChan <- err
 				}
 			}()
@@ -76,7 +105,7 @@ var (
 				log.Info("Shutting down gracefully...")
 				shutdownCtx, shutdownCancel := context.WithTimeout(context.Background(), 10*time.Second)
 				defer shutdownCancel()
-				
+
 				if err := proxyServer.Shutdown(shutdownCtx); err != nil {
 					log.Error(err)
 					os.Exit(1)
@@ -123,10 +152,9 @@ var (
 )
 
 func init() {
-	// Add server command flags
-	serverCommand.Flags().BoolVar(&disableMiddleware, "no-proxy", false, "Disable proxy middleware and run Hugo server directly")
-	serverCommand.Flags().IntVar(&proxyPort, "port", 3131, "Port for the proxy server (Hugo will run on an auto-selected port)")
-	
+	// Note: server command uses DisableFlagParsing and manually parses --port and --no-proxy
+	// to allow forwarding unknown flags directly to Hugo
+
 	rootCmd.AddCommand(hugoCommand)
 	rootCmd.AddCommand(serverCommand)
 	rootCmd.AddCommand(newCommand)
