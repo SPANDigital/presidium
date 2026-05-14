@@ -4,8 +4,8 @@ public/
 main
 node_modules/
 reports/
-presidium-hugo
-presidium
+/presidium-hugo
+/presidium
 dist/
 .DS_Store
 resources/
