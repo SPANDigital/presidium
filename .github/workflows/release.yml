@@ -13,6 +13,7 @@ permissions:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    environment: releaser
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,4 +39,4 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+          GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}

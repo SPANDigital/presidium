@@ -79,7 +79,7 @@ brews:
     repository:
       owner: spandigital
       name: homebrew-tap
-      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+      token: "{{ .Env.GH_ACCESS_TOKEN }}"
     directory: Formula
     install: |
       bin.install "presidium"
