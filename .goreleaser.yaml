@@ -84,4 +84,9 @@ brews:
     repository:
       owner: spandigital
       name: homebrew-tap
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
     directory: Formula
+    install: |
+      bin.install "presidium"
+    test: |
+      assert_match "CLI tools for managing Presidium", shell_output("#{bin}/presidium --help")

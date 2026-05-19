@@ -79,4 +79,4 @@ serve-docs: build ## Serve the documentation site with proxy — browse at http:
 
 lint: ## Run golangci-lint
 	@$(MAKE) prepare-themes
-	@golangci-lint run --timeout 10m
+	@bin/golangci-lint run --timeout 10m
