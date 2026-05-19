@@ -7,8 +7,6 @@ on:
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
 
 jobs:
   goreleaser:
@@ -21,22 +19,19 @@ jobs:
           fetch-depth: 0
           submodules: true
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
-        with:
-          go-version: 1.25.x
-
-      - name: Set up Zig
-        uses: goto-bus-stop/setup-zig@v2
-        with:
-          version: 0.11.0
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          distribution: goreleaser
-          version: latest
-          args: release --clean
+      - name: Run GoReleaser via goreleaser-cross
+        # goreleaser-cross bundles Go, goreleaser, osxcross (with macOS SDK) and
+        # gcc cross toolchains for linux. This is required because zig 0.11.0
+        # cannot satisfy darwin's CoreFoundation/Security framework symbols when
+        # cross-compiling cgo from a linux runner.
+        run: |
+          docker run --rm \
+            -v "$(pwd):/go/src/github.com/SPANDigital/presidium-hugo" \
+            -w /go/src/github.com/SPANDigital/presidium-hugo \
+            -e GITHUB_TOKEN \
+            -e GH_ACCESS_TOKEN \
+            ghcr.io/goreleaser/goreleaser-cross:v1.25.9 \
+            release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
