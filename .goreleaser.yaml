@@ -44,19 +44,6 @@ builds:
           - CGO_ENABLED=1
           - CC=zig cc -target aarch64-macos
           - CXX=zig c++ -target aarch64-macos
-  # Windows build without CGO - extended Hugo features won't work but basic functionality will
-  - id: windows
-    tags:
-      - extended
-    env:
-      - CGO_ENABLED=0
-    goos:
-      - windows
-    goarch:
-      - amd64
-      - arm64
-    ldflags:
-      - -s -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
 
 archives:
   - name_template: '{{ .ProjectName }}_{{ title .Os }}_{{ if eq .Arch "amd64" }}x86_64{{ else if eq .Arch "386" }}i386{{ else }}{{ .Arch }}{{ end }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
