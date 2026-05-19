@@ -19,6 +19,13 @@ jobs:
           fetch-depth: 0
           submodules: true
 
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Run GoReleaser via goreleaser-cross
         # goreleaser-cross bundles Go, goreleaser, osxcross (with macOS SDK) and
         # gcc cross toolchains for linux. This is required because zig 0.11.0
