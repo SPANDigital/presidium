@@ -102,7 +102,11 @@ func (s *Server) Start(hugoArgs []string) error {
 		// Don't modify the path - keep it exactly as received
 	}
 
-	// Enhance the default transport for better performance
+	// Enhance the default transport for better performance.
+	// DisableCompression: ModifyResponse rewrites HTML/JS bodies by byte-replacing
+	// Hugo's internal port with the proxy port. If Hugo returns gzip/br-encoded
+	// content the byte replacement corrupts the response, so we always negotiate
+	// an uncompressed body from the upstream.
 	proxy.Transport = &http.Transport{
 		Proxy: http.ProxyFromEnvironment,
 		DialContext: (&net.Dialer{
@@ -114,6 +118,7 @@ func (s *Server) Start(hugoArgs []string) error {
 		IdleConnTimeout:       90 * time.Second,
 		TLSHandshakeTimeout:   10 * time.Second,
 		ExpectContinueTimeout: 1 * time.Second,
+		DisableCompression:    true,
 	}
 
 	// Fix Hugo's URLs to use proxy port instead of Hugo's internal port

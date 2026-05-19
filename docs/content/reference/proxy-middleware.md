@@ -185,7 +185,6 @@ Tests cover:
 - Format conversion (md/embed)
 - Path normalization
 - Middleware chaining
-- WebSocket header preservation
 
 ## Implementation Details
 

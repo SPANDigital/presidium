@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"syscall"
 	"time"
@@ -14,6 +15,18 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/log"
 	"github.com/spf13/cobra"
 )
+
+// parsePort parses a port string and validates the range. Returns error on invalid input.
+func parsePort(s string) (int, error) {
+	p, err := strconv.Atoi(s)
+	if err != nil {
+		return 0, fmt.Errorf("invalid port %q: must be an integer", s)
+	}
+	if p < 1 || p > 65535 {
+		return 0, fmt.Errorf("invalid port %d: must be between 1 and 65535", p)
+	}
+	return p, nil
+}
 
 var (
 	// Server command flags
@@ -51,14 +64,23 @@ var (
 			for i := 0; i < len(args); i++ {
 				arg := args[i]
 				if arg == "--port" && i+1 < len(args) {
-					// Parse port value
-					_, _ = fmt.Sscanf(args[i+1], "%d", &proxyPort)
+					p, err := parsePort(args[i+1])
+					if err != nil {
+						log.Error(err)
+						os.Exit(1)
+					}
+					proxyPort = p
 					portSet = true
 					i++ // Skip the value
 				} else if arg == "--no-proxy" {
 					disableMiddleware = true
 				} else if strings.HasPrefix(arg, "--port=") {
-					_, _ = fmt.Sscanf(arg[7:], "%d", &proxyPort)
+					p, err := parsePort(arg[7:])
+					if err != nil {
+						log.Error(err)
+						os.Exit(1)
+					}
+					proxyPort = p
 					portSet = true
 				} else {
 					// Forward all other args to Hugo

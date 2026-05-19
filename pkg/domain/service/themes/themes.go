@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"io"
+	"os"
 	"path/filepath"
 	"sort"
 	"strings"
@@ -65,9 +66,15 @@ func (s Service) Extract() (tmpDir string, replacements string, err error) {
 	}
 
 	// Extract all files from zip
+	// Guard against zip-slip: file.Name may contain "../" or absolute paths.
+	tmpDirClean := filepath.Clean(tmpDir) + string(os.PathSeparator)
 	for _, file := range reader.File {
 		// Calculate destination path
 		destPath := filepath.Join(tmpDir, file.Name)
+		if !strings.HasPrefix(destPath+string(os.PathSeparator), tmpDirClean) && destPath != filepath.Clean(tmpDir) {
+			_ = filesystem.AFS.RemoveAll(tmpDir)
+			return "", "", fmt.Errorf("invalid zip entry path (zip-slip): %s", file.Name)
+		}
 
 		if file.FileInfo().IsDir() {
 			// Create directory

@@ -2,6 +2,7 @@ package proxy
 
 import (
 	"net/http"
+	"net/url"
 	"path"
 	"regexp"
 	"strings"
@@ -22,13 +23,15 @@ func RewriteMiddleware(next http.Handler) http.Handler {
 		// Convert to fragment identifier (#) via redirect so browser scrolls to the element.
 		// e.g., /docs/page?article=my-section → redirect to /docs/page#my-section
 		if articleID := query.Get("article"); articleID != "" {
-			// Build the redirect URL with fragment identifier
+			// Build the redirect URL with fragment identifier.
+			// url.PathEscape escapes characters that aren't valid in a fragment
+			// (e.g. literal '#', whitespace) so the Location header stays well-formed.
 			query.Del("article")
 			redirectURL := r.URL.Path
 			if len(query) > 0 {
 				redirectURL += "?" + query.Encode()
 			}
-			redirectURL += "#" + articleID
+			redirectURL += "#" + url.PathEscape(articleID)
 
 			// Issue 302 redirect to the URL with fragment
 			http.Redirect(w, r, redirectURL, http.StatusFound)

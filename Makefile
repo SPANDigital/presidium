@@ -58,6 +58,8 @@ clean: ## Remove build artifacts
 	rm -fr "dist" "$(FILENAME)" "presidium-test" themes.zip
 
 coverage_report: ## Open coverage report in browser
+	@mkdir -p reports
+	@$(MAKE) prepare-themes
 	@go test -coverprofile=reports/tests-cov.out ./... && go tool cover -html=reports/tests-cov.out -o reports/coverage.html
 	@echo "Coverage report generated at reports/coverage.html"
 	@if command -v open >/dev/null 2>&1; then \
