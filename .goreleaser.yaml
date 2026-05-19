@@ -2,6 +2,9 @@ version: 2
 
 before:
   hooks:
+    # goreleaser-cross does not ship `zip`; install it on the fly when missing.
+    # No-ops on dev machines where zip is already present.
+    - sh -c 'command -v zip >/dev/null 2>&1 || (apt-get update && apt-get install -y zip)'
     - go mod tidy
     - make prepare-themes
 
