@@ -5,7 +5,7 @@ go 1.25.0
 require (
 	github.com/Masterminds/sprig/v3 v3.3.0
 	github.com/PuerkitoBio/goquery v1.11.0
-	github.com/gohugoio/hugo v0.156.0
+	github.com/gohugoio/hugo v0.157.0
 	github.com/google/uuid v1.6.0
 	github.com/logrusorgru/aurora v2.0.3+incompatible
 	github.com/manifoldco/promptui v0.9.0
