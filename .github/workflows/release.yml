@@ -31,14 +31,17 @@ jobs:
         # gcc cross toolchains for linux. This is required because zig 0.11.0
         # cannot satisfy darwin's CoreFoundation/Security framework symbols when
         # cross-compiling cgo from a linux runner.
+        #
+        # GITHUB_TOKEN     — writes the GitHub Release on this repo
+        # TAP_GITHUB_TOKEN — pushes the generated cask to spandigital/homebrew-tap
         run: |
           docker run --rm \
             -v "$(pwd):/go/src/github.com/SPANDigital/presidium-hugo" \
             -w /go/src/github.com/SPANDigital/presidium-hugo \
             -e GITHUB_TOKEN \
-            -e GH_ACCESS_TOKEN \
+            -e TAP_GITHUB_TOKEN \
             ghcr.io/goreleaser/goreleaser-cross:v1.25.9 \
             release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_ACCESS_TOKEN: ${{ secrets.GH_ACCESS_TOKEN }}
+          TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
