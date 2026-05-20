@@ -1,16 +1,50 @@
 package proxy
 
 import (
+	"bytes"
+	"encoding/json"
 	"net/http"
-	"net/url"
 	"path"
 	"regexp"
 	"strings"
 )
 
+// articleAnchorScript builds an HTML <script> tag that scrolls the page to
+// the element whose id matches target on load. The target is baked into the
+// script literal (JSON-encoded so any value is safely escaped) so the script
+// works regardless of what the browser's address bar shows — necessary for
+// the ?section= case, where the article id is derived server-side and never
+// appears in the visible URL.
+func articleAnchorScript(target string) string {
+	encoded, _ := json.Marshal(target)
+	return `<script>(function(){var id=` + string(encoded) + `;function go(){var el=document.getElementById(id);if(!el){var n=document.getElementsByName(id);if(n&&n.length)el=n[0];}if(el)el.scrollIntoView();}if(document.readyState==='complete'||document.readyState==='interactive'){go();}else{document.addEventListener('DOMContentLoaded',go);}})();</script>`
+}
+
+// injectArticleAnchorScript returns body with a parameterized anchor-scroll
+// script for target inserted just before the last </body> tag. If no </body>
+// tag is present the script is appended at the end — browsers still execute
+// it. If target is empty the body is returned unchanged.
+func injectArticleAnchorScript(body []byte, target string) []byte {
+	if target == "" {
+		return body
+	}
+	script := []byte(articleAnchorScript(target))
+	closingBody := []byte("</body>")
+	idx := bytes.LastIndex(body, closingBody)
+	if idx == -1 {
+		return append(body, script...)
+	}
+	out := make([]byte, 0, len(body)+len(script))
+	out = append(out, body[:idx]...)
+	out = append(out, script...)
+	out = append(out, body[idx:]...)
+	return out
+}
+
 // RewriteMiddleware implements URL rewriting logic
-// that handles special query parameters for article navigation, sections,
-// and format conversions.
+// that handles special query parameters for section navigation
+// and format conversions. The ?article=<id> parameter is passed
+// through unchanged for downstream handling.
 func RewriteMiddleware(next http.Handler) http.Handler {
 	// Validate section parameter - only allow alphanumeric, hyphens, and underscores
 	// This prevents path traversal attacks with values like "../", "./", or URL-encoded separators
@@ -19,44 +53,41 @@ func RewriteMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		query := r.URL.Query()
 
-		// Handle ?article=<id>
-		// Convert to fragment identifier (#) via redirect so browser scrolls to the element.
-		// e.g., /docs/page?article=my-section → redirect to /docs/page#my-section
-		if articleID := query.Get("article"); articleID != "" {
-			// Build the redirect URL with fragment identifier.
-			// url.PathEscape escapes characters that aren't valid in a fragment
-			// (e.g. literal '#', whitespace) so the Location header stays well-formed.
-			query.Del("article")
-			redirectURL := r.URL.Path
-			if len(query) > 0 {
-				redirectURL += "?" + query.Encode()
-			}
-			redirectURL += "#" + url.PathEscape(articleID)
-
-			// Issue 302 redirect to the URL with fragment
-			http.Redirect(w, r, redirectURL, http.StatusFound)
-			return
-		}
-
 		// Handle ?section=<section>
-		// Extract the last path segment as the article id, rewrite to /<section>/.
-		// e.g. /docs/my-module/some-article/?section=my-module → /my-module/
+		// Find the section slug in the request path and mask-rewrite the path
+		// to everything up to (and including) that slug. Anything after the
+		// slug becomes the article id — promoted to ?article=<remainder> so
+		// the response-injected script scrolls to that element on load.
+		// e.g. /docs/foo/bar?section=foo → mask to /docs/foo/?article=bar
+		//
+		// Edge cases:
+		//   - slug not in path: strip ?section= and pass through unchanged
+		//   - slug appears multiple times: last occurrence wins (deepest match)
+		//   - slug is the final segment (no remainder): mask the path only
 		if section := query.Get("section"); section != "" {
 			// Validate section to prevent path traversal
 			if !sectionPattern.MatchString(section) {
 				http.Error(w, "Invalid section parameter", http.StatusBadRequest)
 				return
 			}
-			r.URL.Path = "/" + section + "/"
-			// Apply path.Clean to ensure no relative references remain
-			r.URL.Path = path.Clean(r.URL.Path)
-			if !strings.HasPrefix(r.URL.Path, "/") {
-				r.URL.Path = "/" + r.URL.Path
+			trimmed := strings.Trim(r.URL.Path, "/")
+			var segments []string
+			if trimmed != "" {
+				segments = strings.Split(trimmed, "/")
 			}
-			if !strings.HasSuffix(r.URL.Path, "/") {
-				r.URL.Path += "/"
+			sectionIdx := -1
+			for i, seg := range segments {
+				if seg == section {
+					sectionIdx = i
+				}
 			}
 			query.Del("section")
+			if sectionIdx >= 0 {
+				r.URL.Path = "/" + strings.Join(segments[:sectionIdx+1], "/") + "/"
+				if remainder := strings.Join(segments[sectionIdx+1:], "/"); remainder != "" {
+					query.Set("article", remainder)
+				}
+			}
 			r.URL.RawQuery = query.Encode()
 		}
 

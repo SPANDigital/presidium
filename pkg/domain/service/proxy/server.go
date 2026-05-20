@@ -168,6 +168,19 @@ func (s *Server) Start(hugoArgs []string) error {
 			wsNewPort := fmt.Sprintf("port=%d", s.proxyPort)
 			modifiedBody = bytes.ReplaceAll(modifiedBody, []byte(wsOldPort), []byte(wsNewPort))
 
+			// Inject the article-anchor scroll script into HTML responses
+			// where the request carried ?article=<id> (either passed in
+			// directly or promoted from ?section= by RewriteMiddleware).
+			// The id is baked into the script so it works even when the
+			// browser's visible URL doesn't contain ?article= (the
+			// ?section= case is masked, so the browser keeps showing the
+			// original ?section= URL).
+			if strings.Contains(contentType, "text/html") && resp.Request != nil {
+				if article := resp.Request.URL.Query().Get("article"); article != "" {
+					modifiedBody = injectArticleAnchorScript(modifiedBody, article)
+				}
+			}
+
 			// Update Content-Length header
 			resp.Body = io.NopCloser(bytes.NewReader(modifiedBody))
 			resp.Header.Set("Content-Length", strconv.Itoa(len(modifiedBody)))

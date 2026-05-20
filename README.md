@@ -76,8 +76,8 @@ The `presidium server` command runs Hugo's development server behind a proxy lay
 
 The proxy automatically handles:
 
-1. **Article Navigation** (`?article=<id>`): Redirects to fragment identifier (`#<id>`) so browser scrolls to the element
-2. **Section Navigation** (`?section=<section>`): Rewrites URLs to section roots (e.g., `/docs/module/article?section=module` → `/module/`)
+1. **Article Navigation** (`?article=<id>`): Passes through unchanged; the proxy injects a small client-side script that scrolls to the element with that id while leaving `?article=` visible in the URL
+2. **Section Navigation** (`?section=<section>`): Locates the section slug in the path, masks the path to up-to-and-including the slug, and promotes any remaining segments to `?article=<remainder>` so the anchor-scroll script scrolls to that element (e.g. `/docs/foo/bar?section=foo` → `/docs/foo/` with `?article=bar`, URL bar unchanged)
 3. **Markdown Export** (`?format=md`): Serves pre-built markdown output with appropriate Content-Type header
 4. **Embed Format** (`?format=embed`): Serves embed-optimized HTML for iframe integration
 5. **WebSocket Support**: Transparently proxies WebSocket connections for Hugo's live-reload feature

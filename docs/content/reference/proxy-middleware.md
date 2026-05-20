@@ -37,31 +37,44 @@ Note: WebSocket support is built into the reverse proxy and does not require a s
 
 ### 1. Article Navigation (`?article=<id>`)
 
-Redirects to a URL with a fragment identifier so the browser scrolls to the element with that ID.
+The `?article=<id>` parameter is passed through to Hugo unchanged — no redirect, no path rewrite. When Hugo returns the HTML response, the proxy injects a small `<script>` just before `</body>` that reads the parameter from `window.location.search` and scrolls the matching element (`document.getElementById(id)`, falling back to `document.getElementsByName(id)`) into view on load.
 
 **Example:**
 
 ```
-Request:   GET /docs/page?article=my-section
-Redirect:  302 to /docs/page#my-section
-Browser:   Navigates to /docs/page#my-section and scrolls to element
+Request:  GET /docs/page?article=my-section
+Forward:  GET /docs/page?article=my-section (unchanged)
+Browser:  /docs/page?article=my-section (URL preserved), page scrolls to #my-section
 ```
 
-**Use Case:** Enable deep linking to specific sections within a page using query parameters, which are then converted to standard HTML anchors for browser scrolling.
+The injection only happens for `text/html` responses where the request actually carries `?article=`, so other pages are unaffected.
+
+**Use Case:** Deep-link to a specific element on a page without converting the link into a fragment URL via a server-side redirect. The original `?article=` URL stays in the address bar (useful when sharing or processing the URL programmatically).
 
 ### 2. Section Navigation (`?section=<section>`)
 
-Rewrites to the section root, extracting the last path segment as the article ID.
+Locates the section slug inside the request path and masks the path to everything up to (and including) that slug. Any path segments after the slug are promoted to `?article=<remainder>` so the response-injected anchor-scroll script (see section 1) targets that element.
+
+This is equivalent to: *"serve the section page, but scroll to the article that the original URL pointed at."* The browser's address bar is preserved.
 
 **Example:**
 
 ```
-Request:  GET /docs/my-module/some-article?section=my-module
-Rewrite:  GET /my-module/
-Browser:  /docs/my-module/some-article?section=my-module (unchanged)
+Request:  GET /docs/foo/bar?section=foo
+Forward:  GET /docs/foo/?article=bar (path masked, remainder promoted)
+Browser:  /docs/foo/bar?section=foo (unchanged), page scrolls to #bar
 ```
 
-**Use Case:** Navigate to section index while preserving original context in URL.
+**Edge cases:**
+
+| Input                                  | Behavior                                                                  |
+|----------------------------------------|---------------------------------------------------------------------------|
+| Slug not in path                       | `?section=` is stripped and the request passes through unchanged.         |
+| Slug appears multiple times in path    | Last (deepest) occurrence wins.                                           |
+| Slug is the final path segment         | Path is masked to `/.../slug/`; no `?article=` is promoted (no scroll).   |
+| Slug fails `^[a-z0-9_-]+$` validation  | `400 Bad Request` (path-traversal guard).                                 |
+
+**Use Case:** Deep-link to a specific article on a section index page without the URL collapsing into the section's canonical path.
 
 ### 3. Markdown Export (`?format=md`)
 
@@ -146,11 +159,11 @@ This middleware replicates the following Caddyfile:
 
 ```caddy
 :3131 {
- @has_article query article=*
- rewrite @has_article {path}
-
- @has_section query section=*
- rewrite @has_section /{query.section}/
+ # ?article=<id> is passed through unchanged. The proxy injects an
+ # anchor-scroll <script> into the HTML response based on resp.Request URL.
+ # ?section=<slug> requires path-aware logic (locate the slug, mask the
+ # path, promote the remainder to ?article=) that goes beyond a simple
+ # Caddy rewrite — implemented in Go in RewriteMiddleware.
 
  @format_md {
   query format=md
@@ -180,7 +193,7 @@ go test ./pkg/domain/service/proxy/... -v
 
 Tests cover:
 
-- Article parameter stripping
+- Article parameter pass-through
 - Section navigation rewriting
 - Format conversion (md/embed)
 - Path normalization
