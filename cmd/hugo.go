@@ -57,9 +57,9 @@ var (
 		Long:               "Start the Hugo development server with live reload and other development features.\nBy default, runs with a proxy layer that provides Caddy-style URL rewriting.\nPass Hugo flags after -- (e.g., presidium server -- --buildDrafts)",
 		DisableFlagParsing: true, // Let us manually parse only --port and --no-proxy, forward the rest to Hugo
 		Run: func(cmd *cobra.Command, args []string) {
-			// Manually parse --port and --no-proxy flags
+			// Manually parse --port and --no-proxy flags. If --port is omitted, leave
+			// proxyPort = 0 so proxy.Server picks a random N (Hugo) / N+1 (proxy) pair.
 			var hugoArgs []string
-			portSet := false
 
 			for i := 0; i < len(args); i++ {
 				arg := args[i]
@@ -70,7 +70,6 @@ var (
 						os.Exit(1)
 					}
 					proxyPort = p
-					portSet = true
 					i++ // Skip the value
 				} else if arg == "--no-proxy" {
 					disableMiddleware = true
@@ -81,16 +80,10 @@ var (
 						os.Exit(1)
 					}
 					proxyPort = p
-					portSet = true
 				} else {
 					// Forward all other args to Hugo
 					hugoArgs = append(hugoArgs, arg)
 				}
-			}
-
-			// If port wasn't set, use default
-			if !portSet {
-				proxyPort = 3131
 			}
 
 			// Check if user wants direct Hugo server or proxy

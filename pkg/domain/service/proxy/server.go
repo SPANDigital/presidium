@@ -5,6 +5,7 @@ import (
 	"context"
 	"fmt"
 	"io"
+	"math/rand"
 	"net"
 	"net/http"
 	"net/http/httputil"
@@ -26,22 +27,33 @@ type Server struct {
 	hugoDone   <-chan error
 }
 
-// NewServer creates a new proxy server instance
+// NewServer creates a new proxy server instance.
 func NewServer(proxyPort int) *Server {
-	hugoPort := findAvailablePort(1313) // Start with Hugo's default port
 	return &Server{
-		hugoPort:  hugoPort,
 		proxyPort: proxyPort,
 	}
 }
 
 // Start initializes Hugo server and reverse proxy
 func (s *Server) Start(hugoArgs []string) error {
-	// Fail fast if the proxy port is already in use — before Hugo starts.
-	// Without this check the error surfaces only after Hugo is running,
-	// leaving a dangling Hugo process the user cannot easily stop.
-	if err := checkPortAvailable(s.proxyPort); err != nil {
-		return fmt.Errorf("proxy port %d is already in use — stop the existing process and try again", s.proxyPort)
+	// If no proxy port was specified, pick a random pair N (Hugo) / N+1 (proxy).
+	// Otherwise honor the explicit proxy port and pick Hugo independently.
+	if s.proxyPort == 0 {
+		hugoPort, proxyPort, err := pickRandomPortPair()
+		if err != nil {
+			return fmt.Errorf("failed to find a free port pair: %w", err)
+		}
+		s.hugoPort = hugoPort
+		s.proxyPort = proxyPort
+	} else {
+		if err := checkPortAvailable(s.proxyPort); err != nil {
+			return fmt.Errorf("proxy port %d is already in use — stop the existing process or omit --port to auto-select", s.proxyPort)
+		}
+		hugoPort, err := pickRandomHighPort()
+		if err != nil {
+			return fmt.Errorf("failed to find a free Hugo port: %w", err)
+		}
+		s.hugoPort = hugoPort
 	}
 
 	// Prepare Hugo with themes
@@ -205,6 +217,7 @@ func (s *Server) Start(hugoArgs []string) error {
 
 	log.Info(fmt.Sprintf("Starting Presidium proxy server on port %d...", s.proxyPort))
 	log.Info(fmt.Sprintf("Proxying requests to Hugo on port %d (HTTP/2, WebSockets enabled)", s.hugoPort))
+	log.Info(fmt.Sprintf("Presidium is ready — open http://localhost:%d/ in your browser", s.proxyPort))
 
 	// Start serving (this blocks)
 	if err := s.httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
@@ -237,43 +250,78 @@ func (s *Server) Shutdown(ctx context.Context) error {
 	return nil
 }
 
-// waitForHugo polls the Hugo server until it's ready or times out.
-// Also checks if the Hugo goroutine exits with an error before the port becomes available.
+// waitForHugo polls until Hugo is ready, then verifies the listener on s.hugoPort is actually a Hugo dev server by fetching /livereload.js — a Hugo-specific endpoint that non-Hugo servers won't have.
 func (s *Server) waitForHugo() error {
 	timeout := time.After(30 * time.Second)
 	ticker := time.NewTicker(100 * time.Millisecond)
 	defer ticker.Stop()
+
+	httpClient := &http.Client{Timeout: 2 * time.Second}
+	livereloadURL := fmt.Sprintf("http://localhost:%d/livereload.js", s.hugoPort)
 
 	for {
 		select {
 		case <-timeout:
 			return fmt.Errorf("timeout waiting for Hugo server to start")
 		case err := <-s.hugoDone:
-			// Hugo goroutine exited - it failed to start
 			if err != nil {
 				return fmt.Errorf("hugo server failed to start: %w", err)
 			}
 			return fmt.Errorf("hugo server exited unexpectedly before becoming ready")
 		case <-ticker.C:
 			conn, err := net.DialTimeout("tcp", fmt.Sprintf("localhost:%d", s.hugoPort), time.Second)
-			if err == nil {
-				conn.Close()
-				return nil
+			if err != nil {
+				continue
 			}
+			conn.Close()
+
+			resp, err := httpClient.Get(livereloadURL)
+			if err != nil {
+				continue
+			}
+			body, _ := io.ReadAll(resp.Body)
+			resp.Body.Close()
+			if resp.StatusCode != 200 || !bytes.Contains(body, []byte("LiveReload")) {
+				return fmt.Errorf("port %d is serving HTTP but does not appear to be a Hugo dev server (no /livereload.js — likely a port collision)", s.hugoPort)
+			}
+			return nil
 		}
 	}
 }
 
-// findAvailablePort finds an available port starting from the given port
-func findAvailablePort(startPort int) int {
-	for port := startPort; port < startPort+100; port++ {
+// pickRandomHighPort returns a free port in a wide high range; concurrent-instance collisions are caught by identity verification in waitForHugo.
+func pickRandomHighPort() (int, error) {
+	const (
+		rangeStart = 20000
+		rangeEnd   = 30000
+		attempts   = 50
+	)
+	for i := 0; i < attempts; i++ {
+		port := rangeStart + rand.Intn(rangeEnd-rangeStart)
 		listener, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 		if err == nil {
 			listener.Close()
-			return port
+			return port, nil
 		}
 	}
-	return startPort // Fallback to original port
+	return 0, fmt.Errorf("could not find a free port in range %d-%d after %d attempts", rangeStart, rangeEnd, attempts)
+}
+
+// pickRandomPortPair returns adjacent free ports (N, N+1) for the Hugo backend and the proxy.
+func pickRandomPortPair() (hugoPort, proxyPort int, err error) {
+	const (
+		rangeStart = 20000
+		rangeEnd   = 29999 // leave room for N+1
+		attempts   = 50
+	)
+	for i := 0; i < attempts; i++ {
+		n := rangeStart + rand.Intn(rangeEnd-rangeStart)
+		if checkPortAvailable(n) != nil || checkPortAvailable(n+1) != nil {
+			continue
+		}
+		return n, n + 1, nil
+	}
+	return 0, 0, fmt.Errorf("could not find an adjacent free port pair in range %d-%d after %d attempts", rangeStart, rangeEnd, attempts)
 }
 
 // checkPortAvailable returns an error if the given port is already in use
