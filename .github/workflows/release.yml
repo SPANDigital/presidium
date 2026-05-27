@@ -7,36 +7,41 @@ on:
 
 permissions:
   contents: write
-  # packages: write
-  # issues: write
 
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    environment: releaser
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
           submodules: true
-      - run: git fetch --force --tags
 
-      - name: Set up Go
-        uses: actions/setup-go@v5
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
         with:
-          go-version: 1.25.x
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Set up Zig
-        uses: goto-bus-stop/setup-zig@v2
-        with:
-          version: 0.11.0
-
-      - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v6
-        with:
-          distribution: goreleaser
-          version: latest
-          args: release --clean
+      - name: Run GoReleaser via goreleaser-cross
+        # goreleaser-cross bundles Go, goreleaser, osxcross (with macOS SDK) and
+        # gcc cross toolchains for linux. This is required because zig 0.11.0
+        # cannot satisfy darwin's CoreFoundation/Security framework symbols when
+        # cross-compiling cgo from a linux runner.
+        #
+        # GITHUB_TOKEN     — writes the GitHub Release on this repo
+        # TAP_GITHUB_TOKEN — pushes the generated cask to spandigital/homebrew-tap
+        run: |
+          docker run --rm \
+            -v "$(pwd):/go/src/github.com/SPANDigital/presidium-hugo" \
+            -w /go/src/github.com/SPANDigital/presidium-hugo \
+            -e GITHUB_TOKEN \
+            -e TAP_GITHUB_TOKEN \
+            ghcr.io/goreleaser/goreleaser-cross:v1.25.9 \
+            release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAP_GITHUB_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}

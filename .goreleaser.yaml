@@ -2,58 +2,60 @@ version: 2
 
 before:
   hooks:
+    # goreleaser-cross does not ship `zip`; install it on the fly when missing.
+    # No-ops on dev machines where zip is already present.
+    - sh -c 'command -v zip >/dev/null 2>&1 || (apt-get update && apt-get install -y zip)'
     - go mod tidy
     - make prepare-themes
 
 builds:
-  - tags:
+  - id: unix
+    tags:
       - extended
     env:
       - CGO_ENABLED=1
+    # Note: -s/-w are intentionally omitted. Go's linker translates them to
+    # `-Wl,-S -Wl,-x` for the external linker on darwin, and zig 0.11.0's
+    # macho linker rejects `-x` as an unsupported arg.
+    ldflags:
+      - -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
     goos:
       - linux
       - darwin
     goarch:
       - amd64
       - arm64
+    # Cross-compile via goreleaser-cross toolchains:
+    #   linux  → gcc-{amd64,arm64}-linux-gnu (cross-gcc packages)
+    #   darwin → osxcross (o64-clang / oa64-clang) with bundled macOS SDK
     overrides:
       - goos: linux
         goarch: amd64
         env:
           - CGO_ENABLED=1
-          - CC=zig cc -target x86_64-linux-gnu
-          - CXX=zig c++ -target x86_64-linux-gnu
+          - CC=x86_64-linux-gnu-gcc
+          - CXX=x86_64-linux-gnu-g++
       - goos: linux
         goarch: arm64
         env:
           - CGO_ENABLED=1
-          - CC=zig cc -target aarch64-linux-gnu
-          - CXX=zig c++ -target aarch64-linux-gnu
+          - CC=aarch64-linux-gnu-gcc
+          - CXX=aarch64-linux-gnu-g++
       - goos: darwin
         goarch: amd64
-        ldflags:
-          - -s -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
         env:
           - CGO_ENABLED=1
-          - CC=zig cc -target x86_64-macos
-          - CXX=zig c++ -target x86_64-macos
+          - CC=o64-clang
+          - CXX=o64-clang++
       - goos: darwin
         goarch: arm64
-        ldflags:
-          - -s -X main.version={{.Version}} -X main.commit={{.Commit}} -X main.date={{.Date}} -X main.builtBy=goreleaser
         env:
           - CGO_ENABLED=1
-          - CC=zig cc -target aarch64-macos
-          - CXX=zig c++ -target aarch64-macos
+          - CC=oa64-clang
+          - CXX=oa64-clang++
 
 archives:
-  - name_template: >-
-      {{ .ProjectName }}_
-      {{- title .Os }}_
-      {{- if eq .Arch "amd64" }}x86_64
-      {{- else if eq .Arch "386" }}i386
-      {{- else }}{{ .Arch }}{{ end }}
-      {{- if .Arm }}v{{ .Arm }}{{ end }}
+  - name_template: '{{ .ProjectName }}_{{ title .Os }}_{{ if eq .Arch "amd64" }}x86_64{{ else if eq .Arch "386" }}i386{{ else }}{{ .Arch }}{{ end }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
     files:
       - LICENSE*
       - README*
@@ -66,11 +68,23 @@ changelog:
       - "^docs:"
       - "^test:"
 
-brews:
+homebrew_casks:
   - name: presidium
+    binaries:
+      - presidium
     homepage: "https://github.com/spandigital/presidium"
     description: "Presidium is a software documentation management system for agile teams"
     repository:
       owner: spandigital
       name: homebrew-tap
-    directory: Formula
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+    directory: Casks
+    # Remove the macOS quarantine attribute so users can run the unsigned binary
+    # without right-click → Open. Without this, the first invocation is blocked
+    # by Gatekeeper.
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/presidium"]
+          end
