@@ -1,0 +1,79 @@
+languageCode: "en-us"
+title: "{{ .Title }}"
+copyright: SPAN Digital
+pluralizelisttitles: false
+params:
+  _merge: deep
+  sortByFilePath: true
+  enterprise_key:
+  frontmatter:
+    - key: author
+      type: email
+      strict: false
+    - key: title
+      type: text
+      strict: true
+markup:
+  goldmark:
+    renderer:
+      Unsafe: true
+    parser:
+      attribute:
+        block: true
+  highlight:
+    style: github
+menu:
+  main:
+    - identifier: overview
+      name: Overview
+      url: /
+      weight: 1
+    - identifier: plan
+      name: Plan
+      url: /plan/
+      weight: 2
+    - identifier: status
+      name: Status
+      url: /status/
+      weight: 3
+    - identifier: team
+      name: Team & Roles
+      url: /team/
+      weight: 4
+    - identifier: risks-and-issues
+      name: Risks & Issues
+      url: /risks-and-issues/
+      weight: 5
+    - identifier: technology
+      name: Technology
+      url: /technology/
+      weight: 6
+outputFormats:
+  MenuIndex:
+    baseName: menu
+    mediaType: application/json
+  SearchMap:
+    baseName: searchmap
+    mediaType: application/json
+outputs:
+  home:
+    - HTML
+    - RSS
+    - MenuIndex
+    - SearchMap
+module:
+  _merge: shallow
+  imports:
+    - path: github.com/spandigital/presidium-styling-base
+      mounts:
+        - source: assets
+          target: assets
+        - source: static
+          target: static
+    - path: github.com/spandigital/presidium-layouts-base
+enableInlineShortcodes: true
+frontmatter:
+  lastmod:
+    - lastmod
+    - :fileModTime
+    - :default
