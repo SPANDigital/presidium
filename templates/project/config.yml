@@ -36,13 +36,13 @@ menu:
       name: Status
       url: /status/
       weight: 3
+    - identifier: solution
+      name: Solution
+      url: /solution/
+      weight: 4
     - identifier: team
       name: Team & Roles
       url: /team/
-      weight: 4
-    - identifier: risks-and-issues
-      name: Risks & Issues
-      url: /risks-and-issues/
       weight: 5
     - identifier: technology
       name: Technology
