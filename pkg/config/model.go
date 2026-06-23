@@ -10,7 +10,6 @@ const (
 	TemplateNameKey = "init.template_name"
 	ThemeKey        = "init.theme"
 	TitleKey        = "init.title"
-	BrandKey        = "init.brand"
 )
 
 type InitConfig struct {

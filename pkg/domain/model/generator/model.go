@@ -1,24 +1,25 @@
 package generator
 
 import (
+	"fmt"
+	"io/fs"
 	"path/filepath"
+	"sort"
+	"strings"
 
 	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
 	"github.com/google/uuid"
 )
 
-type (
-	Template             int
-	WhenSiteTargetExists int // What should happen if the generator targets an existing site
-)
+const templatesDir = "templates"
 
-const (
-	SpanTemplate Template = iota
-	OnBoardingTemplate
-	DesignTemplate
-	BlogTemplate
-	RequirementsTemplate
-	RunbookTemplate
+type (
+	Template struct {
+		code        string
+		name        string
+		description string
+	}
+	WhenSiteTargetExists int // What should happen if the generator targets an existing site
 )
 
 const (
@@ -26,16 +27,53 @@ const (
 	ReplaceTargetSiteIfExists                             // Replaces the content!
 )
 
-var (
-	SupportedTemplates = []Template{
-		SpanTemplate,
-		OnBoardingTemplate,
-		DesignTemplate,
-		BlogTemplate,
-		RequirementsTemplate,
-		RunbookTemplate,
+// SupportedTemplates is populated by LoadTemplates at startup by scanning the
+// immediate subdirectories of the embedded "templates" directory.
+var SupportedTemplates []Template
+
+// LoadTemplates discovers the available site templates by reading the
+// immediate subdirectories of "templates" inside fsys. Each subdirectory
+// becomes one entry in SupportedTemplates, ordered alphabetically by code.
+func LoadTemplates(fsys fs.FS) error {
+	entries, err := fs.ReadDir(fsys, templatesDir)
+	if err != nil {
+		return fmt.Errorf("reading %s directory: %w", templatesDir, err)
 	}
-)
+
+	discovered := make([]Template, 0, len(entries))
+	for _, e := range entries {
+		if !e.IsDir() {
+			continue
+		}
+		code := e.Name()
+		label := humanize(code)
+		discovered = append(discovered, Template{
+			code:        code,
+			name:        fmt.Sprintf("%s Template", label),
+			description: fmt.Sprintf("Presidium %s template", strings.ToLower(label)),
+		})
+	}
+	sort.Slice(discovered, func(i, j int) bool {
+		return discovered[i].code < discovered[j].code
+	})
+	SupportedTemplates = discovered
+	return nil
+}
+
+// humanize converts a directory name like "on-boarding" or "key_concepts"
+// into a display label like "On Boarding" / "Key Concepts".
+func humanize(code string) string {
+	parts := strings.FieldsFunc(code, func(r rune) bool {
+		return r == '-' || r == '_'
+	})
+	for i, p := range parts {
+		if len(p) == 0 {
+			continue
+		}
+		parts[i] = strings.ToUpper(p[:1]) + p[1:]
+	}
+	return strings.Join(parts, " ")
+}
 
 type (
 	ItemSelection struct {
@@ -48,7 +86,6 @@ type (
 		SiteTargetDirectory string               // Where the site must be generator to
 		SiteName            string               // The name of the site
 		SiteTitle           string               // The title for the site
-		BrandingModelUrl    string               // The Hugo model used for branding
 		Template            Template             // Template to use
 		WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
 		Uuid                string               // Unique identifier for the site
@@ -79,7 +116,6 @@ func (t *InitialSiteTarget) GetTemplateParameters() TemplateParameters {
 		Title:       or(t.SiteTitle, t.SiteName),
 		ProjectName: projectName,
 		Template:    t.Template.Code(),
-		Brand:       t.BrandingModelUrl,
 		Uuid:        uuid.NewString(),
 	}
 }
@@ -89,58 +125,18 @@ type TemplateParameters struct {
 	Title       string `json:"title"`
 	ProjectName string `json:"project_name"`
 	Template    string `json:"template"`
-	Brand       string `json:"brand"`
 	Uuid        string `json:"uuid"`
 }
 
-func (t Template) Name() string {
-	return [...]string{
-		"SPAN Default Template",
-		"SPAN On-boarding Template",
-		"SPAN Design Template",
-		"SPAN Blog Template",
-		"SPAN Requirements Template",
-		"SPAN Runbook Template",
-	}[t]
-}
-
-func (t Template) Description() string {
-	return [...]string{
-		"SPAN's default template",
-		"SPAN's on-boarding template",
-		"SPAN's design template",
-		"SPAN's blog template",
-		"SPAN's requirements template",
-		"SPAN's runbook template",
-	}[t]
-}
-
-func (t Template) Code() string {
-	return [...]string{
-		"default",
-		"onboarding",
-		"design",
-		"blog",
-		"requirements",
-		"runbook",
-	}[t]
-}
+func (t Template) Name() string        { return t.name }
+func (t Template) Description() string { return t.description }
+func (t Template) Code() string        { return t.code }
 
 func GetTemplate(code string) (Template, error) {
-	switch code {
-	case SpanTemplate.Code():
-		return SpanTemplate, nil
-	case OnBoardingTemplate.Code():
-		return OnBoardingTemplate, nil
-	case DesignTemplate.Code():
-		return DesignTemplate, nil
-	case BlogTemplate.Code():
-		return BlogTemplate, nil
-	case RequirementsTemplate.Code():
-		return RequirementsTemplate, nil
-	case RunbookTemplate.Code():
-		return RunbookTemplate, nil
-	default:
-		return 0, presidiumerr.GenericError{Code: presidiumerr.UnsupportedTemplate}
+	for _, t := range SupportedTemplates {
+		if t.code == code {
+			return t, nil
+		}
 	}
+	return Template{}, presidiumerr.GenericError{Code: presidiumerr.UnsupportedTemplate}
 }
