@@ -1,0 +1,23 @@
+# Dockerfile for testing offline functionality
+# This container has no network access to verify themes are truly embedded
+FROM alpine:3.19
+
+# Install basic utilities
+RUN apk add --no-cache ca-certificates git
+
+# Create working directory
+WORKDIR /test
+
+# Copy the presidium binary and docs directory
+# These will be provided at build time
+COPY presidium /usr/local/bin/presidium
+COPY docs /test/docs
+
+# Make binary executable
+RUN chmod +x /usr/local/bin/presidium
+
+# Set working directory to docs
+WORKDIR /test/docs
+
+# Run the build command
+CMD ["presidium", "hugo", "--quiet"]

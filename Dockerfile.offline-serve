@@ -1,0 +1,26 @@
+FROM golang:1.25-alpine AS builder
+
+RUN apk add --no-cache git gcc g++ musl-dev
+
+WORKDIR /build
+COPY go.mod go.sum ./
+RUN go mod download
+COPY . .
+
+RUN --mount=type=cache,target=/root/.cache/go-build \
+    --mount=type=cache,target=/go/pkg/mod \
+    go build -tags extended -o presidium .
+
+FROM alpine:3.19
+
+RUN apk add --no-cache ca-certificates git libstdc++
+
+WORKDIR /test
+COPY --from=builder /build/presidium /usr/local/bin/presidium
+COPY docs /test/docs
+RUN chmod +x /usr/local/bin/presidium
+
+WORKDIR /test/docs
+EXPOSE 3131
+
+CMD ["presidium", "server", "--port", "3131"]

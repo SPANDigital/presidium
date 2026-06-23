@@ -1,0 +1,69 @@
+languageCode: "en-us"
+title: "{{ .Title }}"
+copyright: Template Footer
+pluralizelisttitles: false
+params:
+  _merge: deep
+  sortByFilePath: true
+  enterprise_key:
+  frontmatter:
+    - key: author
+      type: email
+      strict: false
+    - key: title
+      type: text
+      strict: true
+markup:
+  goldmark:
+    renderer:
+      Unsafe: true
+    parser:
+      attribute:
+        block: true
+  highlight:
+    style: github
+menu:
+  main:
+    - identifier: overview
+      name: Overview
+      url: /
+      weight: 1
+    - identifier: key-concepts
+      name: Key Concepts
+      url: /key-concepts/
+      weight: 2
+    - identifier: runbooks
+      name: Runbooks
+      url: /runbooks/
+      weight: 3
+    - identifier: SLAs
+      name: SLAs
+      url: /SLAs/
+      weight: 4
+    - identifier: glossary
+      name: Glossary
+      url: /glossary/
+      weight: 5
+outputFormats:
+  MenuIndex:
+    baseName: menu
+    mediaType: application/json
+  SearchMap:
+    baseName: searchmap
+    mediaType: application/json
+outputs:
+  home:
+    - HTML
+    - RSS
+    - MenuIndex
+    - SearchMap
+module:
+  imports:
+    - path: github.com/spandigital/presidium-styling-base
+    - path: github.com/spandigital/presidium-layouts-base
+enableInlineShortcodes: true
+frontmatter:
+  lastmod:
+    - lastmod
+    - :fileModTime
+    - :default

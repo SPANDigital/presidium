@@ -1,7 +1,7 @@
 FILENAME=presidium
 DOCSDIR=docs
 .DEFAULT_GOAL=help
-.PHONY: build test dist clean fmt vet tidy coverage_report help update-themes prepare-themes restore-themes lint checks serve-docs
+.PHONY: build test test-offline serve-offline dist clean fmt vet tidy coverage_report help update-themes prepare-themes lint checks serve-docs
 
 help: ## Display available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-18s %s\n", $$1, $$2}'
@@ -11,59 +11,74 @@ update-themes: ## Update theme submodules to their latest versions
 	@git submodule update --remote themes/presidium-styling-base themes/presidium-layouts-base themes/presidium-layouts-blog
 	@echo "Theme submodules updated."
 
-prepare-themes: ## Prepare themes for embedding (rename go.mod to make embeddable)
-	@echo "Preparing themes for embedding..."
-	@for theme in themes/presidium-*; do \
-		if [ -f "$$theme/go.mod" ]; then \
-			echo "  Renaming $$theme/go.mod -> go.mod.tmpl"; \
-			mv "$$theme/go.mod" "$$theme/go.mod.tmpl"; \
-		fi; \
-		if [ -f "$$theme/go.sum" ]; then \
-			echo "  Renaming $$theme/go.sum -> go.sum.tmpl"; \
-			mv "$$theme/go.sum" "$$theme/go.sum.tmpl"; \
-		fi; \
-	done
+prepare-themes: ## Prepare themes for embedding (create zip bundle)
+	@rm -f themes.zip
+	@echo "Creating themes.zip bundle..."
+	@cd themes && zip -r ../themes.zip presidium-styling-base presidium-layouts-base presidium-layouts-blog -x '*.git*' '*/.*' '*/.github/*'
+	@if [ ! -f themes.zip ]; then \
+		echo "ERROR: Failed to create themes.zip"; \
+		exit 1; \
+	fi
+	@echo "Themes bundle created: themes.zip"
 
-restore-themes: ## Restore theme go.mod files to original names
-	@echo "Restoring theme go.mod files..."
-	@for theme in themes/presidium-*; do \
-		if [ -f "$$theme/go.mod.tmpl" ]; then \
-			echo "  Renaming $$theme/go.mod.tmpl -> go.mod"; \
-			mv "$$theme/go.mod.tmpl" "$$theme/go.mod"; \
-		fi; \
-		if [ -f "$$theme/go.sum.tmpl" ]; then \
-			echo "  Renaming $$theme/go.sum.tmpl -> go.sum"; \
-			mv "$$theme/go.sum.tmpl" "$$theme/go.sum"; \
-		fi; \
-	done
+build: ## Build the presidium binary
+	@$(MAKE) prepare-themes
+	@go build -tags extended -o $(FILENAME) .
 
-build: prepare-themes ## Build the presidium binary
-	go build -tags extended -o $(FILENAME) . ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
-
-test: prepare-themes ## Run tests with coverage
+test: ## Run tests
 	@mkdir -p reports
-	go test -race -timeout 120s ./... -coverprofile=reports/tests-cov.out ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
+	@$(MAKE) prepare-themes
+	@go test -race -timeout 120s ./...
+
+test-offline: ## Test offline build in Docker container (requires Docker)
+	@./test-offline-build.sh
+
+serve-offline: ## Run presidium server in Docker with embedded themes — browse at http://localhost:3131
+	@$(MAKE) prepare-themes
+	@docker rm -f presidium-offline-serve 2>/dev/null || true
+	@DOCKER_BUILDKIT=1 docker build -f Dockerfile.offline-serve -t presidium-offline-serve .
+	@docker run -d --rm -p 3131:3131 --name presidium-offline-serve presidium-offline-serve
+	@echo ""
+	@echo "  Presidium server started at http://localhost:3131"
+	@echo "  View logs:  docker logs -f presidium-offline-serve"
+	@echo "  Stop:       docker stop presidium-offline-serve"
+	@echo ""
 
 fmt: ## Format Go source files
 	go fmt ./...
 
-vet: prepare-themes ## Run go vet
-	go vet ./... ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
+vet: ## Run go vet
+	@$(MAKE) prepare-themes
+	@go vet ./...
 
 tidy: ## Tidy and verify module dependencies
 	go mod tidy && go mod verify
 
-clean: restore-themes ## Remove build artifacts and restore themes
-	rm -fr "dist" "$(FILENAME)" "presidium-test"
+clean: ## Remove build artifacts
+	rm -fr "dist" "$(FILENAME)" "presidium-test" themes.zip
 
 coverage_report: ## Open coverage report in browser
-	@go tool cover -html=reports/tests-cov.out
+	@mkdir -p reports
+	@$(MAKE) prepare-themes
+	@go test -coverprofile=reports/tests-cov.out ./... && go tool cover -html=reports/tests-cov.out -o reports/coverage.html
+	@echo "Coverage report generated at reports/coverage.html"
+	@if command -v open >/dev/null 2>&1; then \
+		open reports/coverage.html; \
+	elif command -v xdg-open >/dev/null 2>&1; then \
+		xdg-open reports/coverage.html; \
+	elif command -v start >/dev/null 2>&1; then \
+		start reports/coverage.html; \
+	else \
+		echo "Please open reports/coverage.html manually in your browser"; \
+	fi
 
-dist: prepare-themes ## Build distribution binary
-	mkdir -p "dist" && go build -trimpath -o "dist/presidium" -tags extended ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
+dist: ## Build distribution binary
+	@$(MAKE) prepare-themes
+	@mkdir -p "dist" && go build -trimpath -o "dist/presidium" -tags extended
 
-serve-docs:
-	cd $(DOCSDIR) && make serve
+serve-docs: build ## Serve the documentation site with proxy — browse at http://localhost:3131
+	cd $(DOCSDIR) && make serve-proxy
 
-lint: prepare-themes ## Run golangci-lint
-	golangci-lint run --timeout 10m ; status=$$? ; $(MAKE) restore-themes ; rstatus=$$? ; if [ $$status -eq 0 ]; then status=$$rstatus; fi ; exit $$status
+lint: ## Run golangci-lint
+	@$(MAKE) prepare-themes
+	@bin/golangci-lint run --timeout 10m

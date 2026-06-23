@@ -4,13 +4,20 @@ public/
 main
 node_modules/
 reports/
-presidium-hugo
-presidium
+/presidium-hugo
+/presidium
 dist/
 .DS_Store
 resources/
 dist/
 docs/resources
+docs/.hugo_build.lock
 reports/
 reports/tests-cov.out
 .claude/
+
+# Theme embedding artifacts (created during build)
+themes.zip
+
+# Docker test artifacts
+Dockerfile.offline-test.tmp
