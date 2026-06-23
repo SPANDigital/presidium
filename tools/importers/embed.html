@@ -1,0 +1,252 @@
+<!doctype html><html><head><meta charset=utf-8><title>Importers - Presidium Open Source</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.163.3"><link rel=icon href=/images/favicon.ico type=image/x-icon><link rel=preload as=image href=/assets/images/logo.svg fetchpriority=high><link rel=preload as=image href=/assets/images/logo-small.svg fetchpriority=high><link rel=stylesheet href=/presidium.min.cd3cadcd826fbe7de802191027e1052ce1e6783daf5ad3ca93685ea80c12fdca.css><script>try{const e=window.localStorage.getItem("sidenav");if(e){const t=Number.parseInt(e,10);!Number.isNaN(t)&&t>=300&&t<=600&&document.documentElement.style.setProperty("--presidium-sidenav-width",`${t}px`)}}catch(e){console.error("Failed to restore sidenav width from localStorage.",e)}</script><style>@media(min-width:992px){#presidium-navigation{flex-basis:var(--presidium-sidenav-width,300px)}}</style></head><body id=presidium zgotmplz><div class=module-title-bar><div class=module-title-bar-brand><div class=module-title-bar-logo><a href=/ aria-label="Presidium Open Source home"><img src=/images/logo.png alt="Presidium Open Source logo" class=brand></a></div><h4 class=brand-name>Presidium Open Source</h4></div></div><div class="content-wrapper prsdm-base-type"><div id=presidium-container class=container-fluid><div class=row><div aria-label=breadcrumb class=breadcrumb><li class=breadcrumb-item><span class=ancestor-title>Presidium Open Source</span></li><li class=breadcrumb-item><span class=ancestor-title>Tools</span></li><li class="breadcrumb-item active"><span>Importers</li></div><div id=presidium-content><div class="page title" data-roles="All Roles" data-link=/tools/importers/embed.html permalink=/tools/importers/embed.html title=Importers><div class="article-title article-actions" data-align=center-left><h1 class="page-title offendingHeading">Importers</h1><div class=permalink><a id=/tools/importers/embed.html data-slug=# class=link-icon title="Copy link to section" onclick='copyPermalink(this,"/tools/importers/embed.html","section")'></a></div></div></div><hr class=offendingHr><section data-section=tools/importers><div data-key data-title="Presidium Open Source" data-type=embed id=presidium-enterprise class=presidium-enterprise style=display:none></div><div class="page index" data-roles="All Roles" id=8c0d1c799ccac333d9d603b2c624e664 data-link=/tools/importers/embed.html permalink=/tools/importers/embed.html data-no-content=true><div class=presidium-article-wrapper><span class=anchor id=importers data-id=tools/importers/_index.md></span></div></div><div class="article child" data-roles="All Roles" id=f6143379d4f3367b974262d629b27cd6 data-link=/tools/importers/embed.html#importing-documentation permalink=/tools/importers/reference-documentation/embed.html data-no-content=false title="Importing Documentation"><div class=presidium-article-wrapper><span class=anchor id=importing-documentation data-id=tools/importers/reference-documentation.md></span><div class="article-title article-actions" data-align=center-left><h3>Importing Documentation</h3><div class=permalink><a id=/tools/importers/reference-documentation/embed.html data-slug=# class=link-icon title="Copy link to article" onclick='copyPermalink(this,"/tools/importers/embed.html#importing-documentation","article")'></a></div></div><article title="Importing Documentation" aria-label="Importing Documentation"><p>The Reference section of Presidium should be reserved as a low-level reference for users.
+Typical components documented in the Reference section may include a client library or API specification.
+The process of importing documentation involves parsing a reference source and generating articles that are included in the generated site.</p><blockquote><p>Where possible, reference documentation should be generated to ensure that your documentation is in sync with the
+system being documented.</p></blockquote><p>Presidium supports the following documentation sources:</p><ul><li><a href=#open-api3>OpenAPI3</a></li></ul><p>For other sources that do not yet have an importer, documentation can be <a href=#embed>embedded</a> into references.</p></article></div></div><div class="article child" data-roles="All Roles" id=73c8435afaf4da27e13cc468bdb0b100 data-link=/tools/importers/embed.html#open-api3 permalink=/tools/importers/oapi3/embed.html data-no-content=false title=OpenAPI3><div class=presidium-article-wrapper><span class=anchor id=open-api3 data-id=tools/importers/oapi3.md></span><div class="article-title article-actions" data-align=center-left><h3>OpenAPI3</h3><div class=permalink><a id=/tools/importers/oapi3/embed.html data-slug=# class=link-icon title="Copy link to article" onclick='copyPermalink(this,"/tools/importers/embed.html#open-api3","article")'></a></div></div><article title=OpenAPI3 aria-label=OpenAPI3><p>Presidium includes a Golang tool (<a href=https://github.com/SPANDigital/presidium-oapi3 target=_blank rel=noopener>presidium-oapi3</a>) for importing your OpenAPI 3 spec into Presidium documentation.</p><ol><li>Install the <a href=https://github.com/SPANDigital/presidium-oapi3 target=_blank rel=noopener>presidium-oapi3</a> tool using Homebrew:</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-sh data-lang=sh><span style=display:flex><span>brew install SPANDigital/tap/presidium-oapi3
+</span></span></code></pre></div><p>Example:</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-sh data-lang=sh><span style=display:flex><span>$ presidium-oapi3 convert -f &lt;YOUR_API_SPEC&gt; -o &lt;THE_OUTPUT_DIRECTORY&gt; -r &lt;THE_PRESIDIUM_REFERENCE_URL&gt;
+</span></span></code></pre></div><p>The following options are available for <code>presidium-oapi3</code>:</p><table><thead><tr><th style=text-align:left>Option</th><th style=text-align:left>Description</th></tr></thead><tbody><tr><td style=text-align:left>-n, --apiName <code>string</code></td><td style=text-align:left>The name under which the generated docs will be grouped</td></tr><tr><td style=text-align:left>-f, --file <code>string</code></td><td style=text-align:left>OpenAPI 3 spec file</td></tr><tr><td style=text-align:left>-o, --outputDir <code>string</code></td><td style=text-align:left>The output directory</td></tr><tr><td style=text-align:left>-r, --referenceURL <code>string</code></td><td style=text-align:left>The reference URL (default &ldquo;reference&rdquo;)</td></tr><tr><td style=text-align:left>-h, --help</td><td style=text-align:left>help for convert</td></tr></tbody></table></article></div></div><div class="article child" data-roles="All Roles" id=3c8a0416ba1050afcde76cf3e83aeb85 data-link=/tools/importers/embed.html#html-to-markdown-converter permalink=/tools/importers/h2md/embed.html data-no-content=false title="HTML to Markdown converter"><div class=presidium-article-wrapper><span class=anchor id=html-to-markdown-converter data-id=tools/importers/h2md.md></span><div class="article-title article-actions" data-align=center-left><h3>HTML to Markdown converter</h3><div class=permalink><a id=/tools/importers/h2md/embed.html data-slug=# class=link-icon title="Copy link to article" onclick='copyPermalink(this,"/tools/importers/embed.html#html-to-markdown-converter","article")'></a></div></div><article title="HTML to Markdown converter" aria-label="HTML to Markdown converter"><p><strong><a href=https://github.com/SPANDigital/presidium-html target=_blank rel=noopener>html2md</a></strong> is a tool that allows you to convert HTML files into <a href=https://presidium.spandigital.net/ target=_blank rel=noopener>Presidium</a> markdown articles.</p><ul><li><a href=#installation>Installation</a></li><li><a href=#usage>Usage</a></li><li><a href=#advanced-usage>Advanced Usage</a></li><li><a href=#limitations>Limitations</a></li></ul><hr><h2 id=installation>Installation</h2><p>Install from Homebrew</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>/bin/bash -c <span style=color:#0a3069>&#34;</span><span style=color:#cf222e>$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh<span style=color:#cf222e>)</span><span style=color:#0a3069>&#34;</span>
+</span></span></code></pre></div><p>Install html2md</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>brew install SPANDigital/tap/html2md
+</span></span></code></pre></div><hr><h2 id=usage>Usage</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>Usage:
+</span></span><span style=display:flex><span>  html2md convert <span style=color:#0550ae>[</span>source<span style=color:#0550ae>]</span> <span style=color:#0550ae>[</span>dest<span style=color:#0550ae>]</span> <span style=color:#0550ae>[</span>flags<span style=color:#0550ae>]</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Flags:
+</span></span><span style=display:flex><span>  -d, --debug             <span style=color:#6639ba>enable</span> debug logging
+</span></span><span style=display:flex><span>      --headers strings   article header tags <span style=color:#0550ae>(</span>default <span style=color:#0550ae>[</span>h1,h2<span style=color:#0550ae>])</span>
+</span></span><span style=display:flex><span>      --select string     the part of the page to <span style=color:#cf222e>select</span> and convert <span style=color:#0550ae>(</span>default <span style=color:#0a3069>&#34;body&#34;</span><span style=color:#0550ae>)</span>
+</span></span></code></pre></div><h3 id=params>Params</h3><p><code>source</code> is the url of the website or the path to the local html file(s).<br><code>dest</code> is the path to the directory where the converted markdown files will be saved.</p><h3 id=examples>Examples</h3><p>Download and convert the <a href=https://presidium.spandigital.net/ target=_blank rel=noopener>Presidium</a> website</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>html2md convert https://presidium.spandigital.net/ ./presidium --select<span style=color:#0550ae>=</span><span style=color:#0a3069>&#34;#presidium-content&#34;</span>
+</span></span></code></pre></div><p>Convert local html files</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-bash data-lang=bash><span style=display:flex><span>html2md convert ./html-files ./presidium --select<span style=color:#0550ae>=</span>.article --headers<span style=color:#0550ae>=</span>h1
+</span></span></code></pre></div><blockquote><p><strong>Note</strong><br>This converter does not output all the files needed to build a complete Presidium website. You will still need to <a href=https://presidium.spandigital.net/getting-started/ target=_blank rel=noopener>create</a> a Presidium site first, or import the converted markdown files into an existing site.
+The converted markdown files will be saved in the <code>content</code> directory relative to the <code>dest</code> path along with assets (images, videos, etc) in the <code>assets</code> directory.</p></blockquote><hr><h2 id=advanced-usage>Advanced usage</h2><p>You can define a <code>config.yml</code> file in your working directory or in<code>$HOME/.html2md</code> directory with additional options to control the conversion.</p><h3 id=remove-html>Remove HTML</h3><p>The <code>html.remove</code> option allows you to selectively remove elements from your source document before converting it to Markdown.
+This can be useful when you want to clean up your HTML content or remove unwanted elements that have no relevance.</p><p><strong>Example Usage:</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#0550ae>html</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span><span style=color:#0550ae>remove</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#1f2328>[</span><span style=color:#0a3069>&#39;.nav-link&#39;</span><span style=color:#1f2328>,</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;#warning&#39;</span><span style=color:#1f2328>]</span><span style=color:#fff>
+</span></span></span></code></pre></div><p>In this example, all element matching the CSS selectors <code>.nav-link</code> or <code>#warning</code> will be removed before conversion.</p><h3 id=replace-html>Replace HTML</h3><p>The <code>html.replace</code> option allows you to transform specific HTML elements into custom Markdown syntax, giving you greater control over the appearance and structure of your converted document.</p><p><strong>Example Usage:</strong></p><p>Suppose you have HTML content that includes <a href=https://presidium.spandigital.net/reference/markdown/#tooltips target=_blank rel=noopener>tooltips</a>, and you want to convert them into Markdown-friendly syntax. Here&rsquo;s how you can achieve this using the &ldquo;Replace HTML&rdquo; feature:</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#0550ae>html</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span><span style=color:#0550ae>replace</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span>- <span style=color:#0550ae>match</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;.tooltips-term&#39;</span><span style=color:#fff> </span><span style=color:#57606a># CSS selector for the element to be replaced</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>    </span><span style=color:#0550ae>select</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#1f2328>[</span><span style=color:#0a3069>&#39;?href&#39;</span><span style=color:#1f2328>,</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;.tooltips-text&#39;</span><span style=color:#1f2328>]</span><span style=color:#fff> </span><span style=color:#57606a># ?href selects the href attribute of the matched element, .tooltips-text selects the content of a child element with the class &#34;tooltips-text&#34;</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>    </span><span style=color:#0550ae>replace</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;{{&lt; tooltip &#34;$1&#34; text=&#34;$2&#34; &gt;}}&#39;</span><span style=color:#fff> </span><span style=color:#57606a># $1 and $2 are the selected elements</span><span style=color:#fff>
+</span></span></span></code></pre></div><p>In this example, the CSS selector <code>.tooltips-term</code> is specified as the element to be replaced. The <code>select</code> field allows you to capture specific attributes and content relative to the matched element. Finally, the <code>replace</code> pattern converts the selected elements into a Markdown tooltip format.</p><blockquote><p><strong>Note</strong><br>In addition to the standard CSS-selectors, <code>select</code> allows you to select attributes on the matched element using the <code>?</code> prefix.
+You can also get the text of the matched element by passing <code>text</code> in the select list.</p></blockquote><h3 id=replace-markdown>Replace Markdown</h3><p>Similar to the HTML replace you can also replace markdown based on a Regex pattern.</p><p><strong>Example Usage:</strong></p><p>Let&rsquo;s say you have Markdown content with links, and you want to prepend the base URL to all these links.</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#0550ae>markdown</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span><span style=color:#0550ae>replace</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>    </span>- <span style=color:#0550ae>pattern</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;\[([^]]+)\]\(([^\)]+)\)&#39;</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#0550ae>with</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#34;[$1]({{&lt; baseurl &gt;}}$2)&#34;</span><span style=color:#fff>
+</span></span></span></code></pre></div><h3 id=sample-config>Sample config</h3><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-yaml data-lang=yaml><span style=display:flex><span><span style=color:#0550ae>html</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span><span style=color:#0550ae>remove</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#1f2328>[</span><span style=color:#0a3069>&#39;.article-title .permalink&#39;</span><span style=color:#1f2328>,</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;#warning&#39;</span><span style=color:#1f2328>]</span><span style=color:#fff> </span><span style=color:#57606a># CSS selectors for elements that should be removed before conversion.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span><span style=color:#0550ae>replace</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>    </span>- <span style=color:#0550ae>match</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;.tooltips-term&#39;</span><span style=color:#fff> </span><span style=color:#57606a># CSS selector for the element to be replaced.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#57606a># Below are the arguments to select elements relative to the matched element.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#0550ae>select</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#1f2328>[</span><span style=color:#0a3069>&#39;?href&#39;</span><span style=color:#1f2328>,</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;.tooltips-text&#39;</span><span style=color:#1f2328>]</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#57606a># Replacement pattern with the selected arguments.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#0550ae>replace</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;{{&lt; tooltip &#34;$1&#34; text=&#34;$2&#34; &gt;}}&#39;</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#0550ae>markdown</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>  </span><span style=color:#0550ae>replace</span><span style=color:#1f2328>:</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>    </span>- <span style=color:#0550ae>pattern</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;\[([^]]+)\]\(([^\)]+)\)&#39;</span><span style=color:#fff> </span><span style=color:#57606a># Regex pattern used for selecting and capturing specific content.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#57606a># The captured content is then utilized in the replacement pattern below.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#fff>      </span><span style=color:#0550ae>with</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#34;[$1](/$2)&#34;</span><span style=color:#fff> </span><span style=color:#57606a># This is the replacement pattern for converting Markdown links.</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#0550ae>whitelist</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#1f2328>[</span><span style=color:#0a3069>&#39;https://spandigital.net/assets/&#39;</span><span style=color:#1f2328>]</span><span style=color:#fff> </span><span style=color:#57606a># URLs that should be whitelisted for conversion</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#0550ae>assetDir</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;assets&#39;</span><span style=color:#fff> </span><span style=color:#57606a># The directory where assets should be saved</span><span style=color:#fff>
+</span></span></span><span style=display:flex><span><span style=color:#0550ae>contentDir</span><span style=color:#1f2328>:</span><span style=color:#fff> </span><span style=color:#0a3069>&#39;content&#39;</span><span style=color:#fff> </span><span style=color:#57606a># The directory where the converted markdown files should be saved</span><span style=color:#fff>
+</span></span></span></code></pre></div></article></div></div><div class="article child" data-roles="All Roles" id=5fe5c9a3002c1cd07ce7c21059aea053 data-link=/tools/importers/embed.html#json-schema permalink=/tools/importers/jsonschema/embed.html data-no-content=false title="JSON Schema"><div class=presidium-article-wrapper><span class=anchor id=json-schema data-id=tools/importers/jsonschema.md></span><div class="article-title article-actions" data-align=center-left><h3>JSON Schema</h3><div class=permalink><a id=/tools/importers/jsonschema/embed.html data-slug=# class=link-icon title="Copy link to article" onclick='copyPermalink(this,"/tools/importers/embed.html#json-schema","article")'></a></div></div><article title="JSON Schema" aria-label="JSON Schema"><p><a href=https://github.com/SPANDigital/presidium-json-schema target=_blank rel=noopener>presidium-json-schema</a> is a CLI tool for importing your <a href=http://json-schema.org/ target=_blank rel=noopener>JSON Schema</a> spec into
+<a href=http://presidium.spandigital.net target=_blank rel=noopener>Presidium</a> documentation.</p><h2 id=install>Install</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-sh data-lang=sh><span style=display:flex><span>brew install SPANDigital/tap/presidium-json-schema
+</span></span></code></pre></div><h2 id=usage>Usage</h2><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-text data-lang=text><span style=display:flex><span>Usage:
+</span></span><span style=display:flex><span>  presidium-json-schema convert [path] [flags]
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>Flags:
+</span></span><span style=display:flex><span>  -d, --destination string   the output directory (default &#34;.&#34;)
+</span></span><span style=display:flex><span>  -e, --extension string     the schema extension (default &#34;*.schema.json&#34;)
+</span></span><span style=display:flex><span>  -o, --ordered              preserve the schema order (defaults to alphabetical)
+</span></span><span style=display:flex><span>  -w, --walk                 walk through sub-directories
+</span></span></code></pre></div><p>To convert a file you simply:</p><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-shell data-lang=shell><span style=display:flex><span>presidium-json-schema convert &lt;PATH_TO_SCHEMA_DIR&gt; -d &lt;THE_DESTINATION_DIR&gt;
+</span></span></code></pre></div></article></div></div><div class="article child" data-roles="All Roles" id=96709c3c23e51762317a74bb990113a1 data-link=/tools/importers/embed.html#embed permalink=/tools/importers/embed.html data-no-content=false title=Embed><div class=presidium-article-wrapper><span class=anchor id=embed data-id=tools/importers/embed.md></span><div class="article-title article-actions" data-align=center-left><h3>Embed</h3><div class=permalink><a id=/tools/importers/embed.html data-slug=# class=link-icon title="Copy link to article" onclick='copyPermalink(this,"/tools/importers/embed.html#embed","article")'></a></div></div><article title=Embed aria-label=Embed><p>A fallback approach to importing generated documentation is to embed documentation in an iframe.
+This approach is not recommended because items are not indexed or available on the main menu. However, it
+will work for certain cases when an importer is not yet available.</p><blockquote><p>When possible, use a simple template when embedding documentation in an iframe.</p></blockquote><p>To include documentation in an iframe:</p><ol><li>Generate the static site documentation for your component.</li><li>Put the documentation in the <code>/static</code> folder so that it&rsquo;s statically served.
+The Presidium convention is to place it under <code>/static/import/{my-reference}</code>.</li><li>Add a reference article to the Reference section:</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f7f7f7;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none><code class=language-markdown data-lang=markdown><span style=display:flex><span>
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span>title: My Reference
+</span></span><span style=display:flex><span>---
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span># foo.bar
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>&lt;div&gt;
+</span></span><span style=display:flex><span>    &lt;iframe&gt;
+</span></span><span style=display:flex><span>            src=&#39;/static/import/{my-reference}/foo/bar/package-summary.html&#39;
+</span></span><span style=display:flex><span>    &lt;/iframe&gt;
+</span></span><span style=display:flex><span>&lt;/div&gt;
+</span></span></code></pre></div><blockquote><p>You can create multiple Markdown files for different components as required.</p></blockquote></article></div></div></section></div><footer><div><p class=text-muted>Generated on Jun 23, 2026</p></div></footer></div></div></div><div class=container-fluid></div><div class=toast-wrapper><div id=copy-toast class=toast><div class=editor-popup-panel-copy><div class=popup-copy-tick></div><span class="popup-copy-text mb-0"></span></div></div></div><div id=presidium-modal><div class=modal-close><span onclick='document.getElementById("presidium-modal").style.display="none"'>&#215;</span></div><img><div class=modal-caption></div></div><script defer src=/presidium.js></script><script defer src=/assets/scripts/jquery.min.js></script><script defer src=/assets/scripts/bootstrap.min.js></script><script defer fetchpriority=low src=/assets/scripts/mermaid.js></script><script type=module>
+  $('.toolbar-wrapper > button.toggle').on('click', (event) => {
+    event.stopPropagation();
+    const $menu = $('.content-wrapper > #presidium-navigation');
+    const isOpen = $menu.hasClass('expanded');
+    $menu.toggleClass('expanded', !isOpen).toggleClass('', isOpen);
+  });
+
+  
+  const toggleMenu = ($menu, isOpen) => {
+    const $ul = $menu.find('ul').first();
+
+    if (isOpen) {
+        $menu.addClass('open').removeClass('closed');
+        $ul.addClass('in active show');
+    } else {
+        $menu.removeClass('open').addClass('closed');
+        $ul.removeClass('in active');
+    }
+
+    $menu.find('div.menu-expander').first().attr('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
+  
+  $('li.menu-row').on('show.bs.collapse', (event) => {
+    event.stopPropagation();
+    const $menu = $(event.currentTarget);
+    toggleMenu($menu, true);
+  });
+
+  $('li.menu-row').on('hide.bs.collapse', (event) => {
+    event.stopPropagation();
+    const $menu = $(event.currentTarget);
+    toggleMenu($menu, false);
+  });
+
+  $('.menu-expander').on('click', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const $menuRow = $(event.currentTarget).closest('.menu-row');
+    const $ul = $menuRow.find('ul').first();
+    $ul.collapse('toggle');
+  });
+
+  $('.menu-title').on('click', function(event) {
+    const $menuRow = $(event.currentTarget).closest('.menu-row');
+    if (!$menuRow.hasClass('open')) return;
+
+    const $ul = $menuRow.find('ul').first();
+    $ul.collapse('toggle');
+  });
+
+  function copyPermalink(link, articleLink, copyTitle) {
+      
+      if (articleLink.startsWith('/')) {
+          articleLink = articleLink.substring(1); 
+      }
+      
+      const fullURL = window.location.origin + '/' + articleLink;
+      navigator.clipboard.writeText(fullURL);
+
+      
+      const toast = document.querySelector('#copy-toast');
+      if (toast) {
+          
+          const popupCopyText = toast.querySelector('.popup-copy-text');
+          popupCopyText.innerHTML = `Copied link to ${copyTitle}`;
+          
+          toast.style.opacity = '1';
+          toast.classList.add("show");
+          setTimeout(function () {
+              toast.style.opacity = '0';
+              toast.classList.remove("show");
+          }, 3000);
+          console.log(`Copied link to ${copyTitle}`);
+      }
+  }
+  
+  window.copyPermalink = copyPermalink;
+
+  window.presidium?.tooltips?.load();
+  window.presidium?.modal?.init();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            'primaryColor': '#00827E',
+            'primaryBorderColor': '#2C6764',
+            'secondaryColor': '#FFFFFF',
+            'lineColor': '#666',
+        },
+    });
+    
+    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+  });
+
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbarHeader = document.querySelector(".navbar-header");
+    const navbarItems = document.querySelector(".navbar-items");
+
+    if (navbarHeader && navbarItems) {
+      
+      const headerHeight = navbarHeader.offsetHeight;
+      navbarItems.style.maxHeight = `calc(100vh - ${headerHeight}px)`;
+    }
+
+    
+    window.addEventListener("resize", function () {
+      if (navbarHeader && navbarItems) {
+        const headerHeight = navbarHeader.offsetHeight;
+        navbarItems.style.maxHeight = `calc(100vh - ${headerHeight}px)`;
+      }
+    });
+  });
+</script><script type=module>
+  const desktopSize = window.matchMedia('(min-width: 992px)');
+  const resizer = document.querySelector('#resizer');
+  const sidebar = document.querySelector('#presidium-navigation');
+  const minWidth = 300;
+  const maxWidth = 600;
+  let isResizing = false;
+
+  const clampWidth = (value) => {
+    return Math.min(maxWidth, Math.max(minWidth, value));
+  };
+
+  const applyWidth = (value) => {
+    const width = `${clampWidth(value)}px`;
+    document.documentElement.style.setProperty('--presidium-sidenav-width', width);
+    try {
+      window.localStorage.setItem('sidenav', width);
+    } catch (error) {
+      
+    }
+  };
+
+  const syncResizeMode = () => {
+    if (!resizer || !sidebar) return;
+    resizer.style.display = desktopSize.matches ? 'block' : 'none';
+  };
+
+  const stopResizing = () => {
+    isResizing = false;
+    document.removeEventListener('mousemove', onMouseMove, false);
+    document.removeEventListener('mouseup', stopResizing, false);
+  };
+
+  const onMouseMove = (event) => {
+    if (!isResizing) return;
+    applyWidth(event.clientX);
+  };
+
+  syncResizeMode();
+
+  let cachedSize = null;
+  try {
+    cachedSize = window.localStorage.getItem('sidenav');
+  } catch (error) {
+    
+  }
+  if (desktopSize.matches && cachedSize) {
+    const parsedSize = Number.parseInt(cachedSize, 10);
+    if (!Number.isNaN(parsedSize)) {
+      applyWidth(parsedSize);
+    }
+  }
+
+  desktopSize.addEventListener('change', syncResizeMode);
+
+  resizer?.addEventListener('mousedown', (event) => {
+    if (!desktopSize.matches) return;
+    event.preventDefault();
+    isResizing = true;
+    document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('mouseup', stopResizing, false);
+  });
+</script></body></html>

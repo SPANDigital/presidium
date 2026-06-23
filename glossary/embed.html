@@ -1,0 +1,180 @@
+<!doctype html><html><head><meta charset=utf-8><title>Glossary - Presidium Open Source</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=generator content="Hugo 0.163.3"><link rel=icon href=/images/favicon.ico type=image/x-icon><link rel=preload as=image href=/assets/images/logo.svg fetchpriority=high><link rel=preload as=image href=/assets/images/logo-small.svg fetchpriority=high><link rel=stylesheet href=/presidium.min.cd3cadcd826fbe7de802191027e1052ce1e6783daf5ad3ca93685ea80c12fdca.css><script>try{const e=window.localStorage.getItem("sidenav");if(e){const t=Number.parseInt(e,10);!Number.isNaN(t)&&t>=300&&t<=600&&document.documentElement.style.setProperty("--presidium-sidenav-width",`${t}px`)}}catch(e){console.error("Failed to restore sidenav width from localStorage.",e)}</script><style>@media(min-width:992px){#presidium-navigation{flex-basis:var(--presidium-sidenav-width,300px)}}</style></head><body id=presidium zgotmplz><div class=module-title-bar><div class=module-title-bar-brand><div class=module-title-bar-logo><a href=/ aria-label="Presidium Open Source home"><img src=/images/logo.png alt="Presidium Open Source logo" class=brand></a></div><h4 class=brand-name>Presidium Open Source</h4></div></div><div class="content-wrapper prsdm-base-type"><div id=presidium-container class=container-fluid><div class=row><div aria-label=breadcrumb class=breadcrumb><li class=breadcrumb-item><span class=ancestor-title>Presidium Open Source</span></li><li class="breadcrumb-item active"><span>Glossary</li></div><div id=presidium-content><div class="page title" data-roles="All Roles" data-link=/glossary/embed.html permalink=/glossary/embed.html title=Glossary><div class="article-title article-actions" data-align=center-left><h1 class="page-title offendingHeading">Glossary</h1><div class=permalink><a id=/glossary/embed.html data-slug=# class=link-icon title="Copy link to section" onclick='copyPermalink(this,"/glossary/embed.html","section")'></a></div></div></div><hr class=offendingHr><section data-section=glossary><div data-key data-title="Presidium Open Source" data-type=embed id=presidium-enterprise class=presidium-enterprise style=display:none></div><div class="page index" data-roles="All Roles" id=d354967a89ac75e18a7b78fa2499ebe1 data-link=/glossary/embed.html permalink=/glossary/embed.html data-no-content=true><div class=presidium-article-wrapper><span class=anchor id=glossary data-id=glossary/_index.md></span></div></div><div class="article child" data-roles="All Roles" id=f0b6d7c37dd5a4bb2ab6a760eaae8d5a data-link=/glossary/embed.html#tooltips permalink=/glossary/tooltip/embed.html data-no-content=false title=Tooltips><div class=presidium-article-wrapper><span class=anchor id=tooltips data-id=glossary/tooltip.md></span><div class="article-title article-actions" data-align=center-left><h2>Tooltips</h2><div class=permalink><a id=/glossary/tooltip/embed.html data-slug=# class=link-icon title="Copy link to article" onclick='copyPermalink(this,"/glossary/embed.html#tooltips","article")'></a></div></div><article title=Tooltips aria-label=Tooltips><p>This is an example of a Glossary entry linked to from <a href=/reference/markdown/tooltips/>here</a>.</p></article></div></div></section></div><footer><div><p class=text-muted>Generated on Jun 23, 2026</p></div></footer></div></div></div><div class=container-fluid></div><div class=toast-wrapper><div id=copy-toast class=toast><div class=editor-popup-panel-copy><div class=popup-copy-tick></div><span class="popup-copy-text mb-0"></span></div></div></div><div id=presidium-modal><div class=modal-close><span onclick='document.getElementById("presidium-modal").style.display="none"'>&#215;</span></div><img><div class=modal-caption></div></div><script defer src=/presidium.js></script><script defer src=/assets/scripts/jquery.min.js></script><script defer src=/assets/scripts/bootstrap.min.js></script><script defer fetchpriority=low src=/assets/scripts/mermaid.js></script><script type=module>
+  $('.toolbar-wrapper > button.toggle').on('click', (event) => {
+    event.stopPropagation();
+    const $menu = $('.content-wrapper > #presidium-navigation');
+    const isOpen = $menu.hasClass('expanded');
+    $menu.toggleClass('expanded', !isOpen).toggleClass('', isOpen);
+  });
+
+  
+  const toggleMenu = ($menu, isOpen) => {
+    const $ul = $menu.find('ul').first();
+
+    if (isOpen) {
+        $menu.addClass('open').removeClass('closed');
+        $ul.addClass('in active show');
+    } else {
+        $menu.removeClass('open').addClass('closed');
+        $ul.removeClass('in active');
+    }
+
+    $menu.find('div.menu-expander').first().attr('aria-expanded', isOpen ? 'true' : 'false');
+  };
+
+  
+  $('li.menu-row').on('show.bs.collapse', (event) => {
+    event.stopPropagation();
+    const $menu = $(event.currentTarget);
+    toggleMenu($menu, true);
+  });
+
+  $('li.menu-row').on('hide.bs.collapse', (event) => {
+    event.stopPropagation();
+    const $menu = $(event.currentTarget);
+    toggleMenu($menu, false);
+  });
+
+  $('.menu-expander').on('click', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    const $menuRow = $(event.currentTarget).closest('.menu-row');
+    const $ul = $menuRow.find('ul').first();
+    $ul.collapse('toggle');
+  });
+
+  $('.menu-title').on('click', function(event) {
+    const $menuRow = $(event.currentTarget).closest('.menu-row');
+    if (!$menuRow.hasClass('open')) return;
+
+    const $ul = $menuRow.find('ul').first();
+    $ul.collapse('toggle');
+  });
+
+  function copyPermalink(link, articleLink, copyTitle) {
+      
+      if (articleLink.startsWith('/')) {
+          articleLink = articleLink.substring(1); 
+      }
+      
+      const fullURL = window.location.origin + '/' + articleLink;
+      navigator.clipboard.writeText(fullURL);
+
+      
+      const toast = document.querySelector('#copy-toast');
+      if (toast) {
+          
+          const popupCopyText = toast.querySelector('.popup-copy-text');
+          popupCopyText.innerHTML = `Copied link to ${copyTitle}`;
+          
+          toast.style.opacity = '1';
+          toast.classList.add("show");
+          setTimeout(function () {
+              toast.style.opacity = '0';
+              toast.classList.remove("show");
+          }, 3000);
+          console.log(`Copied link to ${copyTitle}`);
+      }
+  }
+  
+  window.copyPermalink = copyPermalink;
+
+  window.presidium?.tooltips?.load();
+  window.presidium?.modal?.init();
+
+  document.addEventListener('DOMContentLoaded', () => {
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'base',
+        themeVariables: {
+            'primaryColor': '#00827E',
+            'primaryBorderColor': '#2C6764',
+            'secondaryColor': '#FFFFFF',
+            'lineColor': '#666',
+        },
+    });
+    
+    mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+  });
+
+  
+  document.addEventListener("DOMContentLoaded", function () {
+    const navbarHeader = document.querySelector(".navbar-header");
+    const navbarItems = document.querySelector(".navbar-items");
+
+    if (navbarHeader && navbarItems) {
+      
+      const headerHeight = navbarHeader.offsetHeight;
+      navbarItems.style.maxHeight = `calc(100vh - ${headerHeight}px)`;
+    }
+
+    
+    window.addEventListener("resize", function () {
+      if (navbarHeader && navbarItems) {
+        const headerHeight = navbarHeader.offsetHeight;
+        navbarItems.style.maxHeight = `calc(100vh - ${headerHeight}px)`;
+      }
+    });
+  });
+</script><script type=module>
+  const desktopSize = window.matchMedia('(min-width: 992px)');
+  const resizer = document.querySelector('#resizer');
+  const sidebar = document.querySelector('#presidium-navigation');
+  const minWidth = 300;
+  const maxWidth = 600;
+  let isResizing = false;
+
+  const clampWidth = (value) => {
+    return Math.min(maxWidth, Math.max(minWidth, value));
+  };
+
+  const applyWidth = (value) => {
+    const width = `${clampWidth(value)}px`;
+    document.documentElement.style.setProperty('--presidium-sidenav-width', width);
+    try {
+      window.localStorage.setItem('sidenav', width);
+    } catch (error) {
+      
+    }
+  };
+
+  const syncResizeMode = () => {
+    if (!resizer || !sidebar) return;
+    resizer.style.display = desktopSize.matches ? 'block' : 'none';
+  };
+
+  const stopResizing = () => {
+    isResizing = false;
+    document.removeEventListener('mousemove', onMouseMove, false);
+    document.removeEventListener('mouseup', stopResizing, false);
+  };
+
+  const onMouseMove = (event) => {
+    if (!isResizing) return;
+    applyWidth(event.clientX);
+  };
+
+  syncResizeMode();
+
+  let cachedSize = null;
+  try {
+    cachedSize = window.localStorage.getItem('sidenav');
+  } catch (error) {
+    
+  }
+  if (desktopSize.matches && cachedSize) {
+    const parsedSize = Number.parseInt(cachedSize, 10);
+    if (!Number.isNaN(parsedSize)) {
+      applyWidth(parsedSize);
+    }
+  }
+
+  desktopSize.addEventListener('change', syncResizeMode);
+
+  resizer?.addEventListener('mousedown', (event) => {
+    if (!desktopSize.matches) return;
+    event.preventDefault();
+    isResizing = true;
+    document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('mouseup', stopResizing, false);
+  });
+</script></body></html>
