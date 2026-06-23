@@ -86,7 +86,6 @@ type (
 		SiteTargetDirectory string               // Where the site must be generator to
 		SiteName            string               // The name of the site
 		SiteTitle           string               // The title for the site
-		BrandingModelUrl    string               // The Hugo model used for branding
 		Template            Template             // Template to use
 		WhenSiteExists      WhenSiteTargetExists // What should happen when the site already exists.
 		Uuid                string               // Unique identifier for the site
@@ -117,7 +116,6 @@ func (t *InitialSiteTarget) GetTemplateParameters() TemplateParameters {
 		Title:       or(t.SiteTitle, t.SiteName),
 		ProjectName: projectName,
 		Template:    t.Template.Code(),
-		Brand:       t.BrandingModelUrl,
 		Uuid:        uuid.NewString(),
 	}
 }
@@ -127,7 +125,6 @@ type TemplateParameters struct {
 	Title       string `json:"title"`
 	ProjectName string `json:"project_name"`
 	Template    string `json:"template"`
-	Brand       string `json:"brand"`
 	Uuid        string `json:"uuid"`
 }
 

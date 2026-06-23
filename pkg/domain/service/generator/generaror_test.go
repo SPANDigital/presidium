@@ -76,7 +76,6 @@ var _ = Describe("Site generation behaviour:", func() {
 			SiteTargetDirectory: filepath.Join(workDir, "testSite"),
 			SiteName:            "Test Site",
 			SiteTitle:           "A Test site",
-			BrandingModelUrl:    "",
 			Template:            defaultTemplate,
 			WhenSiteExists:      model.AbortWhenTargetSiteExists,
 		}

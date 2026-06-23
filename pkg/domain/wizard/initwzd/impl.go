@@ -11,7 +11,6 @@ import (
 	"github.com/SPANDigital/presidium-hugo/pkg/presidiumerr"
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/viper"
-	"golang.org/x/mod/module"
 )
 
 type (
@@ -35,12 +34,6 @@ func (i initWizard) Run() {
 	}
 
 	promptSupportedTemplates()
-
-	err = askBrandRepo()
-	if err != nil {
-		log.Error(err)
-		return
-	}
 
 	g, err := generator.New()
 	if err != nil {
@@ -73,7 +66,6 @@ func generateSiteModel() model.InitialSiteTarget {
 		SiteTargetDirectory: viper.GetString(config.ProjectNameKey),
 		SiteName:            viper.GetString(config.ProjectNameKey),
 		SiteTitle:           viper.GetString(config.TitleKey),
-		BrandingModelUrl:    viper.GetString(config.BrandKey),
 		Template:            mustHaveTemplate(),
 		WhenSiteExists:      model.AbortWhenTargetSiteExists,
 	}
@@ -109,27 +101,6 @@ func askProjectName() error {
 	return nil
 }
 
-func askBrandRepo() error {
-
-	isBrand, err := wizard.GetConfirmationFromUser("Do you want to add a brand?", false)
-	if err != nil {
-		log.Error(err)
-		return err
-	}
-
-	if isBrand {
-		validate := func(input string) error {
-			return module.CheckPath(input)
-		}
-		repoURL, err := wizard.GetInputString("Provide your go module for branding", "", validate)
-		if err != nil {
-			return err
-		}
-		viper.Set(config.BrandKey, repoURL)
-	}
-	return nil
-}
-
 func promptSupportedTemplates() {
 	items := make([]model.ItemSelection, 0)
 	for _, item := range model.SupportedTemplates {
@@ -142,6 +113,7 @@ func promptSupportedTemplates() {
 		Label:     "Select a template",
 		Items:     items,
 		Templates: wizard.GetSelectTemplate(),
+		Size:      len(items),
 	}
 
 	idx, _, err := prompt.Run()
