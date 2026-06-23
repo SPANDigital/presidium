@@ -14,6 +14,20 @@ Read Presidium's [documentation](http://presidium.spandigital.net/overview/) for
 
 For detailed instructions on getting started, please see [Getting Started](http://presidium.spandigital.net/getting-started/).
 
+## Install with Homebrew
+
+Install Presidium from the SPANDigital tap:
+
+```bash
+brew install --cask spandigital/homebrew-tap/presidium
+```
+
+You can verify the installation with:
+
+```bash
+presidium help
+```
+
 # Features and Issues
 
 All upcoming features and issues are tracked [here](https://github.com/SPANDigital/presidium/issues).
@@ -45,6 +59,7 @@ Go's `//go:embed` directive cannot embed directories that contain `go.mod` files
 ## Getting started
 
 Initialize the theme submodules before building or running tests:
+
 ```
 git submodule update --init --recursive
 ```
