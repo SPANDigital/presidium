@@ -16,6 +16,30 @@ import (
 	"math/rand/v2"
 )
 
+func TestMain(m *testing.M) {
+	if err := model.LoadTemplates(os.DirFS(testModuleRoot())); err != nil {
+		panic(err)
+	}
+	os.Exit(m.Run())
+}
+
+func testModuleRoot() string {
+	dir, err := os.Getwd()
+	if err != nil {
+		return "."
+	}
+	for {
+		if _, statErr := os.Stat(filepath.Join(dir, "go.mod")); statErr == nil {
+			return dir
+		}
+		parent := filepath.Dir(dir)
+		if parent == dir {
+			return "."
+		}
+		dir = parent
+	}
+}
+
 func TestGeneratorImpl(t *testing.T) {
 	RegisterFailHandler(Fail)
 	RunSpecs(t, "Default Site SiteGenerator Suite")
@@ -46,12 +70,14 @@ var _ = Describe("Site generation behaviour:", func() {
 		var newErr error
 		g, newErr = New()
 		Expect(newErr).ShouldNot(HaveOccurred())
+		defaultTemplate, tmplErr := model.GetTemplate("default")
+		Expect(tmplErr).ShouldNot(HaveOccurred())
 		t = model.InitialSiteTarget{
 			SiteTargetDirectory: filepath.Join(workDir, "testSite"),
 			SiteName:            "Test Site",
 			SiteTitle:           "A Test site",
 			BrandingModelUrl:    "",
-			Template:            model.SpanTemplate,
+			Template:            defaultTemplate,
 			WhenSiteExists:      model.AbortWhenTargetSiteExists,
 		}
 	})
