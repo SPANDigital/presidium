@@ -6,13 +6,7 @@ params:
   _merge: deep
   sortByFilePath: true
   enterprise_key:
-  frontmatter:
-    - key: author
-      type: email
-      strict: false
-    - key: title
-      type: text
-      strict: true
+
 markup:
   goldmark:
     renderer:
