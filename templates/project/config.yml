@@ -6,13 +6,7 @@ params:
   _merge: deep
   sortByFilePath: true
   enterprise_key:
-  frontmatter:
-    - key: author
-      type: email
-      strict: false
-    - key: title
-      type: text
-      strict: true
+
 markup:
   goldmark:
     renderer:
@@ -24,27 +18,27 @@ markup:
     style: github
 menu:
   main:
-    - identifier: overview
+    - identifier: 01-overview
       name: Overview
       url: /
       weight: 1
-    - identifier: plan
+    - identifier: 02-plan
       name: Plan
       url: /plan/
       weight: 2
-    - identifier: status
+    - identifier: 03-status
       name: Status
       url: /status/
       weight: 3
-    - identifier: solution
+    - identifier: 04-solution
       name: Solution
       url: /solution/
       weight: 4
-    - identifier: team
+    - identifier: 05-team
       name: Team & Roles
       url: /team/
       weight: 5
-    - identifier: technology
+    - identifier: 06-technology
       name: Technology
       url: /technology/
       weight: 6
