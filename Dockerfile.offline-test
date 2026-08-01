@@ -1,6 +1,6 @@
 # Dockerfile for testing offline functionality
 # This container has no network access to verify themes are truly embedded
-FROM alpine:3.19
+FROM alpine:3.24
 
 # Install basic utilities
 RUN apk add --no-cache ca-certificates git
