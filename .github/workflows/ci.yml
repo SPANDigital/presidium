@@ -42,7 +42,7 @@ jobs:
       - name: Run Tests
         run: make test || exit 1
       - name: Upload Test Reports
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: test-reports
           path: reports/tests-cov.out
